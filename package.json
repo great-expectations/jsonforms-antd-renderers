@@ -1,0 +1,8 @@
+{
+  "name": "jsonforms-antd-renderers",
+  "version": "0.0.1",
+  "description": "AntD renderers for jsonforms",
+  "repository": "git@github.com:great-expectations/jsonforms-antd-renderers.git",
+  "license": "MIT",
+  "private": false
+}

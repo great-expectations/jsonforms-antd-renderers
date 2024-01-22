@@ -4,8 +4,8 @@ import {
 } from "./controls/UnknownControlRegistryEntry";
 import { VerticalLayoutRendererRegistryEntry } from "./layouts/VerticalLayoutRegistryEntry";
 
-export const renderers = [
+export const rendererRegistryEntries = [
   UnknownRendererRegistryEntry,
   VerticalLayoutRendererRegistryEntry,
 ];
-export const cells = [UnknownCellRegistryEntry];
+export const cellRegistryEntries = [UnknownCellRegistryEntry];

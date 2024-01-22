@@ -3,8 +3,8 @@ import { ChangeEvent, useCallback, useEffect } from "react"
 import { Input, Form, InputProps } from "antd"
 import { QuestionCircleOutlined } from "@ant-design/icons"
 import { TextAreaProps } from "antd/lib/input"
-import { TextControlOptions, TextControlType } from "../ui-schema"
-import { assertNever } from "../common/assert-never"
+import { TextControlOptions, TextControlType } from "../../ui-schema"
+import { assertNever } from "../../common/assert-never"
 
 interface TextControlProps extends ControlProps {
   data: string // TODO: ensure this is true via tester OR change to unknown

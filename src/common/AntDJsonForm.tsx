@@ -3,7 +3,6 @@ import {
   JsonFormsRendererRegistryEntry,
   JsonFormsUISchemaRegistryEntry,
   JsonSchema7,
-  createAjv,
 } from "@jsonforms/core";
 import { UISchema } from "../ui-schema";
 import { rendererRegistryEntries as _rendererRegistryEntries, cellRegistryEntries } from "../renderers";
@@ -32,7 +31,6 @@ export function AntDJsonForm({
   rendererRegistryEntries = _rendererRegistryEntries,
   config,
 }: Props) {
-  const handleDefaultsAjv = createAjv({ useDefaults: true });
 
   return (
     <JsonForms
@@ -47,7 +45,6 @@ export function AntDJsonForm({
         ...(customRendererRegistryEntries ?? []),
       ]}
       config={config}
-      ajv={handleDefaultsAjv}
     />
   );
 }

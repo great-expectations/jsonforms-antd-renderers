@@ -4,8 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "test": "vitest",
     "dev": "vite",
     "build": "tsc && vite build",
+    "tsc": "tsc",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
@@ -17,7 +19,6 @@
     "@jsonforms/react": "^3.1.0",
     "ajv": "^8.12.0",
     "antd": "^5.13.1",
-    "eslint-plugin-no-relative-import-paths": "^1.5.3",
     "lodash-es": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -31,6 +32,9 @@
     "@storybook/react": "^7.6.8",
     "@storybook/react-vite": "^7.6.8",
     "@storybook/test": "^7.6.8",
+    "@testing-library/jest-dom": "^6.4.0",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.2",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
@@ -40,8 +44,11 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "eslint-plugin-storybook": "^0.6.15",
+    "jsdom": "^24.0.0",
+    "json-schema-to-ts": "^3.0.0",
     "storybook": "^7.6.8",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8"
+    "vite": "^5.0.11",
+    "vitest": "^1.2.2"
   }
 }

@@ -50,16 +50,16 @@ export default meta;
 type Story = StoryObj<typeof StorybookAntDJsonForm>;
 
 export const SingleLine: Story = {
+  parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
-  args: {
-    jsonSchema: schema,
-  },
+  args: { jsonSchema: schema },
   argTypes: {
     jsonSchema: {
+      table: {},
       control: "object",
       description: "this is a simple schema with one property (name)",
     },
-  }
+  },
 };
 
 export const MultiLine: Story = {

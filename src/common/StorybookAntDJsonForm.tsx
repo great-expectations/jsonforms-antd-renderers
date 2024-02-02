@@ -2,7 +2,6 @@ import {
   JsonFormsRendererRegistryEntry,
   JsonFormsUISchemaRegistryEntry,
   JsonSchema7,
-  createAjv,
 } from "@jsonforms/core";
 import { UISchema } from "../ui-schema";
 import { AntDJsonForm } from "./AntDJsonForm";

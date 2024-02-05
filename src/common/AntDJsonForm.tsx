@@ -34,11 +34,11 @@ export function AntDJsonForm({
 
   return (
     <JsonForms
-      schema={jsonSchema as JsonSchema7} // bleh
+      schema={jsonSchema}
       uischema={uiSchema}
       uischemas={uiSchemaRegistryEntries ?? []}
       data={data}
-      onChange={({ data }) => updateData(data)}
+      onChange={({ data }) => updateData(data as Record<string, unknown>)}
       cells={[...cellRegistryEntries]}
       renderers={[
         ...rendererRegistryEntries,

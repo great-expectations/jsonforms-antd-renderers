@@ -7,7 +7,7 @@ export interface AntDLayoutRendererProps extends OwnPropsOfRenderer {
   elements: UISchema[];
   direction?: "row" | "column";
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 function AntDLayoutComponent({
   elements,
   schema,

@@ -5,14 +5,14 @@ import {
   JsonSchema7,
 } from "@jsonforms/core";
 import { UISchema } from "../ui-schema";
-import { rendererRegistryEntries as _rendererRegistryEntries, cellRegistryEntries } from "../renderers";
+import {
+  rendererRegistryEntries as _rendererRegistryEntries,
+  cellRegistryEntries,
+} from "../renderers";
 
 type Props = {
   data: Record<string, unknown>;
-  updateData: (
-    data: Record<string, unknown>,
-    areCdmDateTimesEnabled?: boolean
-  ) => void;
+  updateData: (data: Record<string, unknown>) => void;
   jsonSchema: JsonSchema7;
   uiSchema?: UISchema;
   uiSchemaRegistryEntries?: JsonFormsUISchemaRegistryEntry[];
@@ -31,7 +31,6 @@ export function AntDJsonForm({
   rendererRegistryEntries = _rendererRegistryEntries,
   config,
 }: Props) {
-
   return (
     <JsonForms
       schema={jsonSchema}

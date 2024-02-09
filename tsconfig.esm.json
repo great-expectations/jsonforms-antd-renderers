@@ -1,0 +1,14 @@
+{
+    "extends": "./tsconfig.production.json",
+    "compilerOptions": {
+        "lib": [
+            "ES2022",
+            "DOM"
+        ],
+        "target": "ES2022",
+        "module": "ESNext",
+        "moduleResolution": "Node", // should be NodeNext? something else?
+        "outDir": "./lib/esm",
+        "declarationDir": "./lib/esm/types"
+    }
+}

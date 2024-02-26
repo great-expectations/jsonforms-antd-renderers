@@ -6,9 +6,9 @@
             "DOM"
         ],
         "target": "ES2022",
-        "module": "ESNext",
-        "moduleResolution": "Node", // should be NodeNext? something else?
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
         "outDir": "./lib/esm",
-        "declarationDir": "./lib/esm/types"
+        "declarationDir": "./lib/esm"
     }
 }

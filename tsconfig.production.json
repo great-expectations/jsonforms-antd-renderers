@@ -1,18 +1,27 @@
 {
-    // "extends": "./tsconfig.json",
-    "include": ["src"],
-    "exclude": ["**/*.test.tsx", "**/*.stories.*", "src/common/test-render.tsx"],
+    "include": [
+        "src"
+    ],
+    "exclude": [
+        "**/*.test.tsx",
+        "**/*.stories.*",
+        "src/common/test-render.tsx"
+    ],
     "compilerOptions": {
-        "outDir": "lib",
         "declaration": true,
+        "declarationMap": true,
+        "allowSyntheticDefaultImports": true,
 
         "target": "ES2020",
         "useDefineForClassFields": true,
-        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+        "lib": [
+            "ES2020",
+            "DOM",
+            "DOM.Iterable"
+        ],
         "module": "ESNext",
-        // "skipLibCheck": true,
         "skipLibCheck": true,
-    
+        "esModuleInterop": true,
         /* Bundler mode */
         "moduleResolution": "bundler",
         // "allowImportingTsExtensions": true,
@@ -20,7 +29,6 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "react-jsx",
-    
         /* Linting */
         "strict": true,
         "noUnusedLocals": true,

@@ -24,3 +24,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Built package
+great-expectations-jsonforms-antd-renderers-*.tgz

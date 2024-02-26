@@ -1,30 +1,28 @@
-# React + TypeScript + Vite
+# Ant Design Renderers for `jsonforms`
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[jsonforms](jsonforms.io) is "a declarative framework for efficiently building form-based web UIs." `jsonforms` has multiple renderer packages for different frameworks and component libraries, and this is one such package.
 
-Currently, two official plugins are available:
+## Getting started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+$ npm install jsonforms-antd-renderers
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+```tsx
+import { JsonForms } from "@jsonforms/react"
+import { rendererRegistryEntries, cellRegistryEntries } from "jsonforms-antd-renderers"
+
+<JsonForms 
+  schema={schema} 
+  renderers={rendererRegistryEntries} 
+  cells={cellRegistryEntries} />
+```
+
+## Contributing
+
+### First time setup
+
+- Install node.js (only Node v20 is currently supported)  
+- Install pnpm: https://pnpm.io/installation (use pnpm 8.6.8+)
+- Clone this repository
+- Install dependencies: pnpm i --frozen-lockfile

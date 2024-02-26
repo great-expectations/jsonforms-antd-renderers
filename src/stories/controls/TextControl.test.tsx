@@ -13,6 +13,6 @@ test("falls back to default value if value is undefined", async () => {
   });
   const input = await screen.findByLabelText("name");
   await userEvent.type(input, "abc");
-  await screen.findByDisplayValue("abc")
-  expect(input).toHaveValue("abc")
+  await screen.findByDisplayValue("abc");
+  expect(input).toHaveValue("abc");
 });

@@ -9,20 +9,26 @@ $ npm install jsonforms-antd-renderers
 ```
 
 ```tsx
-import { JsonForms } from "@jsonforms/react"
-import { rendererRegistryEntries, cellRegistryEntries } from "jsonforms-antd-renderers"
+import { JsonForms } from "@jsonforms/react";
+import {
+  rendererRegistryEntries,
+  cellRegistryEntries,
+} from "jsonforms-antd-renderers";
 
-<JsonForms 
-  schema={schema} 
-  renderers={rendererRegistryEntries} 
-  cells={cellRegistryEntries} />
+<JsonForms
+  schema={schema}
+  renderers={rendererRegistryEntries}
+  cells={cellRegistryEntries}
+/>;
 ```
 
 ## Contributing
 
 ### First time setup
 
-- Install node.js (only Node v20 is currently supported)  
+- Install node.js (only Node v20 is currently supported)
 - Install pnpm: https://pnpm.io/installation (use pnpm 8.6.8+)
 - Clone this repository
 - Install dependencies: pnpm i --frozen-lockfile
+- Run tests: `pnpm test`
+- Run storybook: `pnpm storybook`

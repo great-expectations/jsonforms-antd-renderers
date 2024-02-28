@@ -43,25 +43,26 @@ export const Info: Story = {
   tags: ["autodocs"],
   args: { 
     jsonSchema: schema, 
-    uiSchema:{
-    type: "VerticalLayout",
-    elements: [
-      {
-        type: "Label",
-        text: "To maintain airspeed velocity, a swallow needs to beat its wings 43 times every second.",
-        options: {
-          type: "info"
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Label",
+          text: "To maintain airspeed velocity, a swallow needs to beat its wings 43 times every second.",
+          options: {
+            type: "info"
+          }
         }
-      }
-    ],
-  } satisfies UISchema, },
+      ],
+    } satisfies UISchema,
+  },
 }
 
 export const Warning: Story = {
   tags: ["autodocs"],
   args: { 
     jsonSchema: schema,
-    uiSchema:{
+    uiSchema: {
       type: "VerticalLayout",
       elements: [
         {
@@ -80,16 +81,17 @@ export const Success: Story = {
   tags: ["autodocs"],
   args: { 
     jsonSchema: schema, 
-    uiSchema:{
-    type: "VerticalLayout",
-    elements: [
-      {
-        type: "Label",
-        text: "You did it!",
-        options: {
-          type: "success"
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Label",
+          text: "You did it!",
+          options: {
+            type: "success"
+          }
         }
-      }
-    ],
-  } satisfies UISchema, },
+      ],
+    } satisfies UISchema,
+  },
 }

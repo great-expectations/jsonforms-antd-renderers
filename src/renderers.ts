@@ -1,13 +1,15 @@
+import { LabelRendererRegistryEntry } from "./controls/LabelRendererRegistryEntry";
+import { TextControlRegistryEntry } from "./stories/controls/TextControlRegistryEntry";
 import {
   UnknownCellRegistryEntry,
   UnknownRendererRegistryEntry,
 } from "./controls/UnknownControlRegistryEntry";
 import { VerticalLayoutRendererRegistryEntry } from "./layouts/VerticalLayoutRegistryEntry";
-import { TextControlRegistryEntry } from "./stories/controls/TextControlRegistryEntry";
 
 export const rendererRegistryEntries = [
+  LabelRendererRegistryEntry,
+  TextControlRegistryEntry,
   UnknownRendererRegistryEntry,
   VerticalLayoutRendererRegistryEntry,
-  TextControlRegistryEntry
 ];
 export const cellRegistryEntries = [UnknownCellRegistryEntry];

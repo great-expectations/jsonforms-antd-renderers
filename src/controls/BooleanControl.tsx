@@ -42,13 +42,7 @@ export function BooleanControl({
     !isDescriptionHidden(
       visible,
       description,
-      // this comment is copypasta, may be removed:
-      // Tooltips have their own focus handlers, so we do not need to rely
-      // on focus state here. So we pass 'true' to treat it as focused.
       true,
-      // this comment is copypasta, may be removed:
-      // We also pass true here for showUnfocusedDescription since it should
-      // render regardless of that setting.
       true,
     )
   return (

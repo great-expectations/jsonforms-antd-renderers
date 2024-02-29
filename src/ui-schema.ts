@@ -1,7 +1,7 @@
 import { JsonSchema } from "@jsonforms/core"
 import { AlertProps } from "antd"
 
-// a prop on type R will override the same prop in L
+// a prop on type R will override the same prop on L
 // this doesn't work if a prop on L is an optional prop on R
 type SimpleSpread<L, R> = R & Pick<L, Exclude<keyof L, keyof R>>
 

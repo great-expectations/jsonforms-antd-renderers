@@ -1,7 +1,7 @@
 import { test, expect } from "vitest";
 import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { render } from "../../common/test-render";
+import { render } from "../common/test-render";
 
 test("falls back to default value if value is undefined", async () => {
   render({

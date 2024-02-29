@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { TextControlRegistryEntry } from "./TextControlRegistryEntry";
 import { rendererRegistryEntries } from "../../renderers";
 import { UISchema } from "../../ui-schema";
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm";
@@ -33,7 +32,6 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     } satisfies UISchema,
     rendererRegistryEntries: [
       ...rendererRegistryEntries,
-      TextControlRegistryEntry,
     ],
   },
   // More on argTypes: https://storybook.js.org/docs/api/argtypes

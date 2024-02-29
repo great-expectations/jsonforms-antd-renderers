@@ -1,5 +1,6 @@
 import { BooleanControlRegistryEntry } from "./controls/BooleanControlRegistryEntry";
 import { LabelRendererRegistryEntry } from "./controls/LabelRendererRegistryEntry";
+import { NumberControlRegistryEntry } from "./controls/NumberControlRegistryEntry";
 import { TextControlRegistryEntry } from "./stories/controls/TextControlRegistryEntry";
 import {
   UnknownCellRegistryEntry,
@@ -10,6 +11,7 @@ import { VerticalLayoutRendererRegistryEntry } from "./layouts/VerticalLayoutReg
 export const rendererRegistryEntries = [
   BooleanControlRegistryEntry,
   LabelRendererRegistryEntry,
+  NumberControlRegistryEntry,
   TextControlRegistryEntry,
   UnknownRendererRegistryEntry,
   VerticalLayoutRendererRegistryEntry,

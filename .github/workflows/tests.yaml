@@ -4,7 +4,7 @@ on:
   - workflow_dispatch
 
 jobs:
-  cache-and-install-deps:
+  cache-and-install-deps-and-run-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,17 +37,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-  tests:
-    runs-on: ubuntu-latest
-    needs: cache-and-install-deps
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - run: pnpm test
+      - name: Run tests
+        run: pnpm test

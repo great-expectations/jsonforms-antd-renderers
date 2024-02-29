@@ -2,7 +2,7 @@ import { JsonSchema } from "@jsonforms/core"
 import { AlertProps } from "antd"
 
 // a prop on type R will override the same prop in L
-// this doesn't work if a prop in L is an optional prop in R
+// this doesn't work if a prop on L is an optional prop on R
 type SimpleSpread<L, R> = R & Pick<L, Exclude<keyof L, keyof R>>
 
 // jsonforms has composed their types in such a way that recursive types only specify the "base" type

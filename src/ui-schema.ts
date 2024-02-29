@@ -1,4 +1,9 @@
 import { JsonSchema } from "@jsonforms/core"
+import { AlertProps } from "antd"
+
+// a prop on type R will override the same prop in L
+// this doesn't work if a prop in L is an optional prop in R
+type SimpleSpread<L, R> = R & Pick<L, Exclude<keyof L, keyof R>>
 
 // jsonforms has composed their types in such a way that recursive types only specify the "base" type
 // this type is intended to fix that problem in the short term so that we can have strong type checking
@@ -116,7 +121,7 @@ interface LabelDescription {
 /**
  * A label element.
  */
-interface LabelElement extends UISchemaElement, Internationalizable {
+interface LabelElementProps {
   type: "Label"
   /**
    * The text of label.
@@ -125,9 +130,10 @@ interface LabelElement extends UISchemaElement, Internationalizable {
   options: LabelOptions
 }
 
-export type AlertLabelOptions = {
-  type?: "warning" | "success" | "info"
-}
+// SimpleSpread is used because options on UISchemaElement is generically typed
+interface LabelElement extends Internationalizable, SimpleSpread<UISchemaElement, LabelElementProps> {}
+
+export type AlertLabelOptions = AlertProps["type"]
 
 // this is intended to be a union, it just has one member rn
 export type LabelOptions = AlertLabelOptions

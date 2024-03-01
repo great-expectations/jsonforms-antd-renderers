@@ -3,8 +3,7 @@
         "src"
     ],
     "exclude": [
-        "**/*.test.tsx",
-        "**/*.test.ts",
+        "**/*.test.*",
         "**/*.stories.*",
         "src/common/test-render.tsx"
     ],

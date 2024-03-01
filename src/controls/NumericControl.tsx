@@ -4,12 +4,6 @@ import { decimalToPercentage, percentageStringToDecimal } from "./utils"
 
 
 
-interface NumericControlProps extends ControlProps {
-  data: number | undefined | null
-  handleChange(path: string, value: number | null): void
-  path: string
-}
-
 export const createNumericControl = (args: { coerceNumber: (value: number) => number; pattern?: string }) => {
   return function NumericControl({
     data,
@@ -21,13 +15,14 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     errors,
     schema,
     required,
-  }: NumericControlProps) {
+  }: ControlProps) {
     const isValid = errors.length === 0
     let step = 0
     const { maximum, minimum } = schema
     const isRangeDefined = typeof maximum === "number" && typeof minimum === "number"
+    const numberData = data as number | undefined | null
     const defaultValue: number | undefined = typeof schema?.default === "number" ? schema.default : undefined
-    const initialValue = data !== undefined ? data : defaultValue
+    const initialValue = numberData !== undefined ? numberData : defaultValue
 
     const onChange = (value: number | null) => {
       if (

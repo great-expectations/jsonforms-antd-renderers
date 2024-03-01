@@ -15,7 +15,7 @@ export function Checkbox({ data, className, id, enabled, uischema, schema, path,
   return (
     <AntDCheckbox
       checked={checked}
-      onChange={(e: CheckboxChangeEvent) => handleChange(path, e.target.checked)}
+      onChange={(e: CheckboxChangeEvent) => {handleChange(path, e.target.checked)}}
       className={className}
       id={id}
       disabled={!enabled}

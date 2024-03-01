@@ -4,5 +4,5 @@ import { AlertControl } from "./AlertControl"
 
 export const LabelRendererRegistryEntry: JsonFormsRendererRegistryEntry = {
     renderer: withJsonFormsLabelProps(AlertControl),
-    tester: rankWith(100, uiTypeIs("Label")),
+    tester: rankWith(1, uiTypeIs("Label")),
   }

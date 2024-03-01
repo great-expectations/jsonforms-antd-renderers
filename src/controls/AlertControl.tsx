@@ -1,11 +1,12 @@
-import { LabelProps, RendererProps } from "@jsonforms/core"
 import { Alert } from "antd"
+import { AlertLabelOptions, LabelElement } from "../ui-schema"
 
-export type AlertLabelOptions = {
-    type?: "warning" | "success" | "info"
-  }
+type AlertControlProps = {
+  text: string
+  uischema: LabelElement
+}
 
-export function AlertControl({ text, uischema }: LabelProps & RendererProps) {
-  const options: AlertLabelOptions = uischema?.options as AlertLabelOptions
+export function AlertControl({ text, uischema }: AlertControlProps) {
+  const options: AlertLabelOptions | undefined = uischema.options
   return <Alert style={{ marginBottom: "24px" }} type={options?.type} message={text} showIcon />
 }

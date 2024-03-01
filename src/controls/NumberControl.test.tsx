@@ -1,7 +1,7 @@
 import { describe, expect, test, it } from "vitest"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { render } from "../jsonforms-test-utils"
+import { render } from "../common/test-render"
 import { JSONSchema } from "json-schema-to-ts"
 import {
   numberMinMaxSchema,

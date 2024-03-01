@@ -4,6 +4,7 @@
     ],
     "exclude": [
         "**/*.test.tsx",
+        "**/*.test.ts",
         "**/*.stories.*",
         "src/common/test-render.tsx"
     ],

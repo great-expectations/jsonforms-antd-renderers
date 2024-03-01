@@ -1,25 +1,13 @@
 import { ControlProps } from "@jsonforms/core"
 import { Col, Form, InputNumber, Row, Slider } from "antd"
-import { FormData } from "../json-schema"
 import { decimalToPercentage, percentageStringToDecimal } from "./utils"
 
 
-type NumberSchema = {
-  type: "number"
-  title: string
-  default?: number
-  minimum?: number
-  maximum?: number
-  description?: string
-}
 
-export type NumberSchemaData = FormData<NumberSchema>
-
-interface NumericControlProps extends ControlProps {
+type NumericControlProps = Omit<ControlProps, "data"> & {
   data: number | undefined | null
   handleChange(path: string, value: number | null): void
   path: string
-  schema: NumberSchema
 }
 
 export const createNumericControl = (args: { coerceNumber: (value: number) => number; pattern?: string }) => {
@@ -38,13 +26,12 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     let step = 0
     const { maximum, minimum } = schema
     const isRangeDefined = typeof maximum === "number" && typeof minimum === "number"
-    const initialValue = data !== undefined ? data : schema?.default
+    const defaultValue: number | undefined = typeof schema?.default === "number" ? schema.default : undefined
+    const initialValue = data !== undefined ? data : defaultValue
 
     const onChange = (value: number | null) => {
       if (
-        // nullable can come down on the schema, but is not defined in the types.
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ((schema).nullable && value === null) ||
+        (value === null) ||
         (typeof value === "number" && (!isRangeDefined || (isRangeDefined && value >= minimum && value <= maximum)))
       ) {
         handleChange(path, value ? args.coerceNumber(value) : value)

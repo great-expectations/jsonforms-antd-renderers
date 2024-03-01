@@ -2,7 +2,7 @@ import { describe, expect, test, it } from "vitest"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { render } from "../jsonforms-test-utils"
-import { NumberSchemaData } from "./NumericControl"
+import { JSONSchema } from "json-schema-to-ts"
 import {
   numberMinMaxSchema,
   numberSchema,
@@ -56,11 +56,11 @@ describe("NumberControl", () => {
   })
 
   it("changes its value when users type", async () => {
-    let data: NumberSchemaData
+    let data: JSONSchema
     render({
       schema: numberSchema,
       uischema: numberUISchema,
-      onChange: (state: { data: NumberSchemaData }) => {
+      onChange: (state: { data: JSONSchema }) => {
         data = state.data
       },
     })

@@ -23,7 +23,7 @@ type RenderProps<T> = {
   onChange?: (result: { data: T }) => void
 }
 
-export function render<T>({ schema, data, uischema, onChange }: RenderProps<T>) {
+export function render<T>({ schema, data, uischema, onChange }: RenderProps<T>): ReturnType<typeof RTLrender>{
   return RTLrender(
       <Form>
         <JsonForms

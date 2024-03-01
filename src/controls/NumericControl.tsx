@@ -4,7 +4,7 @@ import { decimalToPercentage, percentageStringToDecimal } from "./utils"
 
 
 
-type NumericControlProps = Omit<ControlProps, "data"> & {
+interface NumericControlProps extends ControlProps {
   data: number | undefined | null
   handleChange(path: string, value: number | null): void
   path: string

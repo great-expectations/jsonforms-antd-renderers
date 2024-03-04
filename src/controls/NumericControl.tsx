@@ -22,7 +22,7 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     const isRangeDefined = typeof maximum === "number" && typeof minimum === "number"
     const numberData = data as number | undefined | null
     const defaultValue: number | undefined = typeof schema?.default === "number" ? schema.default : undefined
-    const initialValue = numberData !== undefined ? numberData : defaultValue
+    const initialValue = typeof numberData === "number" ? numberData : defaultValue
 
     const onChange = (value: number | null) => {
       if (
@@ -76,10 +76,23 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     )
 
     const isPercentage: boolean = minimum === 0.0 && maximum === 1.0
-
     const inputNumber = isRangeDefined && isPercentage ? percentageInput : numberInput
 
     if (!visible) return null
+
+    const tooltip = {
+      formatter: (value?: number) => {
+        if (typeof value === "number") {
+          if (isPercentage) {
+            return `${decimalToPercentage(value)}%`
+          } else {
+            return value
+          }
+        } else {
+          return defaultValue
+        }
+      }
+    }
 
     return (
       <Form.Item
@@ -100,9 +113,7 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
                 disabled={initialValue === null}
                 onChange={onChange}
                 step={step}
-                tooltip={{
-                  formatter: (value) => `${decimalToPercentage(value)}%`,
-                }}
+                tooltip={tooltip}
               />
             </Col>
             <Col span={7}>{inputNumber}</Col>

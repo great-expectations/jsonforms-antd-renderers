@@ -52,7 +52,7 @@ describe("NumberControl", () => {
       schema: numberSchema,
       uischema: numberUISchema,
     })
-    expect(screen.getByRole("spinbutton")).toHaveValue("1")
+    expect(screen.getByRole("spinbutton")).toHaveValue("42.42")
   })
 
   it("changes its value when users type", async () => {

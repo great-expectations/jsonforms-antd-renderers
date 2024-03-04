@@ -2,28 +2,10 @@ import { RuleEffect } from "@jsonforms/core"
 import { JSONSchema } from "json-schema-to-ts"
 import { UISchema } from "../ui-schema"
 
-export const sampleIntegerSchema = {
-  title: "Amount",
-  type: "integer",
-  default: 42,
-} satisfies JSONSchema
-
-export const sampleNumberSchema = {
-  title: "Amount",
-  type: "number",
-  default: 42.42,
-} satisfies JSONSchema
-
-export const stringSchema = {
-  type: "string",
-  title: "Yolo Text",
-  default: "yolo",
-} satisfies JSONSchema
-
 export const numberSchema = {
   type: "number",
   title: "My Number",
-  default: 1,
+  default: 42.42,
 } satisfies JSONSchema
 
 export const nullableNumberSchema = {

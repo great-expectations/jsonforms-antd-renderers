@@ -39,6 +39,9 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
 
     const arialLabelWithFallback = label || schema.description || "Value"
 
+    const marginLeft = isRangeDefined ? 16 : 0
+    const style = { marginLeft: marginLeft, width: "100%" }
+
     const percentageInput = (
       <InputNumber
         aria-label={arialLabelWithFallback}
@@ -46,7 +49,7 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
         pattern={args.pattern}
         onChange={onChange}
         status={!isValid ? "error" : undefined}
-        style={{ marginLeft: 16, width: "100%" }}
+        style={style}
         max={maximum}
         min={minimum}
         step={step}
@@ -64,7 +67,7 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
         pattern={args.pattern}
         onChange={onChange}
         status={!isValid ? "error" : undefined}
-        style={{ marginLeft: 0, width: "100%" }}
+        style={style}
         max={maximum}
         min={minimum}
         step={step}

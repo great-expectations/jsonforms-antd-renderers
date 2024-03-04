@@ -72,6 +72,10 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
       />
     )
 
+    const isPercentage: boolean = minimum === 0 && maximum === 1
+
+    const inputNumber = isRangeDefined && isPercentage ? percentageInput : numberInput
+
     if (!visible) return null
 
     return (
@@ -98,10 +102,10 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
                 }}
               />
             </Col>
-            <Col span={7}>{percentageInput}</Col>
+            <Col span={7}>{inputNumber}</Col>
           </Row>
         ) : (
-          <Col span={18}>{numberInput}</Col>
+          <Col span={18}>{inputNumber}</Col>
         )}
       </Form.Item>
     )

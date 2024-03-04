@@ -72,7 +72,7 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
       />
     )
 
-    const isPercentage: boolean = minimum === 0 && maximum === 1
+    const isPercentage: boolean = minimum === 0.0 && maximum === 1.0
 
     const inputNumber = isRangeDefined && isPercentage ? percentageInput : numberInput
 

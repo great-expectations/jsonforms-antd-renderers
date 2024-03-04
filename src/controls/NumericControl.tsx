@@ -65,6 +65,10 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
         onChange={onChange}
         status={!isValid ? "error" : undefined}
         style={{ marginLeft: 0, width: "100%" }}
+        max={maximum}
+        min={minimum}
+        step={step}
+        controls={false}
       />
     )
 

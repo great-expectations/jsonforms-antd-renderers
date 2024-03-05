@@ -5,19 +5,10 @@ import { render } from "../common/test-render"
 import { numberTheNumberSchema, numberWeightSchema } from "../testSchemas/numberSchema"
 
 describe("NumericControl", () => {
-  it("falls back to default value if value is undefined", () => {
+  it("does not fall back to default if value is empty", () => {
     render({
       schema: { ...numberTheNumberSchema },
-      data: undefined,
-    })
-
-    expect(screen.getByRole("spinbutton")).toHaveValue("42.42")
-  })
-
-  it("does not fall back to default if value is null", () => {
-    render({
-      schema: { ...numberTheNumberSchema },
-      data: null,
+      data: {},
     })
 
     expect(screen.getByRole("spinbutton")).toHaveValue("")
@@ -41,11 +32,12 @@ describe("NumericControl", () => {
     })
   })
 
-  it("calls onChange with null and no errors when the input gets cleared out and optional", async () => {
+  it("calls onChange with empty object and no errors when the input gets cleared out and optional", async () => {
+    const weight = {}
     let state: Record<string, unknown> = {}
     render({
       schema: numberWeightSchema,
-      data: 123,
+      data: weight,
       onChange: (newState) => {
         state = newState
       },
@@ -54,7 +46,9 @@ describe("NumericControl", () => {
     await userEvent.clear(screen.getByRole("spinbutton"))
 
     await waitFor(() => {
-      expect(state.data).toBe(null)
+      expect(state.data).toBe(weight)
+      const errors = state.errors
+      console.log({errors})
       expect(state.errors).toHaveLength(0)
     })
   })

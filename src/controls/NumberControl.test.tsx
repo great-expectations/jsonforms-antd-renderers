@@ -19,7 +19,7 @@ describe("NumberControl", () => {
       schema: numberMagnitudeSchema,
     })
 
-    expect(screen.getByText("My Number")).not.toBeNull()
+    expect(screen.getByText("Magnitude")).not.toBeNull()
   })
 
   it("Follows the hide rule", () => {
@@ -28,32 +28,35 @@ describe("NumberControl", () => {
       schema: numberMagnitudeSchema,
       uischema: numberUISchemaWithRule,
     })
-    expect(screen.queryByText("My Number")).toBeNull()
+    expect(screen.queryByText("Magnitude")).toBeNull()
   })
 
-  it.each([[0], [100]])("renders when data of %s is included", (data: number) => {
+  it.each([[0], [100]])("renders when data of %s is included", (dataVal: number) => {
+    const data = { theNumber: dataVal}
     render({
-      data,
+      data: data,
       schema: numberTheNumberSchema, // this has a default of 42.42
       uischema: numberTheNumberUISchema,
     })
-    expect(screen.getByText("My Number")).not.toBeNull()
-    expect(screen.getByRole("spinbutton")).toHaveValue(`${data}`)
+    expect(screen.getByText("The Number")).not.toBeNull()
+    expect(screen.getByRole("spinbutton")).toHaveValue(`${dataVal}`)
   })
 
   it.each([[0], [100]])("renders default value of %s when no data is provided", (defaultValue: number) => {
+    const { properties, ...rest } = numberMagnitudeSchema
+    properties.magnitude = { ...properties.magnitude, ...{ default: defaultValue }}
     render({
-      schema: { ...numberMagnitudeSchema, default: defaultValue },
+      schema: { ...rest, properties },
       uischema: numberMagnitudeUISchema,
     })
 
-    expect(screen.getByText("My Number")).not.toBeNull()
+    expect(screen.getByText("Magnitude")).not.toBeNull()
     expect(screen.getByRole("spinbutton")).toHaveValue(`${defaultValue}`)
   })
   it("renders default value when no data is provided", () => {
     render({
-      schema: numberMagnitudeSchema,
-      uischema: numberMagnitudeUISchema,
+      schema: numberTheNumberSchema,
+      uischema: numberTheNumberUISchema,
     })
     expect(screen.getByRole("spinbutton")).toHaveValue("42.42")
   })
@@ -72,7 +75,7 @@ describe("NumberControl", () => {
     await userEvent.type(screen.getByRole("spinbutton"), "123")
 
     await waitFor(() => {
-      expect(data).toBe(123)
+      expect(data).toEqual({ magnitude: 123 })
     })
   })
 
@@ -82,8 +85,8 @@ describe("NumberControl", () => {
       schema: numberBasisPointsSchema,
       uischema: numberMinMaxUISchema,
     })
-    expect(screen.getByText("My Number")).not.toBeNull()
-    expect(screen.getByRole("spinbutton")).toHaveValue("100")
+    expect(screen.getByText("Basis Points")).not.toBeNull()
+    expect(screen.getByRole("spinbutton")).toHaveValue("1")
     expect(screen.getByRole("slider")).not.toBeNull()
     expect(screen.getByRole("slider")).toHaveAttribute("aria-valuenow", "1")
   })

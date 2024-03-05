@@ -5,7 +5,7 @@ import { render } from "../common/test-render"
 import { JSONSchema } from "json-schema-to-ts"
 import {
   numberBasisPointsSchema,
-  numberMinMaxUISchema,
+  numberBasisPointsUISchema,
   numberMagnitudeSchema,
   numberMagnitudeUISchema,
   numberTheNumberSchema,
@@ -23,8 +23,9 @@ describe("NumberControl", () => {
   })
 
   it("Follows the hide rule", () => {
+    const data = { magnitude: 1000 }
     render({
-      data: 1000,
+      data: data,
       schema: numberMagnitudeSchema,
       uischema: numberUISchemaWithRule,
     })
@@ -80,10 +81,11 @@ describe("NumberControl", () => {
   })
 
   it("renders slider when min max values are present", () => {
+    const data = { basisPoints: 1 }
     render({
-      data: 1,
+      data: data,
       schema: numberBasisPointsSchema,
-      uischema: numberMinMaxUISchema,
+      uischema: numberBasisPointsUISchema,
     })
     expect(screen.getByText("Basis Points")).not.toBeNull()
     expect(screen.getByRole("spinbutton")).toHaveValue("1")

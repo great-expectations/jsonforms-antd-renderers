@@ -15,7 +15,7 @@ describe("NumericControl", () => {
   })
 
   it("calls onChange with number values", async () => {
-    let data: number | null = 123
+    let data = { theNumber: 42.00 }
     render({
       schema: numberTheNumberSchema,
       data,
@@ -25,10 +25,10 @@ describe("NumericControl", () => {
     })
 
     await userEvent.clear(screen.getByRole("spinbutton"))
-    await userEvent.type(screen.getByRole("spinbutton"), "345")
+    await userEvent.type(screen.getByRole("spinbutton"), "42.00")
 
     await waitFor(() => {
-      expect(data).toBe(345)
+      expect(data).toBe(42.00)
     })
   })
 

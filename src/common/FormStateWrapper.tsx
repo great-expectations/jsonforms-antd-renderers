@@ -7,20 +7,22 @@ import { UISchema } from "../ui-schema";
 import { cellRegistryEntries, rendererRegistryEntries } from "../renderers";
 import { useState } from "react";
 
-type RenderProps<T> = {
+type RenderProps<T extends Record<string, unknown>> = {
   schema: JSONSchema;
   data?: T;
   uischema?: UISchema;
   onChange?: (result: { data: T }) => void;
 };
 
-export function FormStateWrapper<T>({
+export function FormStateWrapper<T extends Record<string, unknown>>({
   schema,
   uischema,
   data: initialData,
   onChange,
 }: RenderProps<T>) {
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState<Record<string, unknown> | undefined>(
+    initialData
+  );
   return (
     <Form>
       <JsonForms
@@ -33,7 +35,7 @@ export function FormStateWrapper<T>({
           ? { onChange }
           : {
               onChange: (result) =>
-                setData(result.data as T),
+                setData(result.data as Record<string, unknown>),
             })}
       />
     </Form>

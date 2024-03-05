@@ -16,7 +16,7 @@ import {
   numberTheNumberUISchema,
   numberPriceUISchema,
   numberWeightUISchema,
-  numberMinMaxUISchema,
+  numberBasisPointsUISchema,
   numberTemperatureUISchema,
   numberPercentageUISchema,
   numberDonateNowUISchema,
@@ -75,7 +75,7 @@ export const SliderWithGreaterThan100Steps: Story = {
   tags: ["autodocs"],
   args: { 
     jsonSchema: numberBasisPointsSchema,
-    uiSchema: numberMinMaxUISchema,
+    uiSchema: numberBasisPointsUISchema,
   },
 }
 

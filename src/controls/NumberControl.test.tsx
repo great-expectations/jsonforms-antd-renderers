@@ -10,6 +10,8 @@ import {
   numberMagnitudeUISchema,
   numberTheNumberSchema,
   numberTheNumberUISchema,
+  numberHumiditySchema,
+  numberPercentageUISchema,
   numberUISchemaWithRule,
 } from "../testSchemas/numberSchema"
 
@@ -43,6 +45,7 @@ describe("NumberControl", () => {
   })
 
   it.each([[0], [100]])("renders default value of %s when no data is provided", (defaultValue: number) => {
+    // create a new schema with a default value set
     const { properties, ...rest } = numberMagnitudeSchema
     properties.magnitude = { ...properties.magnitude, ...{ default: defaultValue }}
     render({
@@ -90,11 +93,34 @@ describe("NumberControl", () => {
     expect(screen.getByRole("slider")).not.toBeNull()
     expect(screen.getByRole("slider")).toHaveAttribute("aria-valuenow", "1")
   })
-  it("hides slider when min max values are not present", () => {
+
+  it("doesn't show slider when min max values are not present", () => {
     render({
       schema: numberMagnitudeSchema,
       uischema: numberMagnitudeUISchema,
     })
     expect(screen.queryByRole("slider")).toBeNull()
   })
+})
+
+it ("renders slider and input box when number of steps is greater than threshold", () => {
+  const data = { basisPoints: 1 }
+  render({
+    data: data,
+    schema: numberBasisPointsSchema,  // 10,000 steps created by multipleOf
+    uischema: numberBasisPointsUISchema,
+  })
+  expect(screen.getByRole("slider"))
+  expect(screen.getByRole("spinbutton"))
+})
+
+it ("renders slider without input box when number of steps is less than threshold", () => {
+  const data = { basisPoints: 1 }
+  render({
+    data: data,
+    schema: numberHumiditySchema,  // 100 steps
+    uischema: numberPercentageUISchema,
+  })
+  expect(screen.getByRole("slider"))
+  expect(screen.queryByRole("spinbutton")).toBeNull()
 })

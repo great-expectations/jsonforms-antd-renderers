@@ -31,7 +31,7 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     }
     const isLargeStepCount = stepCount && stepCount > maxStepsWithoutTextInput
 
-    const initialValue: number | undefined = typeof schema?.default === "number" ? schema.default : minimum
+    const initialValue = typeof schema?.default === "number" ? schema.default : minimum
     const isEmptyObj = typeof data === "object" && data !== undefined && data !== null ? Object.keys(data as object).length === 0 : false
     const value = data === undefined || isEmptyObj ? initialValue : data as number | null
     

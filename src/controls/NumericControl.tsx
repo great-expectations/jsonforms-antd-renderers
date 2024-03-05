@@ -9,14 +9,21 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     data,
     handleChange,
     path,
+    required,
     label,
     visible,
     id,
     errors,
     schema,
     uischema,
-    required,
   }: ControlProps & RendererProps) {
+    const arialLabelWithFallback = label || schema.description || "Value"
+
+    const value = data as number | undefined
+    const initialValue: number | undefined = typeof schema?.default === "number" ? schema.default : undefined
+
+    const isRequired = required || uischema.options?.required as boolean
+
     const maxStepsWithoutTextInput = 100
     const { maximum, minimum, multipleOf } = schema
     const isRangeDefined = typeof maximum === "number" && typeof minimum === "number"
@@ -33,23 +40,12 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     const addonBefore = uischema.options?.addonBefore as string | undefined
     const isPercentage = addonAfter?.trim() === "%"
 
-    const numberData = data as number | undefined | null
-    const defaultValue: number | undefined = typeof schema?.default === "number" ? schema.default : undefined
-    const initialValue = typeof numberData === "number" ? numberData : defaultValue
-
+    const isValid = errors.length === 0
     const onChange = (value: number | null) => {
-      if (
-        (value === null) ||
-        (typeof value === "number" && (!isRangeDefined || (isRangeDefined && value >= minimum && value <= maximum)))
-      ) {
-        handleChange(path, value ? args.coerceNumber(value) : value)
+      if (typeof value === "number" && (!isRangeDefined || (isRangeDefined && value >= minimum && value <= maximum))) {
+        handleChange(path, args.coerceNumber(value))
       }
     }
-
-    const arialLabelWithFallback = label || schema.description || "Value"
-
-    const isValid = Object.keys(numberData ? numberData : {}).length === 0 || errors.length === 0
-    console.log({errors})
     const status = !isValid ? "error" : undefined
 
     const marginLeft = isRangeDefined ? 16 : 0
@@ -68,8 +64,9 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     const numberInput = (
       <InputNumber
         aria-label={arialLabelWithFallback}
-        value={initialValue}
-        required={required}
+        value={value}
+        defaultValue={initialValue}
+        required={isRequired}
         pattern={args.pattern}
         onChange={onChange}
         status={status}
@@ -94,13 +91,13 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
             return `${addonBefore ? addonBefore : ""}${value}${addonAfter ? addonAfter : ""}`
           }
         } else {
-          return defaultValue
+          return initialValue
         }
       }
     }
 
     const slider = <Slider
-      value={initialValue}
+      value={value}
       min={minimum}
       max={maximum}
       disabled={initialValue === null}
@@ -114,11 +111,9 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
         label={label}
         id={id}
         name={path}
-        required={required}
+        required={isRequired}
         initialValue={initialValue}
-        rules={[
-          { required, message: required ? `${label} is required` : "" }
-        ]}
+        rules={[{ required, message: required ? `${label} is required` : "" }]}
         validateTrigger={["onBlur"]}
       >
         {isRangeDefined ? (

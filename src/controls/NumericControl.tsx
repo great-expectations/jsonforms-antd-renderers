@@ -17,7 +17,6 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     uischema,
   }: ControlProps & RendererProps) {
     const arialLabelWithFallback = label || schema.description || "Value"
-    const value = data === null || (typeof data === "object" && Object.keys(data as object).length === 0) ? undefined : data as number
     const isRequired = required || uischema.options?.required as boolean
 
     const maxStepsWithoutTextInput = 100
@@ -33,6 +32,7 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     const isLargeStepCount = stepCount && stepCount > maxStepsWithoutTextInput
 
     const initialValue: number | undefined = typeof schema?.default === "number" ? schema.default : minimum
+    const value = data === undefined ? initialValue : data as number | null
     
     const addonAfter = uischema.options?.addonAfter as string | undefined
     const addonBefore = uischema.options?.addonBefore as string | undefined
@@ -87,7 +87,7 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     }
 
     const slider = <Slider
-      value={value}
+      value={value === null ? undefined : value}
       defaultValue={initialValue}
       min={minimum}
       max={maximum}

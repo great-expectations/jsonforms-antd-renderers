@@ -13,15 +13,11 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     label,
     visible,
     id,
-    errors,
     schema,
     uischema,
   }: ControlProps & RendererProps) {
     const arialLabelWithFallback = label || schema.description || "Value"
-
-    const value = data as number | undefined
-    const initialValue: number | undefined = typeof schema?.default === "number" ? schema.default : undefined
-
+    const value = data === null || (typeof data === "object" && Object.keys(data as object).length === 0) ? undefined : data as number
     const isRequired = required || uischema.options?.required as boolean
 
     const maxStepsWithoutTextInput = 100
@@ -35,18 +31,18 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
       stepCount = range / step
     }
     const isLargeStepCount = stepCount && stepCount > maxStepsWithoutTextInput
+
+    const initialValue: number | undefined = typeof schema?.default === "number" ? schema.default : minimum
     
     const addonAfter = uischema.options?.addonAfter as string | undefined
     const addonBefore = uischema.options?.addonBefore as string | undefined
     const isPercentage = addonAfter?.trim() === "%"
 
-    const isValid = errors.length === 0
     const onChange = (value: number | null) => {
-      if (typeof value === "number" && (!isRangeDefined || (isRangeDefined && value >= minimum && value <= maximum))) {
-        handleChange(path, args.coerceNumber(value))
+      if ((typeof value === "number" && (!isRangeDefined || (isRangeDefined && value >= minimum && value <= maximum))) || value === null) {
+        handleChange(path, value !== null ? args.coerceNumber(value) : value)
       }
     }
-    const status = !isValid ? "error" : undefined
 
     const marginLeft = isRangeDefined ? 16 : 0
     const style = { marginLeft: marginLeft, width: "100%" }
@@ -66,10 +62,8 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
         aria-label={arialLabelWithFallback}
         value={value}
         defaultValue={initialValue}
-        required={isRequired}
         pattern={args.pattern}
         onChange={onChange}
-        status={status}
         style={style}
         max={maximum}
         min={minimum}
@@ -84,20 +78,17 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
 
     const tooltip = {
       formatter: (value?: number) => {
-        if (typeof value === "number") {
-          if (isPercentage) {
-            return `${decimalToPercentage(value)}%`
-          } else {
-            return `${addonBefore ? addonBefore : ""}${value}${addonAfter ? addonAfter : ""}`
-          }
+        if (isPercentage) {
+          return `${decimalToPercentage(value)}%`
         } else {
-          return initialValue
+          return `${addonBefore ? addonBefore : ""}${value || initialValue}${addonAfter ? addonAfter : ""}`
         }
       }
     }
 
     const slider = <Slider
       value={value}
+      defaultValue={initialValue}
       min={minimum}
       max={maximum}
       disabled={initialValue === null}

@@ -2,21 +2,21 @@ import { describe, expect, it } from "vitest"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { render } from "../common/test-render"
-import { nullableNumberSchema, numberSchema } from "../testSchemas/numberSchema"
+import { numberTheNumberSchema, numberWeightSchema } from "../testSchemas/numberSchema"
 
 describe("NumericControl", () => {
   it("falls back to default value if value is undefined", () => {
     render({
-      schema: { ...numberSchema, default: 123 },
+      schema: { ...numberTheNumberSchema },
       data: undefined,
     })
 
-    expect(screen.getByRole("spinbutton")).toHaveValue("123")
+    expect(screen.getByRole("spinbutton")).toHaveValue("42.42")
   })
 
   it("does not fall back to default if value is null", () => {
     render({
-      schema: { ...numberSchema, default: 123 },
+      schema: { ...numberTheNumberSchema },
       data: null,
     })
 
@@ -26,7 +26,7 @@ describe("NumericControl", () => {
   it("calls onChange with number values", async () => {
     let data: number | null = 123
     render({
-      schema: numberSchema,
+      schema: numberTheNumberSchema,
       data,
       onChange: (state) => {
         data = state.data
@@ -41,10 +41,10 @@ describe("NumericControl", () => {
     })
   })
 
-  it("calls onChange with null and no errors when the input gets cleared out and nullable", async () => {
+  it("calls onChange with null and no errors when the input gets cleared out and optional", async () => {
     let state: Record<string, unknown> = {}
     render({
-      schema: nullableNumberSchema,
+      schema: numberWeightSchema,
       data: 123,
       onChange: (newState) => {
         state = newState

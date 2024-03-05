@@ -9,14 +9,17 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     data,
     handleChange,
     path,
+    required,
     label,
     visible,
     id,
-    errors,
     schema,
     uischema,
-    required,
   }: ControlProps & RendererProps) {
+    const arialLabelWithFallback = label || schema.description || "Value"
+    const value = data === null || (typeof data === "object" && Object.keys(data as object).length === 0) ? undefined : data as number
+    const isRequired = required || uischema.options?.required as boolean
+
     const maxStepsWithoutTextInput = 100
     const { maximum, minimum, multipleOf } = schema
     const isRangeDefined = typeof maximum === "number" && typeof minimum === "number"
@@ -28,29 +31,18 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
       stepCount = range / step
     }
     const isLargeStepCount = stepCount && stepCount > maxStepsWithoutTextInput
+
+    const initialValue: number | undefined = typeof schema?.default === "number" ? schema.default : minimum
     
     const addonAfter = uischema.options?.addonAfter as string | undefined
     const addonBefore = uischema.options?.addonBefore as string | undefined
     const isPercentage = addonAfter?.trim() === "%"
 
-    const numberData = data as number | undefined | null
-    const defaultValue: number | undefined = typeof schema?.default === "number" ? schema.default : undefined
-    const initialValue = typeof numberData === "number" ? numberData : defaultValue
-
     const onChange = (value: number | null) => {
-      if (
-        (value === null) ||
-        (typeof value === "number" && (!isRangeDefined || (isRangeDefined && value >= minimum && value <= maximum)))
-      ) {
-        handleChange(path, value ? args.coerceNumber(value) : value)
+      if ((typeof value === "number" && (!isRangeDefined || (isRangeDefined && value >= minimum && value <= maximum))) || value === null) {
+        handleChange(path, value !== null ? args.coerceNumber(value) : value)
       }
     }
-
-    const arialLabelWithFallback = label || schema.description || "Value"
-
-    const isValid = Object.keys(numberData ? numberData : {}).length === 0 || errors.length === 0
-    console.log({errors})
-    const status = !isValid ? "error" : undefined
 
     const marginLeft = isRangeDefined ? 16 : 0
     const style = { marginLeft: marginLeft, width: "100%" }
@@ -68,11 +60,10 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     const numberInput = (
       <InputNumber
         aria-label={arialLabelWithFallback}
-        value={initialValue}
-        required={required}
+        value={value}
+        defaultValue={initialValue}
         pattern={args.pattern}
         onChange={onChange}
-        status={status}
         style={style}
         max={maximum}
         min={minimum}
@@ -87,20 +78,17 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
 
     const tooltip = {
       formatter: (value?: number) => {
-        if (typeof value === "number") {
-          if (isPercentage) {
-            return `${decimalToPercentage(value)}%`
-          } else {
-            return `${addonBefore ? addonBefore : ""}${value}${addonAfter ? addonAfter : ""}`
-          }
+        if (isPercentage) {
+          return `${decimalToPercentage(value)}%`
         } else {
-          return defaultValue
+          return `${addonBefore ? addonBefore : ""}${value || initialValue}${addonAfter ? addonAfter : ""}`
         }
       }
     }
 
     const slider = <Slider
-      value={initialValue}
+      value={value}
+      defaultValue={initialValue}
       min={minimum}
       max={maximum}
       disabled={initialValue === null}
@@ -114,11 +102,9 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
         label={label}
         id={id}
         name={path}
-        required={required}
+        required={isRequired}
         initialValue={initialValue}
-        rules={[
-          { required, message: required ? `${label} is required` : "" }
-        ]}
+        rules={[{ required, message: required ? `${label} is required` : "" }]}
         validateTrigger={["onBlur"]}
       >
         {isRangeDefined ? (

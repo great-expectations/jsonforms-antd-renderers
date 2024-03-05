@@ -108,7 +108,7 @@ it ("renders slider and input box when number of steps is greater than threshold
   render({
     data: data,
     schema: numberBasisPointsSchema,  // 10,000 steps created by multipleOf
-    uischema: numberBasisPointsUISchema,
+    uischema: numberMinMaxUISchema,
   })
   expect(screen.getByRole("slider"))
   expect(screen.getByRole("spinbutton"))

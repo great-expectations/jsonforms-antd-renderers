@@ -79,10 +79,11 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
 
     const tooltip = {
       formatter: (value?: number) => {
+        const tooltipValue = value !== undefined ? value : initialValue
         if (isPercentage) {
-          return `${decimalToPercentage(value || initialValue)}%`
+          return `${decimalToPercentage(tooltipValue)}%`
         } else {
-          return `${addonBefore ? addonBefore : ""}${value || initialValue}${addonAfter ? addonAfter : ""}`
+          return `${addonBefore ? addonBefore : ""}${tooltipValue}${addonAfter ? addonAfter : ""}`
         }
       }
     }

@@ -32,7 +32,8 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     const isLargeStepCount = stepCount && stepCount > maxStepsWithoutTextInput
 
     const initialValue: number | undefined = typeof schema?.default === "number" ? schema.default : minimum
-    const value = data === undefined ? initialValue : data as number | null
+    const isEmptyObj = typeof data === "object" && data !== undefined && data !== null ? Object.keys(data as object).length === 0 : false
+    const value = data === undefined || isEmptyObj ? initialValue : data as number | null
     
     const addonAfter = uischema.options?.addonAfter as string | undefined
     const addonBefore = uischema.options?.addonBefore as string | undefined
@@ -79,7 +80,7 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     const tooltip = {
       formatter: (value?: number) => {
         if (isPercentage) {
-          return `${decimalToPercentage(value)}%`
+          return `${decimalToPercentage(value || initialValue)}%`
         } else {
           return `${addonBefore ? addonBefore : ""}${value || initialValue}${addonAfter ? addonAfter : ""}`
         }
@@ -87,7 +88,7 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     }
 
     const slider = <Slider
-      value={value === null ? undefined : value}
+      value={value === null ? initialValue : value}
       defaultValue={initialValue}
       min={minimum}
       max={maximum}

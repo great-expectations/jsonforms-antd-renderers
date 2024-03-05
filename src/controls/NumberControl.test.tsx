@@ -124,3 +124,14 @@ it ("renders slider without input box when number of steps is less than threshol
   expect(screen.getByRole("slider"))
   expect(screen.queryByRole("spinbutton")).toBeNull()
 })
+
+it ("shows error message onBlur when field is required and empty", async () => {
+  render({
+    schema: numberTheNumberSchema,
+    uischema: numberTheNumberUISchema,
+  })
+  const input = screen.getByRole("spinbutton")
+  await userEvent.clear(input)
+  input.blur()
+  expect(await screen.findByText("The Number is required")).not.toBeNull()
+})

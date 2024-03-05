@@ -20,7 +20,9 @@ export function FormStateWrapper<T extends Record<string, unknown>>({
   data: initialData,
   onChange,
 }: RenderProps<T>) {
-  const [data, setData] = useState<Record<string, unknown> | undefined>(initialData);
+  const [data, setData] = useState<Record<string, unknown> | undefined>(
+    initialData
+  );
   return (
     <Form>
       <JsonForms

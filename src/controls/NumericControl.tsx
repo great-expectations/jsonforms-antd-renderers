@@ -1,6 +1,6 @@
-import { ControlProps } from "@jsonforms/core"
+import { ControlProps, RendererProps } from "@jsonforms/core"
 import { Col, Form, InputNumber, Row, Slider } from "antd"
-import { decimalToPercentage, percentageStringToDecimal } from "./utils"
+import { decimalToPercentage } from "./utils"
 
 
 
@@ -14,12 +14,25 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
     id,
     errors,
     schema,
+    uischema,
     required,
-  }: ControlProps) {
-    const isValid = errors.length === 0
-    let step = 0
-    const { maximum, minimum } = schema
+  }: ControlProps & RendererProps) {
+    const maxStepsWithoutTextInput = 100
+    const { maximum, minimum, multipleOf } = schema
     const isRangeDefined = typeof maximum === "number" && typeof minimum === "number"
+    let step: number | undefined = undefined
+    let stepCount: number | undefined = undefined
+    if (isRangeDefined) {
+      const range = Math.abs(maximum - minimum)
+      step = multipleOf || (range / maxStepsWithoutTextInput)
+      stepCount = range / step
+    }
+    const isLargeStepCount = stepCount && stepCount > maxStepsWithoutTextInput
+    
+    const addonAfter = uischema.options?.addonAfter as string | undefined
+    const addonBefore = uischema.options?.addonBefore as string | undefined
+    const isPercentage = addonAfter?.trim() === "%"
+
     const numberData = data as number | undefined | null
     const defaultValue: number | undefined = typeof schema?.default === "number" ? schema.default : undefined
     const initialValue = typeof numberData === "number" ? numberData : defaultValue
@@ -32,51 +45,43 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
         handleChange(path, value ? args.coerceNumber(value) : value)
       }
     }
-    if (isRangeDefined) {
-      const range = Math.abs(maximum - minimum)
-      step = args.coerceNumber(range < 10 ? 0.1 : 1)
-    }
 
     const arialLabelWithFallback = label || schema.description || "Value"
 
+    const isValid = Object.keys(numberData ? numberData : {}).length === 0 || errors.length === 0
+    console.log({errors})
+    const status = !isValid ? "error" : undefined
+
     const marginLeft = isRangeDefined ? 16 : 0
     const style = { marginLeft: marginLeft, width: "100%" }
-
-    const percentageInput = (
-      <InputNumber
-        aria-label={arialLabelWithFallback}
-        value={initialValue === null ? undefined : initialValue}
-        pattern={args.pattern}
-        onChange={onChange}
-        status={!isValid ? "error" : undefined}
-        style={style}
-        max={maximum}
-        min={minimum}
-        step={step}
-        formatter={(value) => decimalToPercentage(value)}
-        parser={percentageStringToDecimal}
-        controls={false}
-        addonAfter="%"
-      />
-    )
+    const formatter = ((value?: number) => {
+      if (typeof value !== "undefined") {
+        if (isPercentage) {
+          return decimalToPercentage(value)
+        } else {
+          return value.toString()
+        }
+      }
+      return ""
+    })
 
     const numberInput = (
       <InputNumber
         aria-label={arialLabelWithFallback}
-        value={initialValue === null ? undefined : initialValue}
+        value={initialValue}
+        required={required}
         pattern={args.pattern}
         onChange={onChange}
-        status={!isValid ? "error" : undefined}
+        status={status}
         style={style}
         max={maximum}
         min={minimum}
-        step={step}
+        formatter={formatter}
         controls={false}
+        addonAfter={addonAfter}
+        addonBefore={addonBefore}
       />
     )
-
-    const isPercentage: boolean = minimum === 0.0 && maximum === 1.0
-    const inputNumber = isRangeDefined && isPercentage ? percentageInput : numberInput
 
     if (!visible) return null
 
@@ -86,7 +91,7 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
           if (isPercentage) {
             return `${decimalToPercentage(value)}%`
           } else {
-            return value
+            return `${addonBefore ? addonBefore : ""}${value}${addonAfter ? addonAfter : ""}`
           }
         } else {
           return defaultValue
@@ -94,32 +99,35 @@ export const createNumericControl = (args: { coerceNumber: (value: number) => nu
       }
     }
 
+    const slider = <Slider
+      value={initialValue}
+      min={minimum}
+      max={maximum}
+      disabled={initialValue === null}
+      onChange={onChange}
+      step={step}
+      tooltip={tooltip}
+    />
+
     return (
       <Form.Item
         label={label}
         id={id}
         name={path}
-        initialValue={initialValue === null ? undefined : initialValue}
-        rules={[{ required, message: required ? `${label} is required` : "" }]}
+        required={required}
+        initialValue={initialValue}
+        rules={[
+          { required, message: required ? `${label} is required` : "" }
+        ]}
         validateTrigger={["onBlur"]}
       >
         {isRangeDefined ? (
           <Row>
-            <Col span={8}>
-              <Slider
-                value={initialValue === null ? undefined : initialValue}
-                min={minimum}
-                max={maximum}
-                disabled={initialValue === null}
-                onChange={onChange}
-                step={step}
-                tooltip={tooltip}
-              />
-            </Col>
-            <Col span={7}>{inputNumber}</Col>
+            <Col span={8}>{slider}</Col>
+              {isLargeStepCount ? <Col span={7}>{numberInput}</Col> : null}
           </Row>
         ) : (
-          <Col span={18}>{inputNumber}</Col>
+          <Col span={18}>{numberInput}</Col>
         )}
       </Form.Item>
     )

@@ -5,14 +5,13 @@ import { render } from "../common/test-render"
 import { JSONSchema } from "json-schema-to-ts"
 import {
   numberBasisPointsSchema,
-  numberMinMaxUISchema,
+  numberBasisPointsUISchema,
   numberMagnitudeSchema,
   numberMagnitudeUISchema,
   numberTheNumberSchema,
   numberTheNumberUISchema,
   numberHumiditySchema,
   numberPercentageUISchema,
-  numberUISchemaWithRule,
   numberTemperatureSchema,
   numberTemperatureUISchema,
   numberUISchemaWithRule,
@@ -113,7 +112,7 @@ it ("renders slider and input box when number of steps is greater than threshold
   render({
     data: data,
     schema: numberBasisPointsSchema,  // 10,000 steps created by multipleOf
-    uischema: numberMinMaxUISchema,
+    uischema: numberBasisPointsUISchema,
   })
   expect(screen.getByRole("slider"))
   expect(screen.getByRole("spinbutton"))

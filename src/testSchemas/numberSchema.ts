@@ -47,11 +47,16 @@ export const numberPriceSchema = {
 } satisfies JSONSchema
 
 export const numberBasisPointsSchema = {
-  type: "number",
-  title: "Basis Points",
-  minimum: 0,
-  maximum: 10000,
-  multipleOf: 1,
+  type: "object",
+  properties: {
+    basisPoints: {
+      title: "Basis Points",
+      type: "number",
+      minimum: 0,
+      maximum: 10000,
+      multipleOf: 1,
+    },
+  },
 } satisfies JSONSchema
 
 export const numberTemperatureSchema = {
@@ -148,13 +153,12 @@ export const numberWeightUISchema = {
   ],
 } satisfies UISchema
 
-
-export const numberMinMaxUISchema = {
+export const numberBasisPointsUISchema = {
   type: "VerticalLayout",
   elements: [
     {
       type: "Control",
-      scope: "#",
+      scope: "#/properties/basisPoints",
     },
   ],
 } satisfies UISchema

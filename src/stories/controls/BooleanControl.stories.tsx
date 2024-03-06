@@ -6,7 +6,6 @@ import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm";
 const schema = {
   type: "object",
   properties: { checkbox: { type: "boolean" } },
-  // required: ["name"],
 };
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
@@ -37,10 +36,13 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
     rendererRegistryEntries: { table: { disable: true } },
+    uiSchemaRegistryEntries: { table: { disable: true } },
     jsonSchema: {
       control: "object",
-      description: "this is a simple schema with one property (name)",
     },
+    data: {table: {disable: true}}, 
+    config: {control: "object"},
+    onChange: {table: {disable: true, action: "on-change"}},
   },
 };
 

@@ -7,7 +7,7 @@ import { UISchema } from "../ui-schema";
 import { cellRegistryEntries, rendererRegistryEntries } from "../renderers";
 import { useState } from "react";
 
-type RenderProps<T> = {
+type RenderProps<T extends Record<string, unknown>> = {
   schema: JSONSchema;
   data?: T;
   uischema?: UISchema;

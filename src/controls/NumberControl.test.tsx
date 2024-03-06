@@ -135,8 +135,8 @@ it ("shows error message onBlur when field is required and empty", async () => {
     uischema: numberTheNumberUISchema,
   })
   const input = screen.getByRole("spinbutton")
-  await act(async() => userEvent.clear(input))
-  act(() => input.blur())
+  await userEvent.clear(input)
+  await userEvent.tab()
   expect(await screen.findByText("The Number is required")).not.toBeNull()
 })
 
@@ -158,6 +158,6 @@ it ("shows units in tooltip if set in UI schema", async () => {
   expect(screen.queryByRole("spinbutton")).toBeNull()
   const slider = screen.getByRole("slider")
   expect(screen.queryByText("0%")).toBeNull()
-  await act(async() => userEvent.hover(slider))
+  await userEvent.hover(slider)
   expect(await screen.findByText("0%")).not.toBeNull()
 })

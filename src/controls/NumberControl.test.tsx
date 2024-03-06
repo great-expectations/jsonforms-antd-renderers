@@ -1,5 +1,5 @@
 import { describe, expect, test, it } from "vitest"
-import { screen, waitFor } from "@testing-library/react"
+import { act, screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { render } from "../common/test-render"
 import { JSONSchema } from "json-schema-to-ts"
@@ -13,6 +13,8 @@ import {
   numberHumiditySchema,
   numberPercentageUISchema,
   numberUISchemaWithRule,
+  numberTemperatureSchema,
+  numberTemperatureUISchema,
 } from "../testSchemas/numberSchema"
 
 describe("NumberControl", () => {
@@ -131,7 +133,29 @@ it ("shows error message onBlur when field is required and empty", async () => {
     uischema: numberTheNumberUISchema,
   })
   const input = screen.getByRole("spinbutton")
-  await userEvent.clear(input)
-  input.blur()
+  await act(async() => userEvent.clear(input))
+  act(() => input.blur())
   expect(await screen.findByText("The Number is required")).not.toBeNull()
+})
+
+it ("shows units in text control if set in UI schema", async () => {
+  render({
+    schema: numberTemperatureSchema,
+    uischema: numberTemperatureUISchema,
+  })
+  expect(await screen.findByText("°F")).not.toBeNull()
+})
+
+it ("shows units in tooltip if set in UI schema", async () => {
+  render({
+    schema: numberHumiditySchema,
+    uischema: numberPercentageUISchema,
+  })
+  // we are using a schema that doesn't have the text input,
+  // so we can be sure the units are showing up in the tooltip
+  expect(screen.queryByRole("spinbutton")).toBeNull()
+  const slider = screen.getByRole("slider")
+  expect(screen.queryByText("0%")).toBeNull()
+  await act(async() => userEvent.hover(slider))
+  expect(await screen.findByText("0%")).not.toBeNull()
 })

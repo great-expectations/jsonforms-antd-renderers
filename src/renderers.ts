@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   JsonFormsRendererRegistryEntry,
   JsonFormsCellRendererRegistryEntry,
@@ -9,6 +11,7 @@ import {
   isLayout,
   not,
   and,
+  isDateTimeControl,
 } from "@jsonforms/core";
 import {
   withJsonFormsControlProps,
@@ -25,7 +28,7 @@ import { UnknownControl } from "./controls/UnknownControl";
 import { VerticalLayoutRenderer } from "./layouts/VerticalLayoutRenderer";
 import { ObjectControl } from "./controls/ObjectControl";
 import { GroupLayoutRenderer } from "./layouts/GroupLayoutRenderer";
-import React from "react";
+import { DatetimeControl } from "./controls/DatetimeControl";
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
@@ -54,10 +57,17 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
     renderer: withJsonFormsLabelProps(AlertControl),
   },
   {
+    tester: rankWith(2, isDateTimeControl),
+    renderer: withJsonFormsControlProps(DatetimeControl)
+  },
+  {
     tester: rankWith(10, and(isObjectControl, not(isLayout))),
     renderer: withJsonFormsDetailProps(ObjectControl),
   },
 ];
+
+
+
 
 export const cellRegistryEntries: JsonFormsCellRendererRegistryEntry[] = [
   {

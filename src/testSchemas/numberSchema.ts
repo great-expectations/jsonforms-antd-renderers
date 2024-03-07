@@ -153,7 +153,6 @@ export const numberWeightUISchema = {
   ],
 } satisfies UISchema
 
-
 export const numberBasisPointsUISchema = {
   type: "VerticalLayout",
   elements: [

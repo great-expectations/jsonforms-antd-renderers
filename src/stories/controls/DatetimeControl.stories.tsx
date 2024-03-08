@@ -1,7 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { rendererRegistryEntries } from "../../renderers";
+import { cellRegistryEntries, rendererRegistryEntries } from "../../renderers";
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm";
 import { datetimeSchema, datetimeUISchema } from "../../testSchemas/datetimeSchema";
+import { JsonForms } from "@jsonforms/react";
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Datetime",
@@ -28,6 +29,17 @@ export const Datetime: Story = {
   tags: ["autodocs"],
   args: { 
     jsonSchema: datetimeSchema, 
-    // uiSchema: datetimeUISchema,
+    uiSchema: datetimeUISchema,
   },
+}
+
+export const DateTimeControl: Story = {
+  render: () => (
+    <JsonForms
+      data={{datetime: "2023-07-18T01:02:01.182Z"}}
+      schema={datetimeSchema}
+      cells={[...cellRegistryEntries]}
+      renderers={[...rendererRegistryEntries]}
+    />
+  ),
 }

@@ -58,16 +58,13 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   },
   {
     tester: rankWith(2, isDateTimeControl),
-    renderer: withJsonFormsControlProps(DatetimeControl)
+    renderer: withJsonFormsControlProps(DatetimeControl),
   },
   {
     tester: rankWith(10, and(isObjectControl, not(isLayout))),
     renderer: withJsonFormsDetailProps(ObjectControl),
   },
 ];
-
-
-
 
 export const cellRegistryEntries: JsonFormsCellRendererRegistryEntry[] = [
   {

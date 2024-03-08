@@ -7,3 +7,7 @@ export function decimalToPercentage(value?: number) {
 export function percentageStringToDecimal(value: string | undefined) {
   return Number(value) / 100
 }
+
+export const coerceToInteger = (value: number) => Math.round(value)
+
+export const coerceToNumber = (value: number) => Number(value)

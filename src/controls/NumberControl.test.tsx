@@ -10,8 +10,6 @@ import {
   numberMagnitudeUISchema,
   numberTheNumberSchema,
   numberTheNumberUISchema,
-  numberHumiditySchema,
-  numberPercentageUISchema,
   numberTemperatureSchema,
   numberTemperatureUISchema,
   numberUISchemaWithRule,

@@ -1,4 +1,4 @@
-import { JsonFormsRendererRegistryEntry,JsonFormsCellRendererRegistryEntry, isBooleanControl, isNumberControl, isStringControl, rankWith, uiTypeIs } from "@jsonforms/core";
+import { JsonFormsRendererRegistryEntry,JsonFormsCellRendererRegistryEntry, isBooleanControl, isStringControl, rankWith, uiTypeIs } from "@jsonforms/core";
 import { withJsonFormsControlProps, withJsonFormsLabelProps, withJsonFormsCellProps, withJsonFormsLayoutProps } from "@jsonforms/react";
 
 import { BooleanControl } from "./controls/BooleanControl";

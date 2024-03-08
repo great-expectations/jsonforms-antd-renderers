@@ -6,6 +6,7 @@ import { AlertControl } from "./controls/AlertControl";
 import { TextControl } from "./controls/TextControl";
 import { UnknownControl } from "./controls/UnknownControl";
 import { VerticalLayoutRenderer } from "./layouts/VerticalLayout";
+import { NumericControl } from "./controls/NumericControls/NumericControl";
 import { NumericSliderControl } from "./controls/NumericControls/NumericSliderControl";
 
 import { isNumericControl, isNumericSliderControl } from "./controls/NumericControls/testers";

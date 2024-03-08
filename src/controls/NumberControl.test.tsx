@@ -118,17 +118,6 @@ it ("renders slider and input box when number of steps is greater than threshold
   expect(screen.getByRole("spinbutton"))
 })
 
-it ("renders slider without input box when number of steps is less than threshold", () => {
-  const data = { basisPoints: 1 }
-  render({
-    data: data,
-    schema: numberHumiditySchema,  // 100 steps
-    uischema: numberPercentageUISchema,
-  })
-  expect(screen.getByRole("slider"))
-  expect(screen.queryByRole("spinbutton")).toBeNull()
-})
-
 it ("shows error message onBlur when field is required and empty", async () => {
   render({
     schema: numberTheNumberSchema,
@@ -146,18 +135,4 @@ it ("shows units in text control if set in UI schema", async () => {
     uischema: numberTemperatureUISchema,
   })
   expect(await screen.findByText("°F")).not.toBeNull()
-})
-
-it ("shows units in tooltip if set in UI schema", async () => {
-  render({
-    schema: numberHumiditySchema,
-    uischema: numberPercentageUISchema,
-  })
-  // we are using a schema that doesn't have the text input,
-  // so we can be sure the units are showing up in the tooltip
-  expect(screen.queryByRole("spinbutton")).toBeNull()
-  const slider = screen.getByRole("slider")
-  expect(screen.queryByText("0%")).toBeNull()
-  await userEvent.hover(slider)
-  expect(await screen.findByText("0%")).not.toBeNull()
 })

@@ -38,7 +38,7 @@ export const RequiredInteger: Story = {
   },
 }
 
-export const RequiredIntegerWithUnits: Story = {
+export const RequiredFloatingPointWithUnits: Story = {
   tags: ["autodocs"],
   args: { 
     jsonSchema: numericSliderTemperatureSchema,

@@ -1,15 +1,20 @@
-export const sampleDatetimeSchema = {
-  title: "The Future is Now",
-  type: "string",
-  format: "date-time",
-} as const
+import { JSONSchema } from "json-schema-to-ts"
+import { UISchema } from "../ui-schema"
+import { RuleEffect } from "@jsonforms/core"
+
 
 export const datetimeSchema = {
-  title: "The Future is Now",
-  type: "string",
-  format: "date-time",
-  scope: "#/properties/The Future is Now",
-} as const
+  type: "object",
+  properties: {
+    datetime: {
+      type: "string",
+      title: "The Future is Now",
+      format: "date-time",
+    },
+  },
+  required: ["datetime"],
+} satisfies JSONSchema
+
 
 export const datetimeUISchema = {
   type: "VerticalLayout",
@@ -19,7 +24,7 @@ export const datetimeUISchema = {
       scope: "#",
     },
   ],
-} as const
+} satisfies UISchema
 
 export const datetimeUISchemaWithRule = {
   type: "VerticalLayout",
@@ -28,9 +33,9 @@ export const datetimeUISchemaWithRule = {
       type: "Control",
       scope: "#",
       rule: {
-        effect: "HIDE",
+        effect: RuleEffect.HIDE,
         condition: {},
       },
     },
   ],
-} as const
+} satisfies UISchema

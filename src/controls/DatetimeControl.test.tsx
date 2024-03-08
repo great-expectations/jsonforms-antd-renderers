@@ -16,7 +16,7 @@ describe("DatetimeControl", () => {
 
   it("Follows the hide rule", () => {
     render({
-      data: timestamp,
+      data: {datetime: timestamp},
       schema: datetimeSchema,
       uischema: datetimeUISchemaWithRule,
     })
@@ -25,10 +25,10 @@ describe("DatetimeControl", () => {
 
   it("renders when data is included", () => {
     render({
-      data: timestamp,
+      data: { datetime: timestamp },
       schema: datetimeSchema,
       uischema: datetimeUISchema,
-    })
-    expect(screen.getByText(title)).not.toBeNull()
-  })
+    });
+    expect(screen.getByText(title)).not.toBeNull();
+  });
 })

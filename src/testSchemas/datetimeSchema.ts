@@ -21,7 +21,7 @@ export const datetimeUISchema = {
   elements: [
     {
       type: "Control",
-      scope: "#",
+      scope: "#/properties/datetime",
     },
   ],
 } satisfies UISchema
@@ -31,7 +31,7 @@ export const datetimeUISchemaWithRule = {
   elements: [
     {
       type: "Control",
-      scope: "#",
+      scope: "#/properties/datetime",
       rule: {
         effect: RuleEffect.HIDE,
         condition: {},

@@ -12,9 +12,9 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
   const ariaLabel = props.label || schema.description || "Value"
 
   const defaultValue = schema.default as number | undefined
-  const dataIsNonNullObject = typeof props.data === "object" && props.data !== undefined && props.data !== null
-  const dataIsEmptyObj = dataIsNonNullObject ? Object.keys(props.data as object).length === 0 : false
-  const value = props.data === undefined || dataIsEmptyObj ? defaultValue : props.data as number
+  const isDataNonNullObject = typeof props.data === "object" && props.data !== undefined && props.data !== null
+  const isDataEmptyObj = isDataNonNullObject ? Object.keys(props.data as object).length === 0 : false
+  const value = props.data === undefined || isDataEmptyObj ? defaultValue : props.data as number
 
   const numberType = schema.type
   const isInteger = (typeof numberType === "string" && numberType === "integer") || (Array.isArray(numberType) && numberType.includes("integer"))

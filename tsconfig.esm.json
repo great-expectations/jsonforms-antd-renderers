@@ -3,8 +3,7 @@
     "compilerOptions": {
         "lib": [
             "ES2022",
-            "DOM",
-            "DOM.Iterable"
+            "DOM"
         ],
         "target": "ES2022",
         "module": "NodeNext",

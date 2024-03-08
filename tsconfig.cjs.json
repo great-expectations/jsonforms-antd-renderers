@@ -3,9 +3,7 @@
     "compilerOptions": {
         "lib": [
             "ES6",
-            "ES2020",
-            "DOM",
-            "DOM.Iterable"
+            "DOM"
         ],
         "target": "ES6",
         "module": "CommonJS",

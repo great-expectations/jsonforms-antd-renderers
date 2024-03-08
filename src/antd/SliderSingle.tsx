@@ -7,10 +7,10 @@ type Slider = ReactElement<typeof AntdSlider>
 type SliderSingleProps = AntdSliderSingleProps & RendererProps & ControlProps
 
 export const SliderSingle = (props: SliderSingleProps): Slider => {
-  const dataIsNonNullObject = typeof props.data === "object" && props.data !== undefined && props.data !== null
-  const dataIsEmptyObj = dataIsNonNullObject ? Object.keys(props.data as object).length === 0 : false
+  const isDataNonNullObject = typeof props.data === "object" && props.data !== undefined && props.data !== null
+  const isDataEmptyObj = isDataNonNullObject ? Object.keys(props.data as object).length === 0 : false
   const defaultValue = typeof props.schema?.default === "number" ? props.schema.default : props.schema.minimum
-  const value = props.data === undefined || dataIsEmptyObj ? defaultValue : props.data as number
+  const value = props.data === undefined || isDataEmptyObj ? defaultValue : props.data as number
 
   const addonAfter = props.uischema.options?.addonAfter as string | undefined
   const addonBefore = props.uischema.options?.addonBefore as string | undefined

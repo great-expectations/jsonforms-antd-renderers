@@ -6,7 +6,9 @@ import { AlertControl } from "./controls/AlertControl";
 import { TextControl } from "./controls/TextControl";
 import { UnknownControl } from "./controls/UnknownControl";
 import { VerticalLayoutRenderer } from "./layouts/VerticalLayout";
-import { NumberControl } from "./controls/NumberControl";
+import { NumericSliderControl } from "./controls/NumericControls/NumericSliderControl";
+
+import { isNumericControl, isNumericSliderControl } from "./controls/NumericControls/testers";
 
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
@@ -16,7 +18,8 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   { tester: rankWith(2, isBooleanControl), renderer: withJsonFormsControlProps(BooleanControl) },
   { tester: rankWith(2, isStringControl), renderer: withJsonFormsControlProps(TextControl) },
   { tester: rankWith(2, uiTypeIs("Label")), renderer: withJsonFormsLabelProps(AlertControl) },
-  { tester: rankWith(2, isNumberControl), renderer: withJsonFormsControlProps(NumberControl) },
+  { tester: rankWith(2, isNumericControl), renderer: withJsonFormsControlProps(NumericControl)},
+  { tester: rankWith(3, isNumericSliderControl), renderer: withJsonFormsControlProps(NumericSliderControl) },
 ];
 
 export const cellRegistryEntries: JsonFormsCellRendererRegistryEntry[] = [

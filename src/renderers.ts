@@ -2,7 +2,6 @@ import {
   JsonFormsRendererRegistryEntry,
   JsonFormsCellRendererRegistryEntry,
   isBooleanControl,
-  isNumberControl,
   isStringControl,
   rankWith,
   uiTypeIs,
@@ -24,7 +23,6 @@ import { AlertControl } from "./controls/AlertControl";
 import { TextControl } from "./controls/TextControl";
 import { UnknownControl } from "./controls/UnknownControl";
 import { VerticalLayoutRenderer } from "./layouts/VerticalLayoutRenderer";
-import { NumberControl } from "./controls/NumberControl";
 import { ObjectControl } from "./controls/ObjectControl";
 import { GroupLayoutRenderer } from "./layouts/GroupLayoutRenderer";
 import React from "react";
@@ -54,10 +52,6 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   {
     tester: rankWith(2, uiTypeIs("Label")),
     renderer: withJsonFormsLabelProps(AlertControl),
-  },
-  {
-    tester: rankWith(2, isNumberControl),
-    renderer: withJsonFormsControlProps(NumberControl),
   },
   {
     tester: rankWith(10, and(isObjectControl, not(isLayout))),

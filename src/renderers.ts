@@ -1,29 +1,73 @@
-import { JsonFormsRendererRegistryEntry,JsonFormsCellRendererRegistryEntry, isBooleanControl, isNumberControl, isStringControl, rankWith, uiTypeIs, isObjectControl, isLayout, not, and } from "@jsonforms/core";
-import { withJsonFormsControlProps, withJsonFormsLabelProps, withJsonFormsCellProps, withJsonFormsLayoutProps, withJsonFormsDetailProps } from "@jsonforms/react";
+import {
+  JsonFormsRendererRegistryEntry,
+  JsonFormsCellRendererRegistryEntry,
+  isBooleanControl,
+  isNumberControl,
+  isStringControl,
+  rankWith,
+  uiTypeIs,
+  isObjectControl,
+  isLayout,
+  not,
+  and,
+} from "@jsonforms/core";
+import {
+  withJsonFormsControlProps,
+  withJsonFormsLabelProps,
+  withJsonFormsCellProps,
+  withJsonFormsLayoutProps,
+  withJsonFormsDetailProps,
+} from "@jsonforms/react";
 
 import { BooleanControl } from "./controls/BooleanControl";
 import { AlertControl } from "./controls/AlertControl";
 import { TextControl } from "./controls/TextControl";
 import { UnknownControl } from "./controls/UnknownControl";
-import { VerticalLayoutRenderer } from "./layouts/VerticalLayout";
+import { VerticalLayoutRenderer } from "./layouts/VerticalLayoutRenderer";
 import { NumberControl } from "./controls/NumberControl";
 import { ObjectControl } from "./controls/ObjectControl";
-import { GroupComponent } from "./layouts/GroupRenderer";
+import { GroupLayoutRenderer } from "./layouts/GroupLayoutRenderer";
 import React from "react";
-
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
-  { tester: rankWith(1, () => true), renderer: withJsonFormsControlProps(UnknownControl) },
-  { tester: rankWith(1, uiTypeIs("Group")), renderer: React.memo(GroupComponent) },
-  { tester: rankWith(2, uiTypeIs("VerticalLayout")), renderer: withJsonFormsLayoutProps(VerticalLayoutRenderer) },
-  { tester: rankWith(2, isBooleanControl), renderer: withJsonFormsControlProps(BooleanControl) },
-  { tester: rankWith(2, isStringControl), renderer: withJsonFormsControlProps(TextControl) },
-  { tester: rankWith(2, uiTypeIs("Label")), renderer: withJsonFormsLabelProps(AlertControl) },
-  { tester: rankWith(2, isNumberControl), renderer: withJsonFormsControlProps(NumberControl) },
-  { tester: rankWith(10, and(isObjectControl, not(isLayout))), renderer: withJsonFormsDetailProps(ObjectControl) }
+  {
+    tester: rankWith(1, () => true),
+    renderer: withJsonFormsControlProps(UnknownControl),
+  },
+  {
+    tester: rankWith(1, uiTypeIs("Group")),
+    renderer: React.memo(GroupLayoutRenderer),
+  },
+  {
+    tester: rankWith(2, uiTypeIs("VerticalLayout")),
+    renderer: withJsonFormsLayoutProps(VerticalLayoutRenderer),
+  },
+  {
+    tester: rankWith(2, isBooleanControl),
+    renderer: withJsonFormsControlProps(BooleanControl),
+  },
+  {
+    tester: rankWith(2, isStringControl),
+    renderer: withJsonFormsControlProps(TextControl),
+  },
+  {
+    tester: rankWith(2, uiTypeIs("Label")),
+    renderer: withJsonFormsLabelProps(AlertControl),
+  },
+  {
+    tester: rankWith(2, isNumberControl),
+    renderer: withJsonFormsControlProps(NumberControl),
+  },
+  {
+    tester: rankWith(10, and(isObjectControl, not(isLayout))),
+    renderer: withJsonFormsDetailProps(ObjectControl),
+  },
 ];
 
 export const cellRegistryEntries: JsonFormsCellRendererRegistryEntry[] = [
-  { tester: rankWith(1, () => true), cell: withJsonFormsCellProps(UnknownControl)}
+  {
+    tester: rankWith(1, () => true),
+    cell: withJsonFormsCellProps(UnknownControl),
+  },
 ];

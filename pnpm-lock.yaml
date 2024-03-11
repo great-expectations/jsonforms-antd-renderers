@@ -4,6 +4,14 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  lodash.isempty:
+    specifier: ^4.4.0
+    version: 4.4.0
+  lodash.range:
+    specifier: ^3.2.0
+    version: 3.2.0
+
 devDependencies:
   '@ant-design/icons':
     specifier: ^5.3.0
@@ -50,6 +58,9 @@ devDependencies:
   '@types/lodash.isempty':
     specifier: ^4.4.9
     version: 4.4.9
+  '@types/lodash.range':
+    specifier: ^3.2.9
+    version: 3.2.9
   '@types/react':
     specifier: ^18.2.55
     version: 18.2.55
@@ -92,9 +103,6 @@ devDependencies:
   json-schema-to-ts:
     specifier: ^3.0.0
     version: 3.0.0
-  lodash.isempty:
-    specifier: ^4.4.0
-    version: 4.4.0
   prettier:
     specifier: 3.2.5
     version: 3.2.5
@@ -4308,6 +4316,12 @@ packages:
       '@types/lodash': 4.14.202
     dev: true
 
+  /@types/lodash.range@3.2.9:
+    resolution: {integrity: sha512-JNStPShiaR3ROKIAgtzChBhouPBCJxMI/Fj7Xa1cG51A2EMRyosvtL4fiGXOFiQddaxjZmNVYkZGsDRt8fFKPg==}
+    dependencies:
+      '@types/lodash': 4.14.202
+    dev: true
+
   /@types/lodash@4.14.202:
     resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
     dev: true
@@ -8049,7 +8063,7 @@ packages:
 
   /lodash.isempty@4.4.0:
     resolution: {integrity: sha512-oKMuF3xEeqDltrGMfDxAPGIVMSSRv8tbRSODbrs4KGsRRLEhrW8N8Rd4DRgB2+621hY8A8XwwrTVhXWpxFvMzg==}
-    dev: true
+    dev: false
 
   /lodash.isplainobject@4.0.6:
     resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
@@ -8062,6 +8076,10 @@ packages:
   /lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
+
+  /lodash.range@3.2.0:
+    resolution: {integrity: sha512-Fgkb7SinmuzqgIhNhAElo0BL/R1rHCnhwSZf78omqSwvWqD0kD2ssOAutQonDKH/ldS8BxA72ORYI09qAY9CYg==}
+    dev: false
 
   /lodash.uniqby@4.7.0:
     resolution: {integrity: sha512-e/zcLx6CSbmaEgFHCA7BnoQKyCtKMxnuWrJygbwPs/AIn+IMKl66L8/s+wBUn5LRw2pZx3bUHibiV1b6aTWIww==}

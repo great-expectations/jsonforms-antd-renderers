@@ -22,9 +22,8 @@ export function BooleanControl({
   config,
   description,
 }: ControlProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isValid = errors.length === 0
-  const appliedUiSchemaOptions = {...config, ...uischema.options}
+  const appliedUiSchemaOptions = {...config as Record<string, unknown>, ...uischema.options}
 
   const showDescription = !isDescriptionHidden(
     visible,
@@ -34,7 +33,7 @@ export function BooleanControl({
     // we cannot rely on focus as criteria for showing descriptions.
     // So we pass "false" to treat it as unfocused.
     false,
-    appliedUiSchemaOptions.showUnfocusedDescription,
+    !!appliedUiSchemaOptions.showUnfocusedDescription,
   )
 
   const showTooltip =

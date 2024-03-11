@@ -7,8 +7,8 @@ describe("ObjectControl", () => {
   test("renders nested fields", () => {
     render({ schema: objectSchema })
 
-    expect(screen.getByText("Name")).not.toBeNull()
-    expect(screen.getByText("Last Name")).not.toBeNull()
+    screen.getByText("Name")
+    screen.getByText("Last Name")
   })
 
   describe("only renders when visible", () => {
@@ -36,8 +36,8 @@ describe("ObjectControl", () => {
           uischema: objectUISchemaWithRule,
         })
 
-        expect(screen.getByText("Name")).not.toBeNull()
-        expect(screen.getByText("Last Name")).not.toBeNull()
+        screen.getByText("Name")
+        screen.getByText("Last Name")
       })
     })
   })

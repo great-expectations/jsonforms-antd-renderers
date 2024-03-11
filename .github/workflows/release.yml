@@ -26,10 +26,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: .nvmrc
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          run_install: false
       - name: Install dependencies
-        run: npm clean-install
+        run: pnpm i --frozen-lockfile
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: npm audit signatures
+        run: pnpm audit signatures
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

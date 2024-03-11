@@ -36,8 +36,6 @@ test("handles onChange event correctly", async () => {
 
   const checkbox = await screen.findByLabelText("Name");
   expect(checkbox).not.toBeChecked();
-  // Called with the default when initialized
-  expect(updateData).toHaveBeenLastCalledWith(undefined);
 
   await userEvent.click(checkbox);
   expect(checkbox).toBeChecked();

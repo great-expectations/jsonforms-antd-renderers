@@ -23,10 +23,10 @@ import { AlertControl } from "./controls/AlertControl";
 import { TextControl } from "./controls/TextControl";
 import { UnknownControl } from "./controls/UnknownControl";
 import { VerticalLayoutRenderer } from "./layouts/VerticalLayoutRenderer";
-import { NumericControl } from "./controls/NumericControls/NumericControl";
-import { NumericSliderControl } from "./controls/NumericControls/NumericSliderControl";
 import { ObjectControl } from "./controls/ObjectControl";
 import { GroupLayoutRenderer } from "./layouts/GroupLayoutRenderer";
+import { NumericControl } from "./controls/NumericControls/NumericControl";
+import { NumericSliderControl } from "./controls/NumericControls/NumericSliderControl";
 
 import { isNumericControl, isNumericSliderControl } from "./controls/NumericControls/testers";
 

@@ -29,10 +29,14 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     ]
   },
   argTypes: {
-    rendererRegistryEntries: {},
+    rendererRegistryEntries: { table: { disable: true } },
+    uiSchemaRegistryEntries: { table: { disable: true } },
     jsonSchema: {
       control: "object",
-    }
+    },
+    data: {table: {disable: true}}, 
+    config: {control: "object"},
+    onChange: {table: {disable: true, action: "on-change"}},
   }
 };
 

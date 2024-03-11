@@ -14,6 +14,7 @@ type Props = {
   uiSchema?: UISchema;
   uiSchemaRegistryEntries?: JsonFormsUISchemaRegistryEntry[];
   config?: Record<string, unknown>;
+  onChange: (data: Record<string, unknown>) => void;
 };
 
 // this component exists to facilitate storybook rendering
@@ -24,14 +25,19 @@ export function StorybookAntDJsonForm({
   uiSchemaRegistryEntries,
   rendererRegistryEntries,
   config,
+  onChange
 }: Props) {
   const [data, setData] = useState(initialData);
+  const updateData = (newData: Record<string, unknown>) => {
+    setData(newData);
+    onChange(newData);
+  }
   return (
     <AntDJsonForm
       uiSchema={uiSchema}
       jsonSchema={jsonSchema}
       data={data}
-      updateData={(newData) => setData(newData)}
+      updateData={(newData) => updateData(newData)}
       uiSchemaRegistryEntries={uiSchemaRegistryEntries}
       rendererRegistryEntries={rendererRegistryEntries}
       config={config}

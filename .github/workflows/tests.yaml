@@ -43,5 +43,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Dry-run of build
+        shell: bash
+        run: pnpm pack
+
+      - name: Run lint
+        run: pnpm lint
+
+      - name: Run format
+        run: pnpm format:check
+
       - name: Run tests
         run: pnpm test

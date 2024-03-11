@@ -1,10 +1,10 @@
 {
   "name": "@great-expectations/jsonforms-antd-renderers",
   "private": false,
-  "version": "0.1.0",
-  "files": [
-    "lib/**/*"
-  ],
+  "version": "0.0.0-semantic-release",
+  "files": ["lib/**/*"],
+  "main": "./lib/cjs/index.js",
+  "types": "./lib/cjs/index.d.ts",
   "exports": {
     "require": {
       "types": "./lib/cjs/index.d.ts",
@@ -21,9 +21,7 @@
     "access": "public"
   },
   "release": {
-    "branches": [
-      "main"
-    ]
+    "branches": ["main"]
   },
   "repository": {
     "type": "git",
@@ -38,6 +36,8 @@
     "test": "vitest",
     "tsc": "tsc",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "format:write": "prettier . --write",
+    "format:check": "prettier . --check",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
@@ -47,7 +47,6 @@
     "@ant-design/icons": "^5.3.0",
     "@jsonforms/core": "^3.2.1",
     "@jsonforms/react": "^3.2.1",
-    "lodash.isempty": "^4.4.0",
     "antd": "^5.14.0",
     "date-fns": "^3.3.1",
     "rc-picker": "^4.2.0",
@@ -69,6 +68,9 @@
     "@testing-library/react": "^14.2.1",
     "@testing-library/user-event": "^14.5.2",
     "@types/lodash.isempty": "^4.4.9",
+    "@types/lodash.merge": "^4.6.9",
+    "@types/lodash.range": "^3.2.9",
+    "@types/lodash.startcase": "^4.4.9",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
@@ -81,16 +83,23 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "eslint-plugin-storybook": "^0.6.15",
+    "eslint-plugin-testing-library": "^6.2.0",
     "jsdom": "^24.0.0",
     "json-schema-to-ts": "^3.0.0",
-    "lodash.isempty": "^4.4.0",
     "rc-picker": "^4.2.0",
+    "prettier": "3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "semantic-release": "^23.0.2",
-    "storybook": "^7.6.8",
+    "storybook": "^7.6.17",
     "typescript": "^5.2.2",
-    "vite": "^5.0.11",
+    "vite": "^5.0.12",
     "vitest": "^1.2.2"
+  },
+  "dependencies": {
+    "lodash.isempty": "^4.4.0",
+    "lodash.merge": "^4.6.2",
+    "lodash.range": "^3.2.0",
+    "lodash.startcase": "^4.4.0"
   }
 }

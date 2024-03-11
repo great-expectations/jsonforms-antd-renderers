@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import {
-  ControlProps,
-  isDescriptionHidden,
-} from "@jsonforms/core"
+import { ControlProps, isDescriptionHidden } from "@jsonforms/core"
 import { Form } from "antd"
 import { Checkbox } from "../antd/Checkbox"
 import { QuestionCircleOutlined } from "@ant-design/icons"
+import { withJsonFormsControlProps } from "@jsonforms/react"
 
 export function BooleanControl({
   data,
@@ -22,9 +20,11 @@ export function BooleanControl({
   config,
   description,
 }: ControlProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isValid = errors.length === 0
-  const appliedUiSchemaOptions = {...config, ...uischema.options}
+  const appliedUiSchemaOptions = {
+    ...(config as Record<string, unknown>),
+    ...uischema.options,
+  }
 
   const showDescription = !isDescriptionHidden(
     visible,
@@ -34,17 +34,11 @@ export function BooleanControl({
     // we cannot rely on focus as criteria for showing descriptions.
     // So we pass "false" to treat it as unfocused.
     false,
-    appliedUiSchemaOptions.showUnfocusedDescription,
+    !!appliedUiSchemaOptions.showUnfocusedDescription,
   )
 
   const showTooltip =
-    !showDescription &&
-    !isDescriptionHidden(
-      visible,
-      description,
-      true,
-      true,
-    )
+    !showDescription && !isDescriptionHidden(visible, description, true, true)
   return (
     <Form.Item
       id={id}
@@ -79,3 +73,5 @@ export function BooleanControl({
     </Form.Item>
   )
 }
+
+export const BooleanRenderer = withJsonFormsControlProps(BooleanControl)

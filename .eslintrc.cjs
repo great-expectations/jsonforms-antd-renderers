@@ -8,7 +8,6 @@ module.exports = {
     "plugin:storybook/recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
-    "plugin:testing-library/react",
   ],
   ignorePatterns: ["dist", ".eslintrc.cjs", "lib"],
   parser: "@typescript-eslint/parser",
@@ -18,7 +17,8 @@ module.exports = {
     extends: ["plugin:testing-library/react"],
     rules: {
       "testing-library/prefer-implicit-assert": "error",
-      "testing-library/prefer-presence-queries": "error"
+      "testing-library/prefer-presence-queries": "error",
+      "testing-library/prefer-user-event": "error"
     }
   }],
   parserOptions: {

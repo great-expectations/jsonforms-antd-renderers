@@ -17,8 +17,8 @@ describe("NumericSliderControl", () => {
       schema: numericSliderBasisPointsSchema,
     })
 
-    expect(screen.getByRole("slider")).not.toBeNull()
-    expect(screen.getByText("Basis Points")).not.toBeNull()
+    screen.getByRole("slider")
+    screen.getByText("Basis Points")
   })
 
   it("Follows the hide rule", () => {
@@ -93,6 +93,6 @@ describe("NumericSliderControl", () => {
     expect(screen.queryByText("50%")).toBeNull()
     await userEvent.hover(slider)
 
-    expect(screen.queryByText("50%")).not.toBeNull()
+    screen.getByText("50%")
   })
 })

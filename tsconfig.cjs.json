@@ -2,10 +2,10 @@
     "extends": "./tsconfig.production.json",
     "compilerOptions": {
         "lib": [
-            "ES6",
+            "ESNEXT",
             "DOM"
         ],
-        "target": "ES6",
+        "target": "ESNEXT",
         "module": "CommonJS",
         "moduleResolution": "Node",
         "outDir": "./lib/cjs",

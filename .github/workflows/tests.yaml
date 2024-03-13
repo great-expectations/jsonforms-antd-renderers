@@ -47,8 +47,8 @@ jobs:
         shell: bash
         run: |
           pnpm run clean
-          tsc -p tsconfig.esm.json --dry
-          tsc -p tsconfig.cjs.json --dry
+          tsc --build --dry
+          tsc --build --dry
 
 
       - name: Run lint

@@ -1,5 +1,5 @@
-import { JsonFormsRendererRegistryEntry,JsonFormsCellRendererRegistryEntry, isBooleanControl, isNumberControl, isStringControl, rankWith, uiTypeIs } from "@jsonforms/core";
-import { withJsonFormsControlProps, withJsonFormsLabelProps, withJsonFormsCellProps, withJsonFormsLayoutProps } from "@jsonforms/react";
+import { JsonFormsRendererRegistryEntry,JsonFormsCellRendererRegistryEntry, isBooleanControl, isNumberControl, isPrimitiveArrayControl, isStringControl, rankWith, uiTypeIs } from "@jsonforms/core";
+import { withJsonFormsArrayControlProps, withJsonFormsControlProps, withJsonFormsLabelProps, withJsonFormsCellProps, withJsonFormsLayoutProps } from "@jsonforms/react";
 
 import { BooleanControl } from "./controls/BooleanControl";
 import { AlertControl } from "./controls/AlertControl";
@@ -7,6 +7,7 @@ import { TextControl } from "./controls/TextControl";
 import { UnknownControl } from "./controls/UnknownControl";
 import { VerticalLayoutRenderer } from "./layouts/VerticalLayout";
 import { NumberControl } from "./controls/NumberControl";
+import { PrimitiveArrayControl } from "./controls/PrimitiveArrayControl";
 
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
@@ -17,6 +18,7 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   { tester: rankWith(2, isStringControl), renderer: withJsonFormsControlProps(TextControl) },
   { tester: rankWith(2, uiTypeIs("Label")), renderer: withJsonFormsLabelProps(AlertControl) },
   { tester: rankWith(2, isNumberControl), renderer: withJsonFormsControlProps(NumberControl) },
+  { tester: rankWith(30, isPrimitiveArrayControl), renderer: withJsonFormsArrayControlProps(PrimitiveArrayControl) },
 ];
 
 export const cellRegistryEntries: JsonFormsCellRendererRegistryEntry[] = [

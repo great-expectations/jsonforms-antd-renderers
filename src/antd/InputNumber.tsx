@@ -19,7 +19,7 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
 
   const numberType = schema.type
   const isInteger = (typeof numberType === "string" && numberType === "integer") || (Array.isArray(numberType) && numberType.length === 1 && numberType.includes("integer"))
-  const handleChange = (value: number | null) => {
+  const handleChange = (value: number | string | null) => {
     if (typeof value === "number") {
       if (isInteger) {
         props.handleChange(props.path, coerceToInteger(value))
@@ -52,7 +52,7 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
     }
     return ""
   })
-  const parser = ((value?: string): number => {
+  const parser = ((value?: string): number | undefined => {
     const isNumeric = value ? !isNaN(Number(value)) : false
     if (isNumeric && value !== undefined) {
       if (isPercentage) {
@@ -63,10 +63,7 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
         return parseFloat(value)
       }
     }
-    // this allows us to return undefined for cases where the value has been deleted
-    // when InputNumber is paired with a Slider, the Slider value selector will disappear
-    // for required fields an error message will show instead of jumping to some default value
-    return undefined as unknown as number
+    return undefined
   })
 
   return <AntdInputNumber
@@ -80,7 +77,7 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
     addonAfter={addonAfter}
     style={style}
     formatter={formatter}
-    parser={parser}
+    parser={parser as AntdInputNumberProps["parser"]}
     controls={false}
   />
 }

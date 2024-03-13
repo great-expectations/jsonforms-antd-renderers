@@ -3,11 +3,11 @@ import { Col, Form } from "antd"
 import { Rule } from "antd/lib/form"
 import { InputNumber } from "../../antd/InputNumber"
 
-
 export const NumericControl = (props: ControlProps & RendererProps) => {
   if (!props.visible) return null
 
-  const initialValue = typeof props.schema.default === "number" ? props.schema.default : undefined
+  const initialValue =
+    typeof props.schema.default === "number" ? props.schema.default : undefined
 
   const rules: Rule[] = [
     { required: props.required, message: `${props.label} is required` },
@@ -23,7 +23,7 @@ export const NumericControl = (props: ControlProps & RendererProps) => {
       rules={rules}
       validateTrigger={["onBlur"]}
     >
-      <Col span={18}>{InputNumber({...props})}</Col>
+      <Col span={18}>{InputNumber({ ...props })}</Col>
     </Form.Item>
   )
 }

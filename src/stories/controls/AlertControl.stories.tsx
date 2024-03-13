@@ -1,22 +1,22 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { rendererRegistryEntries } from "../../renderers";
-import { UISchema } from "../../ui-schema";
-import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm";
+import { Meta, StoryObj } from "@storybook/react"
+import { rendererRegistryEntries } from "../../renderers"
+import { UISchema } from "../../ui-schema"
+import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 
 const schema = {
   type: "object",
-  properties: { 
-    text: { type: "string" }, 
+  properties: {
+    text: { type: "string" },
     options: {
-      type: "object", 
+      type: "object",
       properties: {
         type: {
-          type: "string"
-        }
-      }
-    }
-  }
-};
+          type: "string",
+        },
+      },
+    },
+  },
+}
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Alert",
@@ -24,9 +24,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
   tags: ["autodocs"],
   args: {
     jsonSchema: schema,
-    rendererRegistryEntries: [
-      ...rendererRegistryEntries,
-    ]
+    rendererRegistryEntries: [...rendererRegistryEntries],
   },
   argTypes: {
     rendererRegistryEntries: { table: { disable: true } },
@@ -34,19 +32,19 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     jsonSchema: {
       control: "object",
     },
-    data: {table: {disable: true}}, 
-    config: {control: "object"},
-    onChange: {table: {disable: true, action: "on-change"}},
-  }
-};
+    data: { table: { disable: true } },
+    config: { control: "object" },
+    onChange: { table: { disable: true, action: "on-change" } },
+  },
+}
 
-export default meta;
-type Story = StoryObj<typeof StorybookAntDJsonForm>;
+export default meta
+type Story = StoryObj<typeof StorybookAntDJsonForm>
 
 export const Info: Story = {
   tags: ["autodocs"],
-  args: { 
-    jsonSchema: schema, 
+  args: {
+    jsonSchema: schema,
     uiSchema: {
       type: "VerticalLayout",
       elements: [
@@ -54,9 +52,9 @@ export const Info: Story = {
           type: "Label",
           text: "To maintain airspeed velocity, a swallow needs to beat its wings 43 times every second.",
           options: {
-            type: "info"
-          }
-        }
+            type: "info",
+          },
+        },
       ],
     } satisfies UISchema,
   },
@@ -64,7 +62,7 @@ export const Info: Story = {
 
 export const Warning: Story = {
   tags: ["autodocs"],
-  args: { 
+  args: {
     jsonSchema: schema,
     uiSchema: {
       type: "VerticalLayout",
@@ -73,9 +71,9 @@ export const Warning: Story = {
           type: "Label",
           text: "Here be dragons!",
           options: {
-            type: "warning"
-          }
-        }
+            type: "warning",
+          },
+        },
       ],
     } satisfies UISchema,
   },
@@ -83,8 +81,8 @@ export const Warning: Story = {
 
 export const Success: Story = {
   tags: ["autodocs"],
-  args: { 
-    jsonSchema: schema, 
+  args: {
+    jsonSchema: schema,
     uiSchema: {
       type: "VerticalLayout",
       elements: [
@@ -92,9 +90,9 @@ export const Success: Story = {
           type: "Label",
           text: "You did it!",
           options: {
-            type: "success"
-          }
-        }
+            type: "success",
+          },
+        },
       ],
     } satisfies UISchema,
   },

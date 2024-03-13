@@ -1,11 +1,11 @@
-import { GroupLayout, OwnPropsOfRenderer } from "@jsonforms/core";
-import { UISchema } from "../ui-schema";
-import { Divider } from "antd";
-import { AntDLayoutRenderer } from "./LayoutRenderer";
+import { GroupLayout, OwnPropsOfRenderer } from "@jsonforms/core"
+import { UISchema } from "../ui-schema"
+import { Divider } from "antd"
+import { AntDLayoutRenderer } from "./LayoutRenderer"
 
 export type LayoutRendererProps = OwnPropsOfRenderer & {
-  elements: UISchema[];
-};
+  elements: UISchema[]
+}
 
 export function GroupLayoutRenderer({
   visible,
@@ -13,7 +13,7 @@ export function GroupLayoutRenderer({
   uischema,
   ...props
 }: LayoutRendererProps) {
-  const groupLayout = uischema as GroupLayout;
+  const groupLayout = uischema as GroupLayout
   return (
     <>
       <Divider />
@@ -26,5 +26,5 @@ export function GroupLayoutRenderer({
       />
       <Divider />
     </>
-  );
+  )
 }

@@ -4,11 +4,13 @@ import { Rule } from "antd/lib/form"
 import { InputNumber } from "../../antd/InputNumber"
 import { Slider } from "../../antd/Slider"
 
-
 export const NumericSliderControl = (props: ControlProps & RendererProps) => {
   if (!props.visible) return null
 
-  const initialValue = typeof props.schema.default === "number" ? props.schema.default : props.schema.minimum
+  const initialValue =
+    typeof props.schema.default === "number"
+      ? props.schema.default
+      : props.schema.minimum
 
   const rules: Rule[] = [
     { required: props.required, message: `${props.label} is required` },
@@ -25,7 +27,8 @@ export const NumericSliderControl = (props: ControlProps & RendererProps) => {
       validateTrigger={["onBlur"]}
     >
       <Row>
-        <Col span={8}>{Slider({...props})}</Col><Col span={7}>{InputNumber({...props})}</Col>
+        <Col span={8}>{Slider({ ...props })}</Col>
+        <Col span={7}>{InputNumber({ ...props })}</Col>
       </Row>
     </Form.Item>
   )

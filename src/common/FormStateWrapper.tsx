@@ -1,18 +1,18 @@
-import { JsonForms } from "@jsonforms/react";
-import { JSONSchema } from "json-schema-to-ts";
-import { Form } from "antd";
+import { JsonForms } from "@jsonforms/react"
+import { JSONSchema } from "json-schema-to-ts"
+import { Form } from "antd"
 
-import { JsonSchema7 } from "@jsonforms/core";
-import { UISchema } from "../ui-schema";
-import { cellRegistryEntries, rendererRegistryEntries } from "../renderers";
-import { useState } from "react";
+import { JsonSchema7 } from "@jsonforms/core"
+import { UISchema } from "../ui-schema"
+import { cellRegistryEntries, rendererRegistryEntries } from "../renderers"
+import { useState } from "react"
 
 type RenderProps<T extends Record<string, unknown>> = {
-  schema: JSONSchema;
-  data?: T;
-  uischema?: UISchema;
-  onChange?: (result: { data: T }) => void;
-};
+  schema: JSONSchema
+  data?: T
+  uischema?: UISchema
+  onChange?: (result: { data: T }) => void
+}
 
 export function FormStateWrapper<T extends Record<string, unknown>>({
   schema,
@@ -21,8 +21,8 @@ export function FormStateWrapper<T extends Record<string, unknown>>({
   onChange,
 }: RenderProps<T>) {
   const [data, setData] = useState<Record<string, unknown> | undefined>(
-    initialData
-  );
+    initialData,
+  )
   return (
     <Form>
       <JsonForms
@@ -39,5 +39,5 @@ export function FormStateWrapper<T extends Record<string, unknown>>({
             })}
       />
     </Form>
-  );
+  )
 }

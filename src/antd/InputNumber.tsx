@@ -1,6 +1,7 @@
 import { ReactElement } from "react"
 import { ControlProps, RendererProps } from "@jsonforms/core"
 import { InputNumber as AntdInputNumber } from "antd"
+import { InputNumberOptions } from "../ui-schema"
 import { coerceToInteger, coerceToNumber, decimalToPercentage, percentageStringToDecimal } from "../controls/utils"
 
 type InputNumber = ReactElement<typeof AntdInputNumber>
@@ -30,9 +31,10 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
     }
   }
 
-  const addonAfter = props.uischema.options?.addonAfter as string | undefined
-  const addonBefore = props.uischema.options?.addonBefore as string | undefined
-  const isPercentage = addonAfter?.trim() === "%"
+  const options = props.uischema.options as InputNumberOptions
+  const addonAfter = options?.addonAfter
+  const addonBefore = options?.addonBefore
+  const isPercentage = addonAfter && typeof addonAfter === "string" ? addonAfter?.trim() === "%" : false
 
   const min = schema.minimum
   const max = schema.maximum

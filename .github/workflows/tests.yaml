@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  cache-and-install-deps-and-build:
+  cache-and-install-deps-and-run-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -39,19 +39,18 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-          
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Dry-run of build
         shell: bash
-        run: pnpm pack
+        run: |
+          pnpm run clean
+          tsc -p tsconfig.esm.json --dry
+          tsc -p tsconfig.cjs.json --dry
 
 
-  run-tests:
-    runs-on: ubuntu-latest
-
-    steps: 
       - name: Run lint
         run: pnpm lint
 

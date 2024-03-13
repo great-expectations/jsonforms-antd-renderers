@@ -58,6 +58,17 @@ export const numericSheepSchema = {
   required: ["numericValue"],
 } satisfies JSONSchema
 
+export const numericBeansSchema = {
+  type: "object",
+  properties: {
+    numericValue: {
+      title: "Beans",
+      type: ["integer"],
+    },
+  },
+  required: ["numericValue"],
+} satisfies JSONSchema
+
 export const numericROISchema = {
   type: "object",
   properties: {

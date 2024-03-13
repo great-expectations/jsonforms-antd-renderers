@@ -1,6 +1,7 @@
 import { ReactElement } from "react"
 import { ControlProps, RendererProps } from "@jsonforms/core"
 import { InputNumber as AntdInputNumber } from "antd"
+import { InputNumberOptions } from "../ui-schema"
 import { coerceToInteger, coerceToNumber, decimalToPercentage, percentageStringToDecimal } from "../controls/utils"
 
 type InputNumber = ReactElement<typeof AntdInputNumber>
@@ -17,8 +18,8 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
   const value = props.data === undefined || isDataEmptyObj ? defaultValue : props.data as number
 
   const numberType = schema.type
-  const isInteger = (typeof numberType === "string" && numberType === "integer") || (Array.isArray(numberType) && numberType.includes("integer"))
-  const handleChange = (value: number | null) => {
+  const isInteger = (typeof numberType === "string" && numberType === "integer") || (Array.isArray(numberType) && numberType.length === 1 && numberType.includes("integer"))
+  const handleChange = (value: number | string | null) => {
     if (typeof value === "number") {
       if (isInteger) {
         props.handleChange(props.path, coerceToInteger(value))
@@ -30,9 +31,10 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
     }
   }
 
-  const addonAfter = props.uischema.options?.addonAfter as string | undefined
-  const addonBefore = props.uischema.options?.addonBefore as string | undefined
-  const isPercentage = addonAfter?.trim() === "%"
+  const options = props.uischema.options as InputNumberOptions
+  const addonAfter = options?.addonAfter
+  const addonBefore = options?.addonBefore
+  const isPercentage = addonAfter && typeof addonAfter === "string" ? addonAfter?.trim() === "%" : false
 
   const min = schema.minimum
   const max = schema.maximum
@@ -50,7 +52,7 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
     }
     return ""
   })
-  const parser = ((value?: string): number => {
+  const parser = ((value?: string): number | undefined => {
     const isNumeric = value ? !isNaN(Number(value)) : false
     if (isNumeric && value !== undefined) {
       if (isPercentage) {
@@ -61,10 +63,7 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
         return parseFloat(value)
       }
     }
-    // this allows us to return undefined for cases where the value has been deleted
-    // when InputNumber is paired with a Slider, the Slider value selector will disappear
-    // for required fields an error message will show instead of jumping to some default value
-    return undefined as unknown as number
+    return undefined
   })
 
   return <AntdInputNumber
@@ -78,7 +77,7 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
     addonAfter={addonAfter}
     style={style}
     formatter={formatter}
-    parser={parser}
+    parser={parser as AntdInputNumberProps["parser"]}
     controls={false}
   />
 }

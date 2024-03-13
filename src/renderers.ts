@@ -27,10 +27,9 @@ import { ObjectControl } from "./controls/ObjectControl";
 import { GroupLayoutRenderer } from "./layouts/GroupLayoutRenderer";
 import { NumericControl } from "./controls/NumericControls/NumericControl";
 import { NumericSliderControl } from "./controls/NumericControls/NumericSliderControl";
+import React from "react";
 
 import { isNumericControl, isNumericSliderControl } from "./controls/NumericControls/testers";
-
-import React from "react";
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
@@ -61,6 +60,10 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   { 
     tester: rankWith(2, isNumericControl), 
     renderer: withJsonFormsControlProps(NumericControl)
+  },
+  {
+    tester: rankWith(2, isNumericControl),
+    renderer: withJsonFormsControlProps(NumericControl),
   },
   { 
     tester: rankWith(3, isNumericSliderControl), 

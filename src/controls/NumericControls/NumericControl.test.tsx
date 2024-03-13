@@ -7,11 +7,14 @@ import {
   numericMagnitudeSchema,
   numericTheNumberSchema,
   numericWeightSchema,
+  numericSheepSchema,
+  numericBeansSchema,
   numericUISchema,
   numericUISchemaWithRule,
   numericPriceSchema,
   numericUSDUISchema,
 } from "../../testSchemas/numericSchema/numericSchema"
+import "@testing-library/jest-dom"
 
 
 describe("NumericControl", () => {
@@ -57,6 +60,9 @@ describe("NumericControl", () => {
 
     await waitFor(() => {
       expect(state.data).toBe(weight)
+    })
+
+    await waitFor(() => {
       expect(state.errors).toHaveLength(0)
     })
   })
@@ -66,7 +72,7 @@ describe("NumericControl", () => {
       schema: numericMagnitudeSchema,
     })
 
-    expect(screen.getByText("Magnitude")).not.toBeNull()
+    screen.getByText("Magnitude")
   })
 
   it("Follows the hide rule", () => {
@@ -86,13 +92,13 @@ describe("NumericControl", () => {
       schema: numericTheNumberSchema, // this has a default of 42.42
       uischema: numericUISchema,
     })
-    expect(screen.getByText("The Number")).not.toBeNull()
+    screen.getByText("The Number")
     expect(screen.getByRole("spinbutton")).toHaveValue(`${dataVal}`)
   })
 
-  it.each([[numericTheNumberSchema]])("renders default value when no data is provided", (schema: JSONSchema) => {
+  it("renders default value when no data is provided", () => {
     render({
-      schema: schema,
+      schema: numericTheNumberSchema,
       uischema: numericUISchema,
     })
     expect(screen.getByRole("spinbutton")).toHaveValue("42.42")
@@ -124,7 +130,7 @@ describe("NumericControl", () => {
     const input = screen.getByRole("spinbutton")
     await userEvent.clear(input)
     await userEvent.tab()
-    expect(await screen.findByText("The Number is required")).not.toBeNull()
+    await screen.findByText("The Number is required")
   })
 
   it ("shows units next to text input if set in UI schema", async () => {
@@ -132,6 +138,20 @@ describe("NumericControl", () => {
       schema: numericPriceSchema,
       uischema: numericUSDUISchema,
     })
-    expect(await screen.findByText("$")).not.toBeNull()
+    await screen.findByText("$")
+  })
+
+  it.each([
+    numericSheepSchema,
+    numericBeansSchema,
+  ])("is treated as an integer if the schema type is integer or the type is an array with only integer", async (schema: JSONSchema) => {
+    render({
+      schema: schema,
+      uischema: numericUISchema,
+    })
+    const input = screen.getByRole("spinbutton")
+    await userEvent.type(input, "123.45") // try to input a float
+    await userEvent.tab()
+    expect(input).toHaveValue("123") // it should be rounded to an integer
   })
 })

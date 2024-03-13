@@ -2,7 +2,7 @@ import { ControlProps, RendererProps } from "@jsonforms/core"
 import { Col, Form, Row } from "antd"
 import { Rule } from "antd/lib/form"
 import { InputNumber } from "../../antd/InputNumber"
-import { SliderSingle } from "../../antd/SliderSingle"
+import { Slider } from "../../antd/Slider"
 
 
 export const NumericSliderControl = (props: ControlProps & RendererProps) => {
@@ -25,7 +25,7 @@ export const NumericSliderControl = (props: ControlProps & RendererProps) => {
       validateTrigger={["onBlur"]}
     >
       <Row>
-        <Col span={8}>{SliderSingle({...props})}</Col><Col span={7}>{InputNumber({...props})}</Col>
+        <Col span={8}>{Slider({...props})}</Col><Col span={7}>{InputNumber({...props})}</Col>
       </Row>
     </Form.Item>
   )

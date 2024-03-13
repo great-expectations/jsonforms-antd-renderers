@@ -7,6 +7,8 @@ import {
   numericMagnitudeSchema,
   numericTheNumberSchema,
   numericWeightSchema,
+  numericSheepSchema,
+  numericBeansSchema,
   numericUISchema,
   numericUISchemaWithRule,
   numericPriceSchema,
@@ -93,9 +95,9 @@ describe("NumericControl", () => {
     expect(screen.getByRole("spinbutton")).toHaveValue(`${dataVal}`)
   })
 
-  it.each([[numericTheNumberSchema]])("renders default value when no data is provided", (schema: JSONSchema) => {
+  it("renders default value when no data is provided", () => {
     render({
-      schema: schema,
+      schema: numericTheNumberSchema,
       uischema: numericUISchema,
     })
     expect(screen.getByRole("spinbutton")).toHaveValue("42.42")
@@ -136,5 +138,19 @@ describe("NumericControl", () => {
       uischema: numericUSDUISchema,
     })
     await screen.findByText("$")
+  })
+
+  it.each([
+    numericSheepSchema,
+    numericBeansSchema,
+  ])("is treated as an integer if the schema type is integer or the type is an array with only integer", async (schema: JSONSchema) => {
+    render({
+      schema: schema,
+      uischema: numericUISchema,
+    })
+    const input = screen.getByRole("spinbutton")
+    await userEvent.type(input, "123.45") // try to input a float
+    await userEvent.tab()
+    expect(input).toHaveValue("123") // it should be rounded to an integer
   })
 })

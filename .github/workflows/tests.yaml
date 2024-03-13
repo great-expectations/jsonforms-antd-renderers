@@ -45,7 +45,7 @@ jobs:
 
       - name: Dry-run of build
         shell: bash
-        run: pnpm pack
+        run: npx semantic-release --dry-run
 
 
       - name: Run lint

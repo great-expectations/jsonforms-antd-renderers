@@ -5,7 +5,7 @@
             "ESNEXT",
             "DOM"
         ],
-        "target": "ESNEXT",
+        "target": "ES6",
         "module": "CommonJS",
         "moduleResolution": "Node",
         "outDir": "./lib/cjs",

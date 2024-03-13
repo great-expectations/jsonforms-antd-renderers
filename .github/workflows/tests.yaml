@@ -45,8 +45,7 @@ jobs:
 
       - name: Dry-run of build
         shell: bash
-        run: |
-          pnpm pack
+        run: pnpm pack
 
 
   run-tests:

@@ -2,6 +2,7 @@ import {
   JsonFormsRendererRegistryEntry,
   JsonFormsCellRendererRegistryEntry,
   isBooleanControl,
+  isPrimitiveArrayControl,
   isStringControl,
   rankWith,
   uiTypeIs,
@@ -11,6 +12,7 @@ import {
   and,
 } from "@jsonforms/core"
 import {
+  withJsonFormsArrayControlProps,
   withJsonFormsControlProps,
   withJsonFormsLabelProps,
   withJsonFormsCellProps,

@@ -13,7 +13,6 @@ import {
   numericPercentageUISchema,
 } from "../../../testSchemas/numericSchema/numericSchema"
 
-
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Numeric Input",
   component: StorybookAntDJsonForm,
@@ -25,7 +24,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     uiSchema: {
       control: "object",
     },
-  }
+  },
 }
 
 export default meta
@@ -33,7 +32,7 @@ type Story = StoryObj<typeof StorybookAntDJsonForm>
 
 export const RequiredFloatingPoint: Story = {
   tags: ["autodocs"],
-  args: { 
+  args: {
     jsonSchema: numericMagnitudeSchema,
     uiSchema: numericUISchema,
   },
@@ -41,7 +40,7 @@ export const RequiredFloatingPoint: Story = {
 
 export const RequiredFloatingPointWithDefault: Story = {
   tags: ["autodocs"],
-  args: { 
+  args: {
     jsonSchema: numericTheNumberSchema,
     uiSchema: numericUISchema,
   },
@@ -49,7 +48,7 @@ export const RequiredFloatingPointWithDefault: Story = {
 
 export const OptionalFloatingPoint: Story = {
   tags: ["autodocs"],
-  args: { 
+  args: {
     jsonSchema: numericWeightSchema,
     uiSchema: numericUISchema,
   },
@@ -57,7 +56,7 @@ export const OptionalFloatingPoint: Story = {
 
 export const RequiredInteger: Story = {
   tags: ["autodocs"],
-  args: { 
+  args: {
     jsonSchema: numericSheepSchema,
     uiSchema: numericUISchema,
   },
@@ -65,7 +64,7 @@ export const RequiredInteger: Story = {
 
 export const OptionalUSD: Story = {
   tags: ["autodocs"],
-  args: { 
+  args: {
     jsonSchema: numericPriceSchema,
     uiSchema: numericUSDUISchema,
   },
@@ -73,7 +72,7 @@ export const OptionalUSD: Story = {
 
 export const RequiredPercentage: Story = {
   tags: ["autodocs"],
-  args: { 
+  args: {
     jsonSchema: numericROISchema,
     uiSchema: numericPercentageUISchema,
   },

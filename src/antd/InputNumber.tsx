@@ -2,7 +2,12 @@ import { ReactElement } from "react"
 import { ControlProps, RendererProps } from "@jsonforms/core"
 import { InputNumber as AntdInputNumber } from "antd"
 import { InputNumberOptions } from "../ui-schema"
-import { coerceToInteger, coerceToNumber, decimalToPercentage, percentageStringToDecimal } from "../controls/utils"
+import {
+  coerceToInteger,
+  coerceToNumber,
+  decimalToPercentage,
+  percentageStringToDecimal,
+} from "../controls/utils"
 
 type InputNumber = ReactElement<typeof AntdInputNumber>
 type AntdInputNumberProps = React.ComponentProps<typeof AntdInputNumber>
@@ -13,12 +18,24 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
   const ariaLabel = props.label || schema.description || "Value"
 
   const defaultValue = schema.default as number | undefined
-  const isDataNonNullObject = typeof props.data === "object" && props.data !== undefined && props.data !== null
-  const isDataEmptyObj = isDataNonNullObject ? Object.keys(props.data as object).length === 0 : false
-  const value = props.data === undefined || isDataEmptyObj ? defaultValue : props.data as number
+  const isDataNonNullObject =
+    typeof props.data === "object" &&
+    props.data !== undefined &&
+    props.data !== null
+  const isDataEmptyObj = isDataNonNullObject
+    ? Object.keys(props.data as object).length === 0
+    : false
+  const value =
+    props.data === undefined || isDataEmptyObj
+      ? defaultValue
+      : (props.data as number)
 
   const numberType = schema.type
-  const isInteger = (typeof numberType === "string" && numberType === "integer") || (Array.isArray(numberType) && numberType.length === 1 && numberType.includes("integer"))
+  const isInteger =
+    (typeof numberType === "string" && numberType === "integer") ||
+    (Array.isArray(numberType) &&
+      numberType.length === 1 &&
+      numberType.includes("integer"))
   const handleChange = (value: number | string | null) => {
     if (typeof value === "number") {
       if (isInteger) {
@@ -34,14 +51,17 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
   const options = props.uischema.options as InputNumberOptions
   const addonAfter = options?.addonAfter
   const addonBefore = options?.addonBefore
-  const isPercentage = addonAfter && typeof addonAfter === "string" ? addonAfter?.trim() === "%" : false
+  const isPercentage =
+    addonAfter && typeof addonAfter === "string"
+      ? addonAfter?.trim() === "%"
+      : false
 
   const min = schema.minimum
   const max = schema.maximum
   const marginLeft = min === undefined || max === undefined ? 0 : 16
   const style = { marginLeft: marginLeft, width: "100%" }
 
-  const formatter = ((value?: string | number): string => {
+  const formatter = (value?: string | number): string => {
     if (value !== "" && value !== undefined) {
       if (isPercentage) {
         const valueFloat = typeof value === "string" ? parseFloat(value) : value
@@ -51,8 +71,8 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
       }
     }
     return ""
-  })
-  const parser = ((value?: string): number | undefined => {
+  }
+  const parser = (value?: string): number | undefined => {
     const isNumeric = value ? !isNaN(Number(value)) : false
     if (isNumeric && value !== undefined) {
       if (isPercentage) {
@@ -64,20 +84,22 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
       }
     }
     return undefined
-  })
+  }
 
-  return <AntdInputNumber
-    aria-label={ariaLabel}
-    defaultValue={defaultValue}
-    value={value}
-    onChange={(value) => handleChange(value)}
-    min={min}
-    max={max}
-    addonBefore={addonBefore}
-    addonAfter={addonAfter}
-    style={style}
-    formatter={formatter}
-    parser={parser as AntdInputNumberProps["parser"]}
-    controls={false}
-  />
+  return (
+    <AntdInputNumber
+      aria-label={ariaLabel}
+      defaultValue={defaultValue}
+      value={value}
+      onChange={(value) => handleChange(value)}
+      min={min}
+      max={max}
+      addonBefore={addonBefore}
+      addonAfter={addonAfter}
+      style={style}
+      formatter={formatter}
+      parser={parser as AntdInputNumberProps["parser"]}
+      controls={false}
+    />
+  )
 }

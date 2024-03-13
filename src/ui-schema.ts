@@ -281,8 +281,7 @@ type AndCondition = ComposableCondition & {
   type: "AND"
 }
 
-
-export type InputNumberOptions =  { 
+export type InputNumberOptions = {
   addonBefore?: InputNumberProps["addonBefore"]
   addonAfter?: InputNumberProps["addonAfter"]
 }

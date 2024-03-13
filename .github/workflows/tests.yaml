@@ -47,7 +47,6 @@ jobs:
         shell: bash
         run: pnpm pack
 
-
       - name: Run lint
         run: pnpm lint
 

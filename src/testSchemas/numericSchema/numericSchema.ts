@@ -46,7 +46,6 @@ export const numericPriceSchema = {
   required: ["numericValue"],
 } satisfies JSONSchema
 
-
 export const numericSheepSchema = {
   type: "object",
   properties: {
@@ -98,7 +97,7 @@ export const numericUSDUISchema = {
       scope: "#/properties/numericValue",
       options: {
         addonBefore: "$",
-      }
+      },
     },
   ],
 } satisfies UISchema
@@ -111,7 +110,7 @@ export const numericPercentageUISchema = {
       scope: "#/properties/numericValue",
       options: {
         addonAfter: "%",
-      }
+      },
     },
   ],
 } satisfies UISchema

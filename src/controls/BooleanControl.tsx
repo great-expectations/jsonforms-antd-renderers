@@ -70,5 +70,5 @@ export function BooleanControl({
         config={config}
       />
     </Form.Item>
-  );
+  )
 }

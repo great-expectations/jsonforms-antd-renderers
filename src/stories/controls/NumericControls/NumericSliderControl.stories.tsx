@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { StorybookAntDJsonForm } from "../../../common/StorybookAntDJsonForm";
+import { StorybookAntDJsonForm } from "../../../common/StorybookAntDJsonForm"
 
 import {
   numericSliderBasisPointsSchema,
@@ -10,8 +10,7 @@ import {
   numericSliderPercentageUISchema,
   numericSliderDonateNowSchema,
   numericSliderUSDUISchema,
-} from "../../../testSchemas/numericSchema/numericSliderSchema";
-
+} from "../../../testSchemas/numericSchema/numericSliderSchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Numeric Slider",
@@ -24,7 +23,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     uiSchema: {
       control: "object",
     },
-  }
+  },
 }
 
 export default meta
@@ -32,7 +31,7 @@ type Story = StoryObj<typeof StorybookAntDJsonForm>
 
 export const RequiredInteger: Story = {
   tags: ["autodocs"],
-  args: { 
+  args: {
     jsonSchema: numericSliderBasisPointsSchema,
     uiSchema: numericSliderUISchema,
   },
@@ -40,7 +39,7 @@ export const RequiredInteger: Story = {
 
 export const RequiredFloatingPointWithUnits: Story = {
   tags: ["autodocs"],
-  args: { 
+  args: {
     jsonSchema: numericSliderTemperatureSchema,
     uiSchema: numericSliderTemperatureUISchema,
   },
@@ -48,7 +47,7 @@ export const RequiredFloatingPointWithUnits: Story = {
 
 export const RequiredPercentageWithDefault: Story = {
   tags: ["autodocs"],
-  args: { 
+  args: {
     jsonSchema: numericSliderFinalGradeSchema,
     uiSchema: numericSliderPercentageUISchema,
   },
@@ -56,7 +55,7 @@ export const RequiredPercentageWithDefault: Story = {
 
 export const OptionalUSDWithDefault: Story = {
   tags: ["autodocs"],
-  args: { 
+  args: {
     jsonSchema: numericSliderDonateNowSchema,
     uiSchema: numericSliderUSDUISchema,
   },

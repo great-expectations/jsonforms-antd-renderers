@@ -67,7 +67,7 @@ describe("NumericSliderControl", () => {
   })
 
   it("calls onChange with number values", async () => {
-    let data = { numericRangeValue: 42.00 }
+    let data = { numericRangeValue: 42.0 }
     render({
       schema: numericSliderBasisPointsSchema,
       data,
@@ -80,11 +80,11 @@ describe("NumericSliderControl", () => {
     await userEvent.type(screen.getByRole("spinbutton"), "42.00")
 
     await waitFor(() => {
-      expect(data).toEqual({ numericRangeValue: 42.00 })
+      expect(data).toEqual({ numericRangeValue: 42.0 })
     })
   })
 
-  it ("shows units in tooltip if set in UI schema", async () => {
+  it("shows units in tooltip if set in UI schema", async () => {
     render({
       schema: numericSliderFinalGradeSchema,
       uischema: numericSliderPercentageUISchema,

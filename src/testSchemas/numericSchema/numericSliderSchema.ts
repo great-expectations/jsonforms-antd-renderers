@@ -59,7 +59,6 @@ export const numericSliderRelativeChangeSchema = {
   required: ["numericRangeValue"],
 } satisfies JSONSchema
 
-
 export const numericSliderFinalGradeSchema = {
   type: "object",
   properties: {
@@ -75,21 +74,19 @@ export const numericSliderFinalGradeSchema = {
   required: ["numericRangeValue"],
 } satisfies JSONSchema
 
-
 export const numericSliderDonateNowSchema = {
   type: "object",
   properties: {
     numericRangeValue: {
       type: "number",
       title: "Donate Now",
-      minimum: 5.00,
-      maximum: 1000.00,
-      multipleOf: 5.00,
-      default: 20.00,
-    }
+      minimum: 5.0,
+      maximum: 1000.0,
+      multipleOf: 5.0,
+      default: 20.0,
+    },
   },
 } satisfies JSONSchema
-
 
 export const numericSliderUISchema = {
   type: "VerticalLayout",
@@ -109,7 +106,7 @@ export const numericSliderUSDUISchema = {
       scope: "#/properties/numericRangeValue",
       options: {
         addonBefore: "$",
-      }
+      },
     },
   ],
 } satisfies UISchema
@@ -122,7 +119,7 @@ export const numericSliderPercentageUISchema = {
       scope: "#/properties/numericRangeValue",
       options: {
         addonAfter: "%",
-      }
+      },
     },
   ],
 } satisfies UISchema
@@ -135,7 +132,7 @@ export const numericSliderTemperatureUISchema = {
       scope: "#/properties/numericRangeValue",
       options: {
         addonAfter: "°F",
-      }
+      },
     },
   ],
 } satisfies UISchema

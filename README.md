@@ -14,7 +14,6 @@ import {
   rendererRegistryEntries,
   cellRegistryEntries,
 } from "jsonforms-antd-renderers"
-
 ;<JsonForms
   schema={schema}
   renderers={rendererRegistryEntries}

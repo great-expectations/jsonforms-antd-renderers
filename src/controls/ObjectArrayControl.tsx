@@ -8,27 +8,34 @@ import {
 } from "@jsonforms/core";
 import { JsonFormsDispatch } from "@jsonforms/react";
 import { Flex, List, Button } from "antd";
+import { ButtonProps } from "antd/lib";
 import range from "lodash.range";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, ComponentType } from "react";
 
-export function ObjectArrayControl(props: ArrayControlProps) {
+interface ArrayControlButtons {
+  AddButton?: ComponentType<ButtonProps>;
+  RemoveButton?: ComponentType<ButtonProps>;
+}
+
+export function ObjectArrayControl({
+  enabled,
+  data,
+  path,
+  schema,
+  uischema,
+  addItem,
+  removeItems,
+  renderers,
+  cells,
+  rootSchema,
+  uischemas,
+  AddButton = Button,
+  RemoveButton = Button,
+}: ArrayControlProps & ArrayControlButtons) {
   const innerCreateDefaultValue = useCallback(
-    () => createDefaultValue(props.schema, props.rootSchema),
-    [props.schema, props.rootSchema],
+    () => createDefaultValue(schema, rootSchema),
+    [schema, rootSchema],
   );
-  const {
-    enabled,
-    data,
-    path,
-    schema,
-    uischema,
-    addItem,
-    removeItems,
-    renderers,
-    cells,
-    rootSchema,
-    uischemas,
-  } = props;
 
   useEffect(() => {
     if (data === 0) {
@@ -56,19 +63,15 @@ export function ObjectArrayControl(props: ArrayControlProps) {
           <List.Item
             key={index}
             actions={[
-              <Button
-                key="delete"
-                type="text"
-                title="delete button"
-                // ghost
+              <RemoveButton
+                key="remove"
                 disabled={!removeItems || (data === 1 && index === 0)}
                 onClick={(e) => {
                   e.stopPropagation();
                   removeItems?.(path, [index])();
                 }}
-              >
-                Delete
-              </Button>,
+                children="Delete"
+              />,
             ]}
           >
             <div style={{ width: "100%" }}>
@@ -87,14 +90,13 @@ export function ObjectArrayControl(props: ArrayControlProps) {
       }}
       footer={
         <Flex justify="center">
-          <Button
+          <AddButton
             onClick={(e) => {
               e.stopPropagation();
               addItem(path, innerCreateDefaultValue())();
             }}
-          >
-            Add {label}
-          </Button>
+            children={`Add ${label}`}
+          />
         </Flex>
       }
     />

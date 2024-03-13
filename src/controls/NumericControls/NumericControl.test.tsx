@@ -57,6 +57,9 @@ describe("NumericControl", () => {
 
     await waitFor(() => {
       expect(state.data).toBe(weight)
+    })
+
+    await waitFor(() => {
       expect(state.errors).toHaveLength(0)
     })
   })
@@ -66,7 +69,7 @@ describe("NumericControl", () => {
       schema: numericMagnitudeSchema,
     })
 
-    expect(screen.getByText("Magnitude")).not.toBeNull()
+    screen.getByText("Magnitude")
   })
 
   it("Follows the hide rule", () => {
@@ -86,7 +89,7 @@ describe("NumericControl", () => {
       schema: numericTheNumberSchema, // this has a default of 42.42
       uischema: numericUISchema,
     })
-    expect(screen.getByText("The Number")).not.toBeNull()
+    screen.getByText("The Number")
     expect(screen.getByRole("spinbutton")).toHaveValue(`${dataVal}`)
   })
 
@@ -124,7 +127,7 @@ describe("NumericControl", () => {
     const input = screen.getByRole("spinbutton")
     await userEvent.clear(input)
     await userEvent.tab()
-    expect(await screen.findByText("The Number is required")).not.toBeNull()
+    await screen.findByText("The Number is required")
   })
 
   it ("shows units next to text input if set in UI schema", async () => {

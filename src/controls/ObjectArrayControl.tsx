@@ -45,60 +45,66 @@ export function ObjectArrayControl({
 
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema);
   const label = labelDescription.show ? labelDescription.text : "";
-  return (
-    <List // there's a compelling case to be made for Form.List instead, but going with this for now
-      header={<b>{label}</b>}
-      dataSource={range(data)}
-      renderItem={(_item, index) => {
-        const foundUISchema = findUISchema(
-          uischemas ?? [],
-          schema,
-          uischema.scope,
-          path,
-          undefined,
-          uischema,
-          rootSchema,
-        );
-        return (
-          <List.Item
-            key={index}
-            actions={[
-              <RemoveButton
-                key="remove"
-                disabled={!removeItems || (data === 1 && index === 0)}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeItems?.(path, [index])();
-                }}
-                children="Delete"
-              />,
-            ]}
-          >
-            <div style={{ width: "100%" }}>
-              <JsonFormsDispatch
-                enabled={enabled}
-                schema={schema}
-                path={composePaths(path, `${index}`)}
-                uischema={foundUISchema}
-                renderers={renderers}
-                cells={cells}
-                uischemas={uischemas}
-              />
-            </div>
-          </List.Item>
-        );
-      }}
-      footer={
-        <Flex justify="center">
-          <AddButton
+
+  const renderItem = (_item: number, index: number) => {
+    const foundUISchema = findUISchema(
+      uischemas ?? [],
+      schema,
+      uischema.scope,
+      path,
+      undefined,
+      uischema,
+      rootSchema,
+    );
+    return (
+      <List.Item
+        key={index}
+        actions={[
+          <RemoveButton
+            key="remove"
+            disabled={!removeItems || (data === 1 && index === 0)}
             onClick={(e) => {
               e.stopPropagation();
-              addItem(path, innerCreateDefaultValue())();
+              removeItems?.(path, [index])();
             }}
-            children={`Add ${label}`}
+            children="Delete"
+          />,
+        ]}
+      >
+        <div style={{ width: "100%" }}>
+          <JsonFormsDispatch
+            enabled={enabled}
+            schema={schema}
+            path={composePaths(path, `${index}`)}
+            uischema={foundUISchema}
+            renderers={renderers}
+            cells={cells}
+            uischemas={uischemas}
           />
-        </Flex>
-      }
+        </div>
+      </List.Item>
+    );
+  };
+
+  const addButton = (
+    <Flex justify="center">
+      <AddButton
+        onClick={(e) => {
+          e.stopPropagation();
+          addItem(path, innerCreateDefaultValue())();
+        }}
+        children={`Add ${label}`}
+      />
+    </Flex>
+  );
+
+  return (
+    <List // there's a compelling case to be made for Form.List instead, but going with this for now
+      dataSource={range(data)}
+      renderItem={renderItem}
+      {...(uischema.options?.addButtonLocation?.toUpperCase() === "TOP"
+        ? { header: addButton }
+        : { footer: addButton })}
     />
   );
 }

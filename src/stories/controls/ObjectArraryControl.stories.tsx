@@ -97,3 +97,39 @@ export const ObjectArrayOfBooleans: Story = {
     },
   },
 }
+
+export const ObjectArrayWithUiOptionAddButtonTop: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      title: "Yes Or No",
+      type: "object",
+      properties: {
+        options: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              option: {
+                title: "Option",
+                type: "boolean",
+              },
+            },
+          },
+        },
+      },
+    },
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          scope: "#/properties/options",
+          type: "Control",
+          options: {
+            addButtonLocation: "top",
+          },
+        },
+      ],
+    },
+  },
+}

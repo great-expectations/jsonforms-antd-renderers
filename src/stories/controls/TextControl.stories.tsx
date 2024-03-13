@@ -1,13 +1,13 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { rendererRegistryEntries } from "../../renderers";
-import { UISchema } from "../../ui-schema";
-import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm";
+import { Meta, StoryObj } from "@storybook/react"
+import { rendererRegistryEntries } from "../../renderers"
+import { UISchema } from "../../ui-schema"
+import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 
 const schema = {
   type: "object",
   properties: { name: { type: "string" } },
   // required: ["name"],
-};
+}
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Text",
@@ -30,9 +30,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
         },
       ],
     } satisfies UISchema,
-    rendererRegistryEntries: [
-      ...rendererRegistryEntries,
-    ],
+    rendererRegistryEntries: [...rendererRegistryEntries],
   },
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
@@ -42,14 +40,14 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
       description: "this is a simple schema with one property (name)",
     },
     uiSchemaRegistryEntries: { table: { disable: true } },
-    data: {table: {disable: true}}, 
-    config: {control: "object"},
-    onChange: {table: {disable: true, action: "on-change"}},
+    data: { table: { disable: true } },
+    config: { control: "object" },
+    onChange: { table: { disable: true, action: "on-change" } },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof StorybookAntDJsonForm>;
+export default meta
+type Story = StoryObj<typeof StorybookAntDJsonForm>
 
 export const SingleLine: Story = {
   parameters: { controls: { expanded: true } },
@@ -62,7 +60,7 @@ export const SingleLine: Story = {
       description: "this is a simple schema with one property (name)",
     },
   },
-};
+}
 
 export const MultiLine: Story = {
   args: {
@@ -79,4 +77,4 @@ export const MultiLine: Story = {
       ],
     } satisfies UISchema,
   },
-};
+}

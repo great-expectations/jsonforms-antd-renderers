@@ -1,2 +1,2 @@
-export { rendererRegistryEntries, cellRegistryEntries } from "./renderers";
-export type { UISchema } from "./ui-schema";
+export { rendererRegistryEntries, cellRegistryEntries } from "./renderers"
+export type { UISchema } from "./ui-schema"

@@ -1,5 +1,6 @@
 import { JsonSchema } from "@jsonforms/core"
 import { AlertProps } from "antd"
+import { RuleObject as AntDRule } from "antd/lib/form"
 
 // jsonforms has composed their types in such a way that recursive types only specify the "base" type
 // this type is intended to fix that problem in the short term so that we can have strong type checking
@@ -140,13 +141,14 @@ export type OneOfControlOptions = {
   toggleLabel?: string
 }
 
-export type TextControlType = "multiline" | "singleline"
+export type TextControlType = "multiline" | "password" | "singleline"
 
 export type TextControlOptions = {
   type?: TextControlType
   tooltip?: string
   placeholderText?: string
   required?: boolean
+  rules: AntDRule[]
 }
 
 export type AnyOfControlOptions = {

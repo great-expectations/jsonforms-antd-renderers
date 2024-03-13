@@ -14,6 +14,7 @@ import {
   numericPriceSchema,
   numericUSDUISchema,
 } from "../../testSchemas/numericSchema/numericSchema"
+import "@testing-library/jest-dom"
 
 
 describe("NumericControl", () => {

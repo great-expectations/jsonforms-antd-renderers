@@ -25,7 +25,10 @@ import { UnknownControl } from "./controls/UnknownControl";
 import { VerticalLayoutRenderer } from "./layouts/VerticalLayoutRenderer";
 import { ObjectControl } from "./controls/ObjectControl";
 import { GroupLayoutRenderer } from "./layouts/GroupLayoutRenderer";
+import { NumericControl } from "./controls/NumericControls/NumericControl";
 import React from "react";
+
+import { isNumericControl } from "./controls/NumericControls/testers";
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
@@ -52,6 +55,10 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   {
     tester: rankWith(2, uiTypeIs("Label")),
     renderer: withJsonFormsLabelProps(AlertControl),
+  },
+  {
+    tester: rankWith(2, isNumericControl),
+    renderer: withJsonFormsControlProps(NumericControl),
   },
   {
     tester: rankWith(10, and(isObjectControl, not(isLayout))),

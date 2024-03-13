@@ -1,11 +1,11 @@
-import React from "react";
-import { JsonSchema, OwnPropsOfRenderer } from "@jsonforms/core";
-import { renderLayoutElements } from "./render-layout-elements";
-import { UISchema } from "../ui-schema";
+import React from "react"
+import { JsonSchema, OwnPropsOfRenderer } from "@jsonforms/core"
+import { renderLayoutElements } from "./render-layout-elements"
+import { UISchema } from "../ui-schema"
 
 export interface AntDLayoutRendererProps extends OwnPropsOfRenderer {
-  elements: UISchema[];
-  direction?: "row" | "column";
+  elements: UISchema[]
+  direction?: "row" | "column"
 }
 
 function AntDLayoutComponent({
@@ -18,7 +18,7 @@ function AntDLayoutComponent({
   direction = "column",
 }: AntDLayoutRendererProps) {
   if (!elements?.length && !Object.keys(elements).length) {
-    return null;
+    return null
   }
   return (
     <>
@@ -29,9 +29,9 @@ function AntDLayoutComponent({
         !!enabled,
         renderers,
         cells,
-        direction
+        direction,
       )}
     </>
-  );
+  )
 }
-export const AntDLayoutRenderer = React.memo(AntDLayoutComponent);
+export const AntDLayoutRenderer = React.memo(AntDLayoutComponent)

@@ -1,9 +1,9 @@
-import { CellProps, WithClassname, Helpers } from "@jsonforms/core";
-import { Checkbox as AntDCheckbox } from "antd";
-import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { CellProps, WithClassname, Helpers } from "@jsonforms/core"
+import { Checkbox as AntDCheckbox } from "antd"
+import { CheckboxChangeEvent } from "antd/es/checkbox"
 
 interface CheckboxProps extends CellProps, WithClassname {
-  label?: string;
+  label?: string
 }
 
 export function Checkbox({
@@ -17,10 +17,10 @@ export function Checkbox({
   handleChange,
   label,
 }: CheckboxProps) {
-  const checked = !!data; // convert undefined to false
+  const checked = !!data // convert undefined to false
 
-  const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema);
-  const defaultLabel = labelDescription.show ? labelDescription.text : "";
+  const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
+  const defaultLabel = labelDescription.show ? labelDescription.text : ""
 
   return (
     <AntDCheckbox
@@ -34,5 +34,5 @@ export function Checkbox({
     >
       {label ?? defaultLabel}
     </AntDCheckbox>
-  );
+  )
 }

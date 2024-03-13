@@ -9,17 +9,17 @@ $ npm install jsonforms-antd-renderers
 ```
 
 ```tsx
-import { JsonForms } from "@jsonforms/react";
+import { JsonForms } from "@jsonforms/react"
 import {
   rendererRegistryEntries,
   cellRegistryEntries,
-} from "jsonforms-antd-renderers";
+} from "jsonforms-antd-renderers"
 
-<JsonForms
+;<JsonForms
   schema={schema}
   renderers={rendererRegistryEntries}
   cells={cellRegistryEntries}
-/>;
+/>
 ```
 
 ## Contributing

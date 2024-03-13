@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import {
-  ControlProps,
-  isDescriptionHidden,
-} from "@jsonforms/core"
+import { ControlProps, isDescriptionHidden } from "@jsonforms/core"
 import { Form } from "antd"
 import { Checkbox } from "../antd/Checkbox"
 import { QuestionCircleOutlined } from "@ant-design/icons"
@@ -23,7 +20,10 @@ export function BooleanControl({
   description,
 }: ControlProps) {
   const isValid = errors.length === 0
-  const appliedUiSchemaOptions = {...config as Record<string, unknown>, ...uischema.options}
+  const appliedUiSchemaOptions = {
+    ...(config as Record<string, unknown>),
+    ...uischema.options,
+  }
 
   const showDescription = !isDescriptionHidden(
     visible,
@@ -37,13 +37,7 @@ export function BooleanControl({
   )
 
   const showTooltip =
-    !showDescription &&
-    !isDescriptionHidden(
-      visible,
-      description,
-      true,
-      true,
-    )
+    !showDescription && !isDescriptionHidden(visible, description, true, true)
   return (
     <Form.Item
       id={id}
@@ -76,5 +70,5 @@ export function BooleanControl({
         config={config}
       />
     </Form.Item>
-  )
+  );
 }

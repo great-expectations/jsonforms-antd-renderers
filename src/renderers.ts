@@ -9,23 +9,23 @@ import {
   isLayout,
   not,
   and,
-} from "@jsonforms/core";
+} from "@jsonforms/core"
 import {
   withJsonFormsControlProps,
   withJsonFormsLabelProps,
   withJsonFormsCellProps,
   withJsonFormsLayoutProps,
   withJsonFormsDetailProps,
-} from "@jsonforms/react";
+} from "@jsonforms/react"
 
-import { BooleanControl } from "./controls/BooleanControl";
-import { AlertControl } from "./controls/AlertControl";
-import { TextControl } from "./controls/TextControl";
-import { UnknownControl } from "./controls/UnknownControl";
-import { VerticalLayoutRenderer } from "./layouts/VerticalLayoutRenderer";
-import { ObjectControl } from "./controls/ObjectControl";
-import { GroupLayoutRenderer } from "./layouts/GroupLayoutRenderer";
-import React from "react";
+import { BooleanControl } from "./controls/BooleanControl"
+import { AlertControl } from "./controls/AlertControl"
+import { TextControl } from "./controls/TextControl"
+import { UnknownControl } from "./controls/UnknownControl"
+import { VerticalLayoutRenderer } from "./layouts/VerticalLayoutRenderer"
+import { ObjectControl } from "./controls/ObjectControl"
+import { GroupLayoutRenderer } from "./layouts/GroupLayoutRenderer"
+import React from "react"
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
@@ -57,11 +57,11 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
     tester: rankWith(10, and(isObjectControl, not(isLayout))),
     renderer: withJsonFormsDetailProps(ObjectControl),
   },
-];
+]
 
 export const cellRegistryEntries: JsonFormsCellRendererRegistryEntry[] = [
   {
     tester: rankWith(1, () => true),
     cell: withJsonFormsCellProps(UnknownControl),
   },
-];
+]

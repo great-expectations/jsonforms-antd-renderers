@@ -10,9 +10,12 @@ describe("percentageStringToDecimal", () => {
     { value: "0.005", expected: 0.00005 },
     { value: "0.066", expected: 0.00066 },
     { value: "85.9999999999", expected: 0.859999999999 },
-  ])("when value is $value it returns $expected", ({ value, expected }: { value: string; expected: number }) => {
-    expect(percentageStringToDecimal(value)).toEqual(expected)
-  })
+  ])(
+    "when value is $value it returns $expected",
+    ({ value, expected }: { value: string; expected: number }) => {
+      expect(percentageStringToDecimal(value)).toEqual(expected)
+    },
+  )
 })
 
 describe("decimalToPercentage", () => {

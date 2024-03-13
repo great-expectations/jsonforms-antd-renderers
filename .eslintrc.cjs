@@ -12,15 +12,17 @@ module.exports = {
   ignorePatterns: ["dist", ".eslintrc.cjs", "lib"],
   parser: "@typescript-eslint/parser",
   plugins: ["react-refresh", "testing-library"],
-  overrides: [ { 
-    files: ["./src/**/*.test.tsx"],
-    extends: ["plugin:testing-library/react"],
-    rules: {
-      "testing-library/prefer-implicit-assert": "error",
-      "testing-library/prefer-presence-queries": "error",
-      "testing-library/prefer-user-event": "error"
-    }
-  }],
+  overrides: [
+    {
+      files: ["./src/**/*.test.tsx"],
+      extends: ["plugin:testing-library/react"],
+      rules: {
+        "testing-library/prefer-implicit-assert": "error",
+        "testing-library/prefer-presence-queries": "error",
+        "testing-library/prefer-user-event": "error",
+      },
+    },
+  ],
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
@@ -38,4 +40,4 @@ module.exports = {
       version: "detect",
     },
   },
-};
+}

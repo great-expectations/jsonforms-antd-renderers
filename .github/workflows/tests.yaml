@@ -46,8 +46,8 @@ jobs:
       - name: Dry-run of build
         shell: bash
         run: |
-          tsc --build --dry -p tsconfig.esm.json
-          tsc --build --dry -p tsconfig.cjs.json
+          tsc --build --dry tsconfig.esm.json
+          tsc --build --dry tsconfig.cjs.json
 
 
       - name: Run lint

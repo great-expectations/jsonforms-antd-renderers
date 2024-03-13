@@ -1,11 +1,14 @@
 {
-  "extends": "./tsconfig.production.json",
-  "compilerOptions": {
-    "lib": ["ES6", "DOM"],
-    "target": "ES6",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
-    "outDir": "./lib/cjs",
-    "declarationDir": "./lib/cjs"
-  }
+    "extends": "./tsconfig.production.json",
+    "compilerOptions": {
+        "lib": [
+            "ESNEXT",
+            "DOM"
+        ],
+        "target": "ES6",
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "outDir": "./lib/cjs",
+        "declarationDir": "./lib/cjs"
+    }
 }

@@ -135,6 +135,6 @@ describe("NumericControl", () => {
       schema: numericPriceSchema,
       uischema: numericUSDUISchema,
     })
-    expect(await screen.findByText("$")).not.toBeNull()
+    await screen.findByText("$")
   })
 })

@@ -18,7 +18,7 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
   const value = props.data === undefined || isDataEmptyObj ? defaultValue : props.data as number
 
   const numberType = schema.type
-  const isInteger = (typeof numberType === "string" && numberType === "integer") || (Array.isArray(numberType) && numberType.includes("integer"))
+  const isInteger = typeof numberType === "string" && numberType === "integer"
   const handleChange = (value: number | null) => {
     if (typeof value === "number") {
       if (isInteger) {

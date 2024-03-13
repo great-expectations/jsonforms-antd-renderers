@@ -65,6 +65,10 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
     tester: rankWith(2, isNumericControl),
     renderer: withJsonFormsControlProps(NumericControl),
   },
+  {
+    tester: rankWith(2, isNumericControl),
+    renderer: withJsonFormsControlProps(NumericControl),
+  },
   { 
     tester: rankWith(3, isNumericSliderControl), 
     renderer: withJsonFormsControlProps(NumericSliderControl) 

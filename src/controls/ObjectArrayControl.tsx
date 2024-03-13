@@ -59,7 +59,6 @@ export function ObjectArrayControl(props: ArrayControlProps) {
               <Button
                 key="delete"
                 type="text"
-                icon="trash"
                 title="delete button"
                 // ghost
                 disabled={!removeItems || (data === 1 && index === 0)}
@@ -67,7 +66,9 @@ export function ObjectArrayControl(props: ArrayControlProps) {
                   e.stopPropagation();
                   removeItems?.(path, [index])();
                 }}
-              />,
+              >
+                Delete
+              </Button>,
             ]}
           >
             <div style={{ width: "100%" }}>
@@ -87,7 +88,6 @@ export function ObjectArrayControl(props: ArrayControlProps) {
       footer={
         <Flex justify="center">
           <Button
-            icon="plus"
             onClick={(e) => {
               e.stopPropagation();
               addItem(path, innerCreateDefaultValue())();

@@ -45,10 +45,7 @@ jobs:
 
       - name: Dry-run of build
         shell: bash
-        run: |
-          pnpm run clean
-          tsc --build --dry
-          tsc --build --dry
+        run: tsc --build --dry
 
 
       - name: Run lint

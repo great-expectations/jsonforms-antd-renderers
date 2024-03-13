@@ -2,7 +2,7 @@
     "extends": "./tsconfig.production.json",
     "compilerOptions": {
         "lib": [
-            "ESNEXT",
+            "ES6",
             "DOM"
         ],
         "target": "ES6",

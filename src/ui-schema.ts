@@ -1,5 +1,5 @@
 import { JsonSchema } from "@jsonforms/core"
-import { AlertProps } from "antd"
+import { AlertProps, InputNumberProps } from "antd"
 
 // jsonforms has composed their types in such a way that recursive types only specify the "base" type
 // this type is intended to fix that problem in the short term so that we can have strong type checking
@@ -265,4 +265,10 @@ type OrCondition = ComposableCondition & {
  */
 type AndCondition = ComposableCondition & {
   type: "AND"
+}
+
+
+export type InputNumberOptions =  { 
+  addonBefore?: InputNumberProps["addonBefore"]
+  addonAfter?: InputNumberProps["addonAfter"]
 }

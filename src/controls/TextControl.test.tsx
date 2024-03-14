@@ -1,11 +1,11 @@
 import { test, expect } from "vitest"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { JSONSchema } from "json-schema-to-ts"
+import type { JSONSchema } from "json-schema-to-ts"
 
 import { render } from "../common/test-render"
-import { UISchema } from "../ui-schema"
-import { JSONFormData } from "../common/schema-derived-types"
+import type { UISchema } from "../ui-schema"
+import type { JSONFormData } from "../common/schema-derived-types"
 
 const textInputSchema = {
   type: "object",
@@ -86,7 +86,9 @@ test("renders a password when present", async () => {
     "Enter " + passwordSchema.properties.secret.title,
     { exact: false },
   )
-  expect(screen.getByLabelText("Secret").type).toEqual("password")
+  expect(
+    (screen.getByLabelText("Secret") satisfies HTMLInputElement).type,
+  ).toEqual("password")
 })
 
 test("renders error messages from rule validation", async () => {

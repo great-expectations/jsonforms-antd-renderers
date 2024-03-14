@@ -1,11 +1,13 @@
-import { ChangeEvent, useCallback, useEffect } from "react"
-import { Input, Form, InputProps } from "antd"
-import { Rule } from "antd/es/form"
+import type { ChangeEvent } from "react"
+import { useCallback, useEffect } from "react"
+import type { InputProps } from "antd"
+import { Input, Form } from "antd"
 import { QuestionCircleOutlined } from "@ant-design/icons"
-import { TextAreaProps } from "antd/lib/input"
-import { ControlProps } from "@jsonforms/core"
+import type { Rule } from "antd/es/form"
+import type { TextAreaProps } from "antd/es/input"
+import type { ControlProps } from "@jsonforms/core"
 
-import { TextControlOptions, TextControlType } from "../ui-schema"
+import type { TextControlOptions, TextControlType } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
 interface TextControlProps extends ControlProps {
   data: string

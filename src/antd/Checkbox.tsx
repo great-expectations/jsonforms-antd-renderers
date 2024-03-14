@@ -1,6 +1,7 @@
-import { CellProps, WithClassname, Helpers } from "@jsonforms/core"
+import type { CellProps, WithClassname} from "@jsonforms/core";
+import { Helpers } from "@jsonforms/core"
 import { Checkbox as AntDCheckbox } from "antd"
-import { CheckboxChangeEvent } from "antd/es/checkbox"
+import type { CheckboxChangeEvent } from "antd/es/checkbox"
 
 interface CheckboxProps extends CellProps, WithClassname {
   label?: string

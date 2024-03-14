@@ -22,10 +22,10 @@ import { BooleanControl } from "./controls/BooleanControl"
 import { AlertControl } from "./controls/AlertControl"
 import { TextControl } from "./controls/TextControl"
 import { UnknownControl } from "./controls/UnknownControl"
-import { HorizontalLayoutRenderer } from "./layouts/HorizontalLayoutRenderer"
-import { VerticalLayoutRenderer } from "./layouts/VerticalLayoutRenderer"
+import { HorizontalLayout } from "./layouts/HorizontalLayout"
+import { VerticalLayout } from "./layouts/VerticalLayout"
 import { ObjectControl } from "./controls/ObjectControl"
-import { GroupLayoutRenderer } from "./layouts/GroupLayoutRenderer"
+import { GroupLayoutRenderer } from "./layouts/GroupLayout"
 import { NumericControl } from "./controls/NumericControls/NumericControl"
 import { NumericSliderControl } from "./controls/NumericControls/NumericSliderControl"
 import React from "react"
@@ -47,11 +47,11 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   },
   {
     tester: rankWith(2, uiTypeIs("HorizontalLayout")),
-    renderer: withJsonFormsLayoutProps(HorizontalLayoutRenderer),
+    renderer: withJsonFormsLayoutProps(HorizontalLayout),
   },
   {
     tester: rankWith(2, uiTypeIs("VerticalLayout")),
-    renderer: withJsonFormsLayoutProps(VerticalLayoutRenderer),
+    renderer: withJsonFormsLayoutProps(VerticalLayout),
   },
   {
     tester: rankWith(2, isBooleanControl),

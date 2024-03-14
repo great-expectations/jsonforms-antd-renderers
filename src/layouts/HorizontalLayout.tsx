@@ -1,10 +1,10 @@
 import { LayoutProps, GroupLayout } from "@jsonforms/core"
 import isEmpty from "lodash.isempty"
-import { AntDLayoutRenderer, AntDLayoutRendererProps } from "./LayoutRenderer"
+import { AntDLayout, AntDLayoutProps } from "./LayoutRenderer"
 import { HorizontalLayout } from "../ui-schema"
 import { Form, Row } from "antd"
 
-export function HorizontalLayoutRenderer({
+export function HorizontalLayout({
   uischema,
   schema,
   path,
@@ -15,7 +15,7 @@ export function HorizontalLayoutRenderer({
 }: LayoutProps) {
   const horizontalLayout = uischema as HorizontalLayout
   const groupLayout = uischema as GroupLayout
-  const childProps: AntDLayoutRendererProps = {
+  const childProps: AntDLayoutProps = {
     elements: horizontalLayout.elements,
     schema,
     path,
@@ -27,7 +27,7 @@ export function HorizontalLayoutRenderer({
     <Form component={form ? false : "form"} form={form}>
       {!isEmpty(groupLayout.label) && groupLayout.label}
       <Row justify="space-between" gutter={12}>
-        <AntDLayoutRenderer
+        <AntDLayout
           {...childProps}
           direction="row"
           renderers={renderers}

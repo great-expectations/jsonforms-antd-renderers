@@ -1,7 +1,7 @@
 import { GroupLayout, OwnPropsOfRenderer } from "@jsonforms/core"
 import { UISchema } from "../ui-schema"
 import { Divider } from "antd"
-import { AntDLayoutRenderer } from "./LayoutRenderer"
+import { AntDLayout } from "./LayoutRenderer"
 
 export type LayoutRendererProps = OwnPropsOfRenderer & {
   elements: UISchema[]
@@ -18,7 +18,7 @@ export function GroupLayoutRenderer({
     <>
       <Divider />
       {groupLayout?.label && <b>{groupLayout.label}</b>}
-      <AntDLayoutRenderer
+      <AntDLayout
         {...props}
         visible={visible}
         enabled={enabled}

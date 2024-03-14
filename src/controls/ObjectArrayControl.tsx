@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Helpers } from "@jsonforms/core";
+import { Helpers } from "@jsonforms/core"
 import {
   ArrayControlProps,
   composePaths,
   createDefaultValue,
   findUISchema,
-} from "@jsonforms/core";
-import { JsonFormsDispatch } from "@jsonforms/react";
-import { Flex, List, Button } from "antd";
-import range from "lodash.range";
-import React, { useCallback, useEffect } from "react";
-import { ArrayControlOptions } from "../ui-schema";
+} from "@jsonforms/core"
+import { JsonFormsDispatch } from "@jsonforms/react"
+import { Flex, List, Button } from "antd"
+import range from "lodash.range"
+import React, { useCallback, useEffect } from "react"
+import { ArrayControlOptions } from "../ui-schema"
 
 export function ObjectArrayControl({
   enabled,
@@ -28,19 +28,19 @@ export function ObjectArrayControl({
   const innerCreateDefaultValue = useCallback(
     () => createDefaultValue(schema, rootSchema),
     [schema, rootSchema],
-  );
+  )
 
   useEffect(() => {
     if (data === 0) {
-      addItem(path, innerCreateDefaultValue())();
+      addItem(path, innerCreateDefaultValue())()
     }
-  }, [addItem, data, innerCreateDefaultValue, path]);
+  }, [addItem, data, innerCreateDefaultValue, path])
 
-  const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema);
-  const label = labelDescription.show ? labelDescription.text : "";
+  const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
+  const label = labelDescription.show ? labelDescription.text : ""
 
   const options: ArrayControlOptions =
-    (uischema.options as ArrayControlOptions) ?? {};
+    (uischema.options as ArrayControlOptions) ?? {}
 
   const renderItem = (_item: number, index: number) => {
     const foundUISchema = findUISchema(
@@ -51,7 +51,7 @@ export function ObjectArrayControl({
       undefined,
       uischema,
       rootSchema,
-    );
+    )
     return (
       <List.Item
         key={index}
@@ -62,8 +62,8 @@ export function ObjectArrayControl({
             {...options.removeButtonProps}
             disabled={!removeItems || (data === 1 && index === 0)}
             onClick={(e) => {
-              e.stopPropagation();
-              removeItems?.(path, [index])();
+              e.stopPropagation()
+              removeItems?.(path, [index])()
             }}
           />,
         ]}
@@ -80,8 +80,8 @@ export function ObjectArrayControl({
           />
         </div>
       </List.Item>
-    );
-  };
+    )
+  }
 
   const addButton = (
     <Flex justify="center">
@@ -89,12 +89,12 @@ export function ObjectArrayControl({
         children={`Add ${label}`}
         {...options.addButtonProps}
         onClick={(e) => {
-          e.stopPropagation();
-          addItem(path, innerCreateDefaultValue())();
+          e.stopPropagation()
+          addItem(path, innerCreateDefaultValue())()
         }}
       />
     </Flex>
-  );
+  )
 
   return (
     <>
@@ -107,5 +107,5 @@ export function ObjectArrayControl({
           : { footer: addButton })}
       />
     </>
-  );
+  )
 }

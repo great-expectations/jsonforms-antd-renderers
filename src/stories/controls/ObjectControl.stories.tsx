@@ -9,7 +9,6 @@ import {
   objectUISchemaWithRule,
 } from "../../testSchemas/objectSchema"
 
-
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Object",
   component: StorybookAntDJsonForm,
@@ -29,7 +28,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     config: { control: "object" },
     onChange: { table: { disable: true, action: "on-change" } },
   },
-};
+}
 
 export default meta
 type Story = StoryObj<typeof StorybookAntDJsonForm>
@@ -40,7 +39,7 @@ export const ObjectWithUISchemaContainingOnlyName: Story = {
     jsonSchema: objectSchema,
     uiSchema: objectUISchemaWithName,
   },
-};
+}
 
 export const ObjectWithUISchemaContainingBothNameAndLastName: Story = {
   tags: ["autodocs"],
@@ -48,7 +47,7 @@ export const ObjectWithUISchemaContainingBothNameAndLastName: Story = {
     jsonSchema: objectSchema,
     uiSchema: objectUISchemaWithNameAndLastName,
   },
-};
+}
 
 export const ObjectWithRuleHidingLastNameIfNameIsJohn: Story = {
   tags: ["autodocs"],

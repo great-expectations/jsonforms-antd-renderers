@@ -1,7 +1,5 @@
-
-import { JsonSchema } from "@jsonforms/core";
-import { ButtonProps, InputNumberProps, AlertProps } from "antd";
-
+import { JsonSchema } from "@jsonforms/core"
+import { ButtonProps, InputNumberProps, AlertProps } from "antd"
 
 // jsonforms has composed their types in such a way that recursive types only specify the "base" type
 // this type is intended to fix that problem in the short term so that we can have strong type checking
@@ -17,7 +15,7 @@ export type UISchema =
   | GroupLayout
   | ControlElement
   | Categorization
-  | Category;
+  | Category
 
 /**
  * Interface for describing an UI schema element that is referencing
@@ -27,7 +25,7 @@ interface Scopable {
   /**
    * The scope that determines to which part this element should be bound to.
    */
-  scope?: string;
+  scope?: string
 }
 /**
  * Interface for describing an UI schema element that is referencing
@@ -37,7 +35,7 @@ interface Scoped extends Scopable {
   /**
    * The scope that determines to which part this element should be bound to.
    */
-  scope: string;
+  scope: string
 }
 /**
  * Interface for describing an UI schema element that may be labeled.
@@ -46,16 +44,16 @@ interface Labelable<T = string> {
   /**
    * Label for UI schema element.
    */
-  label?: string | T;
+  label?: string | T
 }
 /**
  * Interface for describing an UI schema element that is labeled.
  */
 interface Labeled<T = string> extends Labelable<T> {
-  label: string | T;
+  label: string | T
 }
 interface Internationalizable {
-  i18n?: string;
+  i18n?: string
 }
 /**
  * Common base interface for any UI schema element.
@@ -64,15 +62,15 @@ interface UISchemaElement<TOptions = { [key: string]: unknown }> {
   /**
    * The type of this UI schema element.
    */
-  type: string;
+  type: string
   /**
    * An optional rule.
    */
-  rule?: Rule;
+  rule?: Rule
   /**
    * Any additional options.
    */
-  options?: TOptions;
+  options?: TOptions
 }
 /**
  * Represents a layout element which can order its children
@@ -82,26 +80,26 @@ interface Layout extends UISchemaElement {
   /**
    * The child elements of this layout.
    */
-  elements: UISchema[];
+  elements: UISchema[]
 }
 /**
  * A layout which orders its child elements vertically (i.e. from top to bottom).
  */
 export interface VerticalLayout extends Layout {
-  type: "VerticalLayout";
+  type: "VerticalLayout"
 }
 /**
  * A layout which orders its children horizontally (i.e. from left to right).
  */
 export interface HorizontalLayout extends Layout {
-  type: "HorizontalLayout";
+  type: "HorizontalLayout"
 }
 /**
  * A group resembles a vertical layout, but additionally might have a label.
  * This layout is useful when grouping different elements by a certain criteria.
  */
 interface GroupLayout extends Layout, Labelable, Internationalizable {
-  type: "Group";
+  type: "Group"
 }
 /**
  * Represents an object that can be used to configure a label.
@@ -110,28 +108,28 @@ interface LabelDescription {
   /**
    * An optional text to be displayed.
    */
-  text?: string;
+  text?: string
   /**
    * Optional property that determines whether to show this label.
    */
-  show?: boolean;
+  show?: boolean
 }
 /**
  * A label element.
  */
 export interface LabelElement extends UISchemaElement, Internationalizable {
-  type: "Label";
+  type: "Label"
   /**
    * The text of label.
    */
-  text: string;
-  options?: LabelOptions;
+  text: string
+  options?: LabelOptions
 }
 
-export type AlertLabelOptions = { type: AlertProps["type"] };
+export type AlertLabelOptions = { type: AlertProps["type"] }
 
 // this is intended to be a union, it just has one member rn
-export type LabelOptions = AlertLabelOptions;
+export type LabelOptions = AlertLabelOptions
 
 export const OneOfControlOptions = [
   "button",
@@ -140,36 +138,34 @@ export const OneOfControlOptions = [
   "toggle",
 ] as const
 
-
-export type OneOfControlOption = (typeof OneOfControlOptions)[number];
+export type OneOfControlOption = (typeof OneOfControlOptions)[number]
 
 export type OneOfControlOptions = {
-  optionType?: OneOfControlOption;
-  toggleLabel?: string;
-};
+  optionType?: OneOfControlOption
+  toggleLabel?: string
+}
 
-export type TextControlType = "multiline" | "singleline";
+export type TextControlType = "multiline" | "singleline"
 
 export type TextControlOptions = {
-  type?: TextControlType;
-  tooltip?: string;
-  placeholderText?: string;
-  required?: boolean;
-};
+  type?: TextControlType
+  tooltip?: string
+  placeholderText?: string
+  required?: boolean
+}
 
 export type AnyOfControlOptions = {
-  optionType?: AnyOfControlOption;
-  required?: boolean;
-};
+  optionType?: AnyOfControlOption
+  required?: boolean
+}
 
-export const AnyOfControlOptions = ["button", "dropdown", "radio"] as const;
-export type AnyOfControlOption = (typeof AnyOfControlOptions)[number];
+export const AnyOfControlOptions = ["button", "dropdown", "radio"] as const
+export type AnyOfControlOption = (typeof AnyOfControlOptions)[number]
 
 type ControlOptions =
   | OneOfControlOptions
   | TextControlOptions
   | AnyOfControlOptions
-
 
 /**
  * A control element. The scope property of the control determines
@@ -180,13 +176,13 @@ export interface ControlElement
     Scoped,
     Labelable<string | boolean | LabelDescription>,
     Internationalizable {
-  type: "Control";
+  type: "Control"
 }
 /**
  * The category layout.
  */
 interface Category extends Layout, Labeled, Internationalizable {
-  type: "Category";
+  type: "Category"
 }
 /**
  * The categorization element, which may have children elements.
@@ -194,12 +190,12 @@ interface Category extends Layout, Labeled, Internationalizable {
  * the categorization element can be used to represent recursive structures like trees.
  */
 interface Categorization extends UISchemaElement, Labeled, Internationalizable {
-  type: "Categorization";
+  type: "Categorization"
   /**
    * The child elements of this categorization which are either of type
    * {@link Category} or {@link Categorization}.
    */
-  elements: (Category | Categorization)[];
+  elements: (Category | Categorization)[]
 }
 
 /**
@@ -209,12 +205,12 @@ interface Rule {
   /**
    * The effect of the rule
    */
-  effect: RuleEffect;
+  effect: RuleEffect
   /**
    * The condition of the rule that must evaluate to true in order
    * to trigger the effect.
    */
-  condition: Condition;
+  condition: Condition
 }
 
 enum RuleEffect {
@@ -243,55 +239,54 @@ type Condition =
       | SchemaBasedCondition
       | OrCondition
       | AndCondition
-  )
-
+    )
 
 interface JFCondition {
   /**
    * The type of condition.
    */
-  readonly type?: string;
+  readonly type?: string
 }
 /**
  * A leaf condition.
  */
 type LeafCondition = JFCondition &
   Scoped & {
-    type: "LEAF";
+    type: "LEAF"
     /**
      * The expected value when evaluating the condition
      */
-    expectedValue: unknown;
-  };
+    expectedValue: unknown
+  }
 type SchemaBasedCondition = JFCondition &
   Scoped & {
-    schema: JsonSchema;
-  };
+    schema: JsonSchema
+  }
 /**
  * A composable condition.
  */
 type ComposableCondition = JFCondition & {
-  conditions: Condition[];
-};
+  conditions: Condition[]
+}
 /**
  * An or condition.
  */
 type OrCondition = ComposableCondition & {
-  type: "OR";
-};
+  type: "OR"
+}
 /**
  * An and condition.
  */
 type AndCondition = ComposableCondition & {
-  type: "AND";
-};
+  type: "AND"
+}
 
-export type AddButtonLocation = "top" | "bottom";
+export type AddButtonLocation = "top" | "bottom"
 
 export interface ArrayControlOptions {
-  addButtonProps?: ButtonProps;
-  removeButtonProps?: ButtonProps;
-  addButtonLocation?: AddButtonLocation;
+  addButtonProps?: ButtonProps
+  removeButtonProps?: ButtonProps
+  addButtonLocation?: AddButtonLocation
 }
 
 export type InputNumberOptions = {

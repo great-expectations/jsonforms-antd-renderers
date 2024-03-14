@@ -23,7 +23,7 @@ import {
   withJsonFormsDetailProps,
   withJsonFormsArrayLayoutProps,
   withJsonFormsLayoutProps,
-  withJsonFormsLabelProps
+  withJsonFormsLabelProps,
 } from "@jsonforms/react"
 
 import { BooleanControl } from "./controls/BooleanControl"
@@ -35,13 +35,12 @@ import { ObjectControl } from "./controls/ObjectControl"
 import { GroupLayoutRenderer } from "./layouts/GroupLayoutRenderer"
 import { NumericControl } from "./controls/NumericControls/NumericControl"
 import { NumericSliderControl } from "./controls/NumericControls/NumericSliderControl"
-import { ObjectArrayControl } from "./controls/ObjectArrayControl";
+import { ObjectArrayControl } from "./controls/ObjectArrayControl"
 
 import {
   isNumericControl,
   isNumericSliderControl,
 } from "./controls/NumericControls/testers"
-
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [

@@ -3,7 +3,7 @@ import { Input, Form, InputProps } from "antd"
 import { Rule } from "antd/es/form"
 import { QuestionCircleOutlined } from "@ant-design/icons"
 import { TextAreaProps } from "antd/lib/input"
-import { ControlProps, } from "@jsonforms/core"
+import { ControlProps } from "@jsonforms/core"
 
 import { TextControlOptions, TextControlType } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
@@ -34,7 +34,8 @@ export function TextControl({
     },
     [handleChange, path],
   )
-  const options: TextControlOptions = (uischema.options as TextControlOptions) ?? {}
+  const options: TextControlOptions =
+    (uischema.options as TextControlOptions) ?? {}
   const textControlType: TextControlType = options.type ?? "singleline"
   const tooltip = options.tooltip
   const placeholderText = options.placeholderText
@@ -45,7 +46,7 @@ export function TextControl({
       whitespace: required,
       message: required ? `${label} is required` : "",
     },
-    ...options?.rules ? options.rules : [],
+    ...(options?.rules ? options.rules : []),
   ]
   useEffect(() => {
     form.setFieldValue(path, setInitialValue(data ?? schema.default))
@@ -72,8 +73,12 @@ export function TextControl({
         aria-label={label || schema.description}
         disabled={!enabled}
         autoComplete="off"
-        onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleChange(path, e.target.value)}
-        placeholder={`Enter ${placeholderText ?? (label.toLowerCase() || "value")}`}
+        onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
+          handleChange(path, e.target.value)
+        }
+        placeholder={`Enter ${
+          placeholderText ?? (label.toLowerCase() || "value")
+        }`}
       />
     </Form.Item>
   )

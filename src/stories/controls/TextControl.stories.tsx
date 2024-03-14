@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { rendererRegistryEntries } from "../../renderers";
-import { TextControlOptions, UISchema } from "../../ui-schema";
-import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm";
+import { Meta, StoryObj } from "@storybook/react"
+import { rendererRegistryEntries } from "../../renderers"
+import { TextControlOptions, UISchema } from "../../ui-schema"
+import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 
 const schema = {
   type: "object",
@@ -77,7 +77,7 @@ export const MultiLine: Story = {
       ],
     } satisfies UISchema,
   },
-};
+}
 
 export const Password: Story = {
   args: {
@@ -94,7 +94,7 @@ export const Password: Story = {
       ],
     } satisfies UISchema,
   },
-};
+}
 
 export const RuleDefinedInUISchema: Story = {
   args: {
@@ -110,7 +110,7 @@ export const RuleDefinedInUISchema: Story = {
             rules: [
               {
                 pattern: new RegExp("^(?! ).*(?<! )$"), // no leading or trailing spaces
-                message: "Name cannot start or end with a space"
+                message: "Name cannot start or end with a space",
               },
             ],
           } satisfies TextControlOptions,
@@ -118,4 +118,4 @@ export const RuleDefinedInUISchema: Story = {
       ],
     } satisfies UISchema,
   },
-};
+}

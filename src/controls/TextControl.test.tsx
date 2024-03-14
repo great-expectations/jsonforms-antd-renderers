@@ -1,17 +1,17 @@
-import { test, expect } from "vitest";
-import { screen, waitFor } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
-import { JSONSchema } from "json-schema-to-ts";
+import { test, expect } from "vitest"
+import { screen, waitFor } from "@testing-library/react"
+import { userEvent } from "@testing-library/user-event"
+import { JSONSchema } from "json-schema-to-ts"
 
-import { render } from "../common/test-render";
-import { UISchema } from "../ui-schema";
-import { JSONFormData } from "../common/schema-derived-types";
+import { render } from "../common/test-render"
+import { UISchema } from "../ui-schema"
+import { JSONFormData } from "../common/schema-derived-types"
 
 const textInputSchema = {
   type: "object",
   properties: { foo: { type: "string", title: "Foo" } },
   additionalProperties: false,
-} satisfies JSONSchema;
+} satisfies JSONSchema
 
 const defaultValueTextInputSchema = {
   type: "object",
@@ -19,7 +19,7 @@ const defaultValueTextInputSchema = {
     foo: { type: "string", title: "Foo", default: "i love pizza" },
   },
   additionalProperties: false,
-} satisfies JSONSchema;
+} satisfies JSONSchema
 
 test("renders data that the user enters", async () => {
   render({
@@ -28,66 +28,66 @@ test("renders data that the user enters", async () => {
       properties: { name: { type: "string", title: "name" } },
     },
     data: {},
-  });
-  const input = await screen.findByLabelText("name");
-  await userEvent.type(input, "abc");
-  await screen.findByDisplayValue("abc");
-  expect(input).toHaveValue("abc");
-});
+  })
+  const input = await screen.findByLabelText("name")
+  await userEvent.type(input, "abc")
+  await screen.findByDisplayValue("abc")
+  expect(input).toHaveValue("abc")
+})
 
 test("renders default value when present", async () => {
   render({
     schema: defaultValueTextInputSchema,
-  });
+  })
   await waitFor(() => {
     expect(
       screen.getByPlaceholderText(
         "Enter " + defaultValueTextInputSchema.properties.foo.title,
-        { exact: false }
-      )
-    ).toHaveValue(defaultValueTextInputSchema.properties.foo.default);
-  });
-});
+        { exact: false },
+      ),
+    ).toHaveValue(defaultValueTextInputSchema.properties.foo.default)
+  })
+})
 
 test("updates jsonforms data as expected", async () => {
-  let data: JSONFormData<typeof textInputSchema> = {};
+  let data: JSONFormData<typeof textInputSchema> = {}
   render({
     schema: textInputSchema,
     data,
     onChange: (result) => {
-      data = result.data;
+      data = result.data
     },
-  });
+  })
 
   const input = screen.getByPlaceholderText(
     "Enter " + textInputSchema.properties.foo.title,
-    { exact: false }
-  );
+    { exact: false },
+  )
 
-  await userEvent.clear(input);
-  await userEvent.type(input, "a");
+  await userEvent.clear(input)
+  await userEvent.type(input, "a")
   await waitFor(() => {
-    expect(data).toEqual({ foo: "a" });
-  });
-});
+    expect(data).toEqual({ foo: "a" })
+  })
+})
 
 test("renders a password when present", async () => {
   const passwordUISchema: UISchema = {
     type: "Control",
     scope: "#/properties/secret",
     options: { type: "password" },
-  };
+  }
   const passwordSchema = {
     properties: { secret: { type: "string", title: "Secret" } },
-  } satisfies JSONSchema;
+  } satisfies JSONSchema
 
-  render({ schema: passwordSchema, uischema: passwordUISchema });
+  render({ schema: passwordSchema, uischema: passwordUISchema })
   await screen.findByPlaceholderText(
     "Enter " + passwordSchema.properties.secret.title,
-    { exact: false }
-  );
-  expect(screen.getByLabelText("Secret").type).toEqual("password");
-});
+    { exact: false },
+  )
+  expect(screen.getByLabelText("Secret").type).toEqual("password")
+})
 
 test("renders error messages from rule validation", async () => {
   const patternUISchema: UISchema = {
@@ -101,25 +101,25 @@ test("renders error messages from rule validation", async () => {
         },
       ],
     },
-  };
+  }
 
   const patternSchema = {
     type: "object",
     properties: { name: { type: "string", title: "Name" } },
-  } satisfies JSONSchema;
+  } satisfies JSONSchema
 
   render({
     schema: patternSchema,
     uischema: patternUISchema,
-  });
+  })
 
   const inputElement = await screen.findByPlaceholderText(
     "Enter " + patternSchema.properties.name.title,
-    { exact: false }
-  );
+    { exact: false },
+  )
 
-  await userEvent.type(inputElement, "123");
-  await userEvent.tab(); // to trigger onBlur validation
+  await userEvent.type(inputElement, "123")
+  await userEvent.tab() // to trigger onBlur validation
 
-  await screen.findByText("Only letters are allowed");
-});
+  await screen.findByText("Only letters are allowed")
+})

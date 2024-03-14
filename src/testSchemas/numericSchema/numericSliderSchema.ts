@@ -88,8 +88,18 @@ export const numericSliderDonateNowSchema = {
   },
 } satisfies JSONSchema
 
-export const numericSliderUISchema = {
+export const numericSliderVerticalUISchema = {
   type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/numericRangeValue",
+    },
+  ],
+} satisfies UISchema
+
+export const numericSliderHorizontalUISchema = {
+  type: "HorizontalLayout",
   elements: [
     {
       type: "Control",

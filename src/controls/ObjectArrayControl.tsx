@@ -9,7 +9,7 @@ import {
 import { JsonFormsDispatch } from "@jsonforms/react"
 import { Flex, List, Button } from "antd"
 import range from "lodash.range"
-import React, { useCallback, useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { ArrayControlOptions } from "../ui-schema"
 
 export function ObjectArrayControl({

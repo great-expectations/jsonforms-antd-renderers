@@ -1,4 +1,7 @@
-import { GroupLayout as GroupLayoutUISchema, OwnPropsOfRenderer } from "@jsonforms/core"
+import {
+  GroupLayout as GroupLayoutUISchema,
+  OwnPropsOfRenderer,
+} from "@jsonforms/core"
 import { UISchema } from "../ui-schema"
 import { Divider } from "antd"
 import { AntDLayout } from "./LayoutRenderer"

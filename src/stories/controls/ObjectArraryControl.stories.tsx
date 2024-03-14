@@ -33,7 +33,7 @@ const schema = {
       },
     },
   },
-}
+} satisfies JSONSchema
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Object Array",

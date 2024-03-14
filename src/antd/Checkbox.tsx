@@ -1,4 +1,4 @@
-import type { CellProps, WithClassname} from "@jsonforms/core";
+import type { CellProps, WithClassname } from "@jsonforms/core"
 import { Helpers } from "@jsonforms/core"
 import { Checkbox as AntDCheckbox } from "antd"
 import type { CheckboxChangeEvent } from "antd/es/checkbox"

@@ -8,14 +8,9 @@ import {
 } from "@jsonforms/core";
 import { JsonFormsDispatch } from "@jsonforms/react";
 import { Flex, List, Button } from "antd";
-import { ButtonProps } from "antd/lib";
 import range from "lodash.range";
-import React, { useCallback, useEffect, ComponentType } from "react";
-
-interface ArrayControlButtons {
-  AddButton?: ComponentType<ButtonProps>;
-  RemoveButton?: ComponentType<ButtonProps>;
-}
+import React, { useCallback, useEffect } from "react";
+import { ArrayControlOptions } from "../ui-schema";
 
 export function ObjectArrayControl({
   enabled,
@@ -29,9 +24,7 @@ export function ObjectArrayControl({
   cells,
   rootSchema,
   uischemas,
-  AddButton = Button,
-  RemoveButton = Button,
-}: ArrayControlProps & ArrayControlButtons) {
+}: ArrayControlProps) {
   const innerCreateDefaultValue = useCallback(
     () => createDefaultValue(schema, rootSchema),
     [schema, rootSchema],
@@ -45,6 +38,9 @@ export function ObjectArrayControl({
 
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema);
   const label = labelDescription.show ? labelDescription.text : "";
+
+  const options: ArrayControlOptions =
+    (uischema.options as ArrayControlOptions) ?? {};
 
   const renderItem = (_item: number, index: number) => {
     const foundUISchema = findUISchema(
@@ -60,14 +56,15 @@ export function ObjectArrayControl({
       <List.Item
         key={index}
         actions={[
-          <RemoveButton
+          <Button
             key="remove"
+            children="Delete"
+            {...options.removeButtonProps}
             disabled={!removeItems || (data === 1 && index === 0)}
             onClick={(e) => {
               e.stopPropagation();
               removeItems?.(path, [index])();
             }}
-            children="Delete"
           />,
         ]}
       >
@@ -88,23 +85,27 @@ export function ObjectArrayControl({
 
   const addButton = (
     <Flex justify="center">
-      <AddButton
+      <Button
+        children={`Add ${label}`}
+        {...options.addButtonProps}
         onClick={(e) => {
           e.stopPropagation();
           addItem(path, innerCreateDefaultValue())();
         }}
-        children={`Add ${label}`}
       />
     </Flex>
   );
 
   return (
-    <List // there's a compelling case to be made for Form.List instead, but going with this for now
-      dataSource={range(data)}
-      renderItem={renderItem}
-      {...(uischema.options?.addButtonLocation?.toUpperCase() === "TOP"
-        ? { header: addButton }
-        : { footer: addButton })}
-    />
+    <>
+      <b>{label}</b>
+      <List // there's a compelling case to be made for Form.List instead, but going with this for now
+        dataSource={range(data)}
+        renderItem={renderItem}
+        {...(options.addButtonLocation === "top"
+          ? { header: addButton }
+          : { footer: addButton })}
+      />
+    </>
   );
 }

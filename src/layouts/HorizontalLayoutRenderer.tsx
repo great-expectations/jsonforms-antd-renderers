@@ -1,14 +1,8 @@
-import { LayoutProps, GroupLayout, rankWith, uiTypeIs } from "@jsonforms/core"
+import { LayoutProps, GroupLayout } from "@jsonforms/core"
 import isEmpty from "lodash.isEmpty"
 import { AntDLayoutRenderer, AntDLayoutRendererProps } from "./LayoutRenderer"
 import { HorizontalLayout } from "../ui-schema"
-import { withJsonFormsLayoutProps } from "@jsonforms/react"
 import { Form, Row } from "antd"
-
-export const HorizontalLayoutRendererRegistryEntry = {
-  tester: rankWith(2, uiTypeIs("HorizontalLayout")),
-  renderer: withJsonFormsLayoutProps(HorizontalLayoutRenderer),
-}
 
 export function HorizontalLayoutRenderer({ uischema, schema, path, enabled, visible, renderers, cells }: LayoutProps) {
   const horizontalLayout = uischema as HorizontalLayout

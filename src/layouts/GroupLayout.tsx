@@ -7,7 +7,7 @@ export type LayoutRendererProps = OwnPropsOfRenderer & {
   elements: UISchema[]
 }
 
-export function GroupLayoutRenderer({
+export function GroupLayout({
   visible,
   enabled,
   uischema,

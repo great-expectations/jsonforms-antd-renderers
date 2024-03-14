@@ -25,7 +25,7 @@ import { UnknownControl } from "./controls/UnknownControl"
 import { HorizontalLayout } from "./layouts/HorizontalLayout"
 import { VerticalLayout } from "./layouts/VerticalLayout"
 import { ObjectControl } from "./controls/ObjectControl"
-import { GroupLayoutRenderer } from "./layouts/GroupLayout"
+import { GroupLayout } from "./layouts/GroupLayout"
 import { NumericControl } from "./controls/NumericControls/NumericControl"
 import { NumericSliderControl } from "./controls/NumericControls/NumericSliderControl"
 import React from "react"
@@ -43,7 +43,7 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   },
   {
     tester: rankWith(1, uiTypeIs("Group")),
-    renderer: React.memo(GroupLayoutRenderer),
+    renderer: React.memo(GroupLayout),
   },
   {
     tester: rankWith(2, uiTypeIs("HorizontalLayout")),

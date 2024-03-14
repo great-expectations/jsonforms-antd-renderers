@@ -1,5 +1,5 @@
 import { LayoutProps, GroupLayout } from "@jsonforms/core"
-import isEmpty from "lodash.isEmpty"
+import isEmpty from "lodash.isempty"
 import { AntDLayoutRenderer, AntDLayoutRendererProps } from "./LayoutRenderer"
 import { HorizontalLayout } from "../ui-schema"
 import { Form, Row } from "antd"

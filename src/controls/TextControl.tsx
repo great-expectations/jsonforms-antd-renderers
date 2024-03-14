@@ -1,5 +1,6 @@
-import React, { ChangeEvent, useCallback, useEffect } from "react"
+import { ChangeEvent, useCallback, useEffect } from "react"
 import { Input, Form, InputProps } from "antd"
+import { Rule } from "antd/es/form"
 import { QuestionCircleOutlined } from "@ant-design/icons"
 import { TextAreaProps } from "antd/lib/input"
 import { ControlProps, } from "@jsonforms/core"
@@ -7,7 +8,7 @@ import { ControlProps, } from "@jsonforms/core"
 import { TextControlOptions, TextControlType } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
 interface TextControlProps extends ControlProps {
-  data: string // TODO: ensure this is true via tester OR change to unknown
+  data: string
   handleChange(path: string, value: string): void
   path: string
 }
@@ -38,13 +39,13 @@ export function TextControl({
   const tooltip = options.tooltip
   const placeholderText = options.placeholderText
   const form = Form.useFormInstance()
-  const rules = [
+  const rules: Rule[] = [
     {
       required: required || options.required,
       whitespace: required,
       message: required ? `${label} is required` : "",
     },
-    ...uischema?.options?.rules ? uischema.options.rules : [],
+    ...options?.rules ? options.rules : [],
   ]
   useEffect(() => {
     form.setFieldValue(path, setInitialValue(data ?? schema.default))

@@ -22,6 +22,7 @@ import { BooleanControl } from "./controls/BooleanControl"
 import { AlertControl } from "./controls/AlertControl"
 import { TextControl } from "./controls/TextControl"
 import { UnknownControl } from "./controls/UnknownControl"
+import { HorizontalLayoutRenderer } from "./layouts/HorizontalLayoutRenderer"
 import { VerticalLayoutRenderer } from "./layouts/VerticalLayoutRenderer"
 import { ObjectControl } from "./controls/ObjectControl"
 import { GroupLayoutRenderer } from "./layouts/GroupLayoutRenderer"
@@ -43,6 +44,10 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   {
     tester: rankWith(1, uiTypeIs("Group")),
     renderer: React.memo(GroupLayoutRenderer),
+  },
+  {
+    tester: rankWith(2, uiTypeIs("HorizontalLayout")),
+    renderer: withJsonFormsLayoutProps(HorizontalLayoutRenderer),
   },
   {
     tester: rankWith(2, uiTypeIs("VerticalLayout")),

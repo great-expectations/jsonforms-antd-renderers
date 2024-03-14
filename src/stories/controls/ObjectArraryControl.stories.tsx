@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { rendererRegistryEntries } from "../../renderers"
-import { UISchema } from "../../ui-schema"
+import { JSONSchema } from "json-schema-to-ts"
+import { UISchema } from "../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import { PlusCircleTwoTone, DeleteOutlined } from "@ant-design/icons"
 import React from "react"

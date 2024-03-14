@@ -2,12 +2,10 @@ import { useMemo } from "react"
 import {
   findUISchema,
   Generate,
-  StatePropsOfControlWithDetail
+  StatePropsOfControlWithDetail,
 } from "@jsonforms/core"
 import { JsonFormsDispatch } from "@jsonforms/react"
 import isEmpty from "lodash.isempty"
-
-
 
 export function ObjectControl({
   renderers,

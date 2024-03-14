@@ -1,5 +1,5 @@
 import { JsonSchema } from "@jsonforms/core"
-import { AlertProps } from "antd"
+import { AlertProps, InputNumberProps } from "antd"
 import { RuleObject as AntDRule } from "antd/lib/form"
 
 // jsonforms has composed their types in such a way that recursive types only specify the "base" type
@@ -132,7 +132,12 @@ export type AlertLabelOptions = { type: AlertProps["type"] }
 // this is intended to be a union, it just has one member rn
 export type LabelOptions = AlertLabelOptions
 
-export const OneOfControlOptions = ["button", "dropdown", "radio", "toggle"] as const
+export const OneOfControlOptions = [
+  "button",
+  "dropdown",
+  "radio",
+  "toggle",
+] as const
 
 export type OneOfControlOption = (typeof OneOfControlOptions)[number]
 
@@ -159,7 +164,10 @@ export type AnyOfControlOptions = {
 export const AnyOfControlOptions = ["button", "dropdown", "radio"] as const
 export type AnyOfControlOption = (typeof AnyOfControlOptions)[number]
 
-type ControlOptions = OneOfControlOptions | TextControlOptions | AnyOfControlOptions
+type ControlOptions =
+  | OneOfControlOptions
+  | TextControlOptions
+  | AnyOfControlOptions
 
 /**
  * A control element. The scope property of the control determines
@@ -227,7 +235,13 @@ enum RuleEffect {
 }
 type Condition =
   | Record<string, never> // not documented in their type system AFAIK, but this is how you default a rule to "always true"
-  | (JFCondition | LeafCondition | SchemaBasedCondition | OrCondition | AndCondition)
+  | (
+      | JFCondition
+      | LeafCondition
+      | SchemaBasedCondition
+      | OrCondition
+      | AndCondition
+    )
 
 interface JFCondition {
   /**
@@ -267,4 +281,9 @@ type OrCondition = ComposableCondition & {
  */
 type AndCondition = ComposableCondition & {
   type: "AND"
+}
+
+export type InputNumberOptions = {
+  addonBefore?: InputNumberProps["addonBefore"]
+  addonAfter?: InputNumberProps["addonAfter"]
 }

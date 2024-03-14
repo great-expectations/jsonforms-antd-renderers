@@ -7,7 +7,7 @@ const schema = {
   type: "object",
   properties: { name: { type: "string" } },
   // required: ["name"],
-};
+}
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Text",
@@ -44,10 +44,10 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     config: { control: "object" },
     onChange: { table: { disable: true, action: "on-change" } },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof StorybookAntDJsonForm>;
+export default meta
+type Story = StoryObj<typeof StorybookAntDJsonForm>
 
 export const SingleLine: Story = {
   parameters: { controls: { expanded: true } },
@@ -60,7 +60,7 @@ export const SingleLine: Story = {
       description: "this is a simple schema with one property (name)",
     },
   },
-};
+}
 
 export const MultiLine: Story = {
   args: {

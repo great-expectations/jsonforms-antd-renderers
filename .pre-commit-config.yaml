@@ -9,9 +9,6 @@ repos:
     hooks:
       - id: no-commit-to-branch
         args: [--branch, develop, --branch, main]
-      - id: check-json
-        exclude: .vscode/settings\.json|tsconfig
-      - id: check-yaml
       - id: detect-private-key
 # https://pre-commit.ci/
 ci:

@@ -4,7 +4,15 @@ import { AntDLayoutRenderer, AntDLayoutRendererProps } from "./LayoutRenderer"
 import { HorizontalLayout } from "../ui-schema"
 import { Form, Row } from "antd"
 
-export function HorizontalLayoutRenderer({ uischema, schema, path, enabled, visible, renderers, cells }: LayoutProps) {
+export function HorizontalLayoutRenderer({
+  uischema,
+  schema,
+  path,
+  enabled,
+  visible,
+  renderers,
+  cells,
+}: LayoutProps) {
   const horizontalLayout = uischema as HorizontalLayout
   const groupLayout = uischema as GroupLayout
   const childProps: AntDLayoutRendererProps = {
@@ -19,7 +27,12 @@ export function HorizontalLayoutRenderer({ uischema, schema, path, enabled, visi
     <Form component={form ? false : "form"} form={form}>
       {!isEmpty(groupLayout.label) && groupLayout.label}
       <Row justify="space-between" gutter={12}>
-        <AntDLayoutRenderer {...childProps} direction="row" renderers={renderers} cells={cells} />
+        <AntDLayoutRenderer
+          {...childProps}
+          direction="row"
+          renderers={renderers}
+          cells={cells}
+        />
       </Row>
     </Form>
   )

@@ -1,4 +1,4 @@
-import { GroupLayout, OwnPropsOfRenderer } from "@jsonforms/core"
+import { GroupLayout as GroupLayoutUISchema, OwnPropsOfRenderer } from "@jsonforms/core"
 import { UISchema } from "../ui-schema"
 import { Divider } from "antd"
 import { AntDLayout } from "./LayoutRenderer"
@@ -13,7 +13,7 @@ export function GroupLayout({
   uischema,
   ...props
 }: LayoutRendererProps) {
-  const groupLayout = uischema as GroupLayout
+  const groupLayout = uischema as GroupLayoutUISchema
   return (
     <>
       <Divider />

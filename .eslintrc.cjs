@@ -30,6 +30,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
   },
   rules: {
+    "@typescript-eslint/consistent-type-imports": "error",
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },

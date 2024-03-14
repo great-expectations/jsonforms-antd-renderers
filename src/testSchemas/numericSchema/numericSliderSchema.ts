@@ -98,7 +98,6 @@ export const numericSliderVerticalUISchema = {
   ],
 } satisfies UISchema
 
-
 export const numericSliderHorizontalUISchema = {
   type: "HorizontalLayout",
   elements: [

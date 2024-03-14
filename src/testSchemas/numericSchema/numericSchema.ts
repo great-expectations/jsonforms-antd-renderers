@@ -79,8 +79,18 @@ export const numericROISchema = {
   required: ["numericValue"],
 } satisfies JSONSchema
 
-export const numericUISchema = {
+export const numericVerticalUISchema = {
   type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/numericValue",
+    },
+  ],
+} satisfies UISchema
+
+export const numericHorizontalUISchema = {
+  type: "HorizontalLayout",
   elements: [
     {
       type: "Control",

@@ -6,7 +6,7 @@ import {
   numericTheNumberSchema,
   numericWeightSchema,
   numericSheepSchema,
-  numericUISchema,
+  numericVerticalUISchema,
   numericPriceSchema,
   numericUSDUISchema,
   numericROISchema,
@@ -18,7 +18,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
   component: StorybookAntDJsonForm,
   tags: ["autodocs"],
   args: {
-    uiSchema: numericUISchema,
+    uiSchema: numericVerticalUISchema,
   },
   argTypes: {
     uiSchema: {
@@ -34,7 +34,7 @@ export const RequiredFloatingPoint: Story = {
   tags: ["autodocs"],
   args: {
     jsonSchema: numericMagnitudeSchema,
-    uiSchema: numericUISchema,
+    uiSchema: numericVerticalUISchema,
   },
 }
 
@@ -42,7 +42,7 @@ export const RequiredFloatingPointWithDefault: Story = {
   tags: ["autodocs"],
   args: {
     jsonSchema: numericTheNumberSchema,
-    uiSchema: numericUISchema,
+    uiSchema: numericVerticalUISchema,
   },
 }
 
@@ -50,7 +50,7 @@ export const OptionalFloatingPoint: Story = {
   tags: ["autodocs"],
   args: {
     jsonSchema: numericWeightSchema,
-    uiSchema: numericUISchema,
+    uiSchema: numericVerticalUISchema,
   },
 }
 
@@ -58,7 +58,7 @@ export const RequiredInteger: Story = {
   tags: ["autodocs"],
   args: {
     jsonSchema: numericSheepSchema,
-    uiSchema: numericUISchema,
+    uiSchema: numericVerticalUISchema,
   },
 }
 

@@ -9,7 +9,7 @@ import {
   numericWeightSchema,
   numericSheepSchema,
   numericBeansSchema,
-  numericUISchema,
+  numericVerticalUISchema,
   numericUISchemaWithRule,
   numericPriceSchema,
   numericUSDUISchema,
@@ -90,7 +90,7 @@ describe("NumericControl", () => {
       render({
         data: data,
         schema: numericTheNumberSchema, // this has a default of 42.42
-        uischema: numericUISchema,
+        uischema: numericVerticalUISchema,
       })
       screen.getByText("The Number")
       expect(screen.getByRole("spinbutton")).toHaveValue(`${dataVal}`)
@@ -100,7 +100,7 @@ describe("NumericControl", () => {
   it("renders default value when no data is provided", () => {
     render({
       schema: numericTheNumberSchema,
-      uischema: numericUISchema,
+      uischema: numericVerticalUISchema,
     })
     expect(screen.getByRole("spinbutton")).toHaveValue("42.42")
   })
@@ -109,7 +109,7 @@ describe("NumericControl", () => {
     let data: JSONSchema
     render({
       schema: numericMagnitudeSchema,
-      uischema: numericUISchema,
+      uischema: numericVerticalUISchema,
       onChange: (state: { data: JSONSchema }) => {
         data = state.data
       },
@@ -126,7 +126,7 @@ describe("NumericControl", () => {
   it("shows error message onBlur when field is required and empty", async () => {
     render({
       schema: numericTheNumberSchema,
-      uischema: numericUISchema,
+      uischema: numericVerticalUISchema,
     })
     const input = screen.getByRole("spinbutton")
     await userEvent.clear(input)
@@ -147,7 +147,7 @@ describe("NumericControl", () => {
     async (schema: JSONSchema) => {
       render({
         schema: schema,
-        uischema: numericUISchema,
+        uischema: numericVerticalUISchema,
       })
       const input = screen.getByRole("spinbutton")
       await userEvent.type(input, "123.45") // try to input a float

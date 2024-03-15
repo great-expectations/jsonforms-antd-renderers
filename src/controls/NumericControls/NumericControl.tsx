@@ -1,6 +1,6 @@
-import { ControlProps, RendererProps } from "@jsonforms/core"
+import type { ControlProps, RendererProps } from "@jsonforms/core"
 import { Col, Form } from "antd"
-import { Rule } from "antd/lib/form"
+import type { Rule } from "antd/es/form"
 import { InputNumber } from "../../antd/InputNumber"
 
 export const NumericControl = (props: ControlProps & RendererProps) => {

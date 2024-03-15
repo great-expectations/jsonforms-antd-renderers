@@ -3,7 +3,7 @@ import { StorybookAntDJsonForm } from "../../../common/StorybookAntDJsonForm"
 
 import {
   numericSliderBasisPointsSchema,
-  numericSliderUISchema,
+  numericSliderVerticalUISchema,
   numericSliderTemperatureSchema,
   numericSliderTemperatureUISchema,
   numericSliderFinalGradeSchema,
@@ -17,7 +17,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
   component: StorybookAntDJsonForm,
   tags: ["autodocs"],
   args: {
-    uiSchema: numericSliderUISchema,
+    uiSchema: numericSliderVerticalUISchema,
   },
   argTypes: {
     uiSchema: {
@@ -33,7 +33,7 @@ export const RequiredInteger: Story = {
   tags: ["autodocs"],
   args: {
     jsonSchema: numericSliderBasisPointsSchema,
-    uiSchema: numericSliderUISchema,
+    uiSchema: numericSliderVerticalUISchema,
   },
 }
 

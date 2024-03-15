@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react"
 import { rendererRegistryEntries } from "../../renderers"
-import { UISchema } from "../../ui-schema"
+import { TextControlOptions, UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 
 const schema = {
@@ -73,6 +73,47 @@ export const MultiLine: Story = {
           scope: "#/properties/name",
           label: "Name",
           options: { type: "multiline" },
+        },
+      ],
+    } satisfies UISchema,
+  },
+}
+
+export const Password: Story = {
+  args: {
+    jsonSchema: schema,
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Control",
+          scope: "#/properties/name",
+          label: "Name",
+          options: { type: "password" },
+        },
+      ],
+    } satisfies UISchema,
+  },
+}
+
+export const RuleDefinedInUISchema: Story = {
+  args: {
+    jsonSchema: schema,
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Control",
+          scope: "#/properties/name",
+          label: "Name",
+          options: {
+            rules: [
+              {
+                pattern: new RegExp("^(?! ).*(?<! )$"), // no leading or trailing spaces
+                message: "Name cannot start or end with a space",
+              },
+            ],
+          } satisfies TextControlOptions,
         },
       ],
     } satisfies UISchema,

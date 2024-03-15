@@ -3,7 +3,7 @@ import { JsonSchema, OwnPropsOfRenderer } from "@jsonforms/core"
 import { renderLayoutElements } from "./render-layout-elements"
 import { UISchema } from "../ui-schema"
 
-export interface AntDLayoutRendererProps extends OwnPropsOfRenderer {
+export interface AntDLayoutProps extends OwnPropsOfRenderer {
   elements: UISchema[]
   direction?: "row" | "column"
 }
@@ -16,7 +16,7 @@ function AntDLayoutComponent({
   renderers,
   cells,
   direction = "column",
-}: AntDLayoutRendererProps) {
+}: AntDLayoutProps) {
   if (!elements?.length && !Object.keys(elements).length) {
     return null
   }
@@ -34,4 +34,4 @@ function AntDLayoutComponent({
     </>
   )
 }
-export const AntDLayoutRenderer = React.memo(AntDLayoutComponent)
+export const AntDLayout = React.memo(AntDLayoutComponent)

@@ -68,7 +68,9 @@ export const Slider = (props: SliderProps): ReactElement<typeof AntdSlider> => {
       const formattedTooltipValue = isPercentage
         ? decimalToPercentage(tooltipValue)
         : tooltipValue
-      return `${addonBefore ? addonBefore : ""}${formattedTooltipValue}${addonAfter ? addonAfter : ""}`
+      return `${addonBefore ? addonBefore : ""}${formattedTooltipValue}${
+        addonAfter ? addonAfter : ""
+      }`
     },
   }
 

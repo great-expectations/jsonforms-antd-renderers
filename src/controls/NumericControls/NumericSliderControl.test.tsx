@@ -5,7 +5,7 @@ import { render } from "../../common/test-render"
 import { JSONSchema } from "json-schema-to-ts"
 import {
   numericSliderBasisPointsSchema,
-  numericSliderUISchema,
+  numericSliderVerticalUISchema,
   numericSliderFinalGradeSchema,
   numericSliderPercentageUISchema,
   numericSliderUISchemaWithRule,
@@ -34,7 +34,7 @@ describe("NumericSliderControl", () => {
   it("renders default value when no data is provided", () => {
     render({
       schema: numericSliderFinalGradeSchema,
-      uischema: numericSliderUISchema,
+      uischema: numericSliderVerticalUISchema,
     })
     expect(screen.getByRole("spinbutton")).toHaveValue("0.5")
   })
@@ -43,7 +43,7 @@ describe("NumericSliderControl", () => {
     let data: JSONSchema
     render({
       schema: numericSliderBasisPointsSchema,
-      uischema: numericSliderUISchema,
+      uischema: numericSliderVerticalUISchema,
       onChange: (state: { data: JSONSchema }) => {
         data = state.data
       },

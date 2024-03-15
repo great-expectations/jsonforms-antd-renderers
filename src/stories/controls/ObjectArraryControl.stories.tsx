@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { rendererRegistryEntries } from "../../renderers"
 import { JSONSchema } from "json-schema-to-ts"
-import { UISchema } from "../ui-schema"
+import { UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import { PlusCircleTwoTone, DeleteOutlined } from "@ant-design/icons"
 import React from "react"
@@ -87,7 +87,7 @@ export const ObjectArrayOfBooleans: Story = {
           },
         },
       },
-    },
+    } satisfies JSONSchema,
     uiSchema: {
       type: "VerticalLayout",
       elements: [
@@ -96,7 +96,7 @@ export const ObjectArrayOfBooleans: Story = {
           type: "Control",
         },
       ],
-    },
+    } satisfies UISchema,
   },
 }
 
@@ -119,7 +119,7 @@ export const ObjectArrayWithUiOptionAddButtonTop: Story = {
           },
         },
       },
-    },
+    } satisfies JSONSchema,
     uiSchema: {
       type: "VerticalLayout",
       elements: [
@@ -131,7 +131,7 @@ export const ObjectArrayWithUiOptionAddButtonTop: Story = {
           },
         },
       ],
-    },
+    } satisfies UISchema,
   },
 }
 
@@ -154,7 +154,7 @@ export const ObjectArrayWithUiOptionForButtons: Story = {
           },
         },
       },
-    },
+    } satisfies JSONSchema,
     uiSchema: {
       type: "VerticalLayout",
       elements: [
@@ -173,7 +173,7 @@ export const ObjectArrayWithUiOptionForButtons: Story = {
           },
         },
       ],
-    },
+    } satisfies UISchema,
   },
 }
 
@@ -196,7 +196,7 @@ export const ObjectArrayWithUiOptionWithIcons: Story = {
           },
         },
       },
-    },
+    } satisfies JSONSchema,
     uiSchema: {
       type: "VerticalLayout",
       elements: [
@@ -218,7 +218,7 @@ export const ObjectArrayWithUiOptionWithIcons: Story = {
           },
         },
       ],
-    },
+    } satisfies UISchema,
   },
 }
 
@@ -249,7 +249,7 @@ export const ObjectArrayWithMultipleProperties: Story = {
           },
         },
       },
-    },
+    } satisfies JSONSchema,
     uiSchema: {
       type: "VerticalLayout",
       elements: [
@@ -268,6 +268,6 @@ export const ObjectArrayWithMultipleProperties: Story = {
           },
         },
       ],
-    },
+    } satisfies UISchema,
   },
 }

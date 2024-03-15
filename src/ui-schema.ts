@@ -173,6 +173,7 @@ type ControlOptions =
   | OneOfControlOptions
   | TextControlOptions
   | AnyOfControlOptions
+  | ArrayControlOptions
 
 /**
  * A control element. The scope property of the control determines

@@ -18,7 +18,7 @@ const schema = {
   },
 } satisfies JSONSchema
 
-test("AlertControl renders", async () => {
+test("AlertLayout renders", async () => {
   render({
     schema: schema,
     uischema: {

@@ -1,4 +1,5 @@
 import { CellProps, ControlProps } from "@jsonforms/core"
+import { withJsonFormsControlProps } from "@jsonforms/react"
 
 export function UnknownControl(props: ControlProps | CellProps) {
   // console.log({ schema: props.schema, path: props.path, schemaPath: props.schemaPath, props })
@@ -9,3 +10,5 @@ export function UnknownControl(props: ControlProps | CellProps) {
     </div>
   )
 }
+
+export const UnknownRenderer = withJsonFormsControlProps(UnknownControl)

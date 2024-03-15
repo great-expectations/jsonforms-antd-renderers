@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react"
-import { rendererRegistryEntries } from "../../renderers"
+import { rendererRegistryEntries } from "../../renderer-registry-entries"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 
 import {

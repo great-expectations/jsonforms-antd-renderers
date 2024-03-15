@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 import { JsonSchema } from "@jsonforms/core"
 import { ButtonProps, InputNumberProps, AlertProps } from "antd"
+=======
+import type { JsonSchema } from "@jsonforms/core"
+import type { AlertProps, InputNumberProps } from "antd"
+import type { RuleObject as AntDRule } from "antd/es/form"
+>>>>>>> refs/rewritten/onto
 
 // jsonforms has composed their types in such a way that recursive types only specify the "base" type
 // this type is intended to fix that problem in the short term so that we can have strong type checking
@@ -126,10 +132,10 @@ export interface LabelElement extends UISchemaElement, Internationalizable {
   options?: LabelOptions
 }
 
-export type AlertLabelOptions = { type: AlertProps["type"] }
+export type AlertLayoutOptions = { type: AlertProps["type"] }
 
 // this is intended to be a union, it just has one member rn
-export type LabelOptions = AlertLabelOptions
+export type LabelOptions = AlertLayoutOptions
 
 export const OneOfControlOptions = [
   "button",
@@ -145,13 +151,14 @@ export type OneOfControlOptions = {
   toggleLabel?: string
 }
 
-export type TextControlType = "multiline" | "singleline"
+export type TextControlType = "multiline" | "password" | "singleline"
 
 export type TextControlOptions = {
   type?: TextControlType
   tooltip?: string
   placeholderText?: string
   required?: boolean
+  rules: AntDRule[]
 }
 
 export type AnyOfControlOptions = {
@@ -281,6 +288,7 @@ type AndCondition = ComposableCondition & {
   type: "AND"
 }
 
+<<<<<<< HEAD
 export type AddButtonLocation = "top" | "bottom"
 
 export interface ArrayControlOptions {
@@ -290,6 +298,9 @@ export interface ArrayControlOptions {
 }
 
 export type InputNumberOptions = {
+=======
+export type NumericControlOptions = {
+>>>>>>> refs/rewritten/onto
   addonBefore?: InputNumberProps["addonBefore"]
   addonAfter?: InputNumberProps["addonAfter"]
 }

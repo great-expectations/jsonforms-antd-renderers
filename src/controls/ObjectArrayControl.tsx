@@ -6,7 +6,10 @@ import {
   createDefaultValue,
   findUISchema,
 } from "@jsonforms/core"
-import { JsonFormsDispatch } from "@jsonforms/react"
+import {
+  JsonFormsDispatch,
+  withJsonFormsArrayLayoutProps,
+} from "@jsonforms/react"
 import { Flex, List, Button } from "antd"
 import range from "lodash.range"
 import { useCallback, useEffect } from "react"
@@ -109,3 +112,6 @@ export function ObjectArrayControl({
     </>
   )
 }
+
+export const ObjectArrayRenderer =
+  withJsonFormsArrayLayoutProps(ObjectArrayControl)

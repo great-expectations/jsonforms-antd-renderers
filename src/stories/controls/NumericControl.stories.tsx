@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { StorybookAntDJsonForm } from "../../../common/StorybookAntDJsonForm"
+import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 
 import {
   numericMagnitudeSchema,
@@ -11,7 +11,7 @@ import {
   numericUSDUISchema,
   numericROISchema,
   numericPercentageUISchema,
-} from "../../../testSchemas/numericSchema/numericSchema"
+} from "../../testSchemas/numericSchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Numeric Input",

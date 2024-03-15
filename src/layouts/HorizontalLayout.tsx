@@ -3,6 +3,7 @@ import isEmpty from "lodash.isempty"
 import { AntDLayout, AntDLayoutProps } from "./LayoutRenderer"
 import { HorizontalLayout as HorizontalLayoutUISchema } from "../ui-schema"
 import { Form, Row } from "antd"
+import { withJsonFormsLayoutProps } from "@jsonforms/react"
 
 export function HorizontalLayout({
   uischema,
@@ -37,3 +38,6 @@ export function HorizontalLayout({
     </Form>
   )
 }
+
+export const HorizontalLayoutRenderer =
+  withJsonFormsLayoutProps(HorizontalLayout)

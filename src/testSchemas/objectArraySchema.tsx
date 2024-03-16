@@ -1,0 +1,56 @@
+import React from "react"
+import { JSONSchema } from "json-schema-to-ts"
+import { UISchema } from "../ui-schema"
+import { PlusCircleTwoTone, DeleteOutlined } from "@ant-design/icons"
+
+export const objectArrayControlUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      scope: "#/properties/assets",
+      type: "Control",
+    },
+  ],
+} satisfies UISchema
+
+export const objectArrayControlJsonSchema = {
+  title: "Assets",
+  type: "object",
+  properties: {
+    assets: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          asset: {
+            title: "Asset",
+            type: "string",
+          },
+        },
+      },
+    },
+  },
+} satisfies JSONSchema
+
+export const objectArrayControlUISchemaWithIcons = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      scope: "#/properties/assets",
+      type: "Control",
+      options: {
+        addButtonProps: {
+          children: "Add more items",
+          icon: <PlusCircleTwoTone />,
+          type: "primary",
+        },
+        removeButtonProps: {
+          children: "Destroy me!",
+          icon: <DeleteOutlined />,
+          danger: true,
+          onClick: (e) => {}, // User should be unable to override the onClick event
+        },
+      },
+    },
+  ],
+} satisfies UISchema

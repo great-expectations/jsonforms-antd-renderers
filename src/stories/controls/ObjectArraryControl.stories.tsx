@@ -4,44 +4,18 @@ import { rendererRegistryEntries } from "../../renderers"
 import { JSONSchema } from "json-schema-to-ts"
 import { UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
-import { PlusCircleTwoTone, DeleteOutlined } from "@ant-design/icons"
-import React from "react"
-
-const ObjectArrayControlUISchema: UISchema = {
-  type: "VerticalLayout",
-  elements: [
-    {
-      scope: "#/properties/assets",
-      type: "Control",
-    },
-  ],
-}
-
-const schema = {
-  title: "Assets",
-  type: "object",
-  properties: {
-    assets: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          asset: {
-            title: "Asset",
-            type: "string",
-          },
-        },
-      },
-    },
-  },
-} satisfies JSONSchema
+import {
+  objectArrayControlJsonSchema,
+  objectArrayControlUISchema,
+  objectArrayControlUISchemaWithIcons,
+} from "../../testSchemas/objectArraySchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Object Array",
   component: StorybookAntDJsonForm,
   tags: ["autodocs"],
   args: {
-    jsonSchema: schema,
+    jsonSchema: objectArrayControlJsonSchema,
     rendererRegistryEntries: [...rendererRegistryEntries],
   },
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
@@ -63,8 +37,8 @@ type Story = StoryObj<typeof StorybookAntDJsonForm>
 export const ObjectArrayOfStrings: Story = {
   tags: ["autodocs"],
   args: {
-    jsonSchema: schema,
-    uiSchema: ObjectArrayControlUISchema,
+    jsonSchema: objectArrayControlJsonSchema,
+    uiSchema: objectArrayControlUISchema,
   },
 }
 
@@ -103,28 +77,12 @@ export const ObjectArrayOfBooleans: Story = {
 export const ObjectArrayWithUiOptionAddButtonTop: Story = {
   tags: ["autodocs"],
   args: {
-    jsonSchema: {
-      type: "object",
-      properties: {
-        options: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              option: {
-                title: "Option",
-                type: "boolean",
-              },
-            },
-          },
-        },
-      },
-    } satisfies JSONSchema,
+    jsonSchema: objectArrayControlJsonSchema,
     uiSchema: {
       type: "VerticalLayout",
       elements: [
         {
-          scope: "#/properties/options",
+          scope: "#/properties/assets",
           type: "Control",
           options: {
             addButtonLocation: "top",
@@ -138,28 +96,12 @@ export const ObjectArrayWithUiOptionAddButtonTop: Story = {
 export const ObjectArrayWithUiOptionForButtons: Story = {
   tags: ["autodocs"],
   args: {
-    jsonSchema: {
-      type: "object",
-      properties: {
-        options: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              option: {
-                title: "Option",
-                type: "boolean",
-              },
-            },
-          },
-        },
-      },
-    } satisfies JSONSchema,
+    jsonSchema: objectArrayControlJsonSchema,
     uiSchema: {
       type: "VerticalLayout",
       elements: [
         {
-          scope: "#/properties/options",
+          scope: "#/properties/assets",
           type: "Control",
           options: {
             addButtonProps: {
@@ -180,45 +122,8 @@ export const ObjectArrayWithUiOptionForButtons: Story = {
 export const ObjectArrayWithUiOptionWithIcons: Story = {
   tags: ["autodocs"],
   args: {
-    jsonSchema: {
-      type: "object",
-      properties: {
-        options: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              option: {
-                title: "Option",
-                type: "boolean",
-              },
-            },
-          },
-        },
-      },
-    } satisfies JSONSchema,
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          scope: "#/properties/options",
-          type: "Control",
-          options: {
-            addButtonProps: {
-              children: "Add more items",
-              icon: <PlusCircleTwoTone />,
-              type: "primary",
-            },
-            removeButtonProps: {
-              children: "Destroy me!",
-              icon: <DeleteOutlined />,
-              danger: true,
-              onClick: (e) => {}, // User should be unable to override the onClick event
-            },
-          },
-        },
-      ],
-    } satisfies UISchema,
+    jsonSchema: objectArrayControlJsonSchema,
+    uiSchema: objectArrayControlUISchemaWithIcons,
   },
 }
 

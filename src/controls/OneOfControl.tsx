@@ -27,6 +27,7 @@ import { usePreviousValue } from "../common/usePreviousValue"
 
 export function OneOfControl({
   handleChange,
+  data,
   schema,
   path,
   renderers,
@@ -70,20 +71,39 @@ export function OneOfControl({
   }, [])
 
   const prevSelectedIndex = usePreviousValue(selectedIndex)
+  const [dataForPreviousSchemas, setDataForPreviousSchemas] = useState<
+    Record<number, unknown>
+  >({})
   useEffect(() => {
     if (
       selectedIndex !== prevSelectedIndex &&
       prevSelectedIndex !== undefined
     ) {
-      handleCombinatorTypeChange({
-        handleChange,
-        combinatorIndex: selectedIndex,
-        renderInfos: oneOfRenderInfos,
-        path,
-        rootSchema
+      setDataForPreviousSchemas({
+        ...dataForPreviousSchemas,
+        [prevSelectedIndex]: data as unknown,
       })
+      if (dataForPreviousSchemas[selectedIndex]) {
+        handleChange(path, dataForPreviousSchemas[selectedIndex])
+      } else {
+        handleCombinatorTypeChange({
+          handleChange,
+          combinatorIndex: selectedIndex,
+          renderInfos: oneOfRenderInfos,
+          path,
+          rootSchema,
+        })
+      }
     }
-  }, [handleChange, oneOfRenderInfos, path, prevSelectedIndex, rootSchema, selectedIndex])
+  }, [
+    dataForPreviousSchemas,
+    handleChange,
+    oneOfRenderInfos,
+    path,
+    prevSelectedIndex,
+    rootSchema,
+    selectedIndex,
+  ])
 
   const computeLabel = (oneOfRenderInfo: CombinatorSubSchemaRenderInfo) => {
     const label = oneOfRenderInfo.label.startsWith("oneOf")
@@ -219,13 +239,13 @@ function handleCombinatorTypeChange({
   renderInfos,
   combinatorIndex,
   path,
-  rootSchema
+  rootSchema,
 }: HandleCombinatorTypeChangeArgs) {
-  const newSchema = renderInfos[combinatorIndex]?.schema 
+  const newSchema = renderInfos[combinatorIndex]?.schema
   let newData
   if (newSchema?.type === "object") {
     // const typeDiscriminator = newSchema.properties?.type?.default
-    
+
     newData = {
       ...createDefaultValue(newSchema, rootSchema),
       // ...(typeDiscriminator ? { type: typeDiscriminator } : {}),

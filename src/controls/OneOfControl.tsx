@@ -96,6 +96,7 @@ export function OneOfControl({
       }
     }
   }, [
+    data,
     dataForPreviousSchemas,
     handleChange,
     oneOfRenderInfos,

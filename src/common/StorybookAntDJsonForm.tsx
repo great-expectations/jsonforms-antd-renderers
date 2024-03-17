@@ -6,10 +6,11 @@ import {
 import { UISchema } from "../ui-schema"
 import { AntDJsonForm } from "./AntDJsonForm"
 import { useState } from "react"
+import { JSONSchema } from "json-schema-to-ts"
 
 type Props = {
   data?: Record<string, unknown>
-  jsonSchema: JsonSchema7
+  jsonSchema: JSONSchema
   rendererRegistryEntries: JsonFormsRendererRegistryEntry[]
   uiSchema?: UISchema
   uiSchemaRegistryEntries?: JsonFormsUISchemaRegistryEntry[]
@@ -35,7 +36,7 @@ export function StorybookAntDJsonForm({
   return (
     <AntDJsonForm
       uiSchema={uiSchema}
-      jsonSchema={jsonSchema}
+      jsonSchema={jsonSchema as JsonSchema7}
       data={data}
       updateData={(newData) => updateData(newData)}
       uiSchemaRegistryEntries={uiSchemaRegistryEntries}

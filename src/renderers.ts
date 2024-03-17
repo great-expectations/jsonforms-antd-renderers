@@ -9,6 +9,7 @@ import {
   isLayout,
   not,
   and,
+  isOneOfControl,
 } from "@jsonforms/core"
 import {
   withJsonFormsControlProps,
@@ -16,6 +17,7 @@ import {
   withJsonFormsCellProps,
   withJsonFormsLayoutProps,
   withJsonFormsDetailProps,
+  withJsonFormsOneOfProps,
 } from "@jsonforms/react"
 
 import { BooleanControl } from "./controls/BooleanControl"
@@ -34,6 +36,7 @@ import {
   isNumericControl,
   isNumericSliderControl,
 } from "./controls/NumericControls/testers"
+import { OneOfControl } from "./controls/OneOfControl"
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
@@ -80,6 +83,10 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   {
     tester: rankWith(3, isNumericSliderControl),
     renderer: withJsonFormsControlProps(NumericSliderControl),
+  },
+  {
+    tester: rankWith(3, isOneOfControl),
+    renderer: withJsonFormsOneOfProps(OneOfControl),
   },
   {
     tester: rankWith(10, and(isObjectControl, not(isLayout))),

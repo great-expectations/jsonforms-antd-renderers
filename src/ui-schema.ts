@@ -105,7 +105,7 @@ interface GroupLayout extends Layout, Labelable, Internationalizable {
 /**
  * Represents an object that can be used to configure a label.
  */
-interface LabelDescription {
+export interface LabelDescription {
   /**
    * An optional text to be displayed.
    */

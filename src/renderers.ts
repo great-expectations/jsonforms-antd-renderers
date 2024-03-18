@@ -1,14 +1,19 @@
 import {
+  JsonSchema,
   JsonFormsRendererRegistryEntry,
   JsonFormsCellRendererRegistryEntry,
   isBooleanControl,
   isStringControl,
   rankWith,
   uiTypeIs,
-  isObjectControl,
+  isIntegerControl,
   isLayout,
+  isObjectControl,
+  isNumberControl,
+  schemaMatches,
   not,
   and,
+  or,
 } from "@jsonforms/core"
 import {
   withJsonFormsControlProps,
@@ -19,21 +24,16 @@ import {
 } from "@jsonforms/react"
 
 import { BooleanControl } from "./controls/BooleanControl"
-import { AlertControl } from "./controls/AlertControl"
+import { AlertLayout } from "./layouts/AlertLayout"
 import { TextControl } from "./controls/TextControl"
 import { UnknownControl } from "./controls/UnknownControl"
 import { HorizontalLayout } from "./layouts/HorizontalLayout"
 import { VerticalLayout } from "./layouts/VerticalLayout"
 import { ObjectControl } from "./controls/ObjectControl"
 import { GroupLayout } from "./layouts/GroupLayout"
-import { NumericControl } from "./controls/NumericControls/NumericControl"
-import { NumericSliderControl } from "./controls/NumericControls/NumericSliderControl"
+import { NumericControl } from "./controls/NumericControl"
+import { NumericSliderControl } from "./controls/NumericSliderControl"
 import React from "react"
-
-import {
-  isNumericControl,
-  isNumericSliderControl,
-} from "./controls/NumericControls/testers"
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
@@ -63,22 +63,22 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   },
   {
     tester: rankWith(2, uiTypeIs("Label")),
-    renderer: withJsonFormsLabelProps(AlertControl),
+    renderer: withJsonFormsLabelProps(AlertLayout),
   },
   {
-    tester: rankWith(2, isNumericControl),
+    tester: rankWith(2, or(isNumberControl, isIntegerControl)),
     renderer: withJsonFormsControlProps(NumericControl),
   },
   {
-    tester: rankWith(2, isNumericControl),
-    renderer: withJsonFormsControlProps(NumericControl),
-  },
-  {
-    tester: rankWith(2, isNumericControl),
-    renderer: withJsonFormsControlProps(NumericControl),
-  },
-  {
-    tester: rankWith(3, isNumericSliderControl),
+    tester: rankWith(
+      3,
+      and(
+        or(isNumberControl, isIntegerControl),
+        schemaMatches((schema: JsonSchema) => {
+          return schema.minimum !== undefined && schema.maximum !== undefined
+        }),
+      ),
+    ),
     renderer: withJsonFormsControlProps(NumericSliderControl),
   },
   {

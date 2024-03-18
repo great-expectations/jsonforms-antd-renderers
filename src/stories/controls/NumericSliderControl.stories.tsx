@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { StorybookAntDJsonForm } from "../../../common/StorybookAntDJsonForm"
+import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 
 import {
   numericSliderBasisPointsSchema,
@@ -10,7 +10,7 @@ import {
   numericSliderPercentageUISchema,
   numericSliderDonateNowSchema,
   numericSliderUSDUISchema,
-} from "../../../testSchemas/numericSchema/numericSliderSchema"
+} from "../../testSchemas/numericSliderSchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Numeric Slider",

@@ -24,7 +24,7 @@ import {
 } from "@jsonforms/react"
 
 import { BooleanControl } from "./controls/BooleanControl"
-import { AlertControl } from "./controls/AlertControl"
+import { AlertLayout } from "./layouts/AlertLayout"
 import { TextControl } from "./controls/TextControl"
 import { UnknownControl } from "./controls/UnknownControl"
 import { HorizontalLayout } from "./layouts/HorizontalLayout"
@@ -63,7 +63,7 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   },
   {
     tester: rankWith(2, uiTypeIs("Label")),
-    renderer: withJsonFormsLabelProps(AlertControl),
+    renderer: withJsonFormsLabelProps(AlertLayout),
   },
   {
     tester: rankWith(2, or(isNumberControl, isIntegerControl)),

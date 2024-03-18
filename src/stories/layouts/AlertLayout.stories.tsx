@@ -19,7 +19,7 @@ const schema = {
 }
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
-  title: "Control/Alert",
+  title: "Layout/Alert",
   component: StorybookAntDJsonForm,
   tags: ["autodocs"],
   args: {

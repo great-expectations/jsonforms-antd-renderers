@@ -2,11 +2,12 @@ import { Meta, StoryObj } from "@storybook/react"
 import { rendererRegistryEntries } from "../../renderers"
 import { UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
+import { JSONSchema } from "json-schema-to-ts"
 
 const schema = {
   type: "object",
   properties: { checkbox: { type: "boolean" } },
-}
+} satisfies JSONSchema
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Boolean",

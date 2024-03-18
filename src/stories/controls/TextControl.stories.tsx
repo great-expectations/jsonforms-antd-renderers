@@ -2,12 +2,13 @@ import { Meta, StoryObj } from "@storybook/react"
 import { rendererRegistryEntries } from "../../renderers"
 import { TextControlOptions, UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
+import { JSONSchema } from "json-schema-to-ts"
 
 const schema = {
   type: "object",
   properties: { name: { type: "string" } },
   // required: ["name"],
-}
+} satisfies JSONSchema
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Text",

@@ -1,6 +1,7 @@
 import type { JsonSchema } from "@jsonforms/core"
 import type { AlertProps, InputNumberProps } from "antd"
 import type { RuleObject as AntDRule } from "antd/es/form"
+import { TitleProps } from "antd/es/typography/Title"
 
 // jsonforms has composed their types in such a way that recursive types only specify the "base" type
 // this type is intended to fix that problem in the short term so that we can have strong type checking
@@ -105,7 +106,7 @@ interface GroupLayout extends Layout, Labelable, Internationalizable {
 /**
  * Represents an object that can be used to configure a label.
  */
-export interface LabelDescription {
+export type LabelDescription = {
   /**
    * An optional text to be displayed.
    */
@@ -114,7 +115,7 @@ export interface LabelDescription {
    * Optional property that determines whether to show this label.
    */
   show?: boolean
-}
+} & ({ type: "Title", titleProps: TitleProps } | Record<string, never>)
 /**
  * A label element.
  */
@@ -175,9 +176,9 @@ type ControlOptions =
  */
 export interface ControlElement
   extends UISchemaElement<ControlOptions>,
-    Scoped,
-    Labelable<string | boolean | LabelDescription>,
-    Internationalizable {
+  Scoped,
+  Labelable<string | boolean | LabelDescription>,
+  Internationalizable {
   type: "Control"
 }
 /**
@@ -236,12 +237,12 @@ enum RuleEffect {
 type Condition =
   | Record<string, never> // not documented in their type system AFAIK, but this is how you default a rule to "always true"
   | (
-      | JFCondition
-      | LeafCondition
-      | SchemaBasedCondition
-      | OrCondition
-      | AndCondition
-    )
+    | JFCondition
+    | LeafCondition
+    | SchemaBasedCondition
+    | OrCondition
+    | AndCondition
+  )
 
 interface JFCondition {
   /**

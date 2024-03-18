@@ -15,13 +15,15 @@ import {
   Switch,
   Typography,
 } from "antd"
-import { merge, startCase } from "lodash-es"
+import merge from "lodash.merge"
+import startCase from "lodash.startcase"
 import { useCallback, useEffect, useState } from "react"
 import {
   ControlElement,
   LabelDescription,
   OneOfControlOption,
   OneOfControlOptions,
+  UISchema,
 } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 
@@ -51,8 +53,8 @@ export function OneOfControl({
   )
   const appliedUiSchemaOptions: OneOfControlOptions = merge(
     {},
-    config,
-    uischema.options,
+    config as unknown,
+    uischema.options as Record<string, unknown>,
   ) as OneOfControlOptions
   const oneOfOptionType = appliedUiSchemaOptions.optionType
   const handleRadioChange = useCallback((e: RadioChangeEvent) => {
@@ -112,13 +114,10 @@ export function OneOfControl({
       : oneOfRenderInfo.label
     return startCase(label)
   }
-  const combinatorLabel = getCombinatorUiSchemaLabel(uischema as ControlElement)
 
   return (
     <Space direction="vertical" style={{ width: "100%" }} size="middle">
-      {combinatorLabel && (
-        <Typography.Title>{combinatorLabel}</Typography.Title>
-      )}
+      <CombinatorUiSchemaLabel uischema={uischema} />
       {shouldUseRadioGroupSwitcher(oneOfOptionType) && (
         <RadioGroupSwitcher
           radioProps={{
@@ -192,6 +191,23 @@ function getCombinatorUiSchemaLabel(
   if (typeof label === "string") {
     return label
   }
+}
+
+function CombinatorUiSchemaLabel({ uischema }: { uischema: UISchema }) {
+  if (uischema.type !== "Control") {
+    return null
+  }
+  const controlUISchema: ControlElement = uischema as ControlElement
+  const text = getCombinatorUiSchemaLabel(controlUISchema)
+  let textTitleOptions
+  if (
+    typeof controlUISchema.label === "object" &&
+    controlUISchema?.label?.type === "Title"
+  ) {
+    textTitleOptions = controlUISchema.label.titleProps
+  }
+
+  return <Typography.Title {...textTitleOptions}>{text}</Typography.Title>
 }
 
 function shouldUseRadioGroupSwitcher(

@@ -1,16 +1,13 @@
 import type { ControlProps, RendererProps } from "@jsonforms/core"
-import { Col, Form, Row } from "antd"
+import { Col, Form } from "antd"
 import type { Rule } from "antd/es/form"
-import { InputNumber } from "../../antd/InputNumber"
-import { Slider } from "../../antd/Slider"
+import { InputNumber } from "../antd/InputNumber"
 
-export const NumericSliderControl = (props: ControlProps & RendererProps) => {
+export const NumericControl = (props: ControlProps & RendererProps) => {
   if (!props.visible) return null
 
   const initialValue =
-    typeof props.schema.default === "number"
-      ? props.schema.default
-      : props.schema.minimum
+    typeof props.schema.default === "number" ? props.schema.default : undefined
 
   const rules: Rule[] = [
     { required: props.required, message: `${props.label} is required` },
@@ -26,10 +23,7 @@ export const NumericSliderControl = (props: ControlProps & RendererProps) => {
       rules={rules}
       validateTrigger={["onBlur"]}
     >
-      <Row>
-        <Col span={8}>{Slider({ ...props })}</Col>
-        <Col span={7}>{InputNumber({ ...props })}</Col>
-      </Row>
+      <Col span={18}>{InputNumber({ ...props })}</Col>
     </Form.Item>
   )
 }

@@ -2,7 +2,7 @@ import { JSONSchema } from "json-schema-to-ts"
 import { describe, expect, test, it } from "vitest"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { render } from "../../common/test-render"
+import { render } from "../common/test-render"
 import {
   numericMagnitudeSchema,
   numericTheNumberSchema,
@@ -13,7 +13,7 @@ import {
   numericUISchemaWithRule,
   numericPriceSchema,
   numericUSDUISchema,
-} from "../../testSchemas/numericSchema/numericSchema"
+} from "../testSchemas/numericSchema"
 
 describe("NumericControl", () => {
   it("does not fall back to default if value is empty", () => {

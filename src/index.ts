@@ -1,2 +1,13 @@
 export { rendererRegistryEntries, cellRegistryEntries } from "./renderers"
 export type * from "./ui-schema"
+
+export { BooleanControl } from "./controls/BooleanControl"
+export { AlertControl } from "./controls/AlertControl"
+export { TextControl } from "./controls/TextControl"
+export { UnknownControl } from "./controls/UnknownControl"
+export { HorizontalLayout } from "./layouts/HorizontalLayout"
+export { VerticalLayout } from "./layouts/VerticalLayout"
+export { ObjectControl } from "./controls/ObjectControl"
+export { GroupLayout } from "./layouts/GroupLayout"
+export { NumericControl } from "./controls/NumericControl"
+export { NumericSliderControl } from "./controls/NumericSliderControl"

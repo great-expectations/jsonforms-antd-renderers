@@ -5,7 +5,7 @@ import { render } from "../common/test-render"
 import {
   numericMagnitudeSchema,
   numericVerticalUISchema,
-} from "../testSchemas/numericSchema/numericSchema"
+} from "../testSchemas/numericSchema"
 
 test("Vertical layout renders", async () => {
   render({

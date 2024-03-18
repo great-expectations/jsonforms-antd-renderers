@@ -4,11 +4,11 @@ import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import {
   numericMagnitudeSchema,
   numericVerticalUISchema,
-} from "../../testSchemas/numericSchema/numericSchema"
+} from "../../testSchemas/numericSchema"
 import {
   numericSliderBasisPointsSchema,
   numericSliderVerticalUISchema,
-} from "../../testSchemas/numericSchema/numericSliderSchema"
+} from "../../testSchemas/numericSliderSchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Layout/Vertical",

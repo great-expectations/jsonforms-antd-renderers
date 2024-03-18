@@ -127,10 +127,12 @@ export interface LabelElement extends UISchemaElement, Internationalizable {
   options?: LabelOptions
 }
 
-export type AlertLabelOptions = { type: AlertProps["type"] }
+export type AlertLayoutOptions = { type: AlertProps["type"] }
+// aliased to avoid breaking change, remove in next major version
+export type AlertLaybelOptions = AlertLayoutOptions
 
 // this is intended to be a union, it just has one member rn
-export type LabelOptions = AlertLabelOptions
+export type LabelOptions = AlertLayoutOptions
 
 export const OneOfControlOptions = [
   "button",
@@ -283,7 +285,9 @@ type AndCondition = ComposableCondition & {
   type: "AND"
 }
 
-export type InputNumberOptions = {
+export type NumericControlOptions = {
   addonBefore?: InputNumberProps["addonBefore"]
   addonAfter?: InputNumberProps["addonAfter"]
 }
+// aliased to avoid breaking change, remove in next major version
+export type InputNumberOptions = NumericControlOptions

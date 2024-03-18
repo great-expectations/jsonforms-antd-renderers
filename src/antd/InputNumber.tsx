@@ -1,7 +1,7 @@
 import { ReactElement } from "react"
 import { ControlProps, RendererProps } from "@jsonforms/core"
 import { InputNumber as AntdInputNumber } from "antd"
-import { InputNumberOptions } from "../ui-schema"
+import { NumericControlOptions } from "../ui-schema"
 import {
   coerceToInteger,
   coerceToNumber,
@@ -48,7 +48,7 @@ export const InputNumber = (props: InputNumberProps): InputNumber => {
     }
   }
 
-  const options = props.uischema.options as InputNumberOptions
+  const options = props.uischema.options as NumericControlOptions
   const addonAfter = options?.addonAfter
   const addonBefore = options?.addonBefore
   const isPercentage =

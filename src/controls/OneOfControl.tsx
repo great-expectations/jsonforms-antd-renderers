@@ -5,7 +5,7 @@ import {
   createDefaultValue,
   JsonSchema,
 } from "@jsonforms/core"
-import { JsonFormsDispatch } from "@jsonforms/react"
+import { JsonFormsDispatch, withJsonFormsOneOfProps } from "@jsonforms/react"
 import {
   Radio,
   RadioChangeEvent,
@@ -19,13 +19,14 @@ import merge from "lodash.merge"
 import startCase from "lodash.startcase"
 import { useCallback, useEffect, useState } from "react"
 import {
-  ControlElement,
+  ControlUISchema,
   LabelDescription,
   OneOfControlOption,
   OneOfControlOptions,
   UISchema,
 } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
+import { assertNever } from "../common/assert-never"
 
 export function OneOfControl({
   handleChange,
@@ -117,7 +118,7 @@ export function OneOfControl({
 
   return (
     <Space direction="vertical" style={{ width: "100%" }} size="middle">
-      <CombinatorUiSchemaLabel uischema={uischema} />
+      <CombinatorTitle uischema={uischema} schema={schema} />
       {shouldUseRadioGroupSwitcher(oneOfOptionType) && (
         <RadioGroupSwitcher
           radioProps={{
@@ -178,36 +179,69 @@ export function OneOfControl({
   )
 }
 
+export const OneOfRenderer = withJsonFormsOneOfProps(OneOfControl)
+
+function CombinatorTitle({
+  uischema,
+  schema,
+}: {
+  uischema: UISchema
+  schema: JsonSchema
+}) {
+  if (uischema.type !== "Control") {
+    return null
+  }
+  const controlUISchema: ControlUISchema = uischema as ControlUISchema
+  const text = getCombinatorUiSchemaLabel(controlUISchema)
+  if (!text && !schema.title) {
+    return null
+  }
+  if (!text && schema.title) {
+    return <Typography.Title>{schema.title}</Typography.Title>
+  }
+  if (typeof controlUISchema.label === "object" && controlUISchema.label.type) {
+    const labelType = controlUISchema.label.type
+    switch (labelType) {
+      case "Text":
+        return (
+          <Typography.Text {...controlUISchema.label.textProps}>
+            {text}
+          </Typography.Text>
+        )
+
+      case "Title":
+        return (
+          <Typography.Title {...controlUISchema.label.titleProps}>
+            {text}
+          </Typography.Title>
+        )
+      default:
+        try {
+          assertNever(labelType)
+        } catch (e) {
+          console.error(`Invalid value configured in UI Schema for label.type: '${labelType as string}'`)
+        }
+    }
+  }
+  return <Typography.Title>{text}</Typography.Title>
+}
+
 function getCombinatorUiSchemaLabel(
-  uischema: ControlElement,
+  uischema: ControlUISchema,
 ): string | undefined {
   const label = uischema.label
   if (!label) {
     return undefined
   }
-  if ((label as LabelDescription).text && (label as LabelDescription).show) {
+  if (
+    (label as LabelDescription).text &&
+    (label as LabelDescription).show !== false
+  ) {
     return (label as LabelDescription).text
   }
   if (typeof label === "string") {
     return label
   }
-}
-
-function CombinatorUiSchemaLabel({ uischema }: { uischema: UISchema }) {
-  if (uischema.type !== "Control") {
-    return null
-  }
-  const controlUISchema: ControlElement = uischema as ControlElement
-  const text = getCombinatorUiSchemaLabel(controlUISchema)
-  let textTitleOptions
-  if (
-    typeof controlUISchema.label === "object" &&
-    controlUISchema?.label?.type === "Title"
-  ) {
-    textTitleOptions = controlUISchema.label.titleProps
-  }
-
-  return <Typography.Title {...textTitleOptions}>{text}</Typography.Title>
 }
 
 function shouldUseRadioGroupSwitcher(

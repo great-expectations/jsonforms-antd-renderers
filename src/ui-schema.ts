@@ -1,7 +1,8 @@
 import type { JsonSchema } from "@jsonforms/core"
 import type { AlertProps, InputNumberProps } from "antd"
 import type { RuleObject as AntDRule } from "antd/es/form"
-import { TitleProps } from "antd/es/typography/Title"
+import type { TitleProps } from "antd/es/typography/Title"
+import type { TextProps } from "antd/es/typography/Text"
 
 // jsonforms has composed their types in such a way that recursive types only specify the "base" type
 // this type is intended to fix that problem in the short term so that we can have strong type checking
@@ -118,7 +119,7 @@ export type LabelDescription = {
    * Optional property that determines whether to show this label.
    */
   show?: boolean
-} & ({ type: "Title", titleProps: TitleProps } | Record<string, never>)
+} & ({ type: "Title", titleProps: TitleProps } | { type: "Text", textProps: TextProps } | Record<string, never>)
 /**
  * A label element.
  */

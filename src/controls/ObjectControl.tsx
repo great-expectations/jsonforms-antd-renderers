@@ -4,7 +4,7 @@ import {
   Generate,
   StatePropsOfControlWithDetail,
 } from "@jsonforms/core"
-import { JsonFormsDispatch } from "@jsonforms/react"
+import { JsonFormsDispatch, withJsonFormsDetailProps } from "@jsonforms/react"
 import isEmpty from "lodash.isempty"
 
 export function ObjectControl({
@@ -53,3 +53,5 @@ export function ObjectControl({
     />
   )
 }
+
+export const ObjectRenderer = withJsonFormsDetailProps(ObjectControl)

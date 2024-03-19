@@ -15,59 +15,52 @@ import {
   and,
   or,
 } from "@jsonforms/core"
-import {
-  withJsonFormsControlProps,
-  withJsonFormsLabelProps,
-  withJsonFormsCellProps,
-  withJsonFormsLayoutProps,
-  withJsonFormsDetailProps,
-} from "@jsonforms/react"
+import { withJsonFormsCellProps } from "@jsonforms/react"
 
-import { BooleanControl } from "./controls/BooleanControl"
-import { AlertLayout } from "./layouts/AlertLayout"
-import { TextControl } from "./controls/TextControl"
-import { UnknownControl } from "./controls/UnknownControl"
-import { HorizontalLayout } from "./layouts/HorizontalLayout"
-import { VerticalLayout } from "./layouts/VerticalLayout"
-import { ObjectControl } from "./controls/ObjectControl"
-import { GroupLayout } from "./layouts/GroupLayout"
-import { NumericControl } from "./controls/NumericControl"
-import { NumericSliderControl } from "./controls/NumericSliderControl"
-import React from "react"
+import { BooleanRenderer } from "./controls/BooleanControl"
+import { AlertLayoutRenderer } from "./layouts/AlertLayout"
+import { TextRenderer } from "./controls/TextControl"
+import { UnknownControl, UnknownRenderer } from "./controls/UnknownControl"
+import { HorizontalLayoutRenderer } from "./layouts/HorizontalLayout"
+import { VerticalLayoutRenderer } from "./layouts/VerticalLayout"
+import { ObjectRenderer } from "./controls/ObjectControl"
+import { GroupLayoutRenderer } from "./layouts/GroupLayout"
+import { NumericRenderer } from "./controls/NumericControl"
+import { NumericSliderRenderer } from "./controls/NumericSliderControl"
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   {
     tester: rankWith(1, () => true),
-    renderer: withJsonFormsControlProps(UnknownControl),
+    renderer: UnknownRenderer,
   },
   {
     tester: rankWith(1, uiTypeIs("Group")),
-    renderer: React.memo(GroupLayout),
+    renderer: GroupLayoutRenderer,
   },
   {
     tester: rankWith(2, uiTypeIs("HorizontalLayout")),
-    renderer: withJsonFormsLayoutProps(HorizontalLayout),
+    renderer: HorizontalLayoutRenderer,
   },
   {
     tester: rankWith(2, uiTypeIs("VerticalLayout")),
-    renderer: withJsonFormsLayoutProps(VerticalLayout),
+    renderer: VerticalLayoutRenderer,
   },
   {
     tester: rankWith(2, isBooleanControl),
-    renderer: withJsonFormsControlProps(BooleanControl),
+    renderer: BooleanRenderer,
   },
   {
     tester: rankWith(2, isStringControl),
-    renderer: withJsonFormsControlProps(TextControl),
+    renderer: TextRenderer,
   },
   {
     tester: rankWith(2, uiTypeIs("Label")),
-    renderer: withJsonFormsLabelProps(AlertLayout),
+    renderer: AlertLayoutRenderer,
   },
   {
     tester: rankWith(2, or(isNumberControl, isIntegerControl)),
-    renderer: withJsonFormsControlProps(NumericControl),
+    renderer: NumericRenderer,
   },
   {
     tester: rankWith(
@@ -79,11 +72,11 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
         }),
       ),
     ),
-    renderer: withJsonFormsControlProps(NumericSliderControl),
+    renderer: NumericSliderRenderer,
   },
   {
     tester: rankWith(10, and(isObjectControl, not(isLayout))),
-    renderer: withJsonFormsDetailProps(ObjectControl),
+    renderer: ObjectRenderer,
   },
 ]
 

@@ -5,6 +5,7 @@ import {
 import { UISchema } from "../ui-schema"
 import { Divider } from "antd"
 import { AntDLayout } from "./LayoutRenderer"
+import React from "react"
 
 export type LayoutRendererProps = OwnPropsOfRenderer & {
   elements: UISchema[]
@@ -31,3 +32,5 @@ export function GroupLayout({
     </>
   )
 }
+
+export const GroupLayoutRenderer = React.memo(GroupLayout)

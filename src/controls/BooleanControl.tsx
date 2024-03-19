@@ -3,6 +3,7 @@ import { ControlProps, isDescriptionHidden } from "@jsonforms/core"
 import { Form } from "antd"
 import { Checkbox } from "../antd/Checkbox"
 import { QuestionCircleOutlined } from "@ant-design/icons"
+import { withJsonFormsControlProps } from "@jsonforms/react"
 
 export function BooleanControl({
   data,
@@ -72,3 +73,5 @@ export function BooleanControl({
     </Form.Item>
   )
 }
+
+export const BooleanRenderer = withJsonFormsControlProps(BooleanControl)

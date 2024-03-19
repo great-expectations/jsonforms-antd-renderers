@@ -9,14 +9,14 @@ import type { RuleObject as AntDRule } from "antd/es/form"
 
 export type UISchema =
   | UISchemaElement
-  | Layout
-  | VerticalLayout
-  | HorizontalLayout
-  | LabelElement
-  | GroupLayout
-  | ControlElement
-  | Categorization
-  | Category
+  | LayoutUISchema
+  | VerticalLayoutUISchema
+  | HorizontalLayoutUISchema
+  | LabelLayoutUISchema
+  | GroupLayoutUISchema
+  | ControlUISchema
+  | CategorizationUISchema
+  | CategoryUISchema
 
 /**
  * Interface for describing an UI schema element that is referencing
@@ -77,7 +77,7 @@ interface UISchemaElement<TOptions = { [key: string]: unknown }> {
  * Represents a layout element which can order its children
  * in a specific way.
  */
-interface Layout extends UISchemaElement {
+interface LayoutUISchema extends UISchemaElement {
   /**
    * The child elements of this layout.
    */
@@ -86,20 +86,23 @@ interface Layout extends UISchemaElement {
 /**
  * A layout which orders its child elements vertically (i.e. from top to bottom).
  */
-export interface VerticalLayout extends Layout {
+export interface VerticalLayoutUISchema extends LayoutUISchema {
   type: "VerticalLayout"
 }
 /**
  * A layout which orders its children horizontally (i.e. from left to right).
  */
-export interface HorizontalLayout extends Layout {
+export interface HorizontalLayoutUISchema extends LayoutUISchema {
   type: "HorizontalLayout"
 }
 /**
  * A group resembles a vertical layout, but additionally might have a label.
  * This layout is useful when grouping different elements by a certain criteria.
  */
-interface GroupLayout extends Layout, Labelable, Internationalizable {
+interface GroupLayoutUISchema
+  extends LayoutUISchema,
+    Labelable,
+    Internationalizable {
   type: "Group"
 }
 /**
@@ -118,7 +121,9 @@ interface LabelDescription {
 /**
  * A label element.
  */
-export interface LabelElement extends UISchemaElement, Internationalizable {
+export interface LabelLayoutUISchema
+  extends UISchemaElement,
+    Internationalizable {
   type: "Label"
   /**
    * The text of label.
@@ -174,7 +179,7 @@ type ControlOptions =
  * A control element. The scope property of the control determines
  * to which part of the schema the control should be bound.
  */
-export interface ControlElement
+export interface ControlUISchema
   extends UISchemaElement<ControlOptions>,
     Scoped,
     Labelable<string | boolean | LabelDescription>,
@@ -184,7 +189,10 @@ export interface ControlElement
 /**
  * The category layout.
  */
-interface Category extends Layout, Labeled, Internationalizable {
+interface CategoryUISchema
+  extends LayoutUISchema,
+    Labeled,
+    Internationalizable {
   type: "Category"
 }
 /**
@@ -192,13 +200,16 @@ interface Category extends Layout, Labeled, Internationalizable {
  * A child element may either be itself a Categorization or a Category, hence
  * the categorization element can be used to represent recursive structures like trees.
  */
-interface Categorization extends UISchemaElement, Labeled, Internationalizable {
+interface CategorizationUISchema
+  extends UISchemaElement,
+    Labeled,
+    Internationalizable {
   type: "Categorization"
   /**
    * The child elements of this categorization which are either of type
-   * {@link Category} or {@link Categorization}.
+   * {@link CategoryUISchema} or {@link CategorizationUISchema}.
    */
-  elements: (Category | Categorization)[]
+  elements: (CategoryUISchema | CategorizationUISchema)[]
 }
 
 /**

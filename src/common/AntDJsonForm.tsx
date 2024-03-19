@@ -8,7 +8,7 @@ import { UISchema } from "../ui-schema"
 import {
   rendererRegistryEntries as _rendererRegistryEntries,
   cellRegistryEntries,
-} from "../renderers"
+} from "../renderer-registry-entries"
 
 type Props = {
   data: Record<string, unknown>

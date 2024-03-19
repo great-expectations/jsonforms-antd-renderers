@@ -1,6 +1,6 @@
 import { RuleEffect } from "@jsonforms/core"
 import { JSONSchema } from "json-schema-to-ts"
-import { UISchema } from "../../ui-schema"
+import { UISchema } from "../ui-schema"
 
 export const numericMagnitudeSchema = {
   type: "object",

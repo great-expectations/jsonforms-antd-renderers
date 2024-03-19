@@ -5,7 +5,7 @@ import { render } from "../common/test-render"
 import {
   numericMagnitudeSchema,
   numericHorizontalUISchema,
-} from "../testSchemas/numericSchema/numericSchema"
+} from "../testSchemas/numericSchema"
 
 test("Horizontal layout renders", async () => {
   render({

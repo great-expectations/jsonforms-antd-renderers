@@ -1,7 +1,7 @@
 import { describe, expect, test, it } from "vitest"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { render } from "../../common/test-render"
+import { render } from "../common/test-render"
 import { JSONSchema } from "json-schema-to-ts"
 import {
   numericSliderBasisPointsSchema,
@@ -9,7 +9,7 @@ import {
   numericSliderFinalGradeSchema,
   numericSliderPercentageUISchema,
   numericSliderUISchemaWithRule,
-} from "../../testSchemas/numericSchema/numericSliderSchema"
+} from "../testSchemas/numericSliderSchema"
 
 describe("NumericSliderControl", () => {
   test("renders a slider and number input with no UISchema provided", () => {

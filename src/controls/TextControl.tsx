@@ -9,6 +9,7 @@ import type { ControlProps } from "@jsonforms/core"
 
 import type { TextControlOptions, TextControlType } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
+import { withJsonFormsControlProps } from "@jsonforms/react"
 interface TextControlProps extends ControlProps {
   data: string
   handleChange(path: string, value: string): void
@@ -113,3 +114,5 @@ function TextControlInput({ type, ...rest }: TextControlInputProps) {
 function coerceToString(value: number) {
   return value.toString()
 }
+
+export const TextRenderer = withJsonFormsControlProps(TextControl)

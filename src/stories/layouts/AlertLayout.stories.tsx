@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react"
-import { rendererRegistryEntries } from "../../renderers"
+import { rendererRegistryEntries } from "../../renderer-registry-entries"
 import { UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import { JSONSchema } from "json-schema-to-ts"
@@ -20,7 +20,7 @@ const schema = {
 } satisfies JSONSchema
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
-  title: "Control/Alert",
+  title: "Layout/Alert",
   component: StorybookAntDJsonForm,
   tags: ["autodocs"],
   args: {

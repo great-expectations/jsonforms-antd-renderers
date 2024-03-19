@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { rendererRegistryEntries } from "../../renderers"
+import { rendererRegistryEntries } from "../../renderer-registry-entries"
 import { JSONSchema } from "json-schema-to-ts"
 import { UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"

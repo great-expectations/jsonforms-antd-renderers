@@ -51,9 +51,7 @@
     "@ant-design/icons": "^5.3.0",
     "@jsonforms/core": "^3.2.1",
     "@jsonforms/react": "^3.2.1",
-    "@types/lodash.isempty": "^4.4.9",
     "antd": "^5.14.0",
-    "lodash.isempty": "^4.4.0",
     "react": "^17 || ^18"
   },
   "devDependencies": {
@@ -72,6 +70,7 @@
     "@testing-library/react": "^14.2.1",
     "@testing-library/user-event": "^14.5.2",
     "@types/lodash.isempty": "^4.4.9",
+    "@types/lodash.range": "^3.2.9",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
@@ -86,7 +85,6 @@
     "eslint-plugin-testing-library": "^6.2.0",
     "jsdom": "^24.0.0",
     "json-schema-to-ts": "^3.0.0",
-    "lodash.isempty": "^4.4.0",
     "prettier": "3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -95,5 +93,9 @@
     "typescript": "^5.2.2",
     "vite": "^5.0.12",
     "vitest": "^1.2.2"
+  },
+  "dependencies": {
+    "lodash.isempty": "^4.4.0",
+    "lodash.range": "^3.2.0"
   }
 }

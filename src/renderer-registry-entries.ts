@@ -10,6 +10,9 @@ import {
   isLayout,
   isObjectControl,
   isNumberControl,
+  isObjectArrayControl,
+  isObjectArray,
+  isObjectArrayWithNesting,
   schemaMatches,
   not,
   and,
@@ -27,6 +30,7 @@ import { ObjectRenderer } from "./controls/ObjectControl"
 import { GroupLayoutRenderer } from "./layouts/GroupLayout"
 import { NumericRenderer } from "./controls/NumericControl"
 import { NumericSliderRenderer } from "./controls/NumericSliderControl"
+import { ObjectArrayRenderer } from "./controls/ObjectArrayControl"
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
@@ -73,6 +77,13 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
       ),
     ),
     renderer: NumericSliderRenderer,
+  },
+  {
+    tester: rankWith(
+      3,
+      or(isObjectArrayControl, isObjectArray, isObjectArrayWithNesting),
+    ),
+    renderer: ObjectArrayRenderer,
   },
   {
     tester: rankWith(10, and(isObjectControl, not(isLayout))),

@@ -4,7 +4,10 @@ import { Form } from "antd"
 
 import { JsonSchema7 } from "@jsonforms/core"
 import { UISchema } from "../ui-schema"
-import { cellRegistryEntries, rendererRegistryEntries } from "../renderers"
+import {
+  cellRegistryEntries,
+  rendererRegistryEntries,
+} from "../renderer-registry-entries"
 import { useState } from "react"
 
 type RenderProps<T extends Record<string, unknown>> = {

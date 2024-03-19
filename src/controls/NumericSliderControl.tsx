@@ -3,6 +3,7 @@ import { Col, Form, Row } from "antd"
 import type { Rule } from "antd/es/form"
 import { InputNumber } from "../antd/InputNumber"
 import { Slider } from "../antd/Slider"
+import { withJsonFormsControlProps } from "@jsonforms/react"
 
 export const NumericSliderControl = (props: ControlProps & RendererProps) => {
   if (!props.visible) return null
@@ -33,3 +34,6 @@ export const NumericSliderControl = (props: ControlProps & RendererProps) => {
     </Form.Item>
   )
 }
+
+export const NumericSliderRenderer =
+  withJsonFormsControlProps(NumericSliderControl)

@@ -1,6 +1,7 @@
 import { LabelProps, RendererProps } from "@jsonforms/core"
 import { Alert } from "antd"
 import { AlertLayoutOptions } from "../ui-schema"
+import { withJsonFormsLabelProps } from "@jsonforms/react"
 
 export function AlertLayout({ text, uischema }: LabelProps & RendererProps) {
   const options = uischema.options as AlertLayoutOptions
@@ -13,3 +14,5 @@ export function AlertLayout({ text, uischema }: LabelProps & RendererProps) {
     />
   )
 }
+
+export const AlertLayoutRenderer = withJsonFormsLabelProps(AlertLayout)

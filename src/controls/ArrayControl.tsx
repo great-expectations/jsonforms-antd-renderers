@@ -1,24 +1,19 @@
-<<<<<<< HEAD
-=======
 /* eslint-disable @typescript-eslint/no-unused-vars */
->>>>>>> 5fb8251 (Primitive ArrayControl)
 import {
   Helpers,
   ArrayLayoutProps,
+  ArrayControlProps,
   composePaths,
   createDefaultValue,
   findUISchema,
 } from "@jsonforms/core"
-import {
-  JsonFormsDispatch,
-  withJsonFormsArrayLayoutProps,
-} from "@jsonforms/react"
+import { JsonFormsDispatch } from "@jsonforms/react"
 import { Flex, List, Button } from "antd"
 import range from "lodash.range"
 import { useCallback, useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
 
-export function ObjectArrayControl({
+export function ArrayControl({
   enabled,
   data,
   path,
@@ -32,7 +27,7 @@ export function ObjectArrayControl({
   rootSchema,
   uischemas,
   required,
-}: ArrayLayoutProps) {
+}: ArrayLayoutProps | ArrayControlProps) {
   const foundUISchema = useMemo(
     () =>
       findUISchema(
@@ -45,15 +40,6 @@ export function ObjectArrayControl({
         rootSchema,
       ),
     [uischemas, schema, path, uischema, rootSchema],
-<<<<<<< HEAD
-  )
-
-  const innerCreateDefaultValue = useCallback(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return createDefaultValue(schema, rootSchema)
-  }, [schema, rootSchema])
-
-=======
   )
 
   const innerCreateDefaultValue = useCallback(
@@ -61,7 +47,6 @@ export function ObjectArrayControl({
     [schema, rootSchema],
   )
 
->>>>>>> 5fb8251 (Primitive ArrayControl)
   if (!visible) {
     return null
   }
@@ -72,6 +57,11 @@ export function ObjectArrayControl({
   const options: ArrayControlOptions =
     (uischema.options as ArrayControlOptions) ?? {}
 
+  // Note: For primative arrays, ArrayControlProps.data is an array
+  // For object arrays, ArrayLayoutProps.data is a number
+  const dataSource = typeof data === "number" ? range(data) : data
+  const dataLength = typeof data === "number" ? data : data?.length || 0
+
   const renderItem = (_item: number, index: number) => {
     return (
       <List.Item
@@ -79,15 +69,16 @@ export function ObjectArrayControl({
         actions={[
           <Button
             key="remove"
+            children="Delete"
             {...options.removeButtonProps}
-            disabled={!removeItems || (required && data == 1 && index === 0)}
+            disabled={
+              !removeItems || (required && dataLength == 1 && index === 0)
+            }
             onClick={(e) => {
               e.stopPropagation()
               removeItems?.(path, [index])()
             }}
-          >
-            {options.removeButtonProps?.children ?? "Delete"}
-          </Button>,
+          />,
         ]}
       >
         <div style={{ width: "100%" }}>
@@ -108,14 +99,13 @@ export function ObjectArrayControl({
   const addButton = (
     <Flex justify="center">
       <Button
+        children={`Add ${label}`}
         {...options.addButtonProps}
         onClick={(e) => {
           e.stopPropagation()
           addItem(path, innerCreateDefaultValue())()
         }}
-      >
-        {options.addButtonProps?.children ?? `Add ${label}`}
-      </Button>
+      />
     </Flex>
   )
 
@@ -123,7 +113,7 @@ export function ObjectArrayControl({
     <>
       <b>{label}</b>
       <List // there's a compelling case to be made for Form.List instead, but going with this for now
-        dataSource={range(data)}
+        dataSource={dataSource}
         renderItem={renderItem}
         {...(options.addButtonLocation === "top"
           ? { header: addButton }
@@ -132,6 +122,3 @@ export function ObjectArrayControl({
     </>
   )
 }
-
-export const ObjectArrayRenderer =
-  withJsonFormsArrayLayoutProps(ObjectArrayControl)

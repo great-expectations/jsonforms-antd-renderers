@@ -2,7 +2,6 @@ export {
   rendererRegistryEntries,
   cellRegistryEntries,
 } from "./renderer-registry-entries"
-export type * from "./ui-schema"
 
 export { AlertLayout } from "./layouts/AlertLayout"
 export { BooleanControl } from "./controls/BooleanControl"

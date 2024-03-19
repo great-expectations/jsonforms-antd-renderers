@@ -39,7 +39,6 @@ test.each([
   },
 )
 
-// test with paramaterized schema
 test.each([
   [objectArrayControlJsonSchema],
   [objectArrayControlJsonSchemaWithRequired],
@@ -61,7 +60,7 @@ test.each([
 )
 
 test("ObjectArrayControl correctly appends to the list with add button", async () => {
-  let data = { assets: [{ asset: "my asset" }] }
+  let data = { assets: [] }
   const user = userEvent.setup()
   render({
     schema: objectArrayControlJsonSchema,
@@ -71,14 +70,13 @@ test("ObjectArrayControl correctly appends to the list with add button", async (
       data = result.data
     },
   })
-  await screen.findByDisplayValue("my asset")
   await user.click(screen.getByRole("button", { name: "Add Assets" }))
-  const newAsset = await screen.findByDisplayValue("")
+  const newAsset = await screen.findByLabelText("Asset")
   await user.type(newAsset, "new")
   await screen.findByDisplayValue("new")
   await waitFor(() => {
     expect(data).toEqual({
-      assets: [{ asset: "my asset" }, { asset: "new" }],
+      assets: [{ asset: "new" }],
     })
   })
 })

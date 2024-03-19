@@ -128,8 +128,6 @@ export interface LabelElement extends UISchemaElement, Internationalizable {
 }
 
 export type AlertLayoutOptions = { type: AlertProps["type"] }
-// aliased to avoid breaking change, remove in next major version
-export type AlertLabelOptions = AlertLayoutOptions
 
 // this is intended to be a union, it just has one member rn
 export type LabelOptions = AlertLayoutOptions
@@ -289,5 +287,3 @@ export type NumericControlOptions = {
   addonBefore?: InputNumberProps["addonBefore"]
   addonAfter?: InputNumberProps["addonAfter"]
 }
-// aliased to avoid breaking change, remove in next major version
-export type InputNumberOptions = NumericControlOptions

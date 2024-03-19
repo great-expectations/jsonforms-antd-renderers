@@ -1,4 +1,3 @@
-import React from "react"
 import { JSONSchema } from "json-schema-to-ts"
 import { UISchema } from "../ui-schema"
 import { PlusCircleTwoTone, DeleteOutlined } from "@ant-design/icons"
@@ -68,7 +67,7 @@ export const objectArrayControlUISchemaWithIcons = {
           children: "Destroy me!",
           icon: <DeleteOutlined />,
           danger: true,
-          onClick: (e) => {}, // User should be unable to override the onClick event
+          onClick: () => {}, // User should be unable to override the onClick event
         },
       },
     },

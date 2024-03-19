@@ -12,7 +12,7 @@ import {
 } from "@jsonforms/react"
 import { Flex, List, Button } from "antd"
 import range from "lodash.range"
-import { useCallback, useEffect, useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
 
 export function ObjectArrayControl({

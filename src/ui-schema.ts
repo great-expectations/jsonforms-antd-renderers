@@ -292,7 +292,6 @@ export interface ArrayControlOptions {
   addButtonLocation?: AddButtonLocation
 }
 
-
 export type NumericControlOptions = {
   addonBefore?: InputNumberProps["addonBefore"]
   addonAfter?: InputNumberProps["addonAfter"]

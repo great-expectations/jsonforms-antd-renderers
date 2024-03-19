@@ -53,9 +53,13 @@ test.each([
     await screen.findByText("Add Assets")
     await screen.findByDisplayValue("my asset")
     await screen.findByDisplayValue("my other asset")
-    //note: the text is within a span in the <button>
-    const removeButton = (await screen.findAllByText("Delete"))[0].parentNode
-    expect(removeButton).toHaveProperty("disabled", false)
+    const removeButtons = await screen.findAllByRole("button", {
+      name: "Delete",
+    })
+    expect(removeButtons).toHaveLength(2)
+    removeButtons.forEach((removeButton) => {
+      expect(removeButton).toHaveProperty("disabled", false)
+    })
   },
 )
 

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Helpers,
   ArrayLayoutProps,
@@ -44,10 +43,10 @@ export function ObjectArrayControl({
     [uischemas, schema, path, uischema, rootSchema],
   )
 
-  const innerCreateDefaultValue = useCallback(
-    () => createDefaultValue(schema, rootSchema),
-    [schema, rootSchema],
-  )
+  const innerCreateDefaultValue = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return createDefaultValue(schema, rootSchema)
+  }, [schema, rootSchema])
 
   if (!visible) {
     return null
@@ -66,14 +65,15 @@ export function ObjectArrayControl({
         actions={[
           <Button
             key="remove"
-            children="Delete"
             {...options.removeButtonProps}
             disabled={!removeItems || (required && data == 1 && index === 0)}
             onClick={(e) => {
               e.stopPropagation()
               removeItems?.(path, [index])()
             }}
-          />,
+          >
+            {options.removeButtonProps?.children ?? "Delete"}
+          </Button>,
         ]}
       >
         <div style={{ width: "100%" }}>
@@ -94,13 +94,14 @@ export function ObjectArrayControl({
   const addButton = (
     <Flex justify="center">
       <Button
-        children={`Add ${label}`}
         {...options.addButtonProps}
         onClick={(e) => {
           e.stopPropagation()
           addItem(path, innerCreateDefaultValue())()
         }}
-      />
+      >
+        {options.addButtonProps?.children ?? `Add ${label}`}
+      </Button>
     </Flex>
   )
 

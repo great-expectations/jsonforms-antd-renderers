@@ -42,38 +42,6 @@ export const ObjectArrayOfStrings: Story = {
   },
 }
 
-export const ObjectArrayOfBooleans: Story = {
-  tags: ["autodocs"],
-  args: {
-    jsonSchema: {
-      type: "object",
-      properties: {
-        options: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              option: {
-                title: "Option",
-                type: "boolean",
-              },
-            },
-          },
-        },
-      },
-    } satisfies JSONSchema,
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          scope: "#/properties/options",
-          type: "Control",
-        },
-      ],
-    } satisfies UISchema,
-  },
-}
-
 export const ObjectArrayWithUiOptionAddButtonTop: Story = {
   tags: ["autodocs"],
   args: {
@@ -171,6 +139,61 @@ export const ObjectArrayWithMultipleProperties: Story = {
               danger: true,
             },
           },
+        },
+      ],
+    } satisfies UISchema,
+  },
+}
+
+export const PrimativeArrayOfStringsAsRequired: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      type: "object",
+      properties: {
+        assets: {
+          type: "array",
+          items: {
+            type: "string",
+            title: "asset",
+          },
+        },
+      },
+      required: ["assets"],
+    } satisfies JSONSchema,
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          scope: "#/properties/assets",
+          type: "Control",
+        },
+      ],
+    } satisfies UISchema,
+  },
+}
+
+export const PrimativeArrayOfNumbersWithoutRequired: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      type: "object",
+      properties: {
+        assets: {
+          type: "array",
+          items: {
+            type: "number",
+            title: "asset",
+          },
+        },
+      },
+    } satisfies JSONSchema,
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          scope: "#/properties/assets",
+          type: "Control",
         },
       ],
     } satisfies UISchema,

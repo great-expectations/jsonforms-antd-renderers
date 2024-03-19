@@ -32,6 +32,26 @@ export const objectArrayControlJsonSchema = {
   },
 } satisfies JSONSchema
 
+export const objectArrayControlJsonSchemaWithRequired = {
+  title: "Assets",
+  type: "object",
+  properties: {
+    assets: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          asset: {
+            title: "Asset",
+            type: "string",
+          },
+        },
+      },
+    },
+  },
+  required: ["assets"],
+} satisfies JSONSchema
+
 export const objectArrayControlUISchemaWithIcons = {
   type: "VerticalLayout",
   elements: [

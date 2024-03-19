@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Helpers } from "@jsonforms/core"
 import {
-  ArrayControlProps,
+  Helpers,
+  ArrayLayoutProps,
   composePaths,
   createDefaultValue,
   findUISchema,
@@ -12,7 +12,7 @@ import {
 } from "@jsonforms/react"
 import { Flex, List, Button } from "antd"
 import range from "lodash.range"
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
 
 export function ObjectArrayControl({
@@ -25,19 +25,33 @@ export function ObjectArrayControl({
   removeItems,
   renderers,
   cells,
+  visible,
   rootSchema,
   uischemas,
-}: ArrayControlProps) {
+  required,
+}: ArrayLayoutProps) {
+  const foundUISchema = useMemo(
+    () =>
+      findUISchema(
+        uischemas ?? [],
+        schema,
+        uischema.scope,
+        path,
+        undefined,
+        uischema,
+        rootSchema,
+      ),
+    [uischemas, schema, path, uischema, rootSchema],
+  )
+
   const innerCreateDefaultValue = useCallback(
     () => createDefaultValue(schema, rootSchema),
     [schema, rootSchema],
   )
 
-  useEffect(() => {
-    if (data === 0) {
-      addItem(path, innerCreateDefaultValue())()
-    }
-  }, [addItem, data, innerCreateDefaultValue, path])
+  if (!visible) {
+    return null
+  }
 
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
   const label = labelDescription.show ? labelDescription.text : ""
@@ -46,15 +60,6 @@ export function ObjectArrayControl({
     (uischema.options as ArrayControlOptions) ?? {}
 
   const renderItem = (_item: number, index: number) => {
-    const foundUISchema = findUISchema(
-      uischemas ?? [],
-      schema,
-      uischema.scope,
-      path,
-      undefined,
-      uischema,
-      rootSchema,
-    )
     return (
       <List.Item
         key={index}
@@ -63,7 +68,7 @@ export function ObjectArrayControl({
             key="remove"
             children="Delete"
             {...options.removeButtonProps}
-            disabled={!removeItems || (data === 1 && index === 0)}
+            disabled={!removeItems || (required && data == 1 && index === 0)}
             onClick={(e) => {
               e.stopPropagation()
               removeItems?.(path, [index])()

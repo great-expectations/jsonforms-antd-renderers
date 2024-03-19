@@ -129,7 +129,7 @@ export interface LabelElement extends UISchemaElement, Internationalizable {
 
 export type AlertLayoutOptions = { type: AlertProps["type"] }
 // aliased to avoid breaking change, remove in next major version
-export type AlertLaybelOptions = AlertLayoutOptions
+export type AlertLabelOptions = AlertLayoutOptions
 
 // this is intended to be a union, it just has one member rn
 export type LabelOptions = AlertLayoutOptions

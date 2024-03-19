@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 import { JsonSchema } from "@jsonforms/core"
 import { ButtonProps, InputNumberProps, AlertProps } from "antd"
-=======
-import type { JsonSchema } from "@jsonforms/core"
-import type { AlertProps, InputNumberProps } from "antd"
 import type { RuleObject as AntDRule } from "antd/es/form"
->>>>>>> refs/rewritten/onto
 
 // jsonforms has composed their types in such a way that recursive types only specify the "base" type
 // this type is intended to fix that problem in the short term so that we can have strong type checking
@@ -289,7 +284,6 @@ type AndCondition = ComposableCondition & {
   type: "AND"
 }
 
-<<<<<<< HEAD
 export type AddButtonLocation = "top" | "bottom"
 
 export interface ArrayControlOptions {
@@ -298,10 +292,8 @@ export interface ArrayControlOptions {
   addButtonLocation?: AddButtonLocation
 }
 
-export type InputNumberOptions = {
-=======
+
 export type NumericControlOptions = {
->>>>>>> refs/rewritten/onto
   addonBefore?: InputNumberProps["addonBefore"]
   addonAfter?: InputNumberProps["addonAfter"]
 }

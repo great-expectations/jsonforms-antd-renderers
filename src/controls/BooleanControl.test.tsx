@@ -29,7 +29,6 @@ test("handles onChange event correctly", async () => {
     },
     data: { name: false },
     onChange: (result) => {
-      console.log(result)
       updateData(result)
     },
   })

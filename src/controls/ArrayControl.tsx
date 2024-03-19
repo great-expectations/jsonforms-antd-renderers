@@ -1,4 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   Helpers,
   ArrayLayoutProps,
@@ -7,7 +11,11 @@ import {
   createDefaultValue,
   findUISchema,
 } from "@jsonforms/core"
-import { JsonFormsDispatch } from "@jsonforms/react"
+import {
+  JsonFormsDispatch,
+  withJsonFormsArrayControlProps,
+  withJsonFormsArrayLayoutProps,
+} from "@jsonforms/react"
 import { Flex, List, Button } from "antd"
 import range from "lodash.range"
 import { useCallback, useMemo } from "react"
@@ -59,7 +67,11 @@ export function ArrayControl({
 
   // Note: For primative arrays, ArrayControlProps.data is an array
   // For object arrays, ArrayLayoutProps.data is a number
-  const dataSource = typeof data === "number" ? range(data) : data
+  const dataSource: any[] =
+    typeof data === "number"
+      ? range(data)
+      : // antd List component doesn't like undefined/null in the dataSource
+        data?.map((item: any) => item ?? "")
   const dataLength = typeof data === "number" ? data : data?.length || 0
 
   const renderItem = (_item: number, index: number) => {
@@ -69,7 +81,6 @@ export function ArrayControl({
         actions={[
           <Button
             key="remove"
-            children="Delete"
             {...options.removeButtonProps}
             disabled={
               !removeItems || (required && dataLength == 1 && index === 0)
@@ -78,7 +89,9 @@ export function ArrayControl({
               e.stopPropagation()
               removeItems?.(path, [index])()
             }}
-          />,
+          >
+            {options.removeButtonProps?.children ?? "Delete"}
+          </Button>,
         ]}
       >
         <div style={{ width: "100%" }}>
@@ -99,13 +112,14 @@ export function ArrayControl({
   const addButton = (
     <Flex justify="center">
       <Button
-        children={`Add ${label}`}
         {...options.addButtonProps}
         onClick={(e) => {
           e.stopPropagation()
           addItem(path, innerCreateDefaultValue())()
         }}
-      />
+      >
+        {options.addButtonProps?.children || `Add ${label}`}
+      </Button>
     </Flex>
   )
 
@@ -122,3 +136,7 @@ export function ArrayControl({
     </>
   )
 }
+
+export const ObjectArrayRenderer = withJsonFormsArrayLayoutProps(ArrayControl)
+export const PrimitiveArrayRenderer =
+  withJsonFormsArrayControlProps(ArrayControl)

@@ -11,6 +11,7 @@ import {
   stringArrayControlJsonSchema,
   stringArrayControlJsonSchemaWithRequired,
   stringArrayControlJsonSchemaWithTitle,
+  numberArrayControlJsonSchema,
 } from "../testSchemas/arraySchema"
 
 describe("ArrayControl for Objects", () => {
@@ -58,8 +59,13 @@ describe("ArrayControl for Objects", () => {
       await screen.findByDisplayValue("my asset")
       await screen.findByDisplayValue("my other asset")
       //note: the text is within a span in the <button>
-      const removeButton = (await screen.findAllByText("Delete"))[0].parentNode
-      expect(removeButton).toHaveProperty("disabled", false)
+      const removeButtons = await screen.findAllByRole("button", {
+        name: "Delete",
+      })
+      expect(removeButtons).toHaveLength(2)
+      removeButtons.forEach((removeButton) => {
+        expect(removeButton).toHaveProperty("disabled", false)
+      })
     },
   )
 
@@ -207,8 +213,13 @@ describe("ArrayControl for Primatives", () => {
       await screen.findByDisplayValue("my asset")
       await screen.findByDisplayValue("my other asset")
       //note: the text is within a span in the <button>
-      const removeButton = (await screen.findAllByText("Delete"))[0].parentNode
-      expect(removeButton).toHaveProperty("disabled", false)
+      const removeButtons = await screen.findAllByRole("button", {
+        name: "Delete",
+      })
+      expect(removeButtons).toHaveLength(2)
+      removeButtons.forEach((removeButton) => {
+        expect(removeButton).toHaveProperty("disabled", false)
+      })
     },
   )
 
@@ -307,8 +318,7 @@ describe("ArrayControl for Primatives", () => {
   })
 
   test("renders with title", async () => {
-    const user = userEvent.setup()
-    let data = { assets: ["apple"] }
+    const data = { assets: ["apple"] }
     render({
       schema: stringArrayControlJsonSchemaWithTitle,
       uischema: arrayControlUISchema,
@@ -323,5 +333,20 @@ describe("ArrayControl for Primatives", () => {
     // Label is used within the input
     const textbox = await screen.findByLabelText("Use this as the label")
     expect(textbox).toHaveProperty("value", "apple")
+  })
+
+  test("Primitive Number Array should not error if item is null", async () => {
+    const user = userEvent.setup()
+    const data = { assets: [0] }
+    render({
+      schema: numberArrayControlJsonSchema,
+      uischema: arrayControlUISchema,
+      data: data,
+    })
+
+    await screen.findByDisplayValue("0")
+    // Antd List component does not like null or undefined values, and will error if they are present
+    // This test is to ensure that the component does not error if the value is null
+    await user.clear(screen.getByDisplayValue("0"))
   })
 })

@@ -87,6 +87,19 @@ export const stringArrayControlJsonSchema = {
   },
 } satisfies JSONSchema
 
+export const numberArrayControlJsonSchema = {
+  title: "Assets",
+  type: "object",
+  properties: {
+    assets: {
+      type: "array",
+      items: {
+        type: "number",
+      },
+    },
+  },
+} satisfies JSONSchema
+
 export const stringArrayControlJsonSchemaWithTitle = {
   title: "Assets",
   type: "object",

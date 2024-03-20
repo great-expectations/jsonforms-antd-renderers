@@ -17,6 +17,7 @@ import {
   not,
   and,
   or,
+  isPrimitiveArrayControl,
   isOneOfControl,
   isDateTimeControl,
 } from "@jsonforms/core"
@@ -32,9 +33,13 @@ import { ObjectRenderer } from "./controls/ObjectControl"
 import { GroupLayoutRenderer } from "./layouts/GroupLayout"
 import { NumericRenderer } from "./controls/NumericControl"
 import { NumericSliderRenderer } from "./controls/NumericSliderControl"
+import {
+  ObjectArrayRenderer,
+  PrimitiveArrayRenderer,
+} from "./controls/ArrayControl"
 import { OneOfRenderer } from "./controls/combinators/OneOfControl"
-import { ObjectArrayRenderer } from "./controls/ObjectArrayControl"
 import { DatetimeRenderer } from "./controls/DatetimeControl"
+
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
@@ -100,6 +105,10 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   {
     tester: rankWith(10, and(isObjectControl, not(isLayout))),
     renderer: ObjectRenderer,
+  },
+  {
+    tester: rankWith(30, isPrimitiveArrayControl),
+    renderer: PrimitiveArrayRenderer,
   },
 ]
 

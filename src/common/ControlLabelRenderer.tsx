@@ -12,7 +12,7 @@ export function ControlLabelRenderer({
 }) {
   const controlUISchema: ControlUISchema = uischema
   const text = getUiSchemaLabel(controlUISchema)
-  
+
   if (!text && !schema.title) {
     return null
   }
@@ -50,9 +50,7 @@ export function ControlLabelRenderer({
   return <Typography.Title>{text}</Typography.Title>
 }
 
-function getUiSchemaLabel(
-  uischema: ControlUISchema,
-): string | undefined {
+function getUiSchemaLabel(uischema: ControlUISchema): string | undefined {
   const label = uischema.label
   if (!label) {
     return undefined

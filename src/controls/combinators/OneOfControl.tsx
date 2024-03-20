@@ -6,8 +6,8 @@ import {
 import { JsonFormsDispatch, withJsonFormsOneOfProps } from "@jsonforms/react"
 import { Space } from "antd"
 import { useState } from "react"
-import { ControlUISchema } from "../ui-schema"
-import { ControlLabelRenderer } from "../common/ControlLabelRenderer"
+import { ControlUISchema } from "../../ui-schema"
+import { ControlLabelRenderer } from "../../common/ControlLabelRenderer"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
 
 export function OneOfControl({

@@ -1,9 +1,9 @@
 import { JSONSchema } from "json-schema-to-ts"
 import { screen } from "@testing-library/react"
 import { test, expect, describe } from "vitest"
-import { render } from "../common/test-render"
+import { render } from "../../common/test-render"
 import userEvent from "@testing-library/user-event"
-import { OneOfControlOptions } from "../ui-schema"
+import { OneOfControlOptions } from "../../ui-schema"
 
 const schema = {
   type: "object",
@@ -43,16 +43,19 @@ describe("OneOf control", () => {
     screen.getByLabelText("Address")
   })
   test("OneOf Control with button UISchema allows switching between subschemas", async () => {
-    render({ schema, uischema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/deliveryOption",
-          options: { optionType: "button" } satisfies OneOfControlOptions,
-        },
-      ],
-    } })
+    render({
+      schema,
+      uischema: {
+        type: "VerticalLayout",
+        elements: [
+          {
+            type: "Control",
+            scope: "#/properties/deliveryOption",
+            options: { optionType: "button" } satisfies OneOfControlOptions,
+          },
+        ],
+      },
+    })
     await screen.findByText("Pickup")
     screen.getByLabelText("Location")
 
@@ -60,16 +63,19 @@ describe("OneOf control", () => {
     screen.getByLabelText("Address")
   })
   test("OneOf Control with dropdown UISchema allows switching between subschemas", async () => {
-    render({ schema, uischema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/deliveryOption",
-          options: { optionType: "dropdown" } satisfies OneOfControlOptions,
-        },
-      ],
-    } })
+    render({
+      schema,
+      uischema: {
+        type: "VerticalLayout",
+        elements: [
+          {
+            type: "Control",
+            scope: "#/properties/deliveryOption",
+            options: { optionType: "dropdown" } satisfies OneOfControlOptions,
+          },
+        ],
+      },
+    })
     await screen.findByText("Pickup")
     screen.getByLabelText("Location")
 

@@ -119,7 +119,11 @@ export type LabelDescription = {
    * Optional property that determines whether to show this label.
    */
   show?: boolean
-} & ({ type: "Title", titleProps: TitleProps } | { type: "Text", textProps: TextProps } | Record<string, never>)
+} & (
+  | { type: "Title"; titleProps: TitleProps }
+  | { type: "Text"; textProps: TextProps }
+  | Record<string, never>
+)
 /**
  * A label element.
  */
@@ -182,9 +186,9 @@ type ControlOptions =
  */
 export interface ControlUISchema
   extends UISchemaElement<ControlOptions>,
-  Scoped,
-  Labelable<string | boolean | LabelDescription>,
-  Internationalizable {
+    Scoped,
+    Labelable<string | boolean | LabelDescription>,
+    Internationalizable {
   type: "Control"
 }
 /**
@@ -249,12 +253,12 @@ enum RuleEffect {
 type Condition =
   | Record<string, never> // not documented in their type system AFAIK, but this is how you default a rule to "always true"
   | (
-    | JFCondition
-    | LeafCondition
-    | SchemaBasedCondition
-    | OrCondition
-    | AndCondition
-  )
+      | JFCondition
+      | LeafCondition
+      | SchemaBasedCondition
+      | OrCondition
+      | AndCondition
+    )
 
 interface JFCondition {
   /**

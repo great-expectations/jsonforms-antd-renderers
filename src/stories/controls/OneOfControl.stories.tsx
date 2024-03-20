@@ -138,7 +138,7 @@ export const Dropdown: Story = {
   },
 }
 
-export const OneOfLabelStyling: Story = {
+export const OneOfTitleLabelStyling: Story = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
   args: {
@@ -152,6 +152,35 @@ export const OneOfLabelStyling: Story = {
             type: "Title",
             text: "Titles are configurable with AntD Title Props",
             titleProps: { level: 5, delete: true, type: "danger" },
+          },
+          scope: "#/properties/deliveryOption",
+          options: { optionType: "dropdown" } satisfies OneOfControlOptions,
+        },
+      ],
+    },
+  },
+  argTypes: {
+    jsonSchema: {
+      control: "object",
+      description: "this is a minimal oneOf combinator schema",
+    },
+  },
+}
+
+export const OneOfTextLabelStyling: Story = {
+  parameters: { controls: { expanded: true } },
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: schema,
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Control",
+          label: {
+            type: "Text",
+            text: "Titles are configurable with AntD Title Props",
+            textProps: { disabled: true, type: "secondary" },
           },
           scope: "#/properties/deliveryOption",
           options: { optionType: "dropdown" } satisfies OneOfControlOptions,

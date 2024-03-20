@@ -110,20 +110,17 @@ interface GroupLayoutUISchema
 /**
  * Represents an object that can be used to configure a label.
  */
-export type LabelDescription = {
-  /**
-   * An optional text to be displayed.
-   */
-  text?: string
-  /**
-   * Optional property that determines whether to show this label.
-   */
+export type LabelDescription =
+  | BaseLabelDescription
+  | (BaseLabelDescription &
+      (
+        | { type: "Title"; titleProps: TitleProps }
+        | { type: "Text"; textProps: TextProps }
+      ))
+type BaseLabelDescription = {
+  text: string
   show?: boolean
-} & (
-  | { type: "Title"; titleProps: TitleProps }
-  | { type: "Text"; textProps: TextProps }
-  | Record<string, never>
-)
+}
 /**
  * A label element.
  */

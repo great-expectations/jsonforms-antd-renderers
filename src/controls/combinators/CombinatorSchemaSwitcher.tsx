@@ -1,11 +1,4 @@
-import {
-  Radio,
-  RadioChangeEvent,
-  Select,
-  Space,
-  Switch,
-  Typography,
-} from "antd"
+import { Radio, RadioChangeEvent, Select } from "antd"
 import { OneOfControlOptions } from "../../ui-schema"
 import merge from "lodash.merge"
 import { useEffect, useState } from "react"
@@ -16,7 +9,6 @@ import {
   createDefaultValue,
 } from "@jsonforms/core"
 import { usePreviousValue } from "../../common/usePreviousValue"
-import { shouldUseRadioGroupSwitcher } from "./utils"
 
 type CombinatorSchemaSwitcherProps = {
   renderInfos: CombinatorSubSchemaRenderInfo[]
@@ -24,18 +16,11 @@ type CombinatorSchemaSwitcherProps = {
   selectedIndex: number
 } & Pick<
   CombinatorRendererProps,
-  | "data"
-  | "handleChange"
-  | "path"
-  | "rootSchema"
-  | "uischema"
-  | "config"
-  | "indexOfFittingSchema"
+  "data" | "handleChange" | "path" | "rootSchema" | "uischema" | "config"
 >
 
 export function CombinatorSchemaSwitcher({
   renderInfos,
-  indexOfFittingSchema,
   config,
   uischema,
   setSelectedIndex,
@@ -93,50 +78,42 @@ export function CombinatorSchemaSwitcher({
     value: index,
   }))
 
-  if (shouldUseRadioGroupSwitcher(oneOfOptionType)) {
-    return (
-      <Radio.Group
-        {...(oneOfOptionType === "button" && {
-          optionType: "button",
-          buttonStyle: "solid",
-        })}
-        options={options}
-        onChange={(e: RadioChangeEvent) => {
-          const combinatorIndex = e.target.value as number
-          setSelectedIndex(combinatorIndex)
-        }}
-        value={selectedIndex}
-      />
-    )
-  }
-  if (oneOfOptionType === "dropdown") {
-    return (
-      <Select
-        options={options}
-        onChange={(combinatorIndex: number) =>
-          setSelectedIndex(combinatorIndex)
-        }
-        defaultValue={selectedIndex}
-      />
-    )
-  }
-  if (oneOfOptionType === "toggle") {
-    return (
-      <Space>
-        <Switch
-          onChange={(value: boolean) => {
-            const combinatorIndex = value === false ? 0 : 1
+  switch (oneOfOptionType) {
+    case "button":
+      return (
+        <Radio.Group
+          optionType="button"
+          buttonStyle="solid"
+          options={options}
+          onChange={(e: RadioChangeEvent) => {
+            const combinatorIndex = e.target.value as number
             setSelectedIndex(combinatorIndex)
           }}
-          defaultChecked={indexOfFittingSchema === 1}
+          value={selectedIndex}
         />
-        {appliedUiSchemaOptions.toggleLabel && (
-          <Typography.Text>
-            {appliedUiSchemaOptions.toggleLabel}
-          </Typography.Text>
-        )}
-      </Space>
-    )
+      )
+    case "dropdown":
+      return (
+        <Select
+          options={options}
+          onChange={(combinatorIndex: number) =>
+            setSelectedIndex(combinatorIndex)
+          }
+          defaultValue={selectedIndex}
+        />
+      )
+    case "radio":
+    default:
+      return (
+        <Radio.Group
+          options={options}
+          onChange={(e: RadioChangeEvent) => {
+            const combinatorIndex = e.target.value as number
+            setSelectedIndex(combinatorIndex)
+          }}
+          value={selectedIndex}
+        />
+      )
   }
 }
 

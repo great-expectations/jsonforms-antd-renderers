@@ -1,9 +1,10 @@
-import { JsonSchema } from "@jsonforms/core"
-import { ControlUISchema, LabelDescription } from "../ui-schema"
+import { JsonSchema, Helpers } from "@jsonforms/core"
+import { ControlUISchema } from "../ui-schema"
 import { Typography } from "antd"
 import { assertNever } from "./assert-never"
 
-export function ControlLabelRenderer({
+// This consumes a LabelDescription (+ other formats) in a Control UI Schema
+export function ControlLabel({
   uischema,
   schema,
 }: {
@@ -11,17 +12,13 @@ export function ControlLabelRenderer({
   schema: JsonSchema
 }) {
   const controlUISchema: ControlUISchema = uischema
-  const text = getUiSchemaLabel(controlUISchema)
+  const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
+  const text = labelDescription.show ? labelDescription.text : null
 
-  if (!text && !schema.title) {
-    return null
-  }
-
-  if (!text && schema.title) {
-    return <Typography.Title>{schema.title}</Typography.Title>
-  }
-
-  if (typeof controlUISchema.label === "object" && controlUISchema.label.type) {
+  if (
+    typeof controlUISchema.label === "object" &&
+    "type" in controlUISchema.label
+  ) {
     const labelType = controlUISchema.label.type
     switch (labelType) {
       case "Text":
@@ -48,20 +45,4 @@ export function ControlLabelRenderer({
     }
   }
   return <Typography.Title>{text}</Typography.Title>
-}
-
-function getUiSchemaLabel(uischema: ControlUISchema): string | undefined {
-  const label = uischema.label
-  if (!label) {
-    return undefined
-  }
-  if (
-    (label as LabelDescription).text &&
-    (label as LabelDescription).show !== false
-  ) {
-    return (label as LabelDescription).text
-  }
-  if (typeof label === "string") {
-    return label
-  }
 }

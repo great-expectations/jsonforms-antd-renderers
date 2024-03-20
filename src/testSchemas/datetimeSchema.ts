@@ -11,7 +11,6 @@ export const datetimeSchema = {
       format: "date-time",
     },
   },
-  required: ["datetime"],
 } satisfies JSONSchema
 
 export const datetimeUISchema = {

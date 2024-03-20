@@ -18,10 +18,11 @@ export function DatetimeControl({
   label,
   visible,
   id,
+  required,
 }: DatetimeControlProps) {
   const dateFormat = "MM/DD/YYYY"
   return !visible ? null : (
-    <Form.Item label={label} id={id} name={path}>
+    <Form.Item label={label} id={id} name={path} required={required}>
       <MyDatePicker
         value={data ? new Date(data) : null}
         format={dateFormat}

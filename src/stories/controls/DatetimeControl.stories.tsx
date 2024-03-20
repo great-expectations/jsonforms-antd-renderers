@@ -36,3 +36,14 @@ export const Datetime: Story = {
     uiSchema: datetimeUISchema,
   },
 }
+
+export const RequiredDatetime: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      ...datetimeSchema,
+      required: ["datetime"],
+    },
+    uiSchema: datetimeUISchema,
+  },
+}

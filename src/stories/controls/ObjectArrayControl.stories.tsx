@@ -6,9 +6,9 @@ import { UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import {
   objectArrayControlJsonSchema,
-  objectArrayControlUISchema,
-  objectArrayControlUISchemaWithIcons,
-} from "../../testSchemas/objectArraySchema"
+  arrayControlUISchema,
+  arrayControlUISchemaWithIcons,
+} from "../../testSchemas/arraySchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Object Array",
@@ -38,7 +38,7 @@ export const ObjectArrayOfStrings: Story = {
   tags: ["autodocs"],
   args: {
     jsonSchema: objectArrayControlJsonSchema,
-    uiSchema: objectArrayControlUISchema,
+    uiSchema: arrayControlUISchema,
   },
 }
 
@@ -91,7 +91,7 @@ export const ObjectArrayWithUiOptionWithIcons: Story = {
   tags: ["autodocs"],
   args: {
     jsonSchema: objectArrayControlJsonSchema,
-    uiSchema: objectArrayControlUISchemaWithIcons,
+    uiSchema: arrayControlUISchemaWithIcons,
   },
 }
 

@@ -1,7 +1,7 @@
 import { ControlProps } from "@jsonforms/core"
+import { withJsonFormsControlProps } from "@jsonforms/react"
 import { DatePicker, Form } from "antd"
 import dateFnsGenerateConfig from "rc-picker/lib/generate/dateFns"
-
 
 interface DatetimeControlProps extends ControlProps {
   data: string
@@ -11,11 +11,24 @@ interface DatetimeControlProps extends ControlProps {
 
 const MyDatePicker = DatePicker.generatePicker<Date>(dateFnsGenerateConfig)
 
-export function DatetimeControl({ data, handleChange, path, label, visible, id }: DatetimeControlProps) {
+export function DatetimeControl({
+  data,
+  handleChange,
+  path,
+  label,
+  visible,
+  id,
+}: DatetimeControlProps) {
   const dateFormat = "MM/DD/YYYY"
   return !visible ? null : (
     <Form.Item label={label} id={id} name={path}>
-      <MyDatePicker defaultValue={new Date(data)} format={dateFormat} onChange={(e) => handleChange(path, e)} />
+      <MyDatePicker
+        value={data ? new Date(data) : null}
+        format={dateFormat}
+        onChange={(e) => handleChange(path, e)}
+      />
     </Form.Item>
   )
 }
+
+export const DatetimeRenderer = withJsonFormsControlProps(DatetimeControl)

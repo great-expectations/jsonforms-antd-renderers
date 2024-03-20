@@ -2,7 +2,6 @@ import { JSONSchema } from "json-schema-to-ts"
 import { UISchema } from "../ui-schema"
 import { RuleEffect } from "@jsonforms/core"
 
-
 export const datetimeSchema = {
   type: "object",
   properties: {
@@ -14,7 +13,6 @@ export const datetimeSchema = {
   },
   required: ["datetime"],
 } satisfies JSONSchema
-
 
 export const datetimeUISchema = {
   type: "VerticalLayout",

@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react"
 import { rendererRegistryEntries } from "../../renderer-registry-entries"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
+
 import {
   objectSchema,
   objectUISchemaWithName,
@@ -16,11 +17,16 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     jsonSchema: objectSchema,
     rendererRegistryEntries: [...rendererRegistryEntries],
   },
+  // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
-    rendererRegistryEntries: {},
+    rendererRegistryEntries: { table: { disable: true } },
     jsonSchema: {
       control: "object",
     },
+    uiSchemaRegistryEntries: { table: { disable: true } },
+    data: { table: { disable: true } },
+    config: { control: "object" },
+    onChange: { table: { disable: true, action: "on-change" } },
   },
 }
 

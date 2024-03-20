@@ -1,5 +1,5 @@
 import type { JsonSchema } from "@jsonforms/core"
-import type { AlertProps, InputNumberProps } from "antd"
+import type { ButtonProps, InputNumberProps, AlertProps } from "antd"
 import type { RuleObject as AntDRule } from "antd/es/form"
 import type { TitleProps } from "antd/es/typography/Title"
 import type { TextProps } from "antd/es/typography/Text"
@@ -176,6 +176,7 @@ type ControlOptions =
   | OneOfControlOptions
   | TextControlOptions
   | AnyOfControlOptions
+  | ArrayControlOptions
 
 /**
  * A control element. The scope property of the control determines
@@ -295,6 +296,14 @@ type OrCondition = ComposableCondition & {
  */
 type AndCondition = ComposableCondition & {
   type: "AND"
+}
+
+export type AddButtonLocation = "top" | "bottom"
+
+export interface ArrayControlOptions {
+  addButtonProps?: ButtonProps
+  removeButtonProps?: ButtonProps
+  addButtonLocation?: AddButtonLocation
 }
 
 export type NumericControlOptions = {

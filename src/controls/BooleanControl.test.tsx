@@ -1,5 +1,5 @@
 import { test, expect, vi } from "vitest"
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { render } from "../common/test-render"
 
@@ -38,19 +38,19 @@ test("handles onChange event correctly", async () => {
 
   await userEvent.click(checkbox)
   expect(checkbox).toBeChecked()
-  // FYI the calls to updateData lag behind the actual checkbox state. Not sure why.
-  // It could be the difference between json-forms handleChange(path, value) and the onChange event.
-  expect(updateData).toHaveBeenLastCalledWith({
-    data: { name: false },
-    errors: [],
-  })
+  await waitFor(() =>
+    expect(updateData).toHaveBeenLastCalledWith({
+      data: { name: true },
+      errors: [],
+    }),
+  )
 
   await userEvent.click(checkbox)
   expect(checkbox).not.toBeChecked()
-  expect(updateData).toHaveBeenLastCalledWith({
-    data: { name: true },
-    errors: [],
-  })
-
-  expect(updateData).toBeCalledTimes(2)
+  await waitFor(() =>
+    expect(updateData).toHaveBeenLastCalledWith({
+      data: { name: false },
+      errors: [],
+    }),
+  )
 })

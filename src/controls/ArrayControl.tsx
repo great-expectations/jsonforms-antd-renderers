@@ -1,12 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   Helpers,
   ArrayLayoutProps,
-  ArrayControlProps,
+  ArrayControlProps as JsonFormsArrayControlProps,
   composePaths,
   createDefaultValue,
   findUISchema,
@@ -21,9 +16,35 @@ import range from "lodash.range"
 import { useCallback, useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
 
-export function ArrayControl({
+interface ArrayControlProps
+  extends Omit<JsonFormsArrayControlProps, "data">,
+    Omit<ArrayLayoutProps, "data"> {
+  dataSource: unknown[]
+}
+
+export function PrimitiveArrayControl(props: JsonFormsArrayControlProps) {
+  // For primative arrays, ArrayControlProps.data is an array
+  const dataSource: unknown[] = useMemo(
+    () =>
+      // antd List component doesn't like undefined/null in the dataSource
+      ((props.data as unknown[])?.map(
+        (item: unknown) => item ?? "",
+      ) as unknown[]) ?? [],
+    [props.data],
+  )
+
+  return <ArrayControl {...props} dataSource={dataSource} />
+}
+
+export function ObjectArrayControl(props: ArrayLayoutProps) {
+  // For object arrays, ArrayLayoutProps.data is a number
+  const dataSource = useMemo(() => range(props.data), [props.data])
+
+  return <ArrayControl {...props} dataSource={dataSource} />
+}
+
+function ArrayControl({
   enabled,
-  data,
   path,
   schema,
   uischema,
@@ -35,7 +56,8 @@ export function ArrayControl({
   rootSchema,
   uischemas,
   required,
-}: ArrayLayoutProps | ArrayControlProps) {
+  dataSource,
+}: ArrayControlProps) {
   const foundUISchema = useMemo(
     () =>
       findUISchema(
@@ -51,7 +73,7 @@ export function ArrayControl({
   )
 
   const innerCreateDefaultValue = useCallback(
-    () => createDefaultValue(schema, rootSchema),
+    () => createDefaultValue(schema, rootSchema) as unknown,
     [schema, rootSchema],
   )
 
@@ -65,16 +87,7 @@ export function ArrayControl({
   const options: ArrayControlOptions =
     (uischema.options as ArrayControlOptions) ?? {}
 
-  // Note: For primative arrays, ArrayControlProps.data is an array
-  // For object arrays, ArrayLayoutProps.data is a number
-  const dataSource: any[] =
-    typeof data === "number"
-      ? range(data)
-      : // antd List component doesn't like undefined/null in the dataSource
-        data?.map((item: any) => item ?? "")
-  const dataLength = typeof data === "number" ? data : data?.length || 0
-
-  const renderItem = (_item: number, index: number) => {
+  const renderItem = (_item: unknown, index: number) => {
     return (
       <List.Item
         key={index}
@@ -83,7 +96,8 @@ export function ArrayControl({
             key="remove"
             {...options.removeButtonProps}
             disabled={
-              !removeItems || (required && dataLength == 1 && index === 0)
+              !removeItems ||
+              (required && dataSource.length == 1 && index === 0)
             }
             onClick={(e) => {
               e.stopPropagation()
@@ -118,7 +132,7 @@ export function ArrayControl({
           addItem(path, innerCreateDefaultValue())()
         }}
       >
-        {options.addButtonProps?.children || `Add ${label}`}
+        {options.addButtonProps?.children ?? `Add ${label}`}
       </Button>
     </Flex>
   )
@@ -126,7 +140,7 @@ export function ArrayControl({
   return (
     <>
       <b>{label}</b>
-      <List // there's a compelling case to be made for Form.List instead, but going with this for now
+      <List<unknown> // there's a compelling case to be made for Form.List instead, but going with this for now
         dataSource={dataSource}
         renderItem={renderItem}
         {...(options.addButtonLocation === "top"
@@ -137,6 +151,9 @@ export function ArrayControl({
   )
 }
 
-export const ObjectArrayRenderer = withJsonFormsArrayLayoutProps(ArrayControl)
-export const PrimitiveArrayRenderer =
-  withJsonFormsArrayControlProps(ArrayControl)
+export const ObjectArrayRenderer =
+  withJsonFormsArrayLayoutProps(ObjectArrayControl)
+
+export const PrimitiveArrayRenderer = withJsonFormsArrayControlProps(
+  PrimitiveArrayControl,
+)

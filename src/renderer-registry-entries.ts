@@ -40,7 +40,6 @@ import {
 import { OneOfRenderer } from "./controls/combinators/OneOfControl"
 import { DatetimeRenderer } from "./controls/DatetimeControl"
 
-
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   {

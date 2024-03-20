@@ -8,9 +8,15 @@ dependencies:
   lodash.isempty:
     specifier: ^4.4.0
     version: 4.4.0
+  lodash.merge:
+    specifier: ^4.6.2
+    version: 4.6.2
   lodash.range:
     specifier: ^3.2.0
     version: 3.2.0
+  lodash.startcase:
+    specifier: ^4.4.0
+    version: 4.4.0
 
 devDependencies:
   '@ant-design/icons':
@@ -58,9 +64,15 @@ devDependencies:
   '@types/lodash.isempty':
     specifier: ^4.4.9
     version: 4.4.9
+  '@types/lodash.merge':
+    specifier: ^4.6.9
+    version: 4.6.9
   '@types/lodash.range':
     specifier: ^3.2.9
     version: 3.2.9
+  '@types/lodash.startcase':
+    specifier: ^4.4.9
+    version: 4.4.9
   '@types/react':
     specifier: ^18.2.55
     version: 18.2.55
@@ -4316,8 +4328,20 @@ packages:
       '@types/lodash': 4.14.202
     dev: true
 
+  /@types/lodash.merge@4.6.9:
+    resolution: {integrity: sha512-23sHDPmzd59kUgWyKGiOMO2Qb9YtqRO/x4IhkgNUiPQ1+5MUVqi6bCZeq9nBJ17msjIMbEIO5u+XW4Kz6aGUhQ==}
+    dependencies:
+      '@types/lodash': 4.14.202
+    dev: true
+
   /@types/lodash.range@3.2.9:
     resolution: {integrity: sha512-JNStPShiaR3ROKIAgtzChBhouPBCJxMI/Fj7Xa1cG51A2EMRyosvtL4fiGXOFiQddaxjZmNVYkZGsDRt8fFKPg==}
+    dependencies:
+      '@types/lodash': 4.14.202
+    dev: true
+
+  /@types/lodash.startcase@4.4.9:
+    resolution: {integrity: sha512-C0M4DlN1pnn2vEEhLHkTHxiRZ+3GlTegpoAEHHGXnuJkSOXyJMHGiSc+SLRzBlFZWHsBkixe6FqvEAEU04g14g==}
     dependencies:
       '@types/lodash': 4.14.202
     dev: true
@@ -8075,10 +8099,13 @@ packages:
 
   /lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
-    dev: true
 
   /lodash.range@3.2.0:
     resolution: {integrity: sha512-Fgkb7SinmuzqgIhNhAElo0BL/R1rHCnhwSZf78omqSwvWqD0kD2ssOAutQonDKH/ldS8BxA72ORYI09qAY9CYg==}
+    dev: false
+
+  /lodash.startcase@4.4.0:
+    resolution: {integrity: sha512-+WKqsK294HMSc2jEbNgpHpd0JfIBhp7rEV4aqXWqFr6AlXov+SlcgB1Fv01y2kGe3Gc8nMW7VA0SrGuSkRfIEg==}
     dev: false
 
   /lodash.uniqby@4.7.0:

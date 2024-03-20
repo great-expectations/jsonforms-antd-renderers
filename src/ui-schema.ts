@@ -1,6 +1,8 @@
 import type { JsonSchema } from "@jsonforms/core"
 import type { ButtonProps, InputNumberProps, AlertProps } from "antd"
 import type { RuleObject as AntDRule } from "antd/es/form"
+import type { TitleProps } from "antd/es/typography/Title"
+import type { TextProps } from "antd/es/typography/Text"
 
 // jsonforms has composed their types in such a way that recursive types only specify the "base" type
 // this type is intended to fix that problem in the short term so that we can have strong type checking
@@ -108,14 +110,15 @@ interface GroupLayoutUISchema
 /**
  * Represents an object that can be used to configure a label.
  */
-interface LabelDescription {
-  /**
-   * An optional text to be displayed.
-   */
-  text?: string
-  /**
-   * Optional property that determines whether to show this label.
-   */
+export type LabelDescription =
+  | BaseLabelDescription
+  | (BaseLabelDescription &
+      (
+        | { type: "Title"; titleProps: TitleProps }
+        | { type: "Text"; textProps: TextProps }
+      ))
+type BaseLabelDescription = {
+  text: string
   show?: boolean
 }
 /**

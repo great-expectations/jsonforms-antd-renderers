@@ -11,7 +11,10 @@ export { HorizontalLayout } from "./layouts/HorizontalLayout"
 export { NumericControl } from "./controls/NumericControl"
 export { NumericSliderControl } from "./controls/NumericSliderControl"
 export { ObjectControl } from "./controls/ObjectControl"
-export { ObjectArrayControl, PrimitiveArrayControl } from "./controls/ArrayControl"
+export {
+  ObjectArrayControl,
+  PrimitiveArrayControl,
+} from "./controls/ArrayControl"
 export { TextControl } from "./controls/TextControl"
 export { UnknownControl } from "./controls/UnknownControl"
 export { VerticalLayout } from "./layouts/VerticalLayout"

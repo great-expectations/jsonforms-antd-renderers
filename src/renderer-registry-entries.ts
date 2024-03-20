@@ -83,7 +83,8 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   {
     tester: rankWith(3, isOneOfControl),
     renderer: OneOfRenderer,
-  }, {
+  },
+  {
     tester: rankWith(
       3,
       or(isObjectArrayControl, isObjectArray, isObjectArrayWithNesting),

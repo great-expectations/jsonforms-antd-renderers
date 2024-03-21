@@ -31,3 +31,12 @@ import {
 - Install dependencies: pnpm i --frozen-lockfile
 - Run tests: `pnpm test`
 - Run storybook: `pnpm storybook`
+
+### Making changes
+
+- Make changes to the code
+- Run tests: `pnpm test`
+- Run storybook: `pnpm storybook`
+- Run format: `pnpm format:write`
+- Run lint: `pnpm lint`
+- Commit your changes

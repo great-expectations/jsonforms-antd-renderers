@@ -19,6 +19,7 @@ import {
   or,
   isPrimitiveArrayControl,
   isOneOfControl,
+  isAnyOfControl,
 } from "@jsonforms/core"
 import { withJsonFormsCellProps } from "@jsonforms/react"
 
@@ -86,6 +87,10 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   },
   {
     tester: rankWith(3, isOneOfControl),
+    renderer: OneOfRenderer,
+  },
+  {
+    tester: rankWith(3, isAnyOfControl),
     renderer: OneOfRenderer,
   },
   {

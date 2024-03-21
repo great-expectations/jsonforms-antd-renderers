@@ -138,6 +138,30 @@ export const Dropdown: Story = {
   },
 }
 
+export const Segmented: Story = {
+  parameters: { controls: { expanded: true } },
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: schema,
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Control",
+          scope: "#/properties/deliveryOption",
+          options: { optionType: "segmented" } satisfies OneOfControlOptions,
+        },
+      ],
+    },
+  },
+  argTypes: {
+    jsonSchema: {
+      control: "object",
+      description: "this is a minimal oneOf combinator schema",
+    },
+  },
+}
+
 export const OneOfTitleLabelStyling: Story = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],

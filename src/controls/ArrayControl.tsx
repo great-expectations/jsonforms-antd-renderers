@@ -11,7 +11,8 @@ import {
   withJsonFormsArrayControlProps,
   withJsonFormsArrayLayoutProps,
 } from "@jsonforms/react"
-import { Flex, List, Button } from "antd"
+import { Flex, Form, List, Button } from "antd"
+import type { Rule } from "antd/es/form"
 import range from "lodash.range"
 import { useCallback, useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
@@ -137,17 +138,26 @@ function ArrayControl({
     </Flex>
   )
 
+  const rules: Rule[] = [
+    { required: required, message: `${label} is required` },
+  ]
+
   return (
-    <>
-      <b>{label}</b>
-      <List<unknown> // there's a compelling case to be made for Form.List instead, but going with this for now
+    <Form.Item
+      label={label}
+      name={path}
+      required={required}
+      rules={rules}
+      validateTrigger={["onBlur"]}
+    >
+      <List<unknown>
         dataSource={dataSource}
         renderItem={renderItem}
         {...(options.addButtonLocation === "top"
           ? { header: addButton }
           : { footer: addButton })}
       />
-    </>
+    </Form.Item>
   )
 }
 

@@ -145,6 +145,7 @@ export const OneOfControlOptions = [
   "dropdown",
   "radio",
   "toggle",
+  "segmented",
 ] as const
 
 export type OneOfControlOption = (typeof OneOfControlOptions)[number]

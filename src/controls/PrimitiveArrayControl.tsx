@@ -55,6 +55,24 @@ function PrimitiveArrayControl({
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
   const label = labelDescription.show ? labelDescription.text : ""
 
+  const formItemLayout = {
+    labelCol: {
+      xs: { span: 24 },
+      sm: { span: 4 },
+    },
+    wrapperCol: {
+      xs: { span: 24 },
+      sm: { span: 20 },
+    },
+  };
+  
+  const formItemLayoutWithOutLabel = {
+    wrapperCol: {
+      xs: { span: 24, offset: 0 },
+      sm: { span: 20, offset: 4 },
+    },
+  };
+
   const options: ArrayControlOptions =
     (uischema.options as ArrayControlOptions) ?? {}
 
@@ -68,7 +86,7 @@ function PrimitiveArrayControl({
         <>
           {fields.map((field, index) => (
             <Form.Item
-              // {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+              {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
               label={index === 0 ? label : ""}
               required={false}
               key={index}

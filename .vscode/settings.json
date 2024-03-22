@@ -1,3 +1,9 @@
 {
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "npm.packageManager": "pnpm",
+  "typescript.format.enable": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

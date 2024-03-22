@@ -41,7 +41,9 @@ describe("ControlLabel", () => {
           {
             type: "Control",
             scope: "#/properties/labelMe",
-            label: { text: "Srsly, label me instead" },
+            label: {
+              text: "Srsly, label me instead",
+            },
           },
         ],
       } satisfies UISchema,

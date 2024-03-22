@@ -10,6 +10,8 @@ $ npm install jsonforms-antd-renderers
 
 ### Using AntD Renderers
 
+In order to use this package, you need to import the renderer registry entries from this package and provide them to the `@jsonforms/react` `JsonForms` component:
+
 ```tsx
 import { JsonForms } from "@jsonforms/react"
 import {
@@ -28,10 +30,10 @@ function MyForm() {
 }
 ```
 
-### Using our UISchemas
+### Writing UISchemas
 
-This library expands upon the types and configurability of UISchemas in jsonforms. When writing UISchemas, you'll want to
-import our UISchema types to take advantage of our configuration options.
+This package expands upon the types and configurability of [jsonforms UISchemas](https://jsonforms.io/docs/uischema). When writing UISchemas, you'll want to
+import our UISchema types (like `TextControlOptions` below) to take advantage of our configurability. See our storybooks (instructions for running storybooks under `Contributing`) for more examples.
 
 ```tsx
 import { JsonForms } from "@jsonforms/react"
@@ -81,3 +83,7 @@ function MyForm() {
 - Install dependencies: pnpm i --frozen-lockfile
 - Run tests: `pnpm test`
 - Run storybook: `pnpm storybook`
+
+### Conventional commits
+
+- We use [semantic release](https://github.com/semantic-release/semantic-release) to version & release our package, so make sure your commits adhere to the [conventional commit format](https://semantic-release.gitbook.io/semantic-release#commit-message-format)

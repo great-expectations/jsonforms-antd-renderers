@@ -34,8 +34,6 @@ export function ControlLabel({
             {text}
           </Typography.Title>
         )
-      case undefined:
-        break
       default:
         try {
           assertNever(labelType)

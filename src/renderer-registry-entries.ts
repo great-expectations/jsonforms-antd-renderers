@@ -37,7 +37,7 @@ import {
   ObjectArrayRenderer,
   PrimitiveArrayRenderer,
 } from "./controls/ArrayControl"
-import { OneOfRenderer } from "./controls/combinators/OneOfControl"
+import { AnyOfRenderer, OneOfRenderer } from "./controls/combinators/OneOfControl"
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
@@ -91,7 +91,7 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   },
   {
     tester: rankWith(3, isAnyOfControl),
-    renderer: OneOfRenderer,
+    renderer: AnyOfRenderer,
   },
   {
     tester: rankWith(

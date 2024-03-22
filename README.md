@@ -40,3 +40,9 @@ import {
 - Run format: `pnpm format:write`
 - Run lint: `pnpm lint`
 - Commit your changes
+
+### Testing package locally
+
+- Run pack: `pnpm pack`
+- If you previously installed the package, you may need to remove it first: `yarn remove @great-expectations/jsonforms-antd-renderers` and clear cache: `yarn cache clean`
+- Install the package in your project: `yarn add /path/to/jsonforms-antd-renderers-0.0.0-semantic-release.tgz`

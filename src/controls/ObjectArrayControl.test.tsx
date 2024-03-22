@@ -11,15 +11,6 @@ import {
 } from "../testSchemas/arraySchema"
 
 describe("ArrayControl for Objects", () => {
-  test("renders without any data", async () => {
-    render({
-      schema: objectArrayControlJsonSchema,
-      uischema: arrayControlUISchema,
-    })
-    await screen.findByRole("button")
-    await screen.findByText("Add Assets")
-    await screen.findByText("No data")
-  })
 
   test.each([
     [objectArrayControlJsonSchema, false],
@@ -76,7 +67,7 @@ describe("ArrayControl for Objects", () => {
         data = result.data
       },
     })
-    await user.click(screen.getByRole("button", { name: "Add Assets" }))
+
     const newAsset = await screen.findByLabelText("Asset")
     await user.type(newAsset, "new")
     await screen.findByDisplayValue("new")
@@ -140,8 +131,7 @@ describe("ArrayControl for Objects", () => {
     await screen.findByText("Add more items")
     await screen.findByLabelText("plus-circle") // fyi: aria-label is "plus-circle"
 
-    // Check that the onClick handler is not overwritten on Add button
-    await user.click(await screen.findByText("Add more items"))
+
     await screen.findByRole("textbox")
     await waitFor(() => {
       expect(data).toEqual({
@@ -163,13 +153,22 @@ describe("ArrayControl for Objects", () => {
     })
   })
 
-  test.only("Object Array populates 1 empty value without minItems", async () => {
+  test("Object Array populates 1 empty value without minItems", async () => {
     render({
       schema: objectArrayControlJsonSchema,
       uischema: arrayControlUISchemaWithIcons,
     })
-    
-    await screen.findByText("Asset")
 
+    await screen.findByText("Asset")
+  })
+  test("Object Array lets you delete the last item in the array", async () => {
+    render({
+      schema: objectArrayControlJsonSchema,
+      uischema: arrayControlUISchemaWithIcons,
+    })
+
+    await screen.findByText("Asset")
+    await userEvent.click(screen.getByText("Destroy me!"))
+    await screen.findByText("No data")
   })
 })

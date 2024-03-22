@@ -83,6 +83,26 @@ describe("OneOf control", () => {
     await userEvent.click(screen.getByText("Delivery"))
     screen.getByLabelText("Address")
   })
+  test("OneOf Control with segmented UISchema allows switching between subschemas", async () => {
+    render({
+      schema,
+      uischema: {
+        type: "VerticalLayout",
+        elements: [
+          {
+            type: "Control",
+            scope: "#/properties/deliveryOption",
+            options: { optionType: "segmented" } satisfies OneOfControlOptions,
+          },
+        ],
+      },
+    })
+    await screen.findByText("Pickup")
+    screen.getByLabelText("Location")
+
+    await userEvent.click(screen.getByText("Delivery"))
+    screen.getByLabelText("Address")
+  })
   test("OneOf Control persists state when switching between subschemas", async () => {
     render({ schema })
     await screen.findByText("Pickup")

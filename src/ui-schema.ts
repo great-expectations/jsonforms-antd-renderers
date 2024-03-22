@@ -1,5 +1,11 @@
 import type { JsonSchema } from "@jsonforms/core"
-import type { ButtonProps, InputNumberProps, AlertProps } from "antd"
+import type {
+  ButtonProps,
+  InputNumberProps,
+  AlertProps,
+  CardProps,
+  DividerProps,
+} from "antd"
 import type { RuleObject as AntDRule } from "antd/es/form"
 import type { TitleProps } from "antd/es/typography/Title"
 import type { TextProps } from "antd/es/typography/Text"
@@ -101,7 +107,20 @@ export interface HorizontalLayoutUISchema extends LayoutUISchema {
  * A group resembles a vertical layout, but additionally might have a label.
  * This layout is useful when grouping different elements by a certain criteria.
  */
-interface GroupLayoutUISchema
+export type GroupLayoutUISchema = BaseGroupLayoutUISchema &
+  // using {} is safe and appropriate when used in an intersection type
+  // see last section of this comment: https://github.com/typescript-eslint/typescript-eslint/issues/2063#issuecomment-675156492
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  (| {}
+    | { groupType: "Card"; cardProps: CardProps }
+    | {
+        groupType: "Divider"
+        topDividerProps: DividerProps
+        bottomDividerProps: DividerProps
+      }
+  )
+
+interface BaseGroupLayoutUISchema
   extends LayoutUISchema,
     Labelable,
     Internationalizable {
@@ -110,13 +129,15 @@ interface GroupLayoutUISchema
 /**
  * Represents an object that can be used to configure a label.
  */
-export type LabelDescription =
-  | BaseLabelDescription
-  | (BaseLabelDescription &
-      (
-        | { type: "Title"; titleProps: TitleProps }
-        | { type: "Text"; textProps: TextProps }
-      ))
+export type LabelDescription = BaseLabelDescription &
+  // using {} is safe and appropriate when used in an intersection type
+  // see last section of this comment: https://github.com/typescript-eslint/typescript-eslint/issues/2063#issuecomment-675156492
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  (| {}
+    | { type: "Title"; titleProps: TitleProps }
+    | { type: "Text"; textProps: TextProps }
+  )
+
 type BaseLabelDescription = {
   text: string
   show?: boolean
@@ -145,6 +166,7 @@ export const OneOfControlOptions = [
   "dropdown",
   "radio",
   "toggle",
+  "segmented",
 ] as const
 
 export type OneOfControlOption = (typeof OneOfControlOptions)[number]

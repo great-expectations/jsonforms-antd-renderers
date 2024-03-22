@@ -43,7 +43,7 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
     renderer: UnknownRenderer,
   },
   {
-    tester: rankWith(1, uiTypeIs("Group")),
+    tester: rankWith(2, uiTypeIs("Group")),
     renderer: GroupLayoutRenderer,
   },
   {

@@ -8,7 +8,6 @@ import {
 } from "@jsonforms/core"
 import {
   JsonFormsDispatch,
-  withJsonFormsArrayControlProps,
   withJsonFormsArrayLayoutProps,
 } from "@jsonforms/react"
 import { Flex, Form, List, Button } from "antd"
@@ -21,20 +20,6 @@ interface ArrayControlProps
   extends Omit<JsonFormsArrayControlProps, "data">,
     Omit<ArrayLayoutProps, "data"> {
   dataSource: unknown[]
-}
-
-export function PrimitiveArrayControl(props: JsonFormsArrayControlProps) {
-  // For primative arrays, ArrayControlProps.data is an array
-  const dataSource: unknown[] = useMemo(
-    () =>
-      // antd List component doesn't like undefined/null in the dataSource
-      ((props.data as unknown[])?.map(
-        (item: unknown) => item ?? "",
-      ) as unknown[]) ?? [],
-    [props.data],
-  )
-
-  return <ArrayControl {...props} dataSource={dataSource} />
 }
 
 export function ObjectArrayControl(props: ArrayLayoutProps) {
@@ -163,7 +148,3 @@ function ArrayControl({
 
 export const ObjectArrayRenderer =
   withJsonFormsArrayLayoutProps(ObjectArrayControl)
-
-export const PrimitiveArrayRenderer = withJsonFormsArrayControlProps(
-  PrimitiveArrayControl,
-)

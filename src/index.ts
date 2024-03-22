@@ -14,7 +14,7 @@ export { ObjectControl } from "./controls/ObjectControl"
 export {
   ObjectArrayControl,
   PrimitiveArrayControl,
-} from "./controls/ArrayControl"
+} from "./controls/PrimitiveArrayControl"
 export { TextControl } from "./controls/TextControl"
 export { UnknownControl } from "./controls/UnknownControl"
 export { VerticalLayout } from "./layouts/VerticalLayout"

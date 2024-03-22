@@ -32,10 +32,8 @@ import { ObjectRenderer } from "./controls/ObjectControl"
 import { GroupLayoutRenderer } from "./layouts/GroupLayout"
 import { NumericRenderer } from "./controls/NumericControl"
 import { NumericSliderRenderer } from "./controls/NumericSliderControl"
-import {
-  ObjectArrayRenderer,
-  PrimitiveArrayRenderer,
-} from "./controls/ArrayControl"
+import { ObjectArrayRenderer } from "./controls/ObjectArrayControl"
+import { PrimitiveArrayRenderer } from "./controls/PrimitiveArrayControl"
 import { OneOfRenderer } from "./controls/combinators/OneOfControl"
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.

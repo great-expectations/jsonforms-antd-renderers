@@ -16,44 +16,44 @@ export function GroupLayout({
   ...props
 }: LayoutRendererProps) {
   const groupLayout = uischema as GroupLayoutUISchema
-  const type = groupLayout.groupType
-  switch (type) {
-    case "Card":
-      return (
-        <Card {...groupLayout.cardProps}>
-          {groupLayout?.label && <b>{groupLayout.label}</b>}
-          <AntDLayout
-            {...props}
-            visible={visible}
-            enabled={enabled}
-            elements={groupLayout.elements}
-          />
-        </Card>
-      )
-    case "Divider":
-      return (
-        <>
-          <Divider {...groupLayout.topDividerProps} />
-          {groupLayout?.label && <b>{groupLayout.label}</b>}
-          <AntDLayout
-            {...props}
-            visible={visible}
-            enabled={enabled}
-            elements={groupLayout.elements}
-          />
-          <Divider {...groupLayout.bottomDividerProps} />
-        </>
-      )
-    case undefined:
-      break
-    default:
-      try {
-        assertNever(type)
-      } catch (e) {
-        console.error(
-          `Invalid value configured in GroupLayout UI Schema for groupType: '${type as string}'`,
+  if ("groupType" in groupLayout) {
+    const type = groupLayout.groupType
+    switch (type) {
+      case "Card":
+        return (
+          <Card {...groupLayout.cardProps}>
+            {groupLayout?.label && <b>{groupLayout.label}</b>}
+            <AntDLayout
+              {...props}
+              visible={visible}
+              enabled={enabled}
+              elements={groupLayout.elements}
+            />
+          </Card>
         )
-      }
+      case "Divider":
+        return (
+          <>
+            <Divider {...groupLayout.topDividerProps} />
+            {groupLayout?.label && <b>{groupLayout.label}</b>}
+            <AntDLayout
+              {...props}
+              visible={visible}
+              enabled={enabled}
+              elements={groupLayout.elements}
+            />
+            <Divider {...groupLayout.bottomDividerProps} />
+          </>
+        )
+      default:
+        try {
+          assertNever(type)
+        } catch (e) {
+          console.error(
+            `Invalid value configured in GroupLayout UI Schema for groupType: '${type as string}'`,
+          )
+        }
+    }
   }
   return (
     <>

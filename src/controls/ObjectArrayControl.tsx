@@ -12,7 +12,7 @@ import {
 import { Flex, Form, List, Button } from "antd"
 import type { Rule } from "antd/es/form"
 import range from "lodash.range"
-import { useCallback, useMemo } from "react"
+import { useCallback, useEffect, useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
 
 
@@ -51,6 +51,12 @@ function ObjectArrayControl({
     () => createDefaultValue(schema, rootSchema) as unknown,
     [schema, rootSchema],
   )
+
+  useEffect(() => {
+    if (data === 0) {
+      addItem(path, innerCreateDefaultValue())()
+    }
+  }, [data, addItem, innerCreateDefaultValue, path])
 
   if (!visible) {
     return null
@@ -118,12 +124,12 @@ function ObjectArrayControl({
 
   return (
     <Form.Item
-      label={label}
       name={path}
       required={required}
       rules={rules}
       validateTrigger={["onBlur"]}
     >
+      <>{label}</>
       <List<unknown>
         dataSource={dataSource}
         renderItem={renderItem}

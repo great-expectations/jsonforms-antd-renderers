@@ -162,4 +162,14 @@ describe("ArrayControl for Objects", () => {
       })
     })
   })
+
+  test.only("Object Array populates 1 empty value without minItems", async () => {
+    render({
+      schema: objectArrayControlJsonSchema,
+      uischema: arrayControlUISchemaWithIcons,
+    })
+    
+    await screen.findByText("Asset")
+
+  })
 })

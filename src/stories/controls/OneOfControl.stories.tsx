@@ -1,6 +1,10 @@
 import { Meta, StoryObj } from "@storybook/react"
 import { rendererRegistryEntries } from "../../renderer-registry-entries"
-import { OneOfControlOptions, UISchema } from "../../ui-schema"
+import {
+  LabelDescription,
+  OneOfControlOptions,
+  UISchema,
+} from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import { JSONSchema } from "json-schema-to-ts"
 
@@ -176,7 +180,7 @@ export const OneOfTitleLabelStyling: Story = {
             type: "Title",
             text: "Titles are configurable with AntD Title Props",
             titleProps: { level: 5, delete: true, type: "danger" },
-          },
+          } satisfies LabelDescription,
           scope: "#/properties/deliveryOption",
           options: { optionType: "dropdown" } satisfies OneOfControlOptions,
         },

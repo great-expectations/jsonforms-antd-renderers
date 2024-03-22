@@ -12,7 +12,7 @@ import {
   numberArrayControlJsonSchema,
 } from "../testSchemas/arraySchema"
 
-describe("ArrayControl for Primatives", () => {
+describe("PrimitiveArrayControl", () => {
   test("renders without any data", async () => {
     render({
       schema: stringArrayControlJsonSchema,

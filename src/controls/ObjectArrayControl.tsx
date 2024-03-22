@@ -1,7 +1,6 @@
 import {
   Helpers,
   ArrayLayoutProps,
-  ArrayControlProps as JsonFormsArrayControlProps,
   composePaths,
   createDefaultValue,
   findUISchema,
@@ -16,20 +15,9 @@ import range from "lodash.range"
 import { useCallback, useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
 
-interface ArrayControlProps
-  extends Omit<JsonFormsArrayControlProps, "data">,
-    Omit<ArrayLayoutProps, "data"> {
-  dataSource: unknown[]
-}
 
-export function ObjectArrayControl(props: ArrayLayoutProps) {
-  // For object arrays, ArrayLayoutProps.data is a number
-  const dataSource = useMemo(() => range(props.data), [props.data])
-
-  return <ArrayControl {...props} dataSource={dataSource} />
-}
-
-function ArrayControl({
+function ObjectArrayControl({
+  data,
   enabled,
   path,
   schema,
@@ -42,8 +30,7 @@ function ArrayControl({
   rootSchema,
   uischemas,
   required,
-  dataSource,
-}: ArrayControlProps) {
+}: ArrayLayoutProps) {
   const foundUISchema = useMemo(
     () =>
       findUISchema(
@@ -57,6 +44,8 @@ function ArrayControl({
       ),
     [uischemas, schema, path, uischema, rootSchema],
   )
+
+  const dataSource = useMemo(() => range(data), [data])
 
   const innerCreateDefaultValue = useCallback(
     () => createDefaultValue(schema, rootSchema) as unknown,

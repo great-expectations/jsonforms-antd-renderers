@@ -1,7 +1,6 @@
 import {
   Helpers,
   ArrayLayoutProps,
-  ArrayControlProps as JsonFormsArrayControlProps,
   composePaths,
   createDefaultValue,
   findUISchema,
@@ -16,27 +15,7 @@ import type { Rule } from "antd/es/form"
 import { useCallback, useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
 
-interface ArrayControlProps
-  extends Omit<JsonFormsArrayControlProps, "data">,
-    Omit<ArrayLayoutProps, "data"> {
-  dataSource: unknown[]
-}
-
-export function PrimitiveArrayControl(props: JsonFormsArrayControlProps) {
-  // For primative arrays, ArrayControlProps.data is an array
-  const dataSource: unknown[] = useMemo(
-    () =>
-      // antd List component doesn't like undefined/null in the dataSource
-      ((props.data as unknown[])?.map(
-        (item: unknown) => item ?? "",
-      ) as unknown[]) ?? [],
-    [props.data],
-  )
-
-  return <ArrayControl {...props} dataSource={dataSource} />
-}
-
-function ArrayControl({
+function PrimitiveArrayControl({
   enabled,
   path,
   schema,
@@ -49,7 +28,7 @@ function ArrayControl({
   rootSchema,
   uischemas,
   required,
-}: ArrayControlProps) {
+}: ArrayLayoutProps) {
   const foundUISchema = useMemo(
     () =>
       findUISchema(

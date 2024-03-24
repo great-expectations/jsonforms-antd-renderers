@@ -4,7 +4,7 @@ import {
   JsonSchema,
 } from "@jsonforms/core"
 import { JsonFormsDispatch, withJsonFormsOneOfProps } from "@jsonforms/react"
-import { Form, Space } from "antd"
+import { Space } from "antd"
 import { useState } from "react"
 import { ControlUISchema } from "../../ui-schema"
 import { ControlLabel } from "../../common/ControlLabel"
@@ -22,7 +22,6 @@ export function OneOfControl({
   uischema,
   uischemas,
   config,
-  required,
 }: CombinatorRendererProps) {
   const [selectedIndex, setSelectedIndex] = useState(indexOfFittingSchema || 0)
 

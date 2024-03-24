@@ -1,3 +1,7 @@
+/*
+AnyOfControl should be used when a form item would control other elements within the same form
+AnyOfRenderer does not have options to render the label as a title
+*/
 import {
   CombinatorRendererProps,
   createCombinatorRenderInfos,
@@ -8,8 +12,6 @@ import { JsonFormsDispatch, withJsonFormsOneOfProps } from "@jsonforms/react"
 import { Form, Space } from "antd"
 import { useState } from "react"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
-
-export type CombinatorType = "oneOf" | "anyOf"
 
 export function AnyOfControl({
   handleChange,

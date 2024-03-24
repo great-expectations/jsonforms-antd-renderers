@@ -1,4 +1,8 @@
-import { JsonFormsUISchemaRegistryEntry, JsonSchema, RuleEffect } from "@jsonforms/core"
+import {
+  JsonFormsUISchemaRegistryEntry,
+  JsonSchema,
+  RuleEffect,
+} from "@jsonforms/core"
 import { UISchema } from "../ui-schema"
 import { JSONSchema } from "json-schema-to-ts"
 

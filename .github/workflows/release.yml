@@ -6,9 +6,6 @@ on:
 
 permissions:
   contents: read # for checkout
-  # For publishing to github pages
-  pages: write
-  id-token: write
 
 jobs:
   release:
@@ -42,11 +39,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
-
-  publish_pages:
-    runs-on: ubuntu-latest
-    steps:
-      - id: build-publish
-        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
-        with:
-          path: build # change to your build folder

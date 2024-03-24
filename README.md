@@ -8,17 +8,69 @@
 $ npm install jsonforms-antd-renderers
 ```
 
+### Using AntD Renderers
+
+In order to use this package, you need to import the renderer registry entries from this package and provide them to the `@jsonforms/react` `JsonForms` component:
+
 ```tsx
 import { JsonForms } from "@jsonforms/react"
 import {
   rendererRegistryEntries,
   cellRegistryEntries,
 } from "jsonforms-antd-renderers"
-;<JsonForms
-  schema={schema}
-  renderers={rendererRegistryEntries}
-  cells={cellRegistryEntries}
-/>
+
+function MyForm() {
+  return (
+    <JsonForms
+      schema={schema}
+      renderers={rendererRegistryEntries}
+      cells={cellRegistryEntries}
+    />
+  )
+}
+```
+
+### Writing UISchemas
+
+This package expands upon the types and configurability of [jsonforms UISchemas](https://jsonforms.io/docs/uischema). When writing UISchemas, you'll want to
+import our UISchema types (like `TextControlOptions` below) to take advantage of our configurability. See our storybooks (instructions for running storybooks under `Contributing`) for more examples.
+
+```tsx
+import { JsonForms } from "@jsonforms/react"
+import {
+  rendererRegistryEntries,
+  cellRegistryEntries,
+  TextControlOptions,
+} from "jsonforms-antd-renderers"
+
+const schema = {
+  type: "object",
+  properties: { password: { type: "string" } },
+}
+
+const uischema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/password",
+      // properties like type: "password" here are unique to this renderer package. This allows you more declarative control over how your forms
+      // render. In this case, the password field will be rendered with AntD's password input component
+      options: { type: "password" } satisfies TextControlOptions,
+    },
+  ],
+}
+
+function MyForm() {
+  return (
+    <JsonForms
+      schema={schema}
+      uischema={uischema}
+      renderers={rendererRegistryEntries}
+      cells={cellRegistryEntries}
+    />
+  )
+}
 ```
 
 ## Contributing
@@ -41,8 +93,13 @@ import {
 - Run lint: `pnpm lint`
 - Commit your changes
 
+### Conventional commits
+
+- We use [semantic release](https://github.com/semantic-release/semantic-release) to version & release our package, so make sure your commits adhere to the [conventional commit format](https://semantic-release.gitbook.io/semantic-release#commit-message-format)
+
 ### Testing package locally
 
 - Run pack: `pnpm pack`
 - If you previously installed the package, you may need to remove it first: `yarn remove @great-expectations/jsonforms-antd-renderers` and clear cache: `yarn cache clean`
 - Install the package in your project: `yarn add /path/to/jsonforms-antd-renderers-0.0.0-semantic-release.tgz`
+

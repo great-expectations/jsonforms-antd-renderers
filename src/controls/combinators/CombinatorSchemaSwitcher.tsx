@@ -1,4 +1,4 @@
-import { Radio, RadioChangeEvent, Select } from "antd"
+import { Radio, RadioChangeEvent, Segmented, Select } from "antd"
 import { OneOfControlOptions } from "../../ui-schema"
 import merge from "lodash.merge"
 import { useEffect, useState } from "react"
@@ -100,6 +100,16 @@ export function CombinatorSchemaSwitcher({
             setSelectedIndex(combinatorIndex)
           }
           defaultValue={selectedIndex}
+        />
+      )
+    case "segmented":
+      return (
+        <Segmented
+          options={options}
+          onChange={(combinatorIndex: number) =>
+            setSelectedIndex(combinatorIndex)
+          }
+          value={selectedIndex}
         />
       )
     case "radio":

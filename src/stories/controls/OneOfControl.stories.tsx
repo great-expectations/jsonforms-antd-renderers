@@ -7,7 +7,11 @@ Example usage would be to render "forms" based on a tab selection.s
 */
 import { Meta, StoryObj } from "@storybook/react"
 import { rendererRegistryEntries } from "../../renderer-registry-entries"
-import { OneOfControlOptions, UISchema } from "../../ui-schema"
+import {
+  LabelDescription,
+  OneOfControlOptions,
+  UISchema,
+} from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import { JSONSchema } from "json-schema-to-ts"
 
@@ -145,6 +149,30 @@ export const Dropdown: Story = {
   },
 }
 
+export const Segmented: Story = {
+  parameters: { controls: { expanded: true } },
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: schema,
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Control",
+          scope: "#/properties/deliveryOption",
+          options: { optionType: "segmented" } satisfies OneOfControlOptions,
+        },
+      ],
+    },
+  },
+  argTypes: {
+    jsonSchema: {
+      control: "object",
+      description: "this is a minimal oneOf combinator schema",
+    },
+  },
+}
+
 export const OneOfTitleLabelStyling: Story = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
@@ -159,7 +187,7 @@ export const OneOfTitleLabelStyling: Story = {
             type: "Title",
             text: "Titles are configurable with AntD Title Props",
             titleProps: { level: 5, delete: true, type: "danger" },
-          },
+          } satisfies LabelDescription,
           scope: "#/properties/deliveryOption",
           options: { optionType: "dropdown" } satisfies OneOfControlOptions,
         },

@@ -1,6 +1,6 @@
 import { JsonSchema, Helpers } from "@jsonforms/core"
 import { ControlUISchema } from "../ui-schema"
-import { Space, Typography } from "antd"
+import { Typography } from "antd"
 import { assertNever } from "./assert-never"
 
 // This consumes a LabelDescription (+ other formats) in a Control UI Schema
@@ -23,20 +23,16 @@ export function ControlLabel({
     switch (labelType) {
       case "Text":
         return (
-          <Space direction="horizontal" style={{ width: "100%" }} size="middle">
-            <Typography.Text {...controlUISchema.label.textProps}>
-              {text}
-            </Typography.Text>
-          </Space>
+          <Typography.Text {...controlUISchema.label.textProps}>
+            {text}
+          </Typography.Text>
         )
 
       case "Title":
         return (
-          <>
-            <Typography.Title {...controlUISchema.label.titleProps}>
-              {text}
-            </Typography.Title>
-          </>
+          <Typography.Title {...controlUISchema.label.titleProps}>
+            {text}
+          </Typography.Title>
         )
       default:
         try {
@@ -48,9 +44,5 @@ export function ControlLabel({
         }
     }
   }
-  return (
-    <>
-      <Typography.Title>{text}</Typography.Title>
-    </>
-  )
+  return <Typography.Title>{text}</Typography.Title>
 }

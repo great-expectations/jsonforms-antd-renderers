@@ -7,11 +7,9 @@ import { assertNever } from "./assert-never"
 export function ControlLabel({
   uischema,
   schema,
-  labeledElements,
 }: {
   uischema: ControlUISchema
   schema: JsonSchema
-  labeledElements: React.ReactNode
 }) {
   const controlUISchema: ControlUISchema = uischema
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
@@ -29,7 +27,6 @@ export function ControlLabel({
             <Typography.Text {...controlUISchema.label.textProps}>
               {text}
             </Typography.Text>
-            {labeledElements}
           </Space>
         )
 
@@ -39,7 +36,6 @@ export function ControlLabel({
             <Typography.Title {...controlUISchema.label.titleProps}>
               {text}
             </Typography.Title>
-            {labeledElements}
           </>
         )
       default:
@@ -55,7 +51,6 @@ export function ControlLabel({
   return (
     <>
       <Typography.Title>{text}</Typography.Title>
-      {labeledElements}
     </>
   )
 }

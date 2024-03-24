@@ -1,16 +1,17 @@
 import {
   CombinatorRendererProps,
   createCombinatorRenderInfos,
+  Helpers,
   JsonSchema,
 } from "@jsonforms/core"
 import { JsonFormsDispatch, withJsonFormsOneOfProps } from "@jsonforms/react"
 import { Form, Space } from "antd"
 import { useState } from "react"
-import { ControlUISchema } from "../../ui-schema"
-import { ControlLabel } from "../../common/ControlLabel"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
 
-export function OneOfControl({
+export type CombinatorType = "oneOf" | "anyOf"
+
+export function AnyOfControl({
   handleChange,
   data,
   schema,
@@ -27,9 +28,9 @@ export function OneOfControl({
   const [selectedIndex, setSelectedIndex] = useState(indexOfFittingSchema || 0)
 
   const combinatorRenderInfos = createCombinatorRenderInfos(
-    schema.oneOf as JsonSchema[],
+    schema.anyOf as JsonSchema[],
     rootSchema,
-    "oneOf",
+    "anyOf",
     uischema,
     path,
     uischemas,
@@ -50,10 +51,17 @@ export function OneOfControl({
     />
   )
 
+  const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
+
   return (
     <Space direction="vertical" style={{ width: "100%" }} size="middle">
-      <ControlLabel uischema={uischema as ControlUISchema} schema={schema} />
-      {combinatorSchemaSwitcher}
+      <Form.Item
+        rules={[{ required: required, message: `${schema.title} is required` }]}
+        name={`${path}.combinatorType`}
+        label={labelDescription.show ? labelDescription.text : ""}
+      >
+        {combinatorSchemaSwitcher}
+      </Form.Item>
       {combinatorRenderInfos.map((renderInfo, index) => {
         return (
           selectedIndex === index && (
@@ -73,4 +81,4 @@ export function OneOfControl({
   )
 }
 
-export const OneOfRenderer = withJsonFormsOneOfProps(OneOfControl)
+export const AnyOfRenderer = withJsonFormsOneOfProps(AnyOfControl)

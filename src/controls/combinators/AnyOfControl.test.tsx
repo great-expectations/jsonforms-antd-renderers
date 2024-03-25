@@ -83,7 +83,7 @@ describe("AnyOf control", () => {
       "split_on_year_and_month",
     )
   })
-  test("OneOf Control persists state when switching between subschemas", async () => {
+  test("AnyOf Control persists state when switching between subschemas", async () => {
     render({ schema: anyOfJsonSchema })
 
     // Column Name is available in both subschemas

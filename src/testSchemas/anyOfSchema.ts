@@ -36,7 +36,6 @@ export const SplitterUISchemaRegistryEntry: JsonFormsUISchemaRegistryEntry = {
       schemaPath === "#/properties/splitter"
         ? 2
         : -1
-    // console.log("SplitterUISchema Tester", { rank, schema, schemaPath, path })
     return rank
   },
 }

@@ -35,7 +35,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     rendererRegistryEntries: { table: { disable: true } },
     jsonSchema: {
       control: "object",
-      description: "this is a minimal oneOf combinator schema",
+      description: "this is a minimal anyOf combinator schema",
     },
     uiSchemaRegistryEntries: { table: { disable: true } },
     data: { table: { disable: true } },

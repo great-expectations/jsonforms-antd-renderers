@@ -108,7 +108,7 @@ export const Dropdown: Story = {
   argTypes: {
     jsonSchema: {
       control: "object",
-      description: "this is a minimal oneOf combinator schema",
+      description: "this is a minimal anyOf combinator schema",
     },
   },
 }

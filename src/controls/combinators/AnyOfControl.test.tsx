@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react"
 import { test, expect, describe } from "vitest"
 import { render } from "../../common/test-render"
 import userEvent from "@testing-library/user-event"
-import { OneOfControlOptions } from "../../ui-schema"
+import { AnyOfControlOptions } from "../../ui-schema"
 
 import {
   SplitterUISchemaRegistryEntry,
@@ -34,7 +34,7 @@ describe("AnyOf control", () => {
           {
             type: "Control",
             scope: "#/properties/splitter",
-            options: { optionType: "button" } satisfies OneOfControlOptions,
+            options: { optionType: "button" } satisfies AnyOfControlOptions,
           },
         ],
       },
@@ -63,7 +63,7 @@ describe("AnyOf control", () => {
           {
             type: "Control",
             scope: "#/properties/splitter",
-            options: { optionType: "dropdown" } satisfies OneOfControlOptions,
+            options: { optionType: "dropdown" } satisfies AnyOfControlOptions,
           },
         ],
       },

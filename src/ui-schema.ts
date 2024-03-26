@@ -9,22 +9,24 @@ import type {
 import type { RuleObject as AntDRule } from "antd/es/form"
 import type { TitleProps } from "antd/es/typography/Title"
 import type { TextProps } from "antd/es/typography/Text"
+import { Paths } from "./common/schema-derived-types"
+import { objectSchema } from "./testSchemas/objectSchema"
 
 // jsonforms has composed their types in such a way that recursive types only specify the "base" type
 // this type is intended to fix that problem in the short term so that we can have strong type checking
 // on ui schema configurations
 // long-term solutions include but are not limited to: making a PR against their repo
 
-export type UISchema =
-  | UISchemaElement
-  | LayoutUISchema
-  | VerticalLayoutUISchema
-  | HorizontalLayoutUISchema
+export type UISchema<T extends string> =
+  | UISchemaElement<T>
+  | LayoutUISchema<T>
+  | VerticalLayoutUISchema<T>
+  | HorizontalLayoutUISchema<T>
   | LabelLayoutUISchema
-  | GroupLayoutUISchema
-  | ControlUISchema
-  | CategorizationUISchema
-  | CategoryUISchema
+  | GroupLayoutUISchema<T>
+  | ControlUISchema<T>
+  | CategorizationUISchema<T>
+  | CategoryUISchema<T>
 
 /**
  * Interface for describing an UI schema element that is referencing
@@ -40,11 +42,11 @@ interface Scopable {
  * Interface for describing an UI schema element that is referencing
  * a subschema. The value of the scope must be a JSON Pointer.
  */
-interface Scoped extends Scopable {
+interface Scoped<T extends string> extends Scopable {
   /**
    * The scope that determines to which part this element should be bound to.
    */
-  scope: string
+  scope: T
 }
 /**
  * Interface for describing an UI schema element that may be labeled.
@@ -67,7 +69,10 @@ interface Internationalizable {
 /**
  * Common base interface for any UI schema element.
  */
-interface UISchemaElement<TOptions = { [key: string]: unknown }> {
+interface UISchemaElement<
+  TOptions = { [key: string]: unknown },
+  T extends string = string,
+> {
   /**
    * The type of this UI schema element.
    */
@@ -75,7 +80,7 @@ interface UISchemaElement<TOptions = { [key: string]: unknown }> {
   /**
    * An optional rule.
    */
-  rule?: Rule
+  rule?: Rule<T>
   /**
    * Any additional options.
    */
@@ -85,29 +90,29 @@ interface UISchemaElement<TOptions = { [key: string]: unknown }> {
  * Represents a layout element which can order its children
  * in a specific way.
  */
-interface LayoutUISchema extends UISchemaElement {
+interface LayoutUISchema<T extends string> extends UISchemaElement<T> {
   /**
    * The child elements of this layout.
    */
-  elements: UISchema[]
+  elements: UISchema<T>[]
 }
 /**
  * A layout which orders its child elements vertically (i.e. from top to bottom).
  */
-export interface VerticalLayoutUISchema extends LayoutUISchema {
+export interface VerticalLayoutUISchema<T extends string> extends LayoutUISchema<T> {
   type: "VerticalLayout"
 }
 /**
  * A layout which orders its children horizontally (i.e. from left to right).
  */
-export interface HorizontalLayoutUISchema extends LayoutUISchema {
+export interface HorizontalLayoutUISchema<T extends string> extends LayoutUISchema<T> {
   type: "HorizontalLayout"
 }
 /**
  * A group resembles a vertical layout, but additionally might have a label.
  * This layout is useful when grouping different elements by a certain criteria.
  */
-export type GroupLayoutUISchema = BaseGroupLayoutUISchema &
+export type GroupLayoutUISchema<T extends string> = BaseGroupLayoutUISchema<T> &
   // using {} is safe and appropriate when used in an intersection type
   // see last section of this comment: https://github.com/typescript-eslint/typescript-eslint/issues/2063#issuecomment-675156492
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -120,8 +125,8 @@ export type GroupLayoutUISchema = BaseGroupLayoutUISchema &
       }
   )
 
-interface BaseGroupLayoutUISchema
-  extends LayoutUISchema,
+interface BaseGroupLayoutUISchema<T extends string>
+  extends LayoutUISchema<T>,
     Labelable,
     Internationalizable {
   type: "Group"
@@ -200,13 +205,21 @@ type ControlOptions =
   | AnyOfControlOptions
   | ArrayControlOptions
 
+const ObjectUISchema: UISchema<Paths<typeof objectSchema>> = {
+  type: "VerticalLayout",
+  elements: [
+    {type: "Control", scope: "#/properties/name"}
+  ]
+} // satisfies UISchema<Paths<typeof objectSchema>>
+
+console.log(ObjectUISchema)
 /**
  * A control element. The scope property of the control determines
  * to which part of the schema the control should be bound.
  */
-export interface ControlUISchema
-  extends UISchemaElement<ControlOptions>,
-    Scoped,
+export interface ControlUISchema<T extends string>
+  extends UISchemaElement<ControlOptions, T>,
+    Scoped<T>,
     Labelable<string | boolean | LabelDescription>,
     Internationalizable {
   type: "Control"
@@ -214,8 +227,8 @@ export interface ControlUISchema
 /**
  * The category layout.
  */
-interface CategoryUISchema
-  extends LayoutUISchema,
+interface CategoryUISchema<T extends string>
+  extends LayoutUISchema<T>,
     Labeled,
     Internationalizable {
   type: "Category"
@@ -225,7 +238,7 @@ interface CategoryUISchema
  * A child element may either be itself a Categorization or a Category, hence
  * the categorization element can be used to represent recursive structures like trees.
  */
-interface CategorizationUISchema
+interface CategorizationUISchema<T extends string>
   extends UISchemaElement,
     Labeled,
     Internationalizable {
@@ -234,13 +247,13 @@ interface CategorizationUISchema
    * The child elements of this categorization which are either of type
    * {@link CategoryUISchema} or {@link CategorizationUISchema}.
    */
-  elements: (CategoryUISchema | CategorizationUISchema)[]
+  elements: (CategoryUISchema<T> | CategorizationUISchema<T>)[]
 }
 
 /**
  * A rule that may be attached to any UI schema element.
  */
-interface Rule {
+interface Rule<T extends string> {
   /**
    * The effect of the rule
    */
@@ -249,7 +262,7 @@ interface Rule {
    * The condition of the rule that must evaluate to true in order
    * to trigger the effect.
    */
-  condition: Condition
+  condition: Condition<T>
 }
 
 enum RuleEffect {
@@ -270,14 +283,14 @@ enum RuleEffect {
    */
   DISABLE = "DISABLE",
 }
-type Condition =
+type Condition<T extends string> =
   | Record<string, never> // not documented in their type system AFAIK, but this is how you default a rule to "always true"
   | (
       | JFCondition
-      | LeafCondition
-      | SchemaBasedCondition
-      | OrCondition
-      | AndCondition
+      | LeafCondition<T>
+      | SchemaBasedCondition<T>
+      | OrCondition<T>
+      | AndCondition<T>
     )
 
 interface JFCondition {
@@ -289,34 +302,34 @@ interface JFCondition {
 /**
  * A leaf condition.
  */
-type LeafCondition = JFCondition &
-  Scoped & {
+type LeafCondition<T extends string> = JFCondition &
+  Scoped<T> & {
     type: "LEAF"
     /**
      * The expected value when evaluating the condition
      */
     expectedValue: unknown
   }
-type SchemaBasedCondition = JFCondition &
-  Scoped & {
+type SchemaBasedCondition<T extends string> = JFCondition &
+  Scoped<T> & {
     schema: JsonSchema
   }
 /**
  * A composable condition.
  */
-type ComposableCondition = JFCondition & {
-  conditions: Condition[]
+type ComposableCondition<T extends string> = JFCondition & {
+  conditions: Condition<T>[]
 }
 /**
  * An or condition.
  */
-type OrCondition = ComposableCondition & {
+type OrCondition<T extends string> = ComposableCondition<T> & {
   type: "OR"
 }
 /**
  * An and condition.
  */
-type AndCondition = ComposableCondition & {
+type AndCondition<T extends string> = ComposableCondition<T> & {
   type: "AND"
 }
 

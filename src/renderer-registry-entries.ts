@@ -19,6 +19,7 @@ import {
   or,
   isPrimitiveArrayControl,
   isOneOfControl,
+  isAnyOfControl,
 } from "@jsonforms/core"
 import { withJsonFormsCellProps } from "@jsonforms/react"
 
@@ -32,11 +33,12 @@ import { ObjectRenderer } from "./controls/ObjectControl"
 import { GroupLayoutRenderer } from "./layouts/GroupLayout"
 import { NumericRenderer } from "./controls/NumericControl"
 import { NumericSliderRenderer } from "./controls/NumericSliderControl"
+import { OneOfRenderer } from "./controls/combinators/OneOfControl"
+import { AnyOfRenderer } from "./controls/combinators/AnyOfControl"
 import {
   ObjectArrayRenderer,
   PrimitiveArrayRenderer,
 } from "./controls/ArrayControl"
-import { OneOfRenderer } from "./controls/combinators/OneOfControl"
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
@@ -87,6 +89,10 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   {
     tester: rankWith(3, isOneOfControl),
     renderer: OneOfRenderer,
+  },
+  {
+    tester: rankWith(3, isAnyOfControl),
+    renderer: AnyOfRenderer,
   },
   {
     tester: rankWith(

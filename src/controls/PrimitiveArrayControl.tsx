@@ -1,6 +1,6 @@
 import {
   Helpers,
-  ArrayLayoutProps,
+  ArrayControlProps,
   composePaths,
   createDefaultValue,
   findUISchema,
@@ -10,7 +10,6 @@ import {
   withJsonFormsArrayControlProps,
 } from "@jsonforms/react"
 import { Form, Button } from "antd"
-import { MinusCircleOutlined } from "@ant-design/icons"
 import type { Rule } from "antd/es/form"
 import { useCallback, useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
@@ -28,7 +27,7 @@ function PrimitiveArrayControl({
   rootSchema,
   uischemas,
   required,
-}: ArrayLayoutProps) {
+}: ArrayControlProps) {
   const foundUISchema = useMemo(
     () =>
       findUISchema(
@@ -102,8 +101,8 @@ function PrimitiveArrayControl({
                 uischemas={uischemas}
               />
               {fields.length > 1 ? (
-                <MinusCircleOutlined
-                  className="dynamic-delete-button"
+                <Button
+                  {...options.removeButtonProps}
                   onClick={(e) => {
                     e.stopPropagation()
                     remove(field.name)

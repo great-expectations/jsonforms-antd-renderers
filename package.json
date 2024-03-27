@@ -2,9 +2,7 @@
   "name": "@great-expectations/jsonforms-antd-renderers",
   "private": false,
   "version": "0.0.0-semantic-release",
-  "files": [
-    "lib/**/*"
-  ],
+  "files": ["lib/**/*"],
   "main": "./lib/cjs/index.js",
   "types": "./lib/cjs/index.d.ts",
   "exports": {
@@ -23,9 +21,7 @@
     "access": "public"
   },
   "release": {
-    "branches": [
-      "main"
-    ]
+    "branches": ["main"]
   },
   "repository": {
     "type": "git",
@@ -52,8 +48,6 @@
     "@jsonforms/core": "^3.2.1",
     "@jsonforms/react": "^3.2.1",
     "antd": "^5.14.0",
-    "date-fns": "^3.3.1",
-    "rc-picker": "^4.2.0",
     "react": "^17 || ^18"
   },
   "devDependencies": {
@@ -104,6 +98,8 @@
     "lodash.isempty": "^4.4.0",
     "lodash.merge": "^4.6.2",
     "lodash.range": "^3.2.0",
-    "lodash.startcase": "^4.4.0"
+    "lodash.startcase": "^4.4.0",
+    "date-fns": "^3.3.1",
+    "rc-picker": "^4.2.0"
   }
 }

@@ -16,7 +16,7 @@ import { ArrayControlOptions } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 import React from "react"
 
-function PrimitiveArrayControl({
+export function PrimitiveArrayControl({
   data,
   enabled,
   path,

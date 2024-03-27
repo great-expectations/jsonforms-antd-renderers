@@ -17,7 +17,7 @@ import { ArrayControlOptions } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 import React from "react"
 
-function ObjectArrayControl({
+export function ObjectArrayControl({
   data,
   enabled,
   path,
@@ -86,7 +86,6 @@ function ObjectArrayControl({
   }
   return (
     <Form.Item
-      // name={path}
       required={required}
       rules={rules}
       validateTrigger={["onBlur"]}

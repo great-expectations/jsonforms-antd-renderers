@@ -86,7 +86,7 @@ function ObjectArrayControl({
   }
   return (
     <Form.Item
-      name={path}
+      // name={path}
       required={required}
       rules={rules}
       validateTrigger={["onBlur"]}

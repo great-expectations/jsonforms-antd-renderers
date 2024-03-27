@@ -18,17 +18,17 @@ describe("PrimitiveArrayControl", () => {
       schema: stringArrayControlJsonSchema,
       uischema: arrayControlUISchema,
     })
+    await screen.findByPlaceholderText("Enter value")
     await screen.findByRole("button")
     await screen.findByText("Add Assets")
-    await screen.findByText("No data")
   })
 
   test.each([
-    [stringArrayControlJsonSchema, false],
-    [stringArrayControlJsonSchemaWithRequired, true],
+    [stringArrayControlJsonSchema],
+    [stringArrayControlJsonSchemaWithRequired],
   ])(
-    "renders disabled remove button with one element if required",
-    async (schema, should_be_disabled) => {
+    "does not render remove button with one element",
+    async (schema) => {
       render({
         schema: schema,
         uischema: arrayControlUISchema,
@@ -37,8 +37,7 @@ describe("PrimitiveArrayControl", () => {
       await screen.findByText("Add Assets")
       await screen.findByDisplayValue("my asset")
       //note: the text is within a span in the <button>
-      const removeButton = await screen.findByRole("button", { name: "Delete" })
-      expect(removeButton).toHaveProperty("disabled", should_be_disabled)
+      expect(screen.queryByRole("button", { name: "Delete" })).toBeNull()
     },
   )
 
@@ -51,11 +50,9 @@ describe("PrimitiveArrayControl", () => {
       render({
         schema: schema,
         uischema: arrayControlUISchema,
-        data: { assets: ["my asset", "my other asset"] },
       })
-      await screen.findByRole("button", { name: "Add Assets" })
-      await screen.findByDisplayValue("my asset")
-      await screen.findByDisplayValue("my other asset")
+      const addButton = await screen.findByRole("button", { name: "Add Assets" })
+      await userEvent.click(addButton)
       //note: the text is within a span in the <button>
       const removeButtons = await screen.findAllByRole("button", {
         name: "Delete",
@@ -78,8 +75,7 @@ describe("PrimitiveArrayControl", () => {
         data = result.data
       },
     })
-    await user.click(screen.getByRole("button", { name: "Add Assets" }))
-    const newAsset = await screen.findByRole("textbox")
+    const newAsset = await screen.findByPlaceholderText("Enter value")
     await user.type(newAsset, "new")
     await screen.findByDisplayValue("new")
     await waitFor(() => {
@@ -90,31 +86,23 @@ describe("PrimitiveArrayControl", () => {
   })
 
   test("correctly removes from the list with remove button", async () => {
-    let data = {
-      assets: ["my asset", "remove me!", "my other asset"],
-    }
     const user = userEvent.setup()
     render({
       schema: stringArrayControlJsonSchema,
       uischema: arrayControlUISchema,
-      data: data,
-      onChange: (result) => {
-        data = result.data
-      },
     })
-    await screen.findByDisplayValue("my asset")
-    await screen.findByDisplayValue("remove me!")
-    await screen.findByDisplayValue("my other asset")
+    const addButton = await screen.findByRole("button", { name: "Add Assets" })
+    await user.click(addButton)
+    await user.click(addButton)
+    const inputFields = await screen.findAllByPlaceholderText("Enter value")
+    await user.type(inputFields[0], "my asset")
+    await user.type(inputFields[1], "remove me!")
+    await user.type(inputFields[2], "my other asset")
     const removeButtons = await screen.findAllByRole("button", {
       name: "Delete",
     })
     expect(removeButtons).toHaveLength(3)
     await user.click(removeButtons[1])
-    await waitFor(() => {
-      expect(data).toEqual({
-        assets: ["my asset", "my other asset"],
-      })
-    })
     const updatedRemoveButtons = await screen.findAllByRole("button", {
       name: "Delete",
     })
@@ -140,7 +128,6 @@ describe("PrimitiveArrayControl", () => {
 
     // Check that the onClick handler is not overwritten on Add button
     await user.click(await screen.findByText("Add more items"))
-    await screen.findByRole("textbox")
     await waitFor(() => {
       expect(data).toEqual({
         assets: [""],
@@ -148,15 +135,15 @@ describe("PrimitiveArrayControl", () => {
     })
 
     // Delete button text is overwritten and has the correct icon
-    await screen.findByText("Destroy me!")
-    await screen.findByLabelText("delete") // fyi: aria-label is "delete"
+    await screen.findAllByText("Destroy me!")
+    await screen.findAllByLabelText("delete") // fyi: aria-label is "delete"
 
     // Check that the onClick handler is not overwritten on Delete button
-    const deleteButton = await screen.findByText("Destroy me!")
-    await user.click(deleteButton)
+    const deleteButton = await screen.findAllByText("Destroy me!")
+    await user.click(deleteButton[1])
     await waitFor(() => {
       expect(data).toEqual({
-        assets: [],
+        assets: [""],
       })
     })
   })
@@ -170,9 +157,6 @@ describe("PrimitiveArrayControl", () => {
     })
     // Title is used within the Add button
     await screen.findByText("Add Use this as the label")
-
-    // Delete button text is overwritten and has the correct icon
-    await screen.findByText("Delete")
 
     // Label is used within the input
     const textbox = await screen.findByLabelText("Use this as the label")

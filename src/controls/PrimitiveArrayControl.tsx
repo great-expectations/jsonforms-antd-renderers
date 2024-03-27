@@ -1,6 +1,6 @@
 import {
   Helpers,
-  ArrayControlProps,
+  ArrayLayoutProps,
   composePaths,
   createDefaultValue,
   findUISchema,
@@ -30,7 +30,7 @@ export function PrimitiveArrayControl({
   rootSchema,
   uischemas,
   required,
-}: ArrayControlProps) {
+}: ArrayLayoutProps) {
   const foundUISchema = useMemo(
     () =>
       findUISchema(

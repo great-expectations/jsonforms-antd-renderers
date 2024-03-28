@@ -2,33 +2,33 @@ import { JSONSchema } from "json-schema-to-ts"
 import { UISchema } from "../ui-schema"
 import { RuleEffect } from "@jsonforms/core"
 
-export const datetimeSchema = {
+export const dateSchema = {
   type: "object",
   properties: {
-    datetime: {
+    date: {
       type: "string",
       title: "The Future is Now",
-      format: "date-time",
+      format: "date",
     },
   },
 } satisfies JSONSchema
 
-export const datetimeUISchema = {
+export const dateUISchema = {
   type: "VerticalLayout",
   elements: [
     {
       type: "Control",
-      scope: "#/properties/datetime",
+      scope: "#/properties/date",
     },
   ],
 } satisfies UISchema
 
-export const datetimeUISchemaWithRule = {
+export const dateUISchemaWithRule = {
   type: "VerticalLayout",
   elements: [
     {
       type: "Control",
-      scope: "#/properties/datetime",
+      scope: "#/properties/date",
       rule: {
         effect: RuleEffect.HIDE,
         condition: {},

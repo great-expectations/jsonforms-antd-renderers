@@ -19,7 +19,7 @@ import {
   or,
   isPrimitiveArrayControl,
   isOneOfControl,
-  isDateTimeControl,
+  isDateControl,
   isAnyOfControl,
 } from "@jsonforms/core"
 import { withJsonFormsCellProps } from "@jsonforms/react"
@@ -40,7 +40,7 @@ import {
   ObjectArrayRenderer,
   PrimitiveArrayRenderer,
 } from "./controls/ArrayControl"
-import { DatetimeRenderer } from "./controls/DatetimeControl"
+import { DateRenderer } from "./controls/DateControl"
 
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
@@ -78,8 +78,8 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
     renderer: NumericRenderer,
   },
   {
-    tester: rankWith(3, isDateTimeControl),
-    renderer: DatetimeRenderer,
+    tester: rankWith(3, isDateControl),
+    renderer: DateRenderer,
   },
   {
     tester: rankWith(

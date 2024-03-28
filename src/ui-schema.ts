@@ -332,3 +332,7 @@ export type NumericControlOptions = {
   addonBefore?: InputNumberProps["addonBefore"]
   addonAfter?: InputNumberProps["addonAfter"]
 }
+
+export type DateControlOptions = {
+  dateFormat?: string
+}

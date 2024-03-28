@@ -1,17 +1,15 @@
 import { Meta, StoryObj } from "@storybook/react"
 import { rendererRegistryEntries } from "../../renderer-registry-entries"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
-import {
-  datetimeSchema,
-  datetimeUISchema,
-} from "../../testSchemas/datetimeSchema"
+import { dateSchema, dateUISchema } from "../../testSchemas/dateSchema"
+import { UISchema } from "../.."
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
-  title: "Control/Datetime",
+  title: "Control/Date",
   component: StorybookAntDJsonForm,
   tags: ["autodocs"],
   args: {
-    jsonSchema: datetimeSchema,
+    jsonSchema: dateSchema,
     rendererRegistryEntries: [...rendererRegistryEntries],
   },
   argTypes: {
@@ -29,21 +27,44 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
 export default meta
 type Story = StoryObj<typeof StorybookAntDJsonForm>
 
-export const Datetime: Story = {
+export const RegularDate: Story = {
   tags: ["autodocs"],
   args: {
-    jsonSchema: datetimeSchema,
-    uiSchema: datetimeUISchema,
+    jsonSchema: dateSchema,
+    uiSchema: dateUISchema,
   },
 }
 
-export const RequiredDatetime: Story = {
+export const RequiredDate: Story = {
   tags: ["autodocs"],
   args: {
     jsonSchema: {
-      ...datetimeSchema,
-      required: ["datetime"],
+      ...dateSchema,
+      required: ["date"],
     },
-    uiSchema: datetimeUISchema,
+    uiSchema: dateUISchema,
+  },
+}
+
+export const DateWithOptionFormat: Story = {
+  tags: ["autodocs"],
+  args: {
+    data: { date: new Date("2021-01-01") },
+    jsonSchema: {
+      ...dateSchema,
+      required: ["date"],
+    },
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Control",
+          scope: "#/properties/date",
+          options: {
+            dateFormat: "YYYY MM DD",
+          },
+        },
+      ],
+    } satisfies UISchema,
   },
 }

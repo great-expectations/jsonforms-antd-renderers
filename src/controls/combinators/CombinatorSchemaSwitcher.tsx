@@ -8,7 +8,7 @@ import {
   JsonSchema,
   createDefaultValue,
 } from "@jsonforms/core"
-import { usePreviousValue } from "../../common/usePreviousValue"
+import { usePreviousIndex } from "../../common/usePrevious"
 
 type CombinatorSchemaSwitcherProps = {
   renderInfos: CombinatorSubSchemaRenderInfo[]
@@ -36,7 +36,7 @@ export function CombinatorSchemaSwitcher({
     uischema.options as Record<string, unknown>,
   ) as OneOfControlOptions
   const oneOfOptionType = appliedUiSchemaOptions.optionType
-  const prevSelectedIndex = usePreviousValue(selectedIndex)
+  const prevSelectedIndex = usePreviousIndex(selectedIndex)
   const [dataForPreviousSchemas, setDataForPreviousSchemas] = useState<
     Record<number, unknown>
   >({})
@@ -44,11 +44,11 @@ export function CombinatorSchemaSwitcher({
   useEffect(() => {
     if (
       selectedIndex !== prevSelectedIndex &&
-      prevSelectedIndex !== undefined
+      prevSelectedIndex !== null
     ) {
       setDataForPreviousSchemas({
         ...dataForPreviousSchemas,
-        [prevSelectedIndex || 0]: data as unknown,
+        [prevSelectedIndex]: data as unknown,
       })
       if (dataForPreviousSchemas[selectedIndex]) {
         handleChange(path, dataForPreviousSchemas[selectedIndex])

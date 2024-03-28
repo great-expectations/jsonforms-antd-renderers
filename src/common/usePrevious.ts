@@ -17,3 +17,15 @@ export function usePreviousValue<T>(value: T): T | null {
 
   return previous
 }
+
+export function usePreviousIndex<T>(value: T): T | null {
+  const [prev, setPrev] = useState<T | null>(null)
+
+  useEffect(() => {
+    if (value !== prev) {
+      setPrev(value)
+    }
+  }, [value, prev])
+
+  return prev
+}

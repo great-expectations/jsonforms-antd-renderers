@@ -13,7 +13,7 @@ import { Form, Button, Col, Row } from "antd"
 import type { Rule } from "antd/es/form"
 import { useEffect, useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
-import { usePreviousValue } from "../common/usePreviousValue"
+import { usePreviousValue } from "../common/usePrevious"
 import React from "react"
 
 export function PrimitiveArrayControl({

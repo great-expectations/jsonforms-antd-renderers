@@ -10,7 +10,7 @@ import {
   objectArrayControlJsonSchemaWithRequired,
 } from "../testSchemas/arraySchema"
 
-describe("ArrayControl for Objects", () => {
+describe("ObjectArrayControl", () => {
 
   test.each([
     [objectArrayControlJsonSchema, false],

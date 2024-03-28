@@ -33,12 +33,10 @@ import { ObjectRenderer } from "./controls/ObjectControl"
 import { GroupLayoutRenderer } from "./layouts/GroupLayout"
 import { NumericRenderer } from "./controls/NumericControl"
 import { NumericSliderRenderer } from "./controls/NumericSliderControl"
+import { ObjectArrayRenderer } from "./controls/ObjectArrayControl"
+import { PrimitiveArrayRenderer } from "./controls/PrimitiveArrayControl"
 import { OneOfRenderer } from "./controls/combinators/OneOfControl"
 import { AnyOfRenderer } from "./controls/combinators/AnyOfControl"
-import {
-  ObjectArrayRenderer,
-  PrimitiveArrayRenderer,
-} from "./controls/ArrayControl"
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [

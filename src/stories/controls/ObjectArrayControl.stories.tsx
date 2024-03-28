@@ -87,6 +87,43 @@ export const ObjectArrayWithUiOptionForButtons: Story = {
   },
 }
 
+export const ObjectArrayWithNumericInput: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      type: "object",
+      properties: {
+        ages: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: { age: { type: "number", title: "age" } },
+          },
+        },
+      },
+    },
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          scope: "#/properties/ages",
+          type: "Control",
+          options: {
+            addButtonProps: {
+              children: "Add more items",
+              type: "primary",
+            },
+            removeButtonProps: {
+              children: "Destory of my life!",
+              danger: true,
+            },
+          },
+        },
+      ],
+    } satisfies UISchema,
+  },
+}
+
 export const ObjectArrayWithUiOptionWithIcons: Story = {
   tags: ["autodocs"],
   args: {

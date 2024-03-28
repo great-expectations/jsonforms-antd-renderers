@@ -48,7 +48,7 @@ export function CombinatorSchemaSwitcher({
     ) {
       setDataForPreviousSchemas({
         ...dataForPreviousSchemas,
-        [prevSelectedIndex || 0]: data as unknown,
+        [prevSelectedIndex]: data as unknown,
       })
       if (dataForPreviousSchemas[selectedIndex]) {
         handleChange(path, dataForPreviousSchemas[selectedIndex])

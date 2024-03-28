@@ -11,7 +11,6 @@ import {
 } from "../testSchemas/arraySchema"
 
 describe("ObjectArrayControl", () => {
-
   test.each([
     [objectArrayControlJsonSchema, false],
     [objectArrayControlJsonSchemaWithRequired, true],
@@ -130,7 +129,6 @@ describe("ObjectArrayControl", () => {
     // Add button text is overwritten and has the correct icon
     await screen.findByText("Add more items")
     await screen.findByLabelText("plus-circle") // fyi: aria-label is "plus-circle"
-
 
     await screen.findByRole("textbox")
     await waitFor(() => {

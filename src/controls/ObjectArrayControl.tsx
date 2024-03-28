@@ -85,11 +85,7 @@ export function ObjectArrayControl({
     return null
   }
   return (
-    <Form.Item
-      required={required}
-      rules={rules}
-      validateTrigger={["onBlur"]}
-    >
+    <Form.Item required={required} rules={rules} validateTrigger={["onBlur"]}>
       <>{label}</>
       <List<unknown>
         dataSource={dataSource}

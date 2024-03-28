@@ -42,10 +42,7 @@ export function CombinatorSchemaSwitcher({
   >({})
 
   useEffect(() => {
-    if (
-      selectedIndex !== prevSelectedIndex &&
-      prevSelectedIndex !== null
-    ) {
+    if (selectedIndex !== prevSelectedIndex && prevSelectedIndex !== null) {
       setDataForPreviousSchemas({
         ...dataForPreviousSchemas,
         [prevSelectedIndex]: data as unknown,

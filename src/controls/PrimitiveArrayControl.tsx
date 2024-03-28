@@ -74,7 +74,7 @@ export function PrimitiveArrayControl({
       sm: { span: 20 },
     },
   }
-  
+
   const formItemLayoutWithOutLabel = {
     wrapperCol: {
       xs: { span: 24, offset: 0 },
@@ -94,68 +94,67 @@ export function PrimitiveArrayControl({
       {(fields, { add, remove }, { errors }) => {
         fields.length === 0 && add()
         return (
-        <>
-          {fields.map((field, index) => (
-            <Form.Item
-              {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-              label={index === 0 ? label : ""}
-              required={required}
-              key={index}
-              rules={rules}
-            >
-              <Row gutter={12}>
-                <Col>
-                  <JsonFormsDispatch
-                    enabled={enabled}
-                    schema={schema}
-                    path={composePaths(path, `${index}`)}
-                    uischema={foundUISchema}
-                    renderers={renderers}
-                    cells={cells}
-                    uischemas={uischemas}
-                  />
-                </Col>
-                <Col>
-                  {fields.length > 1 ? (
-                    <Button
-                      key="remove"
-                      disabled={
-                        !removeItems ||
-                        (required && fields.length === 1 && index === 0)
-                      }
-                      {...options.removeButtonProps}
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        remove(field.name)
-                        removeItems?.(path, [index])()
-                      }}
-                    >
-                      {options.removeButtonProps?.children ?? "Delete"}
-                    </Button>
-                  ) : null}
-                </Col>
-              </Row>
-            </Form.Item>
-          ))}
-          <Form.Item
-            {...formItemLayoutWithOutLabel}
-          >
-            <Row>
-              <Button
-                {...options.addButtonProps}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  add()
-                  addItemToList()
-                }}
+          <>
+            {fields.map((field, index) => (
+              <Form.Item
+                {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+                label={index === 0 ? label : ""}
+                required={required}
+                key={index}
+                rules={rules}
               >
-                {options.addButtonProps?.children ?? `Add ${label}`}
-              </Button>
-            </Row>
-            <Form.ErrorList errors={errors} />
-          </Form.Item>
-        </>
-      )}}
+                <Row gutter={12}>
+                  <Col>
+                    <JsonFormsDispatch
+                      enabled={enabled}
+                      schema={schema}
+                      path={composePaths(path, `${index}`)}
+                      uischema={foundUISchema}
+                      renderers={renderers}
+                      cells={cells}
+                      uischemas={uischemas}
+                    />
+                  </Col>
+                  <Col>
+                    {fields.length > 1 ? (
+                      <Button
+                        key="remove"
+                        disabled={
+                          !removeItems ||
+                          (required && fields.length === 1 && index === 0)
+                        }
+                        {...options.removeButtonProps}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          remove(field.name)
+                          removeItems?.(path, [index])()
+                        }}
+                      >
+                        {options.removeButtonProps?.children ?? "Delete"}
+                      </Button>
+                    ) : null}
+                  </Col>
+                </Row>
+              </Form.Item>
+            ))}
+            <Form.Item {...formItemLayoutWithOutLabel}>
+              <Row>
+                <Button
+                  {...options.addButtonProps}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    add()
+                    addItemToList()
+                  }}
+                >
+                  {options.addButtonProps?.children ?? `Add ${label}`}
+                </Button>
+              </Row>
+              <Form.ErrorList errors={errors} />
+            </Form.Item>
+          </>
+        )
+      }}
     </Form.List>
   )
 }

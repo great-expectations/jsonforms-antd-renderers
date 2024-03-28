@@ -26,20 +26,17 @@ describe("PrimitiveArrayControl", () => {
   test.each([
     [stringArrayControlJsonSchema],
     [stringArrayControlJsonSchemaWithRequired],
-  ])(
-    "does not render remove button with one element",
-    async (schema) => {
-      render({
-        schema: schema,
-        uischema: arrayControlUISchema,
-        data: { assets: ["my asset"] },
-      })
-      await screen.findByText("Add Assets")
-      await screen.findByDisplayValue("my asset")
-      //note: the text is within a span in the <button>
-      expect(screen.queryByRole("button", { name: "Delete" })).toBeNull()
-    },
-  )
+  ])("does not render remove button with one element", async (schema) => {
+    render({
+      schema: schema,
+      uischema: arrayControlUISchema,
+      data: { assets: ["my asset"] },
+    })
+    await screen.findByText("Add Assets")
+    await screen.findByDisplayValue("my asset")
+    //note: the text is within a span in the <button>
+    expect(screen.queryByRole("button", { name: "Delete" })).toBeNull()
+  })
 
   test.each([
     [stringArrayControlJsonSchema],
@@ -51,7 +48,9 @@ describe("PrimitiveArrayControl", () => {
         schema: schema,
         uischema: arrayControlUISchema,
       })
-      const addButton = await screen.findByRole("button", { name: "Add Assets" })
+      const addButton = await screen.findByRole("button", {
+        name: "Add Assets",
+      })
       await userEvent.click(addButton)
       //note: the text is within a span in the <button>
       const removeButtons = await screen.findAllByRole("button", {

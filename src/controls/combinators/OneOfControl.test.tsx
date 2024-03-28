@@ -34,14 +34,12 @@ const schema = {
 } satisfies JSONSchema
 
 describe("OneOf control", () => {
-  test.only("OneOf Control with default UISchema allows switching between subschemas", async () => {
+  test("OneOf Control with default UISchema allows switching between subschemas", async () => {
     render({ schema })
     await screen.findByText("Pickup")
     screen.getByLabelText("Location")
 
-    const delivery = screen.getByLabelText("Delivery")
-    console.log(delivery)
-    await userEvent.click(delivery)
+    await userEvent.click(screen.getByLabelText("Delivery"))
     screen.getByLabelText("Address")
   })
   test("OneOf Control with button UISchema allows switching between subschemas", async () => {

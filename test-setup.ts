@@ -9,7 +9,7 @@ global.IS_REACT_ACT_ENVIRONMENT = true
 
 beforeAll(() => {
   // set timezone to US/Eastern for tests
-  process.env.TZ = 'US/Eastern'
+  process.env.TZ = "US/Eastern"
 })
 
 global.matchMedia =

@@ -42,7 +42,6 @@ import {
 } from "./controls/ArrayControl"
 import { DateRenderer } from "./controls/DateControl"
 
-
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
   {

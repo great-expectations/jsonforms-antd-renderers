@@ -2,7 +2,9 @@
   "name": "@great-expectations/jsonforms-antd-renderers",
   "private": false,
   "version": "0.0.0-semantic-release",
-  "files": ["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "main": "./lib/cjs/index.js",
   "types": "./lib/cjs/index.d.ts",
   "exports": {
@@ -21,7 +23,9 @@
     "access": "public"
   },
   "release": {
-    "branches": ["main"]
+    "branches": [
+      "main"
+    ]
   },
   "repository": {
     "type": "git",

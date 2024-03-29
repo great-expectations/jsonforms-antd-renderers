@@ -4,7 +4,7 @@ import {
   JsonSchema,
 } from "@jsonforms/core"
 import { JsonFormsDispatch, withJsonFormsOneOfProps } from "@jsonforms/react"
-import { Space } from "antd"
+import { Form, Space } from "antd"
 import { useState } from "react"
 import { ControlUISchema } from "../../ui-schema"
 import { ControlLabel } from "../../common/ControlLabel"
@@ -13,6 +13,7 @@ import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
 export function OneOfControl({
   handleChange,
   data,
+  required,
   schema,
   path,
   renderers,
@@ -50,25 +51,27 @@ export function OneOfControl({
   )
 
   return (
-    <Space direction="vertical" style={{ width: "100%" }} size="middle">
-      <ControlLabel uischema={uischema as ControlUISchema} schema={schema} />
-      {combinatorSchemaSwitcher}
-      {combinatorRenderInfos.map((renderInfo, index) => {
-        return (
-          selectedIndex === index && (
-            <JsonFormsDispatch
-              key={index}
-              schema={renderInfo.schema}
-              uischemas={uischemas}
-              uischema={renderInfo.uischema}
-              path={path}
-              renderers={renderers}
-              cells={cells}
-            />
-          )
-        )
-      })}
-    </Space>
+    <Form.Item required={required}>
+        <Space direction="vertical" style={{ width: "100%" }} size="middle">
+          <ControlLabel uischema={uischema as ControlUISchema} schema={schema} />
+          {combinatorSchemaSwitcher}
+          {combinatorRenderInfos.map((renderInfo, index) => {
+            return (
+              selectedIndex === index && (
+                <JsonFormsDispatch
+                  key={index}
+                  schema={renderInfo.schema}
+                  uischemas={uischemas}
+                  uischema={renderInfo.uischema}
+                  path={path}
+                  renderers={renderers}
+                  cells={cells}
+                />
+              )
+            )
+          })}
+        </Space>
+    </Form.Item>
   )
 }
 

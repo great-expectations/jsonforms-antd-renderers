@@ -230,3 +230,69 @@ export const OneOfTextLabelStyling: Story = {
     },
   },
 }
+
+export const OneOfArray: Story = {
+  parameters: { controls: { expanded: true } },
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      type: "object",
+      properties: {
+        valueSet: {
+          title: "Value Set",
+          oneOf: [
+            {
+              title: "Text",
+              properties: {
+                text: {
+                  minItems: 1,
+                  type: "array",
+                  items: {
+                    type: "string",
+                  },
+                  examples: [
+                    ["a", "b", "c", "d", "e"],
+                    [
+                      "2024-01-01",
+                      "2024-01-02",
+                      "2024-01-03",
+                      "2024-01-04",
+                      "2024-01-05",
+                    ],
+                  ],
+                },
+              },
+            },
+            {
+              title: "Numbers",
+              properties: {
+                numbers: {
+                  minItems: 1,
+                  type: "array",
+                  items: {
+                    type: "number",
+                  },
+                  examples: [
+                    [1, 2, 3, 4, 5],
+                    [1.1, 2.2, 3.3, 4.4, 5.5],
+                    [1, 2.2, 3, 4.4, 5],
+                  ],
+                },
+              },
+            },
+          ],
+        },
+      },
+    },
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Control",
+          scope: "#/properties/valueSet",
+          options: { optionType: "segmented" } satisfies OneOfControlOptions,
+        },
+      ],
+    },
+  },
+}

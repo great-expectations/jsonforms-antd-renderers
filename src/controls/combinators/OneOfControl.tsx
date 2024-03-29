@@ -51,9 +51,14 @@ export function OneOfControl({
   )
 
   return (
-      <Form.Item required={required} label={uischema.label ? "" : schema.title}>
-        <Space direction="vertical" style={{ width: "100%" }} size="middle">
-        {uischema.label ? (<ControlLabel uischema={uischema as ControlUISchema} schema={schema} />) : null}
+    <Form.Item required={required} label={uischema.label ? "" : schema.title}>
+      <Space direction="vertical" style={{ width: "100%" }} size="middle">
+        {uischema.label ? (
+          <ControlLabel
+            uischema={uischema as ControlUISchema}
+            schema={schema}
+          />
+        ) : null}
         {combinatorSchemaSwitcher}
         {combinatorRenderInfos.map((renderInfo, index) => {
           return (

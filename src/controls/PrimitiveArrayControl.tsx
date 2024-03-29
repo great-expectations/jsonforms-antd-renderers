@@ -71,17 +71,19 @@ export function PrimitiveArrayControl({
     { required: required, message: `${label} is required` },
   ]
 
+  const style = { marginBottom: "0px"}
+
   return (
-    <Form.Item required={required} label={label}>
+    <Form.Item label={label} required={required}>
       <Form.List name="names">
         {(fields, { add, remove }, { errors }) => {
           fields.length === 0 && add()
           return (
             <>
-              <Row justify={"start"} gutter={12}>
+              <Row justify={"start"}>
                 <Col>
                   {fields.map((field, index) => (
-                    <Form.Item key={index} rules={rules}>
+                    <Form.Item key={index} rules={rules} style={style}>
                       <Row gutter={12}>
                         <Col>
                           <JsonFormsDispatch

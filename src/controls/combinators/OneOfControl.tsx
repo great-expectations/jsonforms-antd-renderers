@@ -52,25 +52,25 @@ export function OneOfControl({
 
   return (
     <Form.Item required={required}>
-        <Space direction="vertical" style={{ width: "100%" }} size="middle">
-          <ControlLabel uischema={uischema as ControlUISchema} schema={schema} />
-          {combinatorSchemaSwitcher}
-          {combinatorRenderInfos.map((renderInfo, index) => {
-            return (
-              selectedIndex === index && (
-                <JsonFormsDispatch
-                  key={index}
-                  schema={renderInfo.schema}
-                  uischemas={uischemas}
-                  uischema={renderInfo.uischema}
-                  path={path}
-                  renderers={renderers}
-                  cells={cells}
-                />
-              )
+      <Space direction="vertical" style={{ width: "100%" }} size="middle">
+        <ControlLabel uischema={uischema as ControlUISchema} schema={schema} />
+        {combinatorSchemaSwitcher}
+        {combinatorRenderInfos.map((renderInfo, index) => {
+          return (
+            selectedIndex === index && (
+              <JsonFormsDispatch
+                key={index}
+                schema={renderInfo.schema}
+                uischemas={uischemas}
+                uischema={renderInfo.uischema}
+                path={path}
+                renderers={renderers}
+                cells={cells}
+              />
             )
-          })}
-        </Space>
+          )
+        })}
+      </Space>
     </Form.Item>
   )
 }

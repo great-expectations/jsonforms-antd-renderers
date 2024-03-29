@@ -71,7 +71,7 @@ export function PrimitiveArrayControl({
     { required: required, message: `${label} is required` },
   ]
 
-  const style = { marginBottom: "0px"}
+  const style = { marginBottom: "0px" }
 
   return (
     <Form.Item label={label} required={required}>

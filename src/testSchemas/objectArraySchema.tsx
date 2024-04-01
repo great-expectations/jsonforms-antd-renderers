@@ -10,7 +10,7 @@ export const objectArrayControlUISchema = {
       type: "Control",
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof objectArrayControlJsonSchema>
 
 export const objectArrayControlJsonSchema = {
   title: "Assets",
@@ -72,4 +72,4 @@ export const objectArrayControlUISchemaWithIcons = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof objectArrayControlJsonSchemaWithRequired>

@@ -39,7 +39,10 @@ export function OneOfControl({
     <Space direction="vertical" style={{ width: "100%" }} size="middle">
       {uischema.type === "Control" && ( // I don't think it's possible for this to be false
         // but until we improve the UISchema types a bit, it's hard to be sure
-        <ControlLabel uischema={uischema as ControlUISchema} schema={schema} />
+        <ControlLabel
+          uischema={uischema as ControlUISchema<unknown>}
+          schema={schema}
+        />
       )}
       <CombinatorSchemaSwitcher
         config={config as unknown}

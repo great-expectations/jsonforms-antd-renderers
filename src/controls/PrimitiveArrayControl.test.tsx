@@ -19,8 +19,8 @@ describe("PrimitiveArrayControl", () => {
       uischema: arrayControlUISchema,
     })
     await screen.findByPlaceholderText("Enter value")
-    await screen.findByRole("button")
-    await screen.findByText("Add Assets")
+    screen.getByRole("button")
+    screen.getByText("Add Assets")
   })
 
   test.each([
@@ -33,7 +33,7 @@ describe("PrimitiveArrayControl", () => {
       data: { assets: ["my asset"] },
     })
     await screen.findByText("Add Assets")
-    await screen.findByDisplayValue("my asset")
+    screen.getByDisplayValue("my asset")
     //note: the text is within a span in the <button>
     expect(screen.queryByRole("button", { name: "Delete" })).toBeNull()
   })
@@ -53,7 +53,7 @@ describe("PrimitiveArrayControl", () => {
       })
       await userEvent.click(addButton)
       //note: the text is within a span in the <button>
-      const removeButtons = await screen.findAllByRole("button", {
+      const removeButtons = screen.getAllByRole("button", {
         name: "Delete",
       })
       expect(removeButtons).toHaveLength(2)
@@ -76,7 +76,7 @@ describe("PrimitiveArrayControl", () => {
     })
     const newAsset = await screen.findByPlaceholderText("Enter value")
     await user.type(newAsset, "new")
-    await screen.findByDisplayValue("new")
+    screen.getByDisplayValue("new")
     await waitFor(() => {
       expect(data).toEqual({
         assets: ["new"],
@@ -106,8 +106,8 @@ describe("PrimitiveArrayControl", () => {
       name: "Delete",
     })
     expect(updatedRemoveButtons).toHaveLength(2)
-    await screen.findByDisplayValue("my asset")
-    await screen.findByDisplayValue("my other asset")
+    screen.getByDisplayValue("my asset")
+    screen.getByDisplayValue("my other asset")
   })
 
   test("renders with overwritten icons and does not allow overwriting onClick", async () => {
@@ -123,7 +123,7 @@ describe("PrimitiveArrayControl", () => {
     })
     // Add button text is overwritten and has the correct icon
     await screen.findByText("Add more items")
-    await screen.findByLabelText("plus-circle") // fyi: aria-label is "plus-circle"
+    screen.getByLabelText("plus-circle") // fyi: aria-label is "plus-circle"
 
     // Check that the onClick handler is not overwritten on Add button
     await user.click(await screen.findByText("Add more items"))
@@ -134,8 +134,8 @@ describe("PrimitiveArrayControl", () => {
     })
 
     // Delete button text is overwritten and has the correct icon
-    await screen.findAllByText("Destroy me!")
-    await screen.findAllByLabelText("delete") // fyi: aria-label is "delete"
+    screen.getAllByText("Destroy me!")
+    screen.getAllByLabelText("delete") // fyi: aria-label is "delete"
 
     // Check that the onClick handler is not overwritten on Delete button
     const deleteButton = await screen.findAllByText("Destroy me!")

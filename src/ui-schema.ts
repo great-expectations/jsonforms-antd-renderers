@@ -99,13 +99,15 @@ interface LayoutUISchema<T extends string> extends UISchemaElement<T> {
 /**
  * A layout which orders its child elements vertically (i.e. from top to bottom).
  */
-export interface VerticalLayoutUISchema<T extends string> extends LayoutUISchema<T> {
+export interface VerticalLayoutUISchema<T extends string>
+  extends LayoutUISchema<T> {
   type: "VerticalLayout"
 }
 /**
  * A layout which orders its children horizontally (i.e. from left to right).
  */
-export interface HorizontalLayoutUISchema<T extends string> extends LayoutUISchema<T> {
+export interface HorizontalLayoutUISchema<T extends string>
+  extends LayoutUISchema<T> {
   type: "HorizontalLayout"
 }
 /**
@@ -207,9 +209,7 @@ type ControlOptions =
 
 const ObjectUISchema: UISchema<Paths<typeof objectSchema>> = {
   type: "VerticalLayout",
-  elements: [
-    {type: "Control", scope: "#/properties/name"}
-  ]
+  elements: [{ type: "Control", scope: "#/properties/name" }],
 } // satisfies UISchema<Paths<typeof objectSchema>>
 
 console.log(ObjectUISchema)

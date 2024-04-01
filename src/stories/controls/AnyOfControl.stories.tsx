@@ -1,57 +1,57 @@
 import { Meta, StoryObj } from "@storybook/react"
 import { rendererRegistryEntries } from "../../renderer-registry-entries"
-import { OneOfControlOptions, UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import {
   SplitterUISchemaRegistryEntry,
-  anyOfJsonSchema,
+  splitterAnyOfJsonSchema,
 } from "../../testSchemas/anyOfSchema"
 
-const meta: Meta<typeof StorybookAntDJsonForm> = {
-  title: "Control/AnyOf",
-  component: StorybookAntDJsonForm,
-  parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
-    layout: "centered",
-  },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-  tags: ["autodocs"],
-  args: {
-    jsonSchema: anyOfJsonSchema,
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/splitter",
-        },
-      ],
-    } satisfies UISchema,
-    rendererRegistryEntries: [...rendererRegistryEntries],
-    uiSchemaRegistryEntries: [SplitterUISchemaRegistryEntry],
-  },
-  // More on argTypes: https://storybook.js.org/docs/api/argtypes
-  argTypes: {
-    rendererRegistryEntries: { table: { disable: true } },
-    jsonSchema: {
-      control: "object",
-      description: "this is a minimal anyOf combinator schema",
+const meta: Meta<typeof StorybookAntDJsonForm<typeof splitterAnyOfJsonSchema>> =
+  {
+    title: "Control/AnyOf",
+    component: StorybookAntDJsonForm,
+    parameters: {
+      // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
+      layout: "centered",
     },
-    uiSchemaRegistryEntries: { table: { disable: true } },
-    data: { table: { disable: true } },
-    config: { control: "object" },
-    onChange: { table: { disable: true, action: "on-change" } },
-  },
-}
+    // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
+    tags: ["autodocs"],
+    args: {
+      jsonSchema: splitterAnyOfJsonSchema,
+      uiSchema: {
+        type: "VerticalLayout",
+        elements: [
+          {
+            type: "Control",
+            scope: "#/properties/splitter",
+          },
+        ],
+      },
+      rendererRegistryEntries: [...rendererRegistryEntries],
+      uiSchemaRegistryEntries: [SplitterUISchemaRegistryEntry],
+    },
+    // More on argTypes: https://storybook.js.org/docs/api/argtypes
+    argTypes: {
+      rendererRegistryEntries: { table: { disable: true } },
+      jsonSchema: {
+        control: "object",
+        description: "this is a minimal anyOf combinator schema",
+      },
+      uiSchemaRegistryEntries: { table: { disable: true } },
+      data: { table: { disable: true } },
+      config: { control: "object" },
+      onChange: { table: { disable: true, action: "on-change" } },
+    },
+  }
 
 export default meta
-type Story = StoryObj<typeof StorybookAntDJsonForm>
+type Story<T> = StoryObj<typeof StorybookAntDJsonForm<T>>
 
-export const RadioGroup: Story = {
+export const RadioGroup: Story<typeof splitterAnyOfJsonSchema> = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
   args: {
-    jsonSchema: anyOfJsonSchema,
+    jsonSchema: splitterAnyOfJsonSchema,
     uiSchema: {
       type: "VerticalLayout",
       elements: [{ type: "Control", scope: "#/properties/splitter" }],
@@ -65,18 +65,18 @@ export const RadioGroup: Story = {
   },
 }
 
-export const Button: Story = {
+export const Button: Story<typeof splitterAnyOfJsonSchema> = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
   args: {
-    jsonSchema: anyOfJsonSchema,
+    jsonSchema: splitterAnyOfJsonSchema,
     uiSchema: {
       type: "VerticalLayout",
       elements: [
         {
           type: "Control",
           scope: "#/properties/splitter",
-          options: { optionType: "button" } satisfies OneOfControlOptions,
+          options: { optionType: "button" },
         },
       ],
     },
@@ -89,18 +89,18 @@ export const Button: Story = {
   },
 }
 
-export const Dropdown: Story = {
+export const Dropdown: Story<typeof splitterAnyOfJsonSchema> = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
   args: {
-    jsonSchema: anyOfJsonSchema,
+    jsonSchema: splitterAnyOfJsonSchema,
     uiSchema: {
       type: "VerticalLayout",
       elements: [
         {
           type: "Control",
           scope: "#/properties/splitter",
-          options: { optionType: "dropdown" } satisfies OneOfControlOptions,
+          options: { optionType: "dropdown" },
         },
       ],
     },

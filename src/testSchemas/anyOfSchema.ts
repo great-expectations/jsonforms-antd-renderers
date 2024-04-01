@@ -6,7 +6,9 @@ import {
 import { UISchema } from "../ui-schema"
 import { JSONSchema } from "json-schema-to-ts"
 
-const splitterUISchema: UISchema = {
+const splitterUISchema: UISchema<
+  typeof splitterAnyOfJsonSchema.definitions.SplitterYear
+> = {
   type: "VerticalLayout",
   elements: [
     {
@@ -40,7 +42,7 @@ export const SplitterUISchemaRegistryEntry: JsonFormsUISchemaRegistryEntry = {
   },
 }
 
-export const anyOfJsonSchema = {
+export const splitterAnyOfJsonSchema = {
   type: "object",
   properties: {
     splitter: {
@@ -78,7 +80,7 @@ export const anyOfJsonSchema = {
       },
       required: ["column_name"],
       additionalProperties: false,
-    } as JSONSchema,
+    },
     SplitterYearAndMonth: {
       const: "SplitterYearAndMonth",
       title: "Year - Month",
@@ -98,7 +100,7 @@ export const anyOfJsonSchema = {
       },
       required: ["column_name"],
       additionalProperties: false,
-    } as JSONSchema,
+    },
     SplitterYearAndMonthAndDay: {
       const: "SplitterYearAndMonthAndDay",
       title: "Year - Month - Day",
@@ -117,7 +119,7 @@ export const anyOfJsonSchema = {
       },
       required: ["column_name"],
       additionalProperties: false,
-    } as JSONSchema,
+    },
   },
   required: ["splitter"],
   additionalProperties: false,

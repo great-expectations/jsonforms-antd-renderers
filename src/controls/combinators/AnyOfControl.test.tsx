@@ -6,12 +6,12 @@ import { AnyOfControlOptions } from "../../ui-schema"
 
 import {
   SplitterUISchemaRegistryEntry,
-  anyOfJsonSchema,
+  splitterAnyOfJsonSchema,
 } from "../../testSchemas/anyOfSchema"
 
 describe("AnyOf control", () => {
   test("AnyOf Control with default (radio) UISchema allows switching between subschemas", async () => {
-    render({ schema: anyOfJsonSchema })
+    render({ schema: splitterAnyOfJsonSchema })
     // Column Name is available in both subschemas
     await screen.findByText("Splitter")
     screen.getByLabelText("Column Name")
@@ -27,7 +27,7 @@ describe("AnyOf control", () => {
   })
   test("AnyOf Control with button UISchema allows switching between subschemas and respects uiSchemaRegistryEntries", async () => {
     render({
-      schema: anyOfJsonSchema,
+      schema: splitterAnyOfJsonSchema,
       uischema: {
         type: "VerticalLayout",
         elements: [
@@ -56,7 +56,7 @@ describe("AnyOf control", () => {
   })
   test("AnyOf Control with dropdown UISchema allows switching between subschemas", async () => {
     render({
-      schema: anyOfJsonSchema,
+      schema: splitterAnyOfJsonSchema,
       uischema: {
         type: "VerticalLayout",
         elements: [
@@ -84,7 +84,7 @@ describe("AnyOf control", () => {
     )
   })
   test("AnyOf Control persists state when switching between subschemas", async () => {
-    render({ schema: anyOfJsonSchema })
+    render({ schema: splitterAnyOfJsonSchema })
 
     // Column Name is available in both subschemas
     await screen.findByText("Splitter")

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FromSchema, JSONSchema } from "json-schema-to-ts"
 import {
   AnyOfControlOptions,
@@ -31,8 +30,6 @@ type JsonSchemaTypeToControlOptions<
     : T[K] extends { oneOf: unknown }
       ? OneOfControlOptions
       : unknown
-
-let s: SchemaAwareScope<unknown>
 
 // This is a type called SchemaAwareScope that takes up to two type arguments
 export type SchemaAwareScope<T = unknown> = T extends object

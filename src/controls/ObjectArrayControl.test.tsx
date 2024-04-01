@@ -42,8 +42,8 @@ describe("ObjectArrayControl", () => {
         data: { assets: [{ asset: "my asset" }, { asset: "my other asset" }] },
       })
       await screen.findByText("Add Assets")
-     screen.getByDisplayValue("my asset")
-     screen.getByDisplayValue("my other asset")
+      screen.getByDisplayValue("my asset")
+      screen.getByDisplayValue("my other asset")
       //note: the text is within a span in the <button>
       const removeButtons = await screen.findAllByRole("button", {
         name: "Delete",

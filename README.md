@@ -2,6 +2,16 @@
 
 [jsonforms](jsonforms.io) is "a declarative framework for efficiently building form-based web UIs." `jsonforms` has multiple renderer packages for different frameworks and component libraries, and this is one such package.
 
+## Storybook
+
+This package includes a storybook to help you see the different renderers in action. To run the storybook:
+
+```bash
+$ pnpm storybook
+```
+
+To view the published storybook, visit [https://great-expectations.github.io/jsonforms-antd-renderers/](https://great-expectations.github.io/jsonforms-antd-renderers/)
+
 ## Getting started
 
 ```bash
@@ -84,6 +94,21 @@ function MyForm() {
 - Run tests: `pnpm test`
 - Run storybook: `pnpm storybook`
 
+### Making changes
+
+- Make changes to the code
+- Run tests: `pnpm test`
+- Run storybook: `pnpm storybook`
+- Run format: `pnpm format:write`
+- Run lint: `pnpm lint`
+- Commit your changes
+
 ### Conventional commits
 
 - We use [semantic release](https://github.com/semantic-release/semantic-release) to version & release our package, so make sure your commits adhere to the [conventional commit format](https://semantic-release.gitbook.io/semantic-release#commit-message-format)
+
+### Testing package locally
+
+- Run pack: `pnpm pack`
+- If you previously installed the package, you may need to remove it first: `yarn remove @great-expectations/jsonforms-antd-renderers` and clear cache: `yarn cache clean`
+- Install the package in your project: `yarn add /path/to/jsonforms-antd-renderers-0.0.0-semantic-release.tgz`

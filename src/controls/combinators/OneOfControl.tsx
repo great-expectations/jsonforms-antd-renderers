@@ -25,11 +25,10 @@ export function OneOfControl({
 }: CombinatorRendererProps) {
   const [selectedIndex, setSelectedIndex] = useState(indexOfFittingSchema || 0)
 
-  const combinatorType = "oneOf"
   const oneOfRenderInfos = createCombinatorRenderInfos(
     schema.oneOf as JsonSchema[],
     rootSchema,
-    combinatorType,
+    "oneOf",
     uischema,
     path,
     uischemas,
@@ -56,14 +55,14 @@ export function OneOfControl({
         handleChange={handleChange}
         rootSchema={rootSchema}
       />
-      {oneOfRenderInfos.map((oneOfRenderInfo, oneOfIndex) => {
+      {oneOfRenderInfos.map((renderInfo, index) => {
         return (
-          selectedIndex === oneOfIndex && (
+          selectedIndex === index && (
             <JsonFormsDispatch
-              key={oneOfIndex}
-              schema={oneOfRenderInfo.schema}
+              key={index}
+              schema={renderInfo.schema}
               uischemas={uischemas}
-              uischema={oneOfRenderInfo.uischema}
+              uischema={renderInfo.uischema}
               path={path}
               renderers={renderers}
               cells={cells}

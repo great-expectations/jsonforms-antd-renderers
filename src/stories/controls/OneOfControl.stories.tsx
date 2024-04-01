@@ -1,3 +1,10 @@
+/*
+OneOfControl should be used when an element outside of the "form" would control the elements in the form.
+OneOfRenderer has options to render the label as a title and respects titleProps and textProps.
+OneOfRenderer does not use required.
+
+Example usage would be to render "forms" based on a tab selection.s
+*/
 import { Meta, StoryObj } from "@storybook/react"
 import { rendererRegistryEntries } from "../../renderer-registry-entries"
 import { UISchema } from "../../ui-schema"

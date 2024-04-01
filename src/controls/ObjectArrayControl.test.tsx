@@ -95,8 +95,8 @@ describe("ObjectArrayControl", () => {
       },
     })
     await screen.findByDisplayValue("my asset")
-    await screen.findByDisplayValue("remove me!")
-    await screen.findByDisplayValue("my other asset")
+    screen.getByDisplayValue("remove me!")
+    screen.getByDisplayValue("my other asset")
     const removeButtons = await screen.findAllByRole("button", {
       name: "Delete",
     })
@@ -107,12 +107,12 @@ describe("ObjectArrayControl", () => {
         assets: [{ asset: "my asset" }, { asset: "my other asset" }],
       })
     })
-    const updatedRemoveButtons = await screen.findAllByRole("button", {
+    const updatedRemoveButtons = screen.getAllByRole("button", {
       name: "Delete",
     })
     expect(updatedRemoveButtons).toHaveLength(2)
-    await screen.findByDisplayValue("my asset")
-    await screen.findByDisplayValue("my other asset")
+    screen.getByDisplayValue("my asset")
+    screen.getByDisplayValue("my other asset")
   })
 
   test("renders with overwritten icons and does not allow overwriting onClick", async () => {
@@ -127,8 +127,8 @@ describe("ObjectArrayControl", () => {
       },
     })
     // Add button text is overwritten and has the correct icon
-    await screen.findByText("Add more items")
-    await screen.findByLabelText("plus-circle") // fyi: aria-label is "plus-circle"
+    screen.getByText("Add more items")
+    screen.getByLabelText("plus-circle") // fyi: aria-label is "plus-circle"
 
     await screen.findByRole("textbox")
     await waitFor(() => {

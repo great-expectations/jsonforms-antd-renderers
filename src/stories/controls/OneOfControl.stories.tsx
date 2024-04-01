@@ -236,53 +236,38 @@ export const OneOfArray: Story = {
   tags: ["autodocs"],
   args: {
     jsonSchema: {
-      type: "object",
-      properties: {
-        valueSet: {
-          title: "Value Set",
-          oneOf: [
-            {
-              title: "Text",
-              properties: {
-                text: {
-                  minItems: 1,
-                  type: "array",
-                  items: {
-                    type: "string",
-                  },
-                  examples: [
-                    ["a", "b", "c", "d", "e"],
-                    [
-                      "2024-01-01",
-                      "2024-01-02",
-                      "2024-01-03",
-                      "2024-01-04",
-                      "2024-01-05",
-                    ],
-                  ],
-                },
-              },
-            },
-            {
-              title: "Numbers",
-              properties: {
-                numbers: {
-                  minItems: 1,
-                  type: "array",
-                  items: {
-                    type: "number",
-                  },
-                  examples: [
-                    [1, 2, 3, 4, 5],
-                    [1.1, 2.2, 3.3, 4.4, 5.5],
-                    [1, 2.2, 3, 4.4, 5],
-                  ],
-                },
-              },
-            },
+      title: "Value Set",
+      type: "array",
+      minItems: 1,
+      oneOf: [
+        {
+          title: "Text",
+          items: {
+            type: "string",
+          },
+          examples: [
+            ["a", "b", "c", "d", "e"],
+            [
+              "2024-01-01",
+              "2024-01-02",
+              "2024-01-03",
+              "2024-01-04",
+              "2024-01-05",
+            ],
           ],
         },
-      },
+        {
+          title: "Numbers",
+          items: {
+            type: "number",
+          },
+          examples: [
+            [1, 2, 3, 4, 5],
+            [1.1, 2.2, 3.3, 4.4, 5.5],
+            [1, 2.2, 3, 4.4, 5],
+          ],
+        },
+      ],
     },
     uiSchema: {
       type: "VerticalLayout",
@@ -290,7 +275,9 @@ export const OneOfArray: Story = {
         {
           type: "Control",
           scope: "#/properties/valueSet",
-          options: { optionType: "segmented" } satisfies OneOfControlOptions,
+          options: {
+            optionType: "segmented",
+          } satisfies OneOfControlOptions,
         },
       ],
     },

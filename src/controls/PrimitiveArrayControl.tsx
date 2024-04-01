@@ -55,7 +55,7 @@ export function PrimitiveArrayControl({
     if (data === undefined && prevDataValue === null) {
       addItemToList()
     }
-  })
+  }, [data, prevDataValue, addItemToList])
 
   if (!visible) {
     return null

@@ -5,6 +5,7 @@ import {
   NumericControlOptions,
   OneOfControlOptions,
   TextControlOptions,
+  UISchema,
 } from ".."
 
 export type JSONFormData<T extends JSONSchema> = RecursivePartial<FromSchema<T>>
@@ -90,7 +91,8 @@ export const ObjectUISchema3: SchemaAwareScope<typeof objectSchema> = {
   scope: "#/properties/person/properties/name",
 }
 
-export const OneOfUISchema: SchemaAwareScope<typeof oneOfSchema> = {
+export const OneOfUISchema: UISchema<typeof oneOfSchema> = {
+  type: "Control",
   scope: "#/properties/person",
   options: { optionType: "button" },
 }

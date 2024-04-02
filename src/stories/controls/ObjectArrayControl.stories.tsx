@@ -105,7 +105,9 @@ const objectArrayControlJsonSchemaNumericInput = {
   },
 }
 
-export const ObjectArrayWithNumericInput: Story<typeof objectArrayControlJsonSchemaNumericInput> = {
+export const ObjectArrayWithNumericInput: Story<
+  typeof objectArrayControlJsonSchemaNumericInput
+> = {
   tags: ["autodocs"],
   args: {
     jsonSchema: objectArrayControlJsonSchemaNumericInput,

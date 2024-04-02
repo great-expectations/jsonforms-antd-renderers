@@ -45,32 +45,33 @@ export function OneOfControl({
             schema={schema}
           />
         ) : null}
-      <CombinatorSchemaSwitcher
-        config={config as unknown}
-        renderInfos={oneOfRenderInfos}
-        selectedIndex={selectedIndex}
-        setSelectedIndex={setSelectedIndex}
-        uischema={uischema}
-        path={path}
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        data={data}
-        handleChange={handleChange}
-        rootSchema={rootSchema}
-      />
-      {oneOfRenderInfos.map((renderInfo, index) => {
-        return (
-          selectedIndex === index && (
-            <JsonFormsDispatch
-              key={index}
-              schema={renderInfo.schema}
-              uischemas={uischemas}
-              uischema={renderInfo.uischema}
-              path={path}
-              renderers={renderers}
-              cells={cells}
-            />
+        <CombinatorSchemaSwitcher
+          config={config as unknown}
+          renderInfos={oneOfRenderInfos}
+          selectedIndex={selectedIndex}
+          setSelectedIndex={setSelectedIndex}
+          uischema={uischema}
+          path={path}
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          data={data}
+          handleChange={handleChange}
+          rootSchema={rootSchema}
+        />
+        {oneOfRenderInfos.map((renderInfo, index) => {
+          return (
+            selectedIndex === index && (
+              <JsonFormsDispatch
+                key={index}
+                schema={renderInfo.schema}
+                uischemas={uischemas}
+                uischema={renderInfo.uischema}
+                path={path}
+                renderers={renderers}
+                cells={cells}
+              />
+            )
           )
-        )})}
+        })}
       </Space>
     </Form.Item>
   )

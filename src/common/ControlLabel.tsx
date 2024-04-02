@@ -1,5 +1,5 @@
-import { JsonSchema, Helpers } from "@jsonforms/core"
-import { ControlUISchema } from "../ui-schema"
+import { JsonSchema, Helpers, ControlElement } from "@jsonforms/core"
+import { ControlUISchema, ControlUISchemaLabel } from "../ui-schema"
 import { Typography } from "antd"
 import { assertNever } from "./assert-never"
 
@@ -8,29 +8,31 @@ export function ControlLabel({
   uischema,
   schema,
 }: {
-  uischema: ControlUISchema
+  uischema: ControlUISchema<unknown>
   schema: JsonSchema
 }) {
-  const controlUISchema: ControlUISchema = uischema
-  const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
+  const labelDescription = Helpers.createLabelDescriptionFrom(
+    uischema as unknown as ControlElement,
+    schema,
+  )
   const text = labelDescription.show ? labelDescription.text : null
-
+  const labeledUISchema = uischema as ControlUISchemaLabel
   if (
-    typeof controlUISchema.label === "object" &&
-    "type" in controlUISchema.label
+    typeof labeledUISchema.label === "object" &&
+    "type" in labeledUISchema.label
   ) {
-    const labelType = controlUISchema.label.type
+    const labelType = labeledUISchema.label.type
     switch (labelType) {
       case "Text":
         return (
-          <Typography.Text {...controlUISchema.label.textProps}>
+          <Typography.Text {...labeledUISchema.label.textProps}>
             {text}
           </Typography.Text>
         )
 
       case "Title":
         return (
-          <Typography.Title {...controlUISchema.label.titleProps}>
+          <Typography.Title {...labeledUISchema.label.titleProps}>
             {text}
           </Typography.Title>
         )

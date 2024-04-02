@@ -4,7 +4,7 @@ import { renderLayoutElements } from "./render-layout-elements"
 import { UISchema } from "../ui-schema"
 
 export interface AntDLayoutProps extends OwnPropsOfRenderer {
-  elements: UISchema[]
+  elements: UISchema<unknown>[]
   direction?: "row" | "column"
 }
 

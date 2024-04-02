@@ -9,6 +9,17 @@ const schema = {
   properties: { checkbox: { type: "boolean" } },
 } satisfies JSONSchema
 
+const metaUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/checkbox",
+      label: "Checkbox",
+    },
+  ],
+} satisfies UISchema<typeof schema>
+
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Boolean",
   component: StorybookAntDJsonForm,
@@ -20,16 +31,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
   tags: ["autodocs"],
   args: {
     jsonSchema: schema,
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/checkbox",
-          label: "Checkbox",
-        },
-      ],
-    } satisfies UISchema,
+    uiSchema: metaUISchema,
     rendererRegistryEntries: [...rendererRegistryEntries],
   },
   // More on argTypes: https://storybook.js.org/docs/api/argtypes

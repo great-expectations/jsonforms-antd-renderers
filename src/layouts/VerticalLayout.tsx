@@ -13,7 +13,7 @@ export function VerticalLayout({
   renderers,
   cells,
 }: LayoutProps) {
-  const verticalLayout = uischema as VerticalLayoutUISchema
+  const verticalLayout = uischema as VerticalLayoutUISchema<unknown>
   const groupLayout = uischema as GroupLayout
   const childProps: AntDLayoutProps = {
     elements: verticalLayout.elements,

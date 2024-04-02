@@ -10,7 +10,7 @@ export const arrayControlUISchema = {
       type: "Control",
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof objectArrayControlJsonSchema>
 
 export const arrayControlUISchemaWithIcons = {
   type: "VerticalLayout",
@@ -33,7 +33,7 @@ export const arrayControlUISchemaWithIcons = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof objectArrayControlJsonSchema>
 
 export const objectArrayControlJsonSchema = {
   title: "Assets",

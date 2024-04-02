@@ -96,7 +96,7 @@ export const numericSliderVerticalUISchema = {
       scope: "#/properties/numericRangeValue",
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericSliderDonateNowSchema>
 
 export const numericSliderHorizontalUISchema = {
   type: "HorizontalLayout",
@@ -106,7 +106,7 @@ export const numericSliderHorizontalUISchema = {
       scope: "#/properties/numericRangeValue",
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericSliderDonateNowSchema>
 
 export const numericSliderUSDUISchema = {
   type: "VerticalLayout",
@@ -119,7 +119,7 @@ export const numericSliderUSDUISchema = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericSliderDonateNowSchema>
 
 export const numericSliderPercentageUISchema = {
   type: "VerticalLayout",
@@ -132,7 +132,7 @@ export const numericSliderPercentageUISchema = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericSliderDonateNowSchema>
 
 export const numericSliderTemperatureUISchema = {
   type: "VerticalLayout",
@@ -145,7 +145,7 @@ export const numericSliderTemperatureUISchema = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericSliderDonateNowSchema>
 
 export const numericSliderUISchemaWithRule = {
   type: "VerticalLayout",
@@ -159,4 +159,4 @@ export const numericSliderUISchemaWithRule = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericSliderDonateNowSchema>

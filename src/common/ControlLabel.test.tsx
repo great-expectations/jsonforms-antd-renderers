@@ -28,7 +28,7 @@ describe("ControlLabel", () => {
             label: "No, Label ME",
           },
         ],
-      } satisfies UISchema,
+      } satisfies UISchema<typeof schema>,
     })
     await screen.findByText("No, Label ME")
   })
@@ -46,7 +46,7 @@ describe("ControlLabel", () => {
             },
           },
         ],
-      } satisfies UISchema,
+      } satisfies UISchema<typeof schema>,
     })
     await screen.findByText("Srsly, label me instead")
   })
@@ -66,7 +66,7 @@ describe("ControlLabel", () => {
             },
           },
         ],
-      } satisfies UISchema,
+      } satisfies UISchema<typeof schema>,
     })
     await screen.findByText("Srsly, label me instead")
 
@@ -90,7 +90,7 @@ describe("ControlLabel", () => {
             },
           },
         ],
-      } satisfies UISchema,
+      } satisfies UISchema<typeof schema>,
     })
     await screen.findByLabelText("copy")
   })

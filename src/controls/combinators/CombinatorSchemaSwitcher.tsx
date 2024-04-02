@@ -1,14 +1,13 @@
 import { Radio, RadioChangeEvent, Segmented, Select } from "antd"
 import { OneOfControlOptions } from "../../ui-schema"
 import merge from "lodash.merge"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {
   CombinatorRendererProps,
   CombinatorSubSchemaRenderInfo,
   JsonSchema,
   createDefaultValue,
 } from "@jsonforms/core"
-import { usePreviousValue } from "../../common/usePreviousValue"
 
 type CombinatorSchemaSwitcherProps = {
   renderInfos: CombinatorSubSchemaRenderInfo[]
@@ -37,42 +36,32 @@ export function CombinatorSchemaSwitcher({
   ) as OneOfControlOptions
   const oneOfOptionType = appliedUiSchemaOptions.optionType
   const labelMap = appliedUiSchemaOptions.subschemaTitleToLabelMap
-  const prevSelectedIndex = usePreviousValue(selectedIndex)
   const [dataForPreviousSchemas, setDataForPreviousSchemas] = useState<
     Record<number, unknown>
   >({})
 
-  useEffect(() => {
-    if (
-      selectedIndex !== prevSelectedIndex &&
-      prevSelectedIndex !== undefined
-    ) {
-      setDataForPreviousSchemas({
-        ...dataForPreviousSchemas,
-        [prevSelectedIndex]: data as unknown,
+  const updateDataForPreviousSchemas = () => {
+    setDataForPreviousSchemas({
+      ...dataForPreviousSchemas,
+      [selectedIndex]: data as unknown,
+    })
+  }
+
+  const onChange = (combinatorIndex: number) => {
+    updateDataForPreviousSchemas()
+    setSelectedIndex(combinatorIndex)
+    if (dataForPreviousSchemas[combinatorIndex]) {
+      handleChange(path, dataForPreviousSchemas[combinatorIndex])
+    } else {
+      handleCombinatorTypeChange({
+        handleChange,
+        combinatorIndex: combinatorIndex,
+        renderInfos,
+        path,
+        rootSchema,
       })
-      if (dataForPreviousSchemas[selectedIndex]) {
-        handleChange(path, dataForPreviousSchemas[selectedIndex])
-      } else {
-        handleCombinatorTypeChange({
-          handleChange,
-          combinatorIndex: selectedIndex,
-          renderInfos,
-          path,
-          rootSchema,
-        })
-      }
     }
-  }, [
-    data,
-    dataForPreviousSchemas,
-    handleChange,
-    renderInfos,
-    path,
-    prevSelectedIndex,
-    rootSchema,
-    selectedIndex,
-  ])
+  }
 
   const options = renderInfos.map((renderInfo, index) => ({
     label: labelMap?.[renderInfo.label] ?? renderInfo.label,
@@ -88,7 +77,7 @@ export function CombinatorSchemaSwitcher({
           options={options}
           onChange={(e: RadioChangeEvent) => {
             const combinatorIndex = e.target.value as number
-            setSelectedIndex(combinatorIndex)
+            onChange(combinatorIndex)
           }}
           value={selectedIndex}
         />
@@ -97,9 +86,7 @@ export function CombinatorSchemaSwitcher({
       return (
         <Select
           options={options}
-          onChange={(combinatorIndex: number) =>
-            setSelectedIndex(combinatorIndex)
-          }
+          onChange={onChange}
           defaultValue={selectedIndex}
         />
       )
@@ -107,9 +94,7 @@ export function CombinatorSchemaSwitcher({
       return (
         <Segmented
           options={options}
-          onChange={(combinatorIndex: number) =>
-            setSelectedIndex(combinatorIndex)
-          }
+          onChange={onChange}
           value={selectedIndex}
         />
       )
@@ -120,7 +105,7 @@ export function CombinatorSchemaSwitcher({
           options={options}
           onChange={(e: RadioChangeEvent) => {
             const combinatorIndex = e.target.value as number
-            setSelectedIndex(combinatorIndex)
+            onChange(combinatorIndex)
           }}
           value={selectedIndex}
         />

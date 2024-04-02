@@ -36,7 +36,6 @@ const schema = {
       ] as const,
     },
   },
-  // required: ["name"],
 } satisfies JSONSchema
 
 const metaUISchema = {
@@ -237,6 +236,59 @@ export const OneOfTextLabelStyling: Story = {
     jsonSchema: {
       control: "object",
       description: "this is a minimal oneOf combinator schema",
+    },
+  },
+}
+
+export const OneOfArray: Story = {
+  parameters: { controls: { expanded: true } },
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      title: "Value Set",
+      type: "array",
+      minItems: 1,
+      oneOf: [
+        {
+          title: "Text",
+          items: {
+            type: "string",
+          },
+          examples: [
+            ["a", "b", "c", "d", "e"],
+            [
+              "2024-01-01",
+              "2024-01-02",
+              "2024-01-03",
+              "2024-01-04",
+              "2024-01-05",
+            ],
+          ],
+        },
+        {
+          title: "Numbers",
+          items: {
+            type: "number",
+          },
+          examples: [
+            [1, 2, 3, 4, 5],
+            [1.1, 2.2, 3.3, 4.4, 5.5],
+            [1, 2.2, 3, 4.4, 5],
+          ],
+        },
+      ],
+    },
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Control",
+          scope: "#/properties/valueSet",
+          options: {
+            optionType: "segmented",
+          },
+        },
+      ],
     },
   },
 }

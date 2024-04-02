@@ -92,6 +92,47 @@ export const ObjectArrayWithUiOptionForButtons: Story<
   },
 }
 
+const objectArrayControlJsonSchemaNumericInput = {
+  type: "object",
+  properties: {
+    ages: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: { age: { type: "number", title: "age" } },
+      },
+    },
+  },
+}
+
+export const ObjectArrayWithNumericInput: Story<
+  typeof objectArrayControlJsonSchemaNumericInput
+> = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: objectArrayControlJsonSchemaNumericInput,
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          scope: "#/properties/ages",
+          type: "Control",
+          options: {
+            addButtonProps: {
+              children: "Add more items",
+              type: "primary",
+            },
+            removeButtonProps: {
+              children: "Destory of my life!",
+              danger: true,
+            },
+          },
+        },
+      ],
+    },
+  },
+}
+
 export const ObjectArrayWithUiOptionWithIcons: Story<
   typeof objectArrayControlJsonSchema
 > = {

@@ -131,20 +131,22 @@ export type AlertLayoutOptions = { type: AlertProps["type"] }
 // this is intended to be a union, it just has one member rn
 export type LabelOptions = AlertLayoutOptions
 
-export const OneOfControlOptions = [
+export const CombinatorSchemaSwitcherOptions = [
   "button",
   "dropdown",
   "radio",
-  "toggle",
   "segmented",
 ] as const
 
-export type OneOfControlOption = (typeof OneOfControlOptions)[number]
+export type CombinatorSchemaSwitcherOption = (typeof CombinatorSchemaSwitcherOptions)[number]
 
 export type OneOfControlOptions = {
-  optionType?: OneOfControlOption
-  toggleLabel?: string
+  optionType?: CombinatorSchemaSwitcherOption
+  required?: boolean
+  subschemaTitleToLabelMap?: Record<string, string>
 }
+
+export type AnyOfControlOptions = OneOfControlOptions
 
 export type TextControlType = "multiline" | "password" | "singleline"
 
@@ -155,14 +157,6 @@ export type TextControlOptions = {
   required?: boolean
   rules?: AntDRule[]
 }
-
-export type AnyOfControlOptions = {
-  optionType?: AnyOfControlOption
-  required?: boolean
-}
-
-export const AnyOfControlOptions = ["button", "dropdown", "radio"] as const
-export type AnyOfControlOption = (typeof AnyOfControlOptions)[number]
 
 /**
  * A control element. The scope property of the control determines

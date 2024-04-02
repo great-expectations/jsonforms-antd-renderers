@@ -62,9 +62,7 @@ export const splitterAnyOfJsonSchema = {
   },
   definitions: {
     SplitterYear: {
-      title: "Year",
-      const: "SplitterYear",
-      // "description": "Base model for most fluent datasource related pydantic models.\n\nAdds yaml dumping and parsing methods.\n\nExtra fields are not allowed.\n\nSerialization methods default to `exclude_unset = True` to prevent serializing\nconfigs full of mostly unset default values.\nAlso prevents passing along unset kwargs to BatchSpec.\nhttps://docs.pydantic.dev/usage/exporting_models/",
+      title: "SplitterYear",
       type: "object",
       properties: {
         column_name: {
@@ -82,9 +80,7 @@ export const splitterAnyOfJsonSchema = {
       additionalProperties: false,
     },
     SplitterYearAndMonth: {
-      const: "SplitterYearAndMonth",
-      title: "Year - Month",
-      // "description": "Base model for most fluent datasource related pydantic models.\n\nAdds yaml dumping and parsing methods.\n\nExtra fields are not allowed.\n\nSerialization methods default to `exclude_unset = True` to prevent serializing\nconfigs full of mostly unset default values.\nAlso prevents passing along unset kwargs to BatchSpec.\nhttps://docs.pydantic.dev/usage/exporting_models/",
+      title: "SplitterYearAndMonth",
       type: "object",
       properties: {
         column_name: {
@@ -102,8 +98,7 @@ export const splitterAnyOfJsonSchema = {
       additionalProperties: false,
     },
     SplitterYearAndMonthAndDay: {
-      const: "SplitterYearAndMonthAndDay",
-      title: "Year - Month - Day",
+      title: "SplitterYearAndMonthAndDay",
       type: "object",
       properties: {
         column_name: {

@@ -36,6 +36,7 @@ export function CombinatorSchemaSwitcher({
     uischema.options as Record<string, unknown>,
   ) as OneOfControlOptions
   const oneOfOptionType = appliedUiSchemaOptions.optionType
+  const labelMap = appliedUiSchemaOptions.subschemaTitleToLabelMap
   const prevSelectedIndex = usePreviousValue(selectedIndex)
   const [dataForPreviousSchemas, setDataForPreviousSchemas] = useState<
     Record<number, unknown>
@@ -74,7 +75,7 @@ export function CombinatorSchemaSwitcher({
   ])
 
   const options = renderInfos.map((renderInfo, index) => ({
-    label: renderInfo.label,
+    label: labelMap?.[renderInfo.label] ?? renderInfo.label,
     value: index,
   }))
 

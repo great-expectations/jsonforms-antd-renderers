@@ -54,7 +54,19 @@ export const RadioGroup: Story<typeof splitterAnyOfJsonSchema> = {
     jsonSchema: splitterAnyOfJsonSchema,
     uiSchema: {
       type: "VerticalLayout",
-      elements: [{ type: "Control", scope: "#/properties/splitter" }],
+      elements: [
+        {
+          type: "Control",
+          scope: "#/properties/splitter",
+          options: {
+            subschemaTitleToLabelMap: {
+              SplitterYear: "Year",
+              SplitterYearAndMonthAndDay: "Year - Month - Day",
+              SplitterYearAndMonth: "Year - Month",
+            },
+          },
+        },
+      ],
     },
   },
   argTypes: {

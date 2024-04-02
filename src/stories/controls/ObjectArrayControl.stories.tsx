@@ -92,21 +92,23 @@ export const ObjectArrayWithUiOptionForButtons: Story<
   },
 }
 
-export const ObjectArrayWithNumericInput: Story = {
-  tags: ["autodocs"],
-  args: {
-    jsonSchema: {
-      type: "object",
-      properties: {
-        ages: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: { age: { type: "number", title: "age" } },
-          },
-        },
+const objectArrayControlJsonSchemaNumericInput = {
+  type: "object",
+  properties: {
+    ages: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: { age: { type: "number", title: "age" } },
       },
     },
+  },
+}
+
+export const ObjectArrayWithNumericInput: Story<typeof objectArrayControlJsonSchemaNumericInput> = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: objectArrayControlJsonSchemaNumericInput,
     uiSchema: {
       type: "VerticalLayout",
       elements: [
@@ -125,7 +127,7 @@ export const ObjectArrayWithNumericInput: Story = {
           },
         },
       ],
-    } satisfies UISchema,
+    },
   },
 }
 

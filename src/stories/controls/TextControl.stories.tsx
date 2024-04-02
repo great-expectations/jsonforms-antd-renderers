@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react"
 import { rendererRegistryEntries } from "../../renderer-registry-entries"
-import { TextControlOptions, UISchema } from "../../ui-schema"
+import { UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import { JSONSchema } from "json-schema-to-ts"
 
@@ -30,7 +30,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
           label: "Name",
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof schema>,
     rendererRegistryEntries: [...rendererRegistryEntries],
   },
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
@@ -76,7 +76,7 @@ export const MultiLine: Story = {
           options: { type: "multiline" },
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof schema>,
   },
 }
 
@@ -90,10 +90,10 @@ export const Password: Story = {
           type: "Control",
           scope: "#/properties/name",
           label: "Name",
-          options: { type: "password" },
+          options: { type: "password", rules: [] },
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof schema>,
   },
 }
 
@@ -114,9 +114,9 @@ export const RuleDefinedInUISchema: Story = {
                 message: "Name cannot start or end with a space",
               },
             ],
-          } satisfies TextControlOptions,
+          },
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof schema>,
   },
 }

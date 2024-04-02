@@ -26,7 +26,7 @@ export function OneOfControl({
 }: CombinatorRendererProps) {
   const [selectedIndex, setSelectedIndex] = useState(indexOfFittingSchema || 0)
 
-  const combinatorRenderInfos = createCombinatorRenderInfos(
+  const oneOfRenderInfos = createCombinatorRenderInfos(
     schema.oneOf as JsonSchema[],
     rootSchema,
     "oneOf",
@@ -35,44 +35,40 @@ export function OneOfControl({
     uischemas,
   )
 
-  const combinatorSchemaSwitcher = (
-    <CombinatorSchemaSwitcher
-      config={config as unknown}
-      renderInfos={combinatorRenderInfos}
-      selectedIndex={selectedIndex}
-      setSelectedIndex={setSelectedIndex}
-      uischema={uischema}
-      path={path}
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      data={data}
-      handleChange={handleChange}
-      rootSchema={rootSchema}
-    />
-  )
-
   return (
     <Form.Item required={required} label={uischema.label ? "" : schema.title}>
       <Space direction="vertical" style={{ width: "100%" }} size="middle">
-        {uischema.label ? (
+        {uischema.type === "Control" && uischema.label ? ( // I don't think it's possible for type to be other than "Control"
+          // but until we improve the UISchema types a bit, it's hard to be sure
           <ControlLabel
             uischema={uischema as ControlUISchema}
             schema={schema}
           />
         ) : null}
-        {combinatorSchemaSwitcher}
-        {combinatorRenderInfos.map((renderInfo, index) => {
-          return (
-            selectedIndex === index && (
-              <JsonFormsDispatch
-                key={index}
-                schema={renderInfo.schema}
-                uischemas={uischemas}
-                uischema={renderInfo.uischema}
-                path={path}
-                renderers={renderers}
-                cells={cells}
-              />
-            )
+      <CombinatorSchemaSwitcher
+        config={config as unknown}
+        renderInfos={oneOfRenderInfos}
+        selectedIndex={selectedIndex}
+        setSelectedIndex={setSelectedIndex}
+        uischema={uischema}
+        path={path}
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        data={data}
+        handleChange={handleChange}
+        rootSchema={rootSchema}
+      />
+      {oneOfRenderInfos.map((renderInfo, index) => {
+        return (
+          selectedIndex === index && (
+            <JsonFormsDispatch
+              key={index}
+              schema={renderInfo.schema}
+              uischemas={uischemas}
+              uischema={renderInfo.uischema}
+              path={path}
+              renderers={renderers}
+              cells={cells}
+            />
           )
         })}
       </Space>

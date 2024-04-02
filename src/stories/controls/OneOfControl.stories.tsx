@@ -7,7 +7,7 @@ Example usage would be to render "forms" based on a tab selection.s
 */
 import { Meta, StoryObj } from "@storybook/react"
 import { rendererRegistryEntries } from "../../renderer-registry-entries"
-import { LabelDescription, UISchema } from "../../ui-schema"
+import { UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import { JSONSchema } from "json-schema-to-ts"
 
@@ -38,6 +38,17 @@ const schema = {
   },
 } satisfies JSONSchema
 
+const metaUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/deliveryOption",
+      // label: "Name",
+    },
+  ],
+} satisfies UISchema<typeof schema>
+
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/OneOf",
   component: StorybookAntDJsonForm,
@@ -49,15 +60,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
   tags: ["autodocs"],
   args: {
     jsonSchema: schema,
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/deliveryOption",
-        },
-      ],
-    } satisfies UISchema,
+    uiSchema: metaUISchema,
     rendererRegistryEntries: [...rendererRegistryEntries],
   },
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
@@ -77,15 +80,17 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
 export default meta
 type Story = StoryObj<typeof StorybookAntDJsonForm>
 
+const radioGroupUISchema = {
+  type: "VerticalLayout",
+  elements: [{ type: "Control", scope: "#/properties/deliveryOption" }],
+} satisfies UISchema<typeof schema>
+
 export const RadioGroup: Story = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
   args: {
     jsonSchema: schema,
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [{ type: "Control", scope: "#/properties/deliveryOption" }],
-    },
+    uiSchema: radioGroupUISchema,
   },
   argTypes: {
     jsonSchema: {
@@ -94,22 +99,24 @@ export const RadioGroup: Story = {
     },
   },
 }
+
+const buttonUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/deliveryOption",
+      options: { optionType: "button" },
+    },
+  ],
+} satisfies UISchema<typeof schema>
 
 export const Button: Story = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
   args: {
     jsonSchema: schema,
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/deliveryOption",
-          options: { optionType: "button" },
-        },
-      ],
-    },
+    uiSchema: buttonUISchema,
   },
   argTypes: {
     jsonSchema: {
@@ -118,22 +125,24 @@ export const Button: Story = {
     },
   },
 }
+
+const dropdownUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/deliveryOption",
+      options: { optionType: "dropdown" },
+    },
+  ],
+} satisfies UISchema<typeof schema>
 
 export const Dropdown: Story = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
   args: {
     jsonSchema: schema,
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/deliveryOption",
-          options: { optionType: "dropdown" },
-        },
-      ],
-    },
+    uiSchema: dropdownUISchema,
   },
   argTypes: {
     jsonSchema: {
@@ -142,22 +151,24 @@ export const Dropdown: Story = {
     },
   },
 }
+
+const segmentedUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/deliveryOption",
+      options: { optionType: "dropdown" },
+    },
+  ],
+} satisfies UISchema<typeof schema>
 
 export const Segmented: Story = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
   args: {
     jsonSchema: schema,
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/deliveryOption",
-          options: { optionType: "segmented" },
-        },
-      ],
-    },
+    uiSchema: segmentedUISchema,
   },
   argTypes: {
     jsonSchema: {
@@ -166,27 +177,29 @@ export const Segmented: Story = {
     },
   },
 }
+
+const oneOfTitleUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      label: {
+        type: "Title",
+        text: "Titles are configurable with AntD Title Props",
+        titleProps: { level: 5, delete: true, type: "danger" },
+      },
+      scope: "#/properties/deliveryOption",
+      options: { optionType: "dropdown" },
+    },
+  ],
+} satisfies UISchema<typeof schema>
 
 export const OneOfTitleLabelStyling: Story = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
   args: {
     jsonSchema: schema,
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          label: {
-            type: "Title",
-            text: "Titles are configurable with AntD Title Props",
-            titleProps: { level: 5, delete: true, type: "danger" },
-          } satisfies LabelDescription,
-          scope: "#/properties/deliveryOption",
-          options: { optionType: "dropdown" },
-        },
-      ],
-    },
+    uiSchema: oneOfTitleUISchema,
   },
   argTypes: {
     jsonSchema: {
@@ -196,26 +209,28 @@ export const OneOfTitleLabelStyling: Story = {
   },
 }
 
+const oneOfTextLabelStylingUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      label: {
+        type: "Text",
+        text: "Titles are configurable with AntD Title Props",
+        textProps: { disabled: true, type: "secondary" },
+      },
+      scope: "#/properties/deliveryOption",
+      options: { optionType: "dropdown" },
+    },
+  ],
+} satisfies UISchema<typeof schema>
+
 export const OneOfTextLabelStyling: Story = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
   args: {
     jsonSchema: schema,
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          label: {
-            type: "Text",
-            text: "Titles are configurable with AntD Title Props",
-            textProps: { disabled: true, type: "secondary" },
-          },
-          scope: "#/properties/deliveryOption",
-          options: { optionType: "dropdown" },
-        },
-      ],
-    },
+    uiSchema: oneOfTextLabelStylingUISchema,
   },
   argTypes: {
     jsonSchema: {

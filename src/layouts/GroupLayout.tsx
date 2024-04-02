@@ -6,7 +6,7 @@ import React from "react"
 import { assertNever } from "../common/assert-never"
 
 export type LayoutRendererProps = OwnPropsOfRenderer & {
-  elements: UISchema[]
+  elements: UISchema<unknown>[]
 }
 
 export function GroupLayout({
@@ -15,7 +15,7 @@ export function GroupLayout({
   uischema,
   ...props
 }: LayoutRendererProps) {
-  const groupLayout = uischema as GroupLayoutUISchema
+  const groupLayout = uischema as GroupLayoutUISchema<unknown>
   if ("groupType" in groupLayout) {
     const type = groupLayout.groupType
     switch (type) {

@@ -42,8 +42,7 @@ function MyForm() {
 
 ### Writing UISchemas
 
-This package expands upon the types and configurability of [jsonforms UISchemas](https://jsonforms.io/docs/uischema). When writing UISchemas, you'll want to
-import our UISchema types (like `TextControlOptions` below) to take advantage of our configurability. See our storybooks (instructions for running storybooks under `Contributing`) for more examples.
+This package expands upon the types and configurability of [jsonforms UISchemas](https://jsonforms.io/docs/uischema). When writing UISchemas, you'll want to provide your jsonschema's type to our `UISchema` type to take advantage of advanced typechecking & UI configurability. See our storybooks (instructions for running storybooks under `Contributing`) for more examples.
 
 ```tsx
 import { JsonForms } from "@jsonforms/react"
@@ -58,7 +57,7 @@ const schema = {
   properties: { password: { type: "string" } },
 }
 
-const uischema = {
+const uischema: UISchema<typeof schema> = {
   type: "VerticalLayout",
   elements: [
     {
@@ -66,7 +65,7 @@ const uischema = {
       scope: "#/properties/password",
       // properties like type: "password" here are unique to this renderer package. This allows you more declarative control over how your forms
       // render. In this case, the password field will be rendered with AntD's password input component
-      options: { type: "password" } satisfies TextControlOptions,
+      options: { type: "password" },
     },
   ],
 }

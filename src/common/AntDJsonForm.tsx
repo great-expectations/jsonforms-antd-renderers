@@ -10,18 +10,18 @@ import {
   cellRegistryEntries,
 } from "../renderer-registry-entries"
 
-type Props = {
+type Props<T> = {
   data: Record<string, unknown>
   updateData: (data: Record<string, unknown>) => void
-  jsonSchema: JsonSchema7
-  uiSchema?: UISchema
+  jsonSchema: T
+  uiSchema?: UISchema<T>
   uiSchemaRegistryEntries?: JsonFormsUISchemaRegistryEntry[]
   customRendererRegistryEntries?: JsonFormsRendererRegistryEntry[]
   rendererRegistryEntries?: JsonFormsRendererRegistryEntry[]
   config?: Record<string, unknown>
 }
 
-export function AntDJsonForm({
+export function AntDJsonForm<T = Record<string, unknown>>({
   uiSchema,
   jsonSchema,
   data,
@@ -30,10 +30,10 @@ export function AntDJsonForm({
   customRendererRegistryEntries,
   rendererRegistryEntries = _rendererRegistryEntries,
   config,
-}: Props) {
+}: Props<T>) {
   return (
     <JsonForms
-      schema={jsonSchema}
+      schema={jsonSchema as JsonSchema7}
       uischema={uiSchema}
       uischemas={uiSchemaRegistryEntries ?? []}
       data={data}

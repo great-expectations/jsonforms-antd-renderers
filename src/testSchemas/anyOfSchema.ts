@@ -6,7 +6,9 @@ import {
 import { UISchema } from "../ui-schema"
 import { JSONSchema } from "json-schema-to-ts"
 
-const splitterUISchema: UISchema = {
+const splitterUISchema: UISchema<
+  typeof splitterAnyOfJsonSchema.definitions.SplitterYear
+> = {
   type: "VerticalLayout",
   elements: [
     {
@@ -40,7 +42,7 @@ export const SplitterUISchemaRegistryEntry: JsonFormsUISchemaRegistryEntry = {
   },
 }
 
-export const anyOfJsonSchema = {
+export const splitterAnyOfJsonSchema = {
   type: "object",
   properties: {
     splitter: {
@@ -60,9 +62,7 @@ export const anyOfJsonSchema = {
   },
   definitions: {
     SplitterYear: {
-      title: "Year",
-      const: "SplitterYear",
-      // "description": "Base model for most fluent datasource related pydantic models.\n\nAdds yaml dumping and parsing methods.\n\nExtra fields are not allowed.\n\nSerialization methods default to `exclude_unset = True` to prevent serializing\nconfigs full of mostly unset default values.\nAlso prevents passing along unset kwargs to BatchSpec.\nhttps://docs.pydantic.dev/usage/exporting_models/",
+      title: "SplitterYear",
       type: "object",
       properties: {
         column_name: {
@@ -78,11 +78,9 @@ export const anyOfJsonSchema = {
       },
       required: ["column_name"],
       additionalProperties: false,
-    } as JSONSchema,
+    },
     SplitterYearAndMonth: {
-      const: "SplitterYearAndMonth",
-      title: "Year - Month",
-      // "description": "Base model for most fluent datasource related pydantic models.\n\nAdds yaml dumping and parsing methods.\n\nExtra fields are not allowed.\n\nSerialization methods default to `exclude_unset = True` to prevent serializing\nconfigs full of mostly unset default values.\nAlso prevents passing along unset kwargs to BatchSpec.\nhttps://docs.pydantic.dev/usage/exporting_models/",
+      title: "SplitterYearAndMonth",
       type: "object",
       properties: {
         column_name: {
@@ -98,10 +96,9 @@ export const anyOfJsonSchema = {
       },
       required: ["column_name"],
       additionalProperties: false,
-    } as JSONSchema,
+    },
     SplitterYearAndMonthAndDay: {
-      const: "SplitterYearAndMonthAndDay",
-      title: "Year - Month - Day",
+      title: "SplitterYearAndMonthAndDay",
       type: "object",
       properties: {
         column_name: {
@@ -117,7 +114,7 @@ export const anyOfJsonSchema = {
       },
       required: ["column_name"],
       additionalProperties: false,
-    } as JSONSchema,
+    },
   },
   required: ["splitter"],
   additionalProperties: false,

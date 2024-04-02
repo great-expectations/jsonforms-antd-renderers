@@ -1,25 +1,23 @@
 import {
   JsonFormsRendererRegistryEntry,
   JsonFormsUISchemaRegistryEntry,
-  JsonSchema7,
 } from "@jsonforms/core"
 import { UISchema } from "../ui-schema"
 import { AntDJsonForm } from "./AntDJsonForm"
 import { useState } from "react"
-import { JSONSchema } from "json-schema-to-ts"
 
-type Props = {
+type Props<T> = {
   data?: Record<string, unknown>
-  jsonSchema: JSONSchema
+  jsonSchema: T
   rendererRegistryEntries: JsonFormsRendererRegistryEntry[]
-  uiSchema?: UISchema
+  uiSchema?: UISchema<T>
   uiSchemaRegistryEntries?: JsonFormsUISchemaRegistryEntry[]
   config?: Record<string, unknown>
   onChange: (data: Record<string, unknown>) => void
 }
 
 // this component exists to facilitate storybook rendering
-export function StorybookAntDJsonForm({
+export function StorybookAntDJsonForm<T>({
   data: initialData = {},
   uiSchema,
   jsonSchema,
@@ -27,16 +25,16 @@ export function StorybookAntDJsonForm({
   rendererRegistryEntries,
   config,
   onChange,
-}: Props) {
+}: Props<T>) {
   const [data, setData] = useState(initialData)
   const updateData = (newData: Record<string, unknown>) => {
     setData(newData)
     onChange(newData)
   }
   return (
-    <AntDJsonForm
+    <AntDJsonForm<typeof jsonSchema>
       uiSchema={uiSchema}
-      jsonSchema={jsonSchema as JsonSchema7}
+      jsonSchema={jsonSchema}
       data={data}
       updateData={(newData) => updateData(newData)}
       uiSchemaRegistryEntries={uiSchemaRegistryEntries}

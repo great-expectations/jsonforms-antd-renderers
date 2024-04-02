@@ -27,7 +27,6 @@ test("AlertLayout renders", async () => {
         {
           type: "Label",
           text: "An African swallow, maybe -- but not a European swallow, that's my point.",
-          options: {},
         },
       ],
     },

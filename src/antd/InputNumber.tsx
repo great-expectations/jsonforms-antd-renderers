@@ -41,6 +41,7 @@ export function InputNumber({
     (Array.isArray(numberType) &&
       numberType.length === 1 &&
       numberType.includes("integer"))
+  // TODO: Revist useCallback use - was meant to prevent re-renders
   const onChange = useCallback(
     (value: number | string | null) => {
       if (typeof value === "number") {
@@ -69,6 +70,7 @@ export function InputNumber({
   const marginLeft = min === undefined || max === undefined ? 0 : 16
   const style = { marginLeft: marginLeft, width: "100%" }
 
+  // TODO: Revist useCallback use - was meant to prevent re-renders
   const formatter = useCallback(
     (value?: string | number): string => {
       if (value !== "" && value !== undefined) {
@@ -84,6 +86,7 @@ export function InputNumber({
     },
     [isPercentage],
   )
+  // TODO: Revist useCallback use - was meant to prevent re-renders
   const parser = useCallback(
     (value?: string): number | undefined => {
       const isNumeric = value ? !isNaN(Number(value)) : false

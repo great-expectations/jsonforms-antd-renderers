@@ -138,7 +138,8 @@ export const CombinatorSchemaSwitcherOptions = [
   "segmented",
 ] as const
 
-export type CombinatorSchemaSwitcherOption = (typeof CombinatorSchemaSwitcherOptions)[number]
+export type CombinatorSchemaSwitcherOption =
+  (typeof CombinatorSchemaSwitcherOptions)[number]
 
 export type OneOfControlOptions = {
   optionType?: CombinatorSchemaSwitcherOption

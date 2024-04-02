@@ -2,12 +2,30 @@ import { screen } from "@testing-library/react"
 import { test, expect, describe } from "vitest"
 import { render } from "../../common/test-render"
 import userEvent from "@testing-library/user-event"
-import { AnyOfControlOptions } from "../../ui-schema"
 
 import {
   SplitterUISchemaRegistryEntry,
   splitterAnyOfJsonSchema,
 } from "../../testSchemas/anyOfSchema"
+import { UISchema } from "../../ui-schema"
+
+const uischema: UISchema<typeof splitterAnyOfJsonSchema> = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/splitter",
+      options: {
+        optionType: "button",
+        subschemaTitleToLabelMap: {
+          SplitterYear: "Year",
+          SplitterYearAndMonthAndDay: "Year - Month - Day",
+          SplitterYearAndMonth: "Year - Month",
+        },
+      },
+    },
+  ],
+}
 
 describe("AnyOf control", () => {
   test("AnyOf Control with default (radio) UISchema allows switching between subschemas", async () => {
@@ -19,7 +37,7 @@ describe("AnyOf control", () => {
 
     // UiSchema is not set here, so we should see the Method Name changing
 
-    await userEvent.click(screen.getByLabelText("Year - Month"))
+    await userEvent.click(screen.getByLabelText("SplitterYearAndMonth"))
     screen.getByLabelText("Column Name")
     expect(screen.queryByLabelText("Method Name")).toHaveValue(
       "split_on_year_and_month",
@@ -28,16 +46,7 @@ describe("AnyOf control", () => {
   test("AnyOf Control with button UISchema allows switching between subschemas and respects uiSchemaRegistryEntries", async () => {
     render({
       schema: splitterAnyOfJsonSchema,
-      uischema: {
-        type: "VerticalLayout",
-        elements: [
-          {
-            type: "Control",
-            scope: "#/properties/splitter",
-            options: { optionType: "button" } satisfies AnyOfControlOptions,
-          },
-        ],
-      },
+      uischema,
       uiSchemaRegistryEntries: [SplitterUISchemaRegistryEntry],
     })
     // Column Name is available in both subschemas
@@ -57,16 +66,7 @@ describe("AnyOf control", () => {
   test("AnyOf Control with dropdown UISchema allows switching between subschemas", async () => {
     render({
       schema: splitterAnyOfJsonSchema,
-      uischema: {
-        type: "VerticalLayout",
-        elements: [
-          {
-            type: "Control",
-            scope: "#/properties/splitter",
-            options: { optionType: "dropdown" } satisfies AnyOfControlOptions,
-          },
-        ],
-      },
+      uischema,
     })
     // Column Name is available in both subschemas
     await screen.findByText("Splitter")
@@ -91,12 +91,12 @@ describe("AnyOf control", () => {
     screen.getByLabelText("Column Name")
     await userEvent.type(screen.getByLabelText("Column Name"), "abc")
 
-    await userEvent.click(screen.getByLabelText("Year - Month"))
+    await userEvent.click(screen.getByLabelText("SplitterYearAndMonth"))
     screen.getByLabelText("Column Name")
     expect(screen.queryByLabelText("Column Name")).not.toHaveValue("abc")
     await userEvent.type(screen.getByLabelText("Column Name"), "xyz")
 
-    await userEvent.click(screen.getByLabelText("Year"))
+    await userEvent.click(screen.getByLabelText("SplitterYear"))
     screen.getByLabelText("Column Name")
     expect(screen.queryByLabelText("Column Name")).toHaveValue("abc")
   })

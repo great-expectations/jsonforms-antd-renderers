@@ -17,40 +17,48 @@ type RecursivePartial<T> = T extends object
 
 type JsonSchemaTypeToControlOptions<
   T,
-  K extends keyof T & string,
-> = T[K] extends { type: infer U }
-  ? U extends "string"
-    ? TextControlOptions
-    : U extends "number" | "integer"
-      ? NumericControlOptions
-      : U extends "array"
-        ? ArrayControlOptions
-        : unknown
-  : T[K] extends { anyOf: unknown }
+  // K extends keyof T & string,
+> = T extends { type: infer U }
+  ? U extends "object" // ObjectControlOptions goes here
+    ? unknown
+    : U extends "string"
+      ? TextControlOptions
+      : U extends "number" | "integer"
+        ? NumericControlOptions
+        : U extends "array"
+          ? ArrayControlOptions
+          : U extends "boolean"
+            ? unknown // BooleanControlOptions goes here
+            : unknown
+  : T extends { anyOf: unknown }
     ? AnyOfControlOptions
-    : T[K] extends { oneOf: unknown }
+    : T extends { oneOf: unknown }
       ? OneOfControlOptions
       : unknown
 
+type IsControlProperty<T> = T extends  // is this a property we can apply a control to?
+  | { type: string }
+  | { anyOf: unknown }
+  | { oneOf: unknown }
+  ? true
+  : false
+
 // This is a type called SchemaAwareScope that takes up to two type arguments
 export type SchemaAwareScope<T = unknown> = T extends object
-  ? _SchemaAwareScope<T>
+  ? _SchemaAwareScope<T> | TopLevelScope<T>
   : { scope: string; [key: string]: unknown }
 
 type _SchemaAwareScope<T, Prefix extends string = ""> = {
   // let's define properties for each key in object type T
-  [K in keyof T & string]: T[K] extends  // is this a property we can apply a control to?
-    | { type: string }
-    | { anyOf: unknown }
-    | { oneOf: unknown }
+  [K in keyof T & string]: IsControlProperty<T[K]> extends true // is this a property we can apply a control to?
     ? // we can apply a control to it
       // does it have a typed options property? if this type extends object, that means T[K] is a property that has typed options, e.g. TextControlOptions
-      JsonSchemaTypeToControlOptions<T, K> extends object
+      JsonSchemaTypeToControlOptions<T[K]> extends object
       ? // it does have a typed options property, so we provide that type info
         {
           // it does have a typed options property, so this is the type
           scope: Prefix extends "" ? `#/${K}` : `${Prefix}/${K}`
-          options?: JsonSchemaTypeToControlOptions<T, K>
+          options?: JsonSchemaTypeToControlOptions<T[K]>
         }
       : // it doesn't have a typed options property
         // does it have properties of its own?
@@ -74,6 +82,27 @@ type _SchemaAwareScope<T, Prefix extends string = ""> = {
         never
 }[keyof T & string] // make this type a union of the properties of the object type we created
 
+type TopLevelScope<T> =
+  IsControlProperty<T> extends true
+    ? JsonSchemaTypeToControlOptions<T> extends object
+      ? // it does have a typed options property, so we provide that type info
+        {
+          // it does have a typed options property, so this is the type
+          scope: "#"
+          options?: JsonSchemaTypeToControlOptions<T>
+        }
+      : { scope: "#" }
+    : unknown
+
+export const TopLevelTest1: SchemaAwareScope<typeof objectSchema> = {
+  scope: "#",
+}
+export const TopLevelTest2: SchemaAwareScope<
+  typeof arraySchema.properties.list
+> = {
+  scope: "#",
+}
+
 export const ObjectUISchema: SchemaAwareScope<typeof objectSchema> = {
   scope: "#/properties/person",
 }
@@ -95,6 +124,30 @@ export const OneOfUISchema: UISchema<typeof oneOfSchema> = {
   type: "Control",
   scope: "#/properties/person",
   options: { optionType: "button" },
+}
+
+const arraySchema = {
+  type: "object",
+  properties: {
+    list: {
+      title: "LIST",
+      default: [],
+      type: "array",
+      items: { oneOf: [{ type: "string" }] },
+    },
+  },
+} as const satisfies JSONSchema
+
+export const Test: UISchema<typeof arraySchema> = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/list",
+      label: "ASset",
+      options: {},
+    },
+  ],
 }
 
 export const objectSchema = {

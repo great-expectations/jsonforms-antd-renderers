@@ -41,7 +41,7 @@ export function OneOfControl({
         {uischema.type === "Control" && uischema.label ? ( // I don't think it's possible for type to be other than "Control"
           // but until we improve the UISchema types a bit, it's hard to be sure
           <ControlLabel
-            uischema={uischema as ControlUISchema}
+            uischema={uischema as ControlUISchema<unknown>}
             schema={schema}
           />
         ) : null}
@@ -70,7 +70,7 @@ export function OneOfControl({
               cells={cells}
             />
           )
-        })}
+        )})}
       </Space>
     </Form.Item>
   )

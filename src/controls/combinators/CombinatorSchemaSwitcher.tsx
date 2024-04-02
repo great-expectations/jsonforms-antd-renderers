@@ -36,7 +36,6 @@ export function CombinatorSchemaSwitcher({
   ) as OneOfControlOptions
   const oneOfOptionType = appliedUiSchemaOptions.optionType
   const labelMap = appliedUiSchemaOptions.subschemaTitleToLabelMap
-  const prevSelectedIndex = usePreviousValue(selectedIndex)
   const [dataForPreviousSchemas, setDataForPreviousSchemas] = useState<
     Record<number, unknown>
   >({})

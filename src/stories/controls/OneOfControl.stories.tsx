@@ -7,11 +7,7 @@ Example usage would be to render "forms" based on a tab selection.s
 */
 import { Meta, StoryObj } from "@storybook/react"
 import { rendererRegistryEntries } from "../../renderer-registry-entries"
-import {
-  LabelDescription,
-  OneOfControlOptions,
-  UISchema,
-} from "../../ui-schema"
+import { LabelDescription, UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import { JSONSchema } from "json-schema-to-ts"
 
@@ -40,7 +36,6 @@ const schema = {
       ] as const,
     },
   },
-  // required: ["name"],
 } satisfies JSONSchema
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
@@ -60,7 +55,6 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
         {
           type: "Control",
           scope: "#/properties/deliveryOption",
-          // label: "Name",
         },
       ],
     } satisfies UISchema,
@@ -112,7 +106,7 @@ export const Button: Story = {
         {
           type: "Control",
           scope: "#/properties/deliveryOption",
-          options: { optionType: "button" } satisfies OneOfControlOptions,
+          options: { optionType: "button" },
         },
       ],
     },
@@ -136,7 +130,7 @@ export const Dropdown: Story = {
         {
           type: "Control",
           scope: "#/properties/deliveryOption",
-          options: { optionType: "dropdown" } satisfies OneOfControlOptions,
+          options: { optionType: "dropdown" },
         },
       ],
     },
@@ -160,7 +154,7 @@ export const Segmented: Story = {
         {
           type: "Control",
           scope: "#/properties/deliveryOption",
-          options: { optionType: "segmented" } satisfies OneOfControlOptions,
+          options: { optionType: "segmented" },
         },
       ],
     },
@@ -189,7 +183,7 @@ export const OneOfTitleLabelStyling: Story = {
             titleProps: { level: 5, delete: true, type: "danger" },
           } satisfies LabelDescription,
           scope: "#/properties/deliveryOption",
-          options: { optionType: "dropdown" } satisfies OneOfControlOptions,
+          options: { optionType: "dropdown" },
         },
       ],
     },
@@ -218,7 +212,7 @@ export const OneOfTextLabelStyling: Story = {
             textProps: { disabled: true, type: "secondary" },
           },
           scope: "#/properties/deliveryOption",
-          options: { optionType: "dropdown" } satisfies OneOfControlOptions,
+          options: { optionType: "dropdown" },
         },
       ],
     },
@@ -277,7 +271,7 @@ export const OneOfArray: Story = {
           scope: "#/properties/valueSet",
           options: {
             optionType: "segmented",
-          } satisfies OneOfControlOptions,
+          },
         },
       ],
     },

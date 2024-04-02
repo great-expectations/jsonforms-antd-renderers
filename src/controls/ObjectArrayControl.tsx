@@ -12,7 +12,7 @@ import {
 import { Flex, Form, List, Button } from "antd"
 import type { Rule } from "antd/es/form"
 import range from "lodash.range"
-import { useEffect, useMemo } from "react"
+import { useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 import React from "react"
@@ -52,11 +52,9 @@ export function ObjectArrayControl({
   )
 
   const prevDataValue = usePreviousValue(data)
-  useEffect(() => {
-    if (data === 0 && prevDataValue === null) {
-      addItemToList()
-    }
-  })
+  if (data === 0 && prevDataValue === null) {
+    addItemToList()
+  }
 
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
   const label = labelDescription.show ? labelDescription.text : ""

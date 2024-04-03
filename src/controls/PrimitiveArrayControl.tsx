@@ -85,8 +85,11 @@ export function PrimitiveArrayControl({
                       <Row gutter={12}>
                         <Col>
                           <JsonFormsDispatch
-                            enabled={enabled}
-                            schema={schema}
+                            enabled={enabled} // not crazy about this pattern of overriding the description, but it solves the problem of disappearing aria labels
+                            schema={{
+                              ...schema,
+                              description: `${labelDescription.text} ${index + 1}`,
+                            }}
                             path={composePaths(path, `${index}`)}
                             uischema={foundUISchema}
                             renderers={renderers}

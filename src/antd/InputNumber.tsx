@@ -17,7 +17,6 @@ export function InputNumber({
   handleChange,
   path,
   schema,
-
   ...props
 }: InputNumberProps) {
   const ariaLabel = props.label || schema.description || "Value"

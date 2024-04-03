@@ -127,3 +127,30 @@ export const stringArrayControlJsonSchemaWithRequired = {
   },
   required: ["assets"],
 } satisfies JSONSchema
+
+export const arrayInsideCombinatorSchema = {
+  type: "object",
+  properties: {
+    list: {
+      title: "My List",
+      oneOf: [
+        {
+          title: "Text",
+          type: "array",
+          items: {
+            type: "string",
+          },
+          minItems: 1,
+        },
+        {
+          title: "Numbers",
+          type: "array",
+          items: {
+            type: "number",
+          },
+          minItems: 1,
+        },
+      ],
+    },
+  },
+} satisfies JSONSchema

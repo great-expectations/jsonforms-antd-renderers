@@ -30,6 +30,7 @@ export function PrimitiveArrayControl({
   rootSchema,
   uischemas,
   required,
+  ...props
 }: ArrayLayoutProps) {
   const foundUISchema = useMemo(
     () =>
@@ -60,7 +61,7 @@ export function PrimitiveArrayControl({
   }
 
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
-  const label = labelDescription.show ? labelDescription.text : ""
+  const label = labelDescription.text || props.label // nullish coalescing doesn't work here because labelDescription.text can be an empty string =(
 
   const options: ArrayControlOptions =
     (uischema.options as ArrayControlOptions) ?? {}
@@ -88,7 +89,7 @@ export function PrimitiveArrayControl({
                             enabled={enabled} // not crazy about this pattern of overriding the description, but it solves the problem of disappearing aria labels
                             schema={{
                               ...schema,
-                              description: `${labelDescription.text} ${index + 1}`,
+                              description: `${label} ${index + 1}`,
                             }}
                             path={composePaths(path, `${index}`)}
                             uischema={foundUISchema}

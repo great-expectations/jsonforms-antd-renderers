@@ -10,7 +10,9 @@ import {
   stringArrayControlJsonSchemaWithRequired,
   stringArrayControlJsonSchemaWithTitle,
   numberArrayControlJsonSchema,
+  arrayInsideCombinatorSchema,
 } from "../testSchemas/arraySchema"
+import { UISchema } from "../ui-schema"
 
 describe("PrimitiveArrayControl", () => {
   test("renders without any data", async () => {
@@ -195,5 +197,18 @@ describe("PrimitiveArrayControl", () => {
     })
 
     await screen.findByLabelText("Assets 1")
+  })
+  test("Aria label falls back to the label from props (this bug is only reproducible when Primitive Array is rendered from a Combinator subschema)", async () => {
+    const data = { assets: [11, 5] }
+    render({
+      schema: arrayInsideCombinatorSchema,
+      uischema: {
+        type: "VerticalLayout",
+        elements: [{ type: "Control", scope: "#/properties/list" }],
+      } satisfies UISchema<typeof arrayInsideCombinatorSchema>,
+      data: data,
+    })
+
+    await screen.findByLabelText("Text 1")
   })
 })

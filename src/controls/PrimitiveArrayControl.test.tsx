@@ -176,4 +176,24 @@ describe("PrimitiveArrayControl", () => {
     // This test is to ensure that the component does not error if the value is null
     await user.clear(screen.getByDisplayValue("0"))
   })
+  test("Array of string inputs should have aria labels", async () => {
+    const data = { assets: ["abc", "def"] }
+    render({
+      schema: stringArrayControlJsonSchema,
+      uischema: arrayControlUISchema,
+      data: data,
+    })
+
+    await screen.findByLabelText("Assets 1")
+  })
+  test("Array of number inputs should have aria labels", async () => {
+    const data = { assets: [11, 5] }
+    render({
+      schema: numberArrayControlJsonSchema,
+      uischema: arrayControlUISchema,
+      data: data,
+    })
+
+    await screen.findByLabelText("Assets 1")
+  })
 })

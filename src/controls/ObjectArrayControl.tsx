@@ -10,9 +10,8 @@ import {
   withJsonFormsArrayLayoutProps,
 } from "@jsonforms/react"
 import { Flex, Form, List, Button } from "antd"
-import type { Rule } from "antd/es/form"
 import range from "lodash.range"
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 import React from "react"
@@ -52,9 +51,12 @@ export function ObjectArrayControl({
   )
 
   const prevDataValue = usePreviousValue(data)
-  if (data === 0 && prevDataValue === null) {
-    addItemToList()
-  }
+
+  useEffect(() => {
+    if (data === 0 && prevDataValue === null) {
+      addItemToList()
+    }
+  })
 
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
   const label = labelDescription.show ? labelDescription.text : ""
@@ -76,14 +78,15 @@ export function ObjectArrayControl({
     </Flex>
   )
 
-  const rules: Rule[] = [
-    { required: required, message: `${label} is required` },
-  ]
   if (!visible) {
     return null
   }
   return (
-    <Form.Item required={required} rules={rules} validateTrigger={["onBlur"]}>
+    <Form.Item
+      required={required}
+      rules={[{ required: required, message: `${label} is required` }]}
+      validateTrigger={["onBlur"]}
+    >
       <>{label}</>
       <List<unknown>
         dataSource={dataSource}

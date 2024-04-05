@@ -8,7 +8,11 @@ import {
   objectArrayControlJsonSchema,
   arrayControlUISchemaWithIcons,
   objectArrayControlJsonSchemaWithRequired,
+  objectArrayWithCombinatorSchema,
+  objectArrayWithCombinator_CombinatorUISchemaRegistryEntry as objectArrayWithCombinator_CombinatorPropertyUISchemaRegistryEntry,
+  objectArrayWithCombinator_FavoriteThing1UISchemaRegistryEntry as objectArrayWithCombinator_CombinatorSubschemaUISchemaRegistryEntry,
 } from "../testSchemas/arraySchema"
+import { UISchema } from "../ui-schema"
 
 describe("ObjectArrayControl", () => {
   test.each([
@@ -168,5 +172,20 @@ describe("ObjectArrayControl", () => {
     await screen.findByText("Asset")
     await userEvent.click(screen.getByText("Destroy me!"))
     await screen.findByText("No data")
+  })
+  test("Object Array ensures one default item exists in the list if subschema is a combinator", async () => {
+    render({
+      schema: objectArrayWithCombinatorSchema,
+      uischema: {
+        type: "VerticalLayout",
+        elements: [{ scope: "#/properties/list", type: "Control" }],
+      } satisfies UISchema<typeof objectArrayWithCombinatorSchema>,
+      uiSchemaRegistryEntries: [
+        objectArrayWithCombinator_CombinatorPropertyUISchemaRegistryEntry,
+        objectArrayWithCombinator_CombinatorSubschemaUISchemaRegistryEntry,
+      ],
+    })
+
+    await screen.findByText("Brown Copper Kettle")
   })
 })

@@ -1,7 +1,7 @@
 import { test, expect, describe } from "vitest"
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { render } from "../common/test-render"
+import { render, strictRender } from "../common/test-render"
 
 import {
   arrayControlUISchema,
@@ -174,7 +174,7 @@ describe("ObjectArrayControl", () => {
     await screen.findByText("No data")
   })
   test("Object Array ensures one default item exists in the list if subschema is a combinator", async () => {
-    render({
+    strictRender({
       schema: objectArrayWithCombinatorSchema,
       uischema: {
         type: "VerticalLayout",

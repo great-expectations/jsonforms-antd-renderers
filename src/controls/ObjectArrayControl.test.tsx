@@ -1,14 +1,18 @@
 import { test, expect, describe } from "vitest"
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { render } from "../common/test-render"
+import { render, strictRender } from "../common/test-render"
 
 import {
   arrayControlUISchema,
   objectArrayControlJsonSchema,
   arrayControlUISchemaWithIcons,
   objectArrayControlJsonSchemaWithRequired,
+  objectArrayWithCombinatorSchema,
+  objectArrayWithCombinator_CombinatorUISchemaRegistryEntry as objectArrayWithCombinator_CombinatorPropertyUISchemaRegistryEntry,
+  objectArrayWithCombinator_FavoriteThing1UISchemaRegistryEntry as objectArrayWithCombinator_CombinatorSubschemaUISchemaRegistryEntry,
 } from "../testSchemas/arraySchema"
+import { UISchema } from "../ui-schema"
 
 describe("ObjectArrayControl", () => {
   test.each([
@@ -168,5 +172,20 @@ describe("ObjectArrayControl", () => {
     await screen.findByText("Asset")
     await userEvent.click(screen.getByText("Destroy me!"))
     await screen.findByText("No data")
+  })
+  test("Object Array ensures one default item exists in the list if subschema is a combinator", async () => {
+    strictRender({
+      schema: objectArrayWithCombinatorSchema,
+      uischema: {
+        type: "VerticalLayout",
+        elements: [{ scope: "#/properties/list", type: "Control" }],
+      } satisfies UISchema<typeof objectArrayWithCombinatorSchema>,
+      uiSchemaRegistryEntries: [
+        objectArrayWithCombinator_CombinatorPropertyUISchemaRegistryEntry,
+        objectArrayWithCombinator_CombinatorSubschemaUISchemaRegistryEntry,
+      ],
+    })
+
+    await screen.findByText("Brown Copper Kettle")
   })
 })

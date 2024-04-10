@@ -57,7 +57,7 @@ export const Info: Story = {
           },
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof schema>,
   },
 }
 
@@ -76,7 +76,7 @@ export const Warning: Story = {
           },
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof schema>,
   },
 }
 
@@ -95,6 +95,6 @@ export const Success: Story = {
           },
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof schema>,
   },
 }

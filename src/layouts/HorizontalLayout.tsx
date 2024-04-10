@@ -14,7 +14,7 @@ export function HorizontalLayout({
   renderers,
   cells,
 }: LayoutProps) {
-  const horizontalLayout = uischema as HorizontalLayoutUISchema
+  const horizontalLayout = uischema as HorizontalLayoutUISchema<unknown>
   const groupLayout = uischema as GroupLayout
   const childProps: AntDLayoutProps = {
     elements: horizontalLayout.elements,

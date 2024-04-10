@@ -1,6 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react"
-
-import { rendererRegistryEntries } from "../../renderer-registry-entries"
 import { JSONSchema } from "json-schema-to-ts"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import {
@@ -14,11 +12,9 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
   tags: ["autodocs"],
   args: {
     jsonSchema: stringArrayControlJsonSchema,
-    rendererRegistryEntries: [...rendererRegistryEntries],
   },
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
-    rendererRegistryEntries: { table: { disable: true } },
     jsonSchema: {
       control: "object",
     },

@@ -87,7 +87,7 @@ export const numericVerticalUISchema = {
       scope: "#/properties/numericValue",
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericROISchema>
 
 export const numericHorizontalUISchema = {
   type: "HorizontalLayout",
@@ -97,7 +97,7 @@ export const numericHorizontalUISchema = {
       scope: "#/properties/numericValue",
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericROISchema>
 
 export const numericUSDUISchema = {
   type: "VerticalLayout",
@@ -110,7 +110,7 @@ export const numericUSDUISchema = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericROISchema>
 
 export const numericPercentageUISchema = {
   type: "VerticalLayout",
@@ -123,7 +123,7 @@ export const numericPercentageUISchema = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericROISchema>
 
 export const numericUISchemaWithRule = {
   type: "VerticalLayout",
@@ -137,4 +137,4 @@ export const numericUISchemaWithRule = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericROISchema>

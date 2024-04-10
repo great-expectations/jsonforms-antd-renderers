@@ -72,11 +72,11 @@ test("updates jsonforms data as expected", async () => {
 })
 
 test("renders a password when present", async () => {
-  const passwordUISchema: UISchema = {
+  const passwordUISchema = {
     type: "Control",
     scope: "#/properties/secret",
     options: { type: "password" },
-  }
+  } satisfies UISchema<typeof passwordSchema>
   const passwordSchema = {
     properties: { secret: { type: "string", title: "Secret" } },
   } satisfies JSONSchema
@@ -92,18 +92,18 @@ test("renders a password when present", async () => {
 })
 
 test("renders error messages from rule validation", async () => {
-  const patternUISchema: UISchema = {
+  const patternUISchema = {
     type: "Control",
     scope: "#/properties/name",
     options: {
       rules: [
         {
-          pattern: "^[a-zA-Z ]*$",
+          pattern: /^[a-zA-Z ]*$/,
           message: "Only letters are allowed",
         },
       ],
     },
-  }
+  } satisfies UISchema<typeof patternSchema>
 
   const patternSchema = {
     type: "object",

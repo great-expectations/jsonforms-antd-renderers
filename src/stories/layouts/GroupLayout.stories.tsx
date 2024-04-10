@@ -45,9 +45,9 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
 }
 
 export default meta
-type Story = StoryObj<typeof StorybookAntDJsonForm>
+type Story<T> = StoryObj<typeof StorybookAntDJsonForm<T>>
 
-export const Divider: Story = {
+export const Divider: Story<typeof reindeerSchema> = {
   tags: ["autodocs"],
   args: {
     jsonSchema: reindeerSchema,
@@ -76,11 +76,11 @@ export const Divider: Story = {
           ],
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof reindeerSchema>,
   },
 }
 
-export const DividerWithCustomStyles: Story = {
+export const DividerWithCustomStyles: Story<typeof reindeerSchema> = {
   tags: ["autodocs"],
   args: {
     jsonSchema: reindeerSchema,
@@ -118,11 +118,11 @@ export const DividerWithCustomStyles: Story = {
           ],
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof reindeerSchema>,
   },
 }
 
-export const Card: Story = {
+export const Card: Story<typeof addressSchema> = {
   tags: ["autodocs"],
   args: {
     jsonSchema: addressSchema,
@@ -153,6 +153,6 @@ export const Card: Story = {
           ],
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof addressSchema>,
   },
 }

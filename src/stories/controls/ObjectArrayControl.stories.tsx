@@ -2,13 +2,13 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { rendererRegistryEntries } from "../../renderer-registry-entries"
 import { JSONSchema } from "json-schema-to-ts"
-import { UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import {
   objectArrayControlJsonSchema,
   arrayControlUISchema,
   arrayControlUISchemaWithIcons,
 } from "../../testSchemas/arraySchema"
+import { ComponentProps } from "react"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Object Array",
@@ -32,17 +32,20 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
 }
 
 export default meta
-type Story = StoryObj<typeof StorybookAntDJsonForm>
+type Story<T> = StoryObj<ComponentProps<typeof StorybookAntDJsonForm<T>>>
 
-export const ObjectArrayOfStrings: Story = {
-  tags: ["autodocs"],
-  args: {
-    jsonSchema: objectArrayControlJsonSchema,
-    uiSchema: arrayControlUISchema,
-  },
-}
+export const ObjectArrayOfStrings: Story<typeof objectArrayControlJsonSchema> =
+  {
+    tags: ["autodocs"],
+    args: {
+      jsonSchema: objectArrayControlJsonSchema,
+      uiSchema: arrayControlUISchema,
+    },
+  }
 
-export const ObjectArrayWithUiOptionAddButtonTop: Story = {
+export const ObjectArrayWithUiOptionAddButtonTop: Story<
+  typeof objectArrayControlJsonSchema
+> = {
   tags: ["autodocs"],
   args: {
     jsonSchema: objectArrayControlJsonSchema,
@@ -57,11 +60,13 @@ export const ObjectArrayWithUiOptionAddButtonTop: Story = {
           },
         },
       ],
-    } satisfies UISchema,
+    },
   },
 }
 
-export const ObjectArrayWithUiOptionForButtons: Story = {
+export const ObjectArrayWithUiOptionForButtons: Story<
+  typeof objectArrayControlJsonSchema
+> = {
   tags: ["autodocs"],
   args: {
     jsonSchema: objectArrayControlJsonSchema,
@@ -83,11 +88,54 @@ export const ObjectArrayWithUiOptionForButtons: Story = {
           },
         },
       ],
-    } satisfies UISchema,
+    },
   },
 }
 
-export const ObjectArrayWithUiOptionWithIcons: Story = {
+const objectArrayControlJsonSchemaNumericInput = {
+  type: "object",
+  properties: {
+    ages: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: { age: { type: "number", title: "age" } },
+      },
+    },
+  },
+}
+
+export const ObjectArrayWithNumericInput: Story<
+  typeof objectArrayControlJsonSchemaNumericInput
+> = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: objectArrayControlJsonSchemaNumericInput,
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          scope: "#/properties/ages",
+          type: "Control",
+          options: {
+            addButtonProps: {
+              children: "Add more items",
+              type: "primary",
+            },
+            removeButtonProps: {
+              children: "Destory of my life!",
+              danger: true,
+            },
+          },
+        },
+      ],
+    },
+  },
+}
+
+export const ObjectArrayWithUiOptionWithIcons: Story<
+  typeof objectArrayControlJsonSchema
+> = {
   tags: ["autodocs"],
   args: {
     jsonSchema: objectArrayControlJsonSchema,
@@ -95,34 +143,38 @@ export const ObjectArrayWithUiOptionWithIcons: Story = {
   },
 }
 
-export const ObjectArrayWithMultipleProperties: Story = {
-  tags: ["autodocs"],
-  args: {
-    jsonSchema: {
-      type: "object",
-      properties: {
-        guest_list: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              name: {
-                title: "name",
-                type: "string",
-              },
-              gluten_free: {
-                title: "gluten-free",
-                type: "boolean",
-              },
-              vegan: {
-                title: "vegan",
-                type: "boolean",
-              },
-            },
+const objectArrayMultiplePropertiesJsonSchema = {
+  type: "object",
+  properties: {
+    guest_list: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          name: {
+            title: "name",
+            type: "string",
+          },
+          gluten_free: {
+            title: "gluten-free",
+            type: "boolean",
+          },
+          vegan: {
+            title: "vegan",
+            type: "boolean",
           },
         },
       },
-    } satisfies JSONSchema,
+    },
+  },
+} satisfies JSONSchema
+
+export const ObjectArrayWithMultipleProperties: Story<
+  typeof objectArrayMultiplePropertiesJsonSchema
+> = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: objectArrayMultiplePropertiesJsonSchema,
     uiSchema: {
       type: "VerticalLayout",
       elements: [
@@ -141,6 +193,6 @@ export const ObjectArrayWithMultipleProperties: Story = {
           },
         },
       ],
-    } satisfies UISchema,
+    },
   },
 }

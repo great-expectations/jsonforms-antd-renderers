@@ -37,6 +37,7 @@ export function TextControl({
     },
     [handleChange, path],
   )
+  const ariaLabel = label || schema.description
   const options: TextControlOptions =
     (uischema.options as TextControlOptions) ?? {}
   const textControlType: TextControlType = options.type ?? "singleline"
@@ -73,7 +74,7 @@ export function TextControl({
     >
       <TextControlInput
         type={textControlType}
-        aria-label={label || schema.description}
+        aria-label={ariaLabel}
         disabled={!enabled}
         autoComplete="off"
         onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>

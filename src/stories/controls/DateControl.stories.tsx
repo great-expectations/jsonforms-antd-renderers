@@ -1,8 +1,11 @@
 import { Meta, StoryObj } from "@storybook/react"
 import { rendererRegistryEntries } from "../../renderer-registry-entries"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
-import { dateSchema, dateUISchema } from "../../testSchemas/dateSchema"
-import { UISchema } from "../.."
+import {
+  dateSchema,
+  dateUISchema,
+  dateUISchemaWithFormatOption,
+} from "../../testSchemas/dateSchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Date",
@@ -54,17 +57,6 @@ export const DateWithOptionFormat: Story = {
       ...dateSchema,
       required: ["date"],
     },
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/date",
-          options: {
-            dateFormat: "YYYY MM DD",
-          },
-        },
-      ],
-    } satisfies UISchema,
+    uiSchema: dateUISchemaWithFormatOption,
   },
 }

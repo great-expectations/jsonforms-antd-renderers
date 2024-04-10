@@ -8,7 +8,7 @@ export const dateSchema = {
     date: {
       type: "string",
       title: "The Future is Now",
-      format: "date"
+      format: "date",
     },
   },
 } satisfies JSONSchema

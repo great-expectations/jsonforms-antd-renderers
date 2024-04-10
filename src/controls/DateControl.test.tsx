@@ -9,7 +9,6 @@ import {
   dateUISchemaWithFormatOption,
 } from "../testSchemas/dateSchema"
 import { isDateControl, rankWith } from "@jsonforms/core"
-import { UISchema } from ".."
 
 describe("DateControlTester", () => {
   test("tester works", () => {

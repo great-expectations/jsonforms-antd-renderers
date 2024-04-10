@@ -23,5 +23,5 @@
     // TODO: move this to a tsconfig.test.json file so that we only load these types for compiling tests
     "types": ["@testing-library/jest-dom"]
   },
-  "include": ["src", "test-setup.ts"]
+  "include": ["src", "test-setup.ts", "test-global.ts"]
 }

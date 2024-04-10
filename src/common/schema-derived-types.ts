@@ -5,6 +5,7 @@ import {
   NumericControlOptions,
   OneOfControlOptions,
   TextControlOptions,
+  DateControlOptions,
   UISchema,
 } from ".."
 
@@ -22,7 +23,7 @@ type JsonSchemaTypeToControlOptions<
   ? U extends "object" // ObjectControlOptions goes here
     ? unknown
     : U extends "string"
-      ? TextControlOptions
+      ? TextControlOptions | DateControlOptions
       : U extends "number" | "integer"
         ? NumericControlOptions
         : U extends "array"

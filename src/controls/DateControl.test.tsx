@@ -6,6 +6,7 @@ import {
   dateSchema,
   dateUISchema,
   dateUISchemaWithRule,
+  dateUISchemaWithFormatOption,
 } from "../testSchemas/dateSchema"
 import { isDateControl, rankWith } from "@jsonforms/core"
 import { UISchema } from ".."
@@ -61,18 +62,7 @@ describe("DateControl", () => {
     render({
       data: { date: timestamp },
       schema: dateSchema,
-      uischema: {
-        type: "VerticalLayout",
-        elements: [
-          {
-            type: "Control",
-            scope: "#/properties/date",
-            options: {
-              dateFormat: "YYYY MM DD",
-            },
-          },
-        ],
-      } satisfies UISchema,
+      uischema: dateUISchemaWithFormatOption,
     })
 
     await screen.findByDisplayValue("2023 07 18")

@@ -8,7 +8,7 @@ export const dateSchema = {
     date: {
       type: "string",
       title: "The Future is Now",
-      format: "date",
+      format: "date"
     },
   },
 } satisfies JSONSchema
@@ -21,7 +21,20 @@ export const dateUISchema = {
       scope: "#/properties/date",
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof dateSchema>
+
+export const dateUISchemaWithFormatOption = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/date",
+      options: {
+        dateFormat: "YYYY MM DD",
+      },
+    },
+  ],
+} satisfies UISchema<typeof dateSchema>
 
 export const dateUISchemaWithRule = {
   type: "VerticalLayout",
@@ -35,4 +48,4 @@ export const dateUISchemaWithRule = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof dateSchema>

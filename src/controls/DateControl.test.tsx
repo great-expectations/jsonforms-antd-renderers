@@ -53,10 +53,8 @@ describe("DateControl", () => {
       uischema: dateUISchema,
     })
     await screen.findByText(title)
-    // but date is localized to the local timezone (EST for our tests)
-    // which is why it's 2023-07-17
     // Should use the default date format
-    await screen.findByDisplayValue("07/17/2023")
+    await screen.findByDisplayValue("07/18/2023")
   })
 
   it("respects dateFormat", async () => {
@@ -76,8 +74,7 @@ describe("DateControl", () => {
         ],
       } satisfies UISchema,
     })
-    // but date is localized to the local timezone (EST for our tests)
-    // which is why it's 2023-07-17
-    await screen.findByDisplayValue("2023 07 17")
+
+    await screen.findByDisplayValue("2023 07 18")
   })
 })

@@ -8,6 +8,7 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     setupFiles: ["test-setup.ts"],
+    globalSetup: "test-global.ts",
     // globals: true // very happy about being able to turn globals off here!
   },
 })

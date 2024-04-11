@@ -89,7 +89,7 @@ function MyForm() {
 - Install node.js (only Node v20 is currently supported)
 - Install pnpm: https://pnpm.io/installation (use pnpm 8.6.8+)
 - Clone this repository
-- Install dependencies: pnpm i --frozen-lockfile
+- Install dependencies: `pnpm i --frozen-lockfile`
 - Run tests: `pnpm test`
 - Run storybook: `pnpm storybook`
 

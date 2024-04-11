@@ -66,7 +66,7 @@ describe("PrimitiveArrayControl", () => {
   )
 
   test("correctly appends to the list with add button", async () => {
-    let data = { assets: [] }
+    let data = {}
     const user = userEvent.setup()
     render({
       schema: stringArrayControlJsonSchema,
@@ -114,7 +114,7 @@ describe("PrimitiveArrayControl", () => {
 
   test("renders with overwritten icons and does not allow overwriting onClick", async () => {
     const user = userEvent.setup()
-    let data = { assets: [] }
+    let data = {}
     render({
       schema: stringArrayControlJsonSchema,
       uischema: arrayControlUISchemaWithIcons,

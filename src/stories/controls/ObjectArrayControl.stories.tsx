@@ -103,7 +103,7 @@ const objectArrayControlJsonSchemaNumericInput = {
       },
     },
   },
-}
+} satisfies JSONSchema
 
 export const ObjectArrayWithNumericInput: Story<
   typeof objectArrayControlJsonSchemaNumericInput

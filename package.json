@@ -38,6 +38,7 @@
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "prepack": "pnpm run build",
     "test": "vitest",
+    "coverage": "vitest run --coverage",
     "tsc": "tsc",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format:write": "prettier . --write",

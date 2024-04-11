@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/great-expectations/jsonforms-antd-renderers/graph/badge.svg?token=aDz1isILuA)](https://codecov.io/gh/great-expectations/jsonforms-antd-renderers)
+
 # Ant Design Renderers for `jsonforms`
 
 [jsonforms](jsonforms.io) is "a declarative framework for efficiently building form-based web UIs." `jsonforms` has multiple renderer packages for different frameworks and component libraries, and this is one such package.

@@ -72,12 +72,18 @@ test("updates jsonforms data as expected", async () => {
 })
 
 test("renders a password when present", async () => {
-  const passwordUISchema = {
-    type: "Control",
-    scope: "#/properties/secret",
-    options: { type: "password" },
-  } satisfies UISchema<typeof passwordSchema>
+  const passwordUISchema: UISchema<typeof passwordSchema> = {
+    type: "VerticalLayout",
+    elements: [
+      {
+        type: "Control",
+        scope: "#/properties/secret",
+        options: { type: "password" },
+      },
+    ],
+  }
   const passwordSchema = {
+    type: "object",
     properties: { secret: { type: "string", title: "Secret" } },
   } satisfies JSONSchema
 

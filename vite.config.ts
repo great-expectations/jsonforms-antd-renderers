@@ -8,6 +8,9 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     setupFiles: ["test-setup.ts"],
+    coverage: {
+      reporter: ['cobertura'],
+    },
     // globals: true // very happy about being able to turn globals off here!
   },
 })

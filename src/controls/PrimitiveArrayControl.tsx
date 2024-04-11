@@ -1,9 +1,9 @@
 import {
   Helpers,
-  ArrayControlProps,
   composePaths,
   createDefaultValue,
   findUISchema,
+  ArrayControlProps as JSFArrayControlProps,
 } from "@jsonforms/core"
 import {
   JsonFormsDispatch,
@@ -11,10 +11,14 @@ import {
 } from "@jsonforms/react"
 import { Form, Button, Col, Row } from "antd"
 import type { Rule } from "antd/es/form"
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 import React from "react"
+
+type ArrayControlProps = Omit<JSFArrayControlProps, "data"> & {
+  data?: unknown[]
+}
 
 export function PrimitiveArrayControl({
   data,
@@ -51,10 +55,12 @@ export function PrimitiveArrayControl({
     [addItem, path, schema, rootSchema],
   )
 
-  const prevDataValue = usePreviousValue(data as unknown)
-  if (data === undefined && prevDataValue === null) {
-    addDefaultItemToList()
-  }
+  const prevDataValue = usePreviousValue(data)
+  useEffect(() => {
+    if (data === undefined && prevDataValue === null) {
+      addDefaultItemToList()
+    }
+  })
 
   if (!visible) {
     return null
@@ -74,72 +80,69 @@ export function PrimitiveArrayControl({
 
   return (
     <Form.Item label={label} required={required}>
-      <Form.List name="names" initialValue={data as unknown[] | undefined}>
-        {(fields, { add, remove }, { errors }) => {
-          fields.length === 0 && add()
-          return (
-            <>
-              <Row justify={"start"}>
-                <Col>
-                  {fields.map((field, index) => (
-                    <Form.Item key={index} rules={rules} style={style}>
-                      <Row gutter={12}>
-                        <Col>
-                          <JsonFormsDispatch
-                            enabled={enabled} // not crazy about this pattern of overriding the description, but it solves the problem of disappearing aria labels
-                            schema={{
-                              ...schema,
-                              description: `${label} ${index + 1}`,
+      <Form.List name="names" initialValue={data ?? [undefined]}>
+        {(fields, { add, remove }, { errors }) => (
+          <>
+            <Row justify={"start"}>
+              <Col>
+                {fields.map((field, index) => (
+                  <Form.Item key={index} rules={rules} style={style}>
+                    <Row gutter={12}>
+                      <Col>
+                        <JsonFormsDispatch
+                          enabled={enabled} // not crazy about this pattern of overriding the description, but it solves the problem of disappearing aria labels
+                          schema={{
+                            ...schema,
+                            description: `${label} ${index + 1}`,
+                          }}
+                          path={composePaths(path, `${index}`)}
+                          uischema={foundUISchema}
+                          renderers={renderers}
+                          cells={cells}
+                          uischemas={uischemas}
+                        />
+                      </Col>
+                      <Col>
+                        {fields.length > 1 ? (
+                          <Button
+                            key="remove"
+                            disabled={
+                              !removeItems ||
+                              (required && fields.length === 1 && index === 0)
+                            }
+                            {...options.removeButtonProps}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              remove(field.name)
+                              removeItems?.(path, [index])()
                             }}
-                            path={composePaths(path, `${index}`)}
-                            uischema={foundUISchema}
-                            renderers={renderers}
-                            cells={cells}
-                            uischemas={uischemas}
-                          />
-                        </Col>
-                        <Col>
-                          {fields.length > 1 ? (
-                            <Button
-                              key="remove"
-                              disabled={
-                                !removeItems ||
-                                (required && fields.length === 1 && index === 0)
-                              }
-                              {...options.removeButtonProps}
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                remove(field.name)
-                                removeItems?.(path, [index])()
-                              }}
-                            >
-                              {options.removeButtonProps?.children ?? "Delete"}
-                            </Button>
-                          ) : null}
-                        </Col>
-                      </Row>
-                    </Form.Item>
-                  ))}
-                  <Form.Item>
-                    <Row>
-                      <Button
-                        {...options.addButtonProps}
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          add()
-                          addDefaultItemToList()
-                        }}
-                      >
-                        {options.addButtonProps?.children ?? `Add ${label}`}
-                      </Button>
+                          >
+                            {options.removeButtonProps?.children ?? "Delete"}
+                          </Button>
+                        ) : null}
+                      </Col>
                     </Row>
-                    <Form.ErrorList errors={errors} />
                   </Form.Item>
-                </Col>
-              </Row>
-            </>
-          )
-        }}
+                ))}
+                <Form.Item>
+                  <Row>
+                    <Button
+                      {...options.addButtonProps}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        add()
+                        addDefaultItemToList()
+                      }}
+                    >
+                      {options.addButtonProps?.children ?? `Add ${label}`}
+                    </Button>
+                  </Row>
+                  <Form.ErrorList errors={errors} />
+                </Form.Item>
+              </Col>
+            </Row>
+          </>
+        )}
       </Form.List>
     </Form.Item>
   )

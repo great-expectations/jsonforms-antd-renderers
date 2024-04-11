@@ -54,6 +54,10 @@ export function PrimitiveArrayControl({
   const prevDataValue = usePreviousValue(data)
   if (data === undefined && prevDataValue === null) {
     addItemToList()
+  } else if (Array.isArray(data)) {
+    data.forEach(() => {
+      addItemToList()
+    })
   }
 
   if (!visible) {

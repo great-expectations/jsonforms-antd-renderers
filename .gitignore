@@ -27,3 +27,6 @@ dist-ssr
 
 # Built package
 great-expectations-jsonforms-antd-renderers-*.tgz
+
+# coverage
+coverage/

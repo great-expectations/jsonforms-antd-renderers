@@ -8,6 +8,11 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     setupFiles: ["test-setup.ts"],
+    coverage: {
+      provider: "istanbul",
+      reporter: ["cobertura"],
+      include: ["src/**/*"],
+    },
     // globals: true // very happy about being able to turn globals off here!
   },
 })

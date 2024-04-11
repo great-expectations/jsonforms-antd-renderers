@@ -53,5 +53,12 @@ jobs:
       - name: Run format
         run: pnpm format:check
 
-      - name: Run tests
-        run: pnpm test
+      - name: Run tests with coverage
+        run: pnpm test:cov
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.1.0
+        with:
+          files: coverage/cobertura-coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: great-expectations/jsonforms-antd-renderers

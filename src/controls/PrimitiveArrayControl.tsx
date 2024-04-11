@@ -46,18 +46,14 @@ export function PrimitiveArrayControl({
     [uischemas, schema, path, uischema, rootSchema],
   )
 
-  const addItemToList = useMemo(
+  const addDefaultItemToList = useMemo(
     () => addItem(path, createDefaultValue(schema, rootSchema)),
     [addItem, path, schema, rootSchema],
   )
 
   const prevDataValue = usePreviousValue(data)
   if (data === undefined && prevDataValue === null) {
-    addItemToList()
-  } else if (Array.isArray(data)) {
-    data.forEach(() => {
-      addItemToList()
-    })
+    addDefaultItemToList()
   }
 
   if (!visible) {
@@ -80,7 +76,7 @@ export function PrimitiveArrayControl({
     <Form.Item label={label} required={required}>
       <Form.List name="names">
         {(fields, { add, remove }, { errors }) => {
-          fields.length === 0 && add()
+          fields.length > 0 ? fields.forEach(() => add()) : add()
           return (
             <>
               <Row justify={"start"}>
@@ -131,7 +127,7 @@ export function PrimitiveArrayControl({
                         onClick={(e) => {
                           e.stopPropagation()
                           add()
-                          addItemToList()
+                          addDefaultItemToList()
                         }}
                       >
                         {options.addButtonProps?.children ?? `Add ${label}`}

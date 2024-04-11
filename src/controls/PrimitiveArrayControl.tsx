@@ -1,6 +1,6 @@
 import {
   Helpers,
-  ArrayLayoutProps,
+  ArrayControlProps,
   composePaths,
   createDefaultValue,
   findUISchema,
@@ -31,7 +31,7 @@ export function PrimitiveArrayControl({
   uischemas,
   required,
   ...props
-}: ArrayLayoutProps) {
+}: ArrayControlProps) {
   const foundUISchema = useMemo(
     () =>
       findUISchema(
@@ -51,7 +51,7 @@ export function PrimitiveArrayControl({
     [addItem, path, schema, rootSchema],
   )
 
-  const prevDataValue = usePreviousValue(data)
+  const prevDataValue = usePreviousValue(data as unknown)
   if (data === undefined && prevDataValue === null) {
     addDefaultItemToList()
   }
@@ -74,9 +74,9 @@ export function PrimitiveArrayControl({
 
   return (
     <Form.Item label={label} required={required}>
-      <Form.List name="names">
+      <Form.List name="names" initialValue={data as number[]}>
         {(fields, { add, remove }, { errors }) => {
-          fields.length > 0 ? fields.forEach(() => add()) : add()
+          fields.length === 0 && add()
           return (
             <>
               <Row justify={"start"}>

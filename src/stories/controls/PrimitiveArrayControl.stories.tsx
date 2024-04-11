@@ -65,3 +65,22 @@ export const ArrayOfNumbersWithoutRequired: Story = {
     uiSchema: arrayControlUISchema,
   },
 }
+
+export const PrePopulatedArray: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      type: "object",
+      properties: {
+        assets: {
+          type: "array",
+          items: {
+            type: "number",
+          },
+        },
+      },
+    } satisfies JSONSchema,
+    uiSchema: arrayControlUISchema,
+    data: { assets: [1, 2, 3] },
+  },
+}

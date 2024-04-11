@@ -74,7 +74,7 @@ export function PrimitiveArrayControl({
 
   return (
     <Form.Item label={label} required={required}>
-      <Form.List name="names" initialValue={data as number[]}>
+      <Form.List name="names" initialValue={data as unknown[] | undefined}>
         {(fields, { add, remove }, { errors }) => {
           fields.length === 0 && add()
           return (

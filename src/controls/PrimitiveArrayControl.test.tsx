@@ -211,4 +211,17 @@ describe("PrimitiveArrayControl", () => {
 
     await screen.findByLabelText("Text 1")
   })
+  test("Array should show all data without clicking add", async () => {
+    const data = { assets: [11, 5, 18, 22] }
+    render({
+      schema: numberArrayControlJsonSchema,
+      uischema: arrayControlUISchema,
+      data: data,
+    })
+
+    await screen.findByLabelText("Assets 1")
+    await screen.findByLabelText("Assets 2")
+    await screen.findByLabelText("Assets 3")
+    await screen.findByLabelText("Assets 4")
+  })
 })

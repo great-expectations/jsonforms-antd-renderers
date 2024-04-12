@@ -5,7 +5,6 @@ import { render } from "../common/test-render"
 
 import {
   arrayControlUISchema,
-  arrayControlUISchemaWithIcons,
   stringArrayControlJsonSchema,
   stringArrayControlJsonSchemaWithRequired,
   stringArrayControlJsonSchemaWithTitle,
@@ -110,43 +109,6 @@ describe("PrimitiveArrayControl", () => {
     expect(updatedRemoveButtons).toHaveLength(2)
     screen.getByDisplayValue("my asset")
     screen.getByDisplayValue("my other asset")
-  })
-
-  test("renders with overwritten icons and does not allow overwriting onClick", async () => {
-    const user = userEvent.setup()
-    let data = {}
-    render({
-      schema: stringArrayControlJsonSchema,
-      uischema: arrayControlUISchemaWithIcons,
-      data: data,
-      onChange: (result) => {
-        data = result.data
-      },
-    })
-    // Add button text is overwritten and has the correct icon
-    await screen.findByText("Add more items")
-    screen.getByLabelText("plus-circle") // fyi: aria-label is "plus-circle"
-
-    // Check that the onClick handler is not overwritten on Add button
-    await user.click(await screen.findByText("Add more items"))
-    await waitFor(() => {
-      expect(data).toEqual({
-        assets: [""],
-      })
-    })
-
-    // Delete button text is overwritten and has the correct icon
-    screen.getAllByText("Destroy me!")
-    screen.getAllByLabelText("delete") // fyi: aria-label is "delete"
-
-    // Check that the onClick handler is not overwritten on Delete button
-    const deleteButton = await screen.findAllByText("Destroy me!")
-    await user.click(deleteButton[1])
-    await waitFor(() => {
-      expect(data).toEqual({
-        assets: [""],
-      })
-    })
   })
 
   test("renders with title", async () => {

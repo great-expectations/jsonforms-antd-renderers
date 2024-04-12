@@ -187,7 +187,7 @@ describe("PrimitiveArrayControl", () => {
     await screen.findByLabelText("Assets 3")
     await screen.findByLabelText("Assets 4")
   })
-  test.only("minItems requires minimum number of items in the array", async () => {
+  test("minItems requires minimum number of items in the array", async () => {
     render({
       schema: stringArrayControlJsonSchemaWithMinItems,
       uischema: arrayControlUISchema,

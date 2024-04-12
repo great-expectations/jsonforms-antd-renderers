@@ -187,7 +187,7 @@ describe("PrimitiveArrayControl", () => {
     await screen.findByLabelText("Assets 3")
     await screen.findByLabelText("Assets 4")
   })
-  test.only("minItems requires minimum number of items in the array", async () => {
+  test("minItems requires minimum number of items in the array", async () => {
     render({
       schema: stringArrayControlJsonSchemaWithMinItems,
       uischema: arrayControlUISchema,
@@ -197,10 +197,21 @@ describe("PrimitiveArrayControl", () => {
     await screen.findByLabelText("Assets 2")
     await screen.findByLabelText("Assets 3")
 
-    const removeButtons = await screen.findAllByRole("button", {
+    const removeButtonsBefore = await screen.findAllByRole("button", {
       name: "Delete",
     })
-    expect(removeButtons).toHaveLength(3)
-    expect(removeButtons[2]).toHaveProperty("disabled", true)
+    expect(removeButtonsBefore).toHaveLength(3)
+    expect(removeButtonsBefore[2]).toHaveProperty("disabled", true)
+
+    const addButton = await screen.findByRole("button", {
+      name: "Add Assets",
+    })
+    await userEvent.click(addButton)
+    await screen.findByLabelText("Assets 4")
+
+    const removeButtonsAfter = await screen.findAllByRole("button", {
+      name: "Delete",
+    })
+    expect(removeButtonsAfter[3]).toHaveProperty("disabled", false)
   })
 })

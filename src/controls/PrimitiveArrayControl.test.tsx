@@ -5,7 +5,6 @@ import { render } from "../common/test-render"
 
 import {
   arrayControlUISchema,
-  arrayControlUISchemaWithIcons,
   stringArrayControlJsonSchema,
   stringArrayControlJsonSchemaWithRequired,
   stringArrayControlJsonSchemaWithTitle,

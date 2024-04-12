@@ -55,9 +55,13 @@ export function PrimitiveArrayControl({
   )
 
   const prevDataValue = usePreviousValue(data)
+  const minItems = rootSchema.properties?.[path].minItems || 0
+  const length = minItems === 0 ? 1 : minItems
   useEffect(() => {
     if (data === undefined && prevDataValue === null) {
-      addDefaultItemToList()
+      for (let i = 0; i < length; i++) {
+        addDefaultItemToList()
+      }
     }
   })
 
@@ -68,12 +72,14 @@ export function PrimitiveArrayControl({
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
   const label = labelDescription.text || props.label // nullish coalescing doesn't work here because labelDescription.text can be an empty string =(
 
+  const initialValue = data ?? Array.from({ length: length }, () => undefined)
+
   const options: ArrayControlOptions =
     (uischema.options as ArrayControlOptions) ?? {}
 
   return (
     <Form.Item id={id} name={path} label={label} required={required}>
-      <Form.List name={path} initialValue={data ?? [undefined]}>
+      <Form.List name={path} initialValue={initialValue}>
         {(fields, { add, remove }, { errors }) => (
           <Row justify={"start"}>
             <Col>
@@ -99,7 +105,7 @@ export function PrimitiveArrayControl({
                         key="remove"
                         disabled={
                           !removeItems ||
-                          (required && fields.length === 1 && index === 0)
+                          (fields.length <= minItems && index <= minItems)
                         }
                         {...options.removeButtonProps}
                         onClick={(e) => {

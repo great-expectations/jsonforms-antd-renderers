@@ -132,6 +132,21 @@ export const stringArrayControlJsonSchemaWithRequired = {
   required: ["assets"],
 } satisfies JSONSchema
 
+export const stringArrayControlJsonSchemaWithMinItems = {
+  title: "Assets",
+  type: "object",
+  properties: {
+    assets: {
+      type: "array",
+      items: {
+        type: "string",
+      },
+      minItems: 3,
+    },
+  },
+  required: ["assets"],
+} satisfies JSONSchema
+
 export const arrayInsideCombinatorSchema = {
   type: "object",
   properties: {

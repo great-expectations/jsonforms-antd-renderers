@@ -6,6 +6,7 @@ import { render } from "../common/test-render"
 import {
   arrayControlUISchema,
   stringArrayControlJsonSchema,
+  stringArrayControlJsonSchemaWithMinItems,
   stringArrayControlJsonSchemaWithRequired,
   stringArrayControlJsonSchemaWithTitle,
   numberArrayControlJsonSchema,
@@ -185,5 +186,19 @@ describe("PrimitiveArrayControl", () => {
     await screen.findByLabelText("Assets 2")
     await screen.findByLabelText("Assets 3")
     await screen.findByLabelText("Assets 4")
+  })
+  test.only("minItems requires minimum number of items in the array", async () => {
+    render({
+      schema: stringArrayControlJsonSchemaWithMinItems,
+      uischema: arrayControlUISchema,
+    })
+
+    await screen.findByLabelText("Assets 1")
+    await screen.findByLabelText("Assets 2")
+    await screen.findByLabelText("Assets 3")
+
+    const removeButtons = await screen.findAllByRole("button", { name: "Delete" })
+    expect(removeButtons).toHaveLength(3)
+    expect(removeButtons[2]).toHaveProperty("disabled", true)
   })
 })

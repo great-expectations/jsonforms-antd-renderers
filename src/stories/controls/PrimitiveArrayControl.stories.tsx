@@ -84,3 +84,22 @@ export const PrePopulatedArray: Story = {
     data: { assets: [1, 2, 3] },
   },
 }
+
+export const ArrayWithMinItems: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      type: "object",
+      properties: {
+        assets: {
+          type: "array",
+          items: {
+            type: "number",
+          },
+          minItems: 3,
+        },
+      },
+    } satisfies JSONSchema,
+    uiSchema: arrayControlUISchema,
+  },
+}

@@ -197,7 +197,9 @@ describe("PrimitiveArrayControl", () => {
     await screen.findByLabelText("Assets 2")
     await screen.findByLabelText("Assets 3")
 
-    const removeButtons = await screen.findAllByRole("button", { name: "Delete" })
+    const removeButtons = await screen.findAllByRole("button", {
+      name: "Delete",
+    })
     expect(removeButtons).toHaveLength(3)
     expect(removeButtons[2]).toHaveProperty("disabled", true)
   })

@@ -11,7 +11,7 @@ export default defineConfig({
     coverage: {
       provider: "istanbul",
       reporter: process.env.GITHUB_ACTIONS
-        ? ["github-actions", "cobertura"]
+        ? ["cobertura"]
         : ["text", "html", "clover", "json"],
       reportsDirectory: "html/coverage",
       include: ["src/**/*"],

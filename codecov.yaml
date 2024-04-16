@@ -7,11 +7,3 @@ flag_management:
         threshold: 2 # the amount coverage can decrease by
       - type: patch
         target: 80%
-  # in general these individual flags should correspond to pytest markers
-  # individual_flags: # exceptions to the default rules above, stated flag by flag
-  # - name: some_flag
-  #   statuses:
-  #     - type: project
-  #       target: 75%
-  #     - type: patch
-  #       target: 95%

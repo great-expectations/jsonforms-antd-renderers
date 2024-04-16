@@ -17,7 +17,7 @@ To view the published storybook, visit [https://great-expectations.github.io/jso
 ## Getting started
 
 ```bash
-$ npm install jsonforms-antd-renderers
+$ npm install @great-expectations/jsonforms-antd-renderers
 ```
 
 ### Using AntD Renderers
@@ -29,7 +29,7 @@ import { JsonForms } from "@jsonforms/react"
 import {
   rendererRegistryEntries,
   cellRegistryEntries,
-} from "jsonforms-antd-renderers"
+} from "@great-expectations/jsonforms-antd-renderers"
 
 function MyForm() {
   return (
@@ -51,8 +51,7 @@ import { JsonForms } from "@jsonforms/react"
 import {
   rendererRegistryEntries,
   cellRegistryEntries,
-  TextControlOptions,
-} from "jsonforms-antd-renderers"
+} from "@great-expectations/jsonforms-antd-renderers"
 
 const schema = {
   type: "object",
@@ -84,15 +83,67 @@ function MyForm() {
 }
 ```
 
+### Form Validation & Submission
+
+Here's a somewhat minimal example showing how to validate & save a form on form submission
+
+```tsx
+import { useCallback, useState } from "react"
+import { Form, Button } from "antd"
+import { JsonForms } from "@jsonforms/react"
+import {
+  rendererRegistryEntries,
+  cellRegistryEntries,
+} from "@great-expectations/jsonforms-antd-renderers"
+
+function MyForm() {
+  const [data, setData] = useState<Record<string, unknown>>({})
+  const [form] = Form.useForm()
+  const onSubmit = useCallback(async () => {
+    const formValidationResult = await form
+      .validateFields()
+      .then((values: Record<string, unknown>) => values)
+      .catch((errorInfo: { errorFields: unknown[] }) => errorInfo)
+
+    if ("errorFields" in formValidationResult) {
+      return // nothing to do; validateFields will have already rendered error messages on form fields
+    }
+    // api call to save form data goes here
+  }, [form])
+
+  return (
+    <Form form={form}>
+      <JsonForms
+        data={data}
+        onChange={(result) => setData(result.data as Record<string, unknown>)}
+        schema={schema}
+        uischema={uischema}
+        renderers={rendererRegistryEntries}
+        cells={cellRegistryEntries}
+      />
+      <Form.Item>
+        <Button type="primary" onClick={onSubmit}>
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+  )
+}
+```
+
 ## Contributing
 
 ### First time setup
 
 - Install node.js (only Node v20 is currently supported)
-- Install pnpm: https://pnpm.io/installation (use pnpm 8.6.8+)
+- Install pnpm: [https://pnpm.io/installation](https://pnpm.io/installation) (use pnpm 8.6.8+)
 - Clone this repository
 - Install dependencies: `pnpm i --frozen-lockfile`
 - Run tests: `pnpm test`
+- Run tests and view coverage:
+  - `pnpm test:cov`
+  - `npx vite preview --outDir html`
+  - in the terminal, type `o` + `enter` to open the results in a browser
 - Run storybook: `pnpm storybook`
 
 ### Making changes

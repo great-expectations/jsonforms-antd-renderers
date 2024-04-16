@@ -10,9 +10,15 @@ export default defineConfig({
     setupFiles: ["test-setup.ts"],
     coverage: {
       provider: "istanbul",
-      reporter: ["cobertura"],
+      reporter: process.env.GITHUB_ACTIONS
+        ? ["cobertura"]
+        : ["text", "html", "clover", "json"],
+      reportsDirectory: "html/coverage",
       include: ["src/**/*"],
+      exclude: ["**/*.stories.tsx", "src/common/StorybookAntDJsonForm.tsx"],
     },
-    // globals: true // very happy about being able to turn globals off here!
+    reporters: process.env.GITHUB_ACTIONS
+      ? ["github-actions"]
+      : ["default", "html"],
   },
 })

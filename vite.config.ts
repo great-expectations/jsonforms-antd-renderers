@@ -12,6 +12,7 @@ export default defineConfig({
       provider: "istanbul",
       reporter: ["cobertura"],
       include: ["src/**/*"],
+      exclude: ["**/*.stories.tsx", "src/common/StorybookAntDJsonForm.tsx"],
     },
     // globals: true // very happy about being able to turn globals off here!
   },

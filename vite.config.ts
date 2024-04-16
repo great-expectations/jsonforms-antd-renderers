@@ -17,6 +17,8 @@ export default defineConfig({
       include: ["src/**/*"],
       exclude: ["**/*.stories.tsx", "src/common/StorybookAntDJsonForm.tsx"],
     },
-    reporters: process.env.GITHUB_ACTIONS ? ["github-actions"] : ["default", "html"],
+    reporters: process.env.GITHUB_ACTIONS
+      ? ["github-actions"]
+      : ["default", "html"],
   },
 })

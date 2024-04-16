@@ -3,6 +3,7 @@ export {
   cellRegistryEntries,
 } from "./renderer-registry-entries"
 export type * from "./ui-schema"
+export type { JSONFormData, JSONData } from "./common/schema-derived-types"
 
 export { AlertLayout } from "./layouts/AlertLayout"
 export { BooleanControl } from "./controls/BooleanControl"

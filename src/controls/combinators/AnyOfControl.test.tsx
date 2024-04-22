@@ -8,6 +8,8 @@ import {
   splitterAnyOfJsonSchema,
 } from "../../testSchemas/anyOfSchema"
 import { UISchema } from "../../ui-schema"
+import { SnowflakeDataSourceJsonSchema } from "./splitter-json-schema"
+import { SnowflakeDataSourcePage2UISchema, SplitterUISchemaRegistryEntry2 } from "./splitter-schema"
 
 const uischema: UISchema<typeof splitterAnyOfJsonSchema> = {
   type: "VerticalLayout",
@@ -99,5 +101,20 @@ describe("AnyOf control", () => {
     await userEvent.click(screen.getByLabelText("SplitterYear"))
     screen.getByLabelText("Column Name")
     expect(screen.queryByLabelText("Column Name")).toHaveValue("abc")
+  })
+  test("doesnt have the absent default combinator bug", async () => {
+    render({
+      schema: SnowflakeDataSourceJsonSchema,
+      uischema: SnowflakeDataSourcePage2UISchema,
+      uiSchemaRegistryEntries: [SplitterUISchemaRegistryEntry2],
+    })
+    await screen.findByText("Column of datetime type")
+    const columnInput = screen.getByLabelText("Column of datetime type")
+    await userEvent.click(columnInput)
+    await userEvent.type(columnInput, "ab")
+    await userEvent.click(screen.getByText("Submit"))
+    // screen.debug(undefined, 100000)
+    // this needs to fail when relevant code is commented out
+    expect(screen.queryByText("is required", { exact: false })).toBeNull()
   })
 })

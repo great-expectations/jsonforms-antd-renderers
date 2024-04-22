@@ -5,6 +5,8 @@ import {
   SplitterUISchemaRegistryEntry,
   splitterAnyOfJsonSchema,
 } from "../../testSchemas/anyOfSchema"
+import { SnowflakeDataSourcePage2UISchema, SplitterUISchemaRegistryEntry2 } from "../../controls/combinators/splitter-schema"
+import { SnowflakeDataSourceJsonSchema } from "../../controls/combinators/splitter-json-schema"
 
 const meta: Meta<typeof StorybookAntDJsonForm<typeof splitterAnyOfJsonSchema>> =
   {
@@ -116,6 +118,22 @@ export const Dropdown: Story<typeof splitterAnyOfJsonSchema> = {
         },
       ],
     },
+  },
+  argTypes: {
+    jsonSchema: {
+      control: "object",
+      description: "this is a minimal anyOf combinator schema",
+    },
+  },
+}
+// the bug is fixed in this story
+export const Bug: Story<typeof splitterAnyOfJsonSchema> = {
+  parameters: { controls: { expanded: true } },
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: SnowflakeDataSourceJsonSchema,
+    uiSchemaRegistryEntries: [SplitterUISchemaRegistryEntry2],
+    uiSchema: SnowflakeDataSourcePage2UISchema,
   },
   argTypes: {
     jsonSchema: {

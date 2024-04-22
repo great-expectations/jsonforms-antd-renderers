@@ -37,6 +37,13 @@ export function AnyOfControl({
     path,
     uischemas,
   )
+  // this is what fixes the no-default-value-for-combinator bug
+  // const form = Form.useFormInstance()
+  // useEffect(() => {
+  //   form.setFieldValue(`${path}.combinatorType`, selectedIndex)
+  //   // intention is to run this just once on initial render so antd understands a default value has been selected
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
   const combinatorSchemaSwitcher = (
     <CombinatorSchemaSwitcher

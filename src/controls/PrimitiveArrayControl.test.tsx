@@ -20,8 +20,7 @@ describe("PrimitiveArrayControl", () => {
       uischema: arrayControlUISchema,
     })
     await screen.findByPlaceholderText("Enter value")
-    screen.getByRole("button")
-    screen.getByText("Add Assets")
+    screen.getByRole("button", { name: "Add Assets" })
   })
 
   test.each([

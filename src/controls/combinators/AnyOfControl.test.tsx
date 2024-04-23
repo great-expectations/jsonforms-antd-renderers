@@ -4,12 +4,13 @@ import { render } from "../../common/test-render"
 import userEvent from "@testing-library/user-event"
 
 import {
+  AnyOfWithDefaultsBaseUISchema,
+  AnyOfWithDefaultsSchema,
+  AnyOfWithDefaultsUISchemaRegistryEntries,
   SplitterUISchemaRegistryEntry,
   splitterAnyOfJsonSchema,
 } from "../../testSchemas/anyOfSchema"
 import { UISchema } from "../../ui-schema"
-import { SnowflakeDataSourceJsonSchema } from "./splitter-json-schema"
-import { SnowflakeDataSourcePage2UISchema, SplitterUISchemaRegistryEntry2 } from "./splitter-schema"
 
 const uischema: UISchema<typeof splitterAnyOfJsonSchema> = {
   type: "VerticalLayout",
@@ -102,19 +103,17 @@ describe("AnyOf control", () => {
     screen.getByLabelText("Column Name")
     expect(screen.queryByLabelText("Column Name")).toHaveValue("abc")
   })
-  test("doesnt have the absent default combinator bug", async () => {
+  test("provides a default value for a required combinator", async () => {
     render({
-      schema: SnowflakeDataSourceJsonSchema,
-      uischema: SnowflakeDataSourcePage2UISchema,
-      uiSchemaRegistryEntries: [SplitterUISchemaRegistryEntry2],
+      schema: AnyOfWithDefaultsSchema,
+      uischema: AnyOfWithDefaultsBaseUISchema,
+      uiSchemaRegistryEntries: AnyOfWithDefaultsUISchemaRegistryEntries,
     })
-    await screen.findByText("Column of datetime type")
-    const columnInput = screen.getByLabelText("Column of datetime type")
-    await userEvent.click(columnInput)
-    await userEvent.type(columnInput, "ab")
+    await screen.findByText("Pattern")
     await userEvent.click(screen.getByText("Submit"))
-    // screen.debug(undefined, 100000)
-    // this needs to fail when relevant code is commented out
-    expect(screen.queryByText("is required", { exact: false })).toBeNull()
+    await screen.findByText("Pattern is required", { exact: false })
+    expect(
+      screen.queryByText("contactMethod is required", { exact: false }),
+    ).toBeNull()
   })
 })

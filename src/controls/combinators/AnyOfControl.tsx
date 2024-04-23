@@ -10,7 +10,7 @@ import {
 } from "@jsonforms/core"
 import { JsonFormsDispatch, withJsonFormsOneOfProps } from "@jsonforms/react"
 import { Form, Space } from "antd"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
 
 export function AnyOfControl({
@@ -38,12 +38,12 @@ export function AnyOfControl({
     uischemas,
   )
   // this is what fixes the no-default-value-for-combinator bug
-  // const form = Form.useFormInstance()
-  // useEffect(() => {
-  //   form.setFieldValue(`${path}.combinatorType`, selectedIndex)
-  //   // intention is to run this just once on initial render so antd understands a default value has been selected
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+  const form = Form.useFormInstance()
+  useEffect(() => {
+    form.setFieldValue(`${path}.combinatorType`, selectedIndex)
+    // intention is to run this just once on initial render so antd understands a default value has been selected
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const combinatorSchemaSwitcher = (
     <CombinatorSchemaSwitcher

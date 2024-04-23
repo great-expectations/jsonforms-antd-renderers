@@ -123,7 +123,6 @@ export const splitterAnyOfJsonSchema = {
 export const AnyOfWithDefaultsSchema = {
   type: "object",
   properties: {
-    name: { type: "string" },
     contactMethod: {
       title: "contactMethod",
       anyOf: [
@@ -162,7 +161,6 @@ export const AnyOfWithDefaultsSchema = {
 export const AnyOfWithDefaultsBaseUISchema = {
   type: "VerticalLayout",
   elements: [
-    { type: "Control", scope: "#/properties/name" },
     { type: "Control", scope: "#/properties/contactMethod" },
   ],
 } satisfies UISchema<typeof AnyOfWithDefaultsSchema>

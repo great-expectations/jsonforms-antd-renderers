@@ -38,7 +38,6 @@ export function FormStateWrapper<T extends Record<string, unknown>, S>({
     if ("errorFields" in formValidationResult) {
       return // nothing to do; validateFields will have already rendered error messages on form fields
     }
-    // api call to save form data goes here
   }, [form])
 
   return (

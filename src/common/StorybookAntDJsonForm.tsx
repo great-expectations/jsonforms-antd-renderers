@@ -41,10 +41,8 @@ export function StorybookAntDJsonForm<T>({
       .catch((errorInfo: { errorFields: unknown[] }) => errorInfo)
 
     if ("errorFields" in formValidationResult) {
-      console.log(formValidationResult)
       return // nothing to do; validateFields will have already rendered error messages on form fields
     }
-    // api call to save form data goes here
   }, [form])
   return (
     <Form form={form}>

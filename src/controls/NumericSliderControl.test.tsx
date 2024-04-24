@@ -10,6 +10,7 @@ import {
   numericSliderPercentageUISchema,
   numericSliderUISchemaWithRule,
 } from "../testSchemas/numericSliderSchema"
+import { JSONFormData } from "../common/schema-derived-types"
 
 describe("NumericSliderControl", () => {
   test("renders a slider and number input with no UISchema provided", () => {
@@ -67,12 +68,14 @@ describe("NumericSliderControl", () => {
   })
 
   it("calls onChange with number values", async () => {
-    let data = { numericRangeValue: 42.0 }
+    let data: JSONFormData<typeof numericSliderBasisPointsSchema> = {
+      numericRangeValue: 42.0,
+    }
     render({
       schema: numericSliderBasisPointsSchema,
       data,
       onChange: (state) => {
-        data = state.data
+        data = state.data as JSONFormData<typeof numericSliderBasisPointsSchema>
       },
     })
 
@@ -93,6 +96,6 @@ describe("NumericSliderControl", () => {
     expect(screen.queryByText("50%")).toBeNull()
     await userEvent.hover(slider)
 
-    screen.getByText("50%")
+    await screen.findByText("50%")
   })
 })

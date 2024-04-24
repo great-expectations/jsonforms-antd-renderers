@@ -13,6 +13,7 @@ import {
   objectArrayWithCombinator_FavoriteThing1UISchemaRegistryEntry as objectArrayWithCombinator_CombinatorSubschemaUISchemaRegistryEntry,
 } from "../testSchemas/arraySchema"
 import { UISchema } from "../ui-schema"
+import { JSONFormData } from "../common/schema-derived-types"
 
 describe("ObjectArrayControl", () => {
   test.each([
@@ -60,14 +61,14 @@ describe("ObjectArrayControl", () => {
   )
 
   test("correctly appends to the list with add button", async () => {
-    let data = { assets: [] }
+    let data: JSONFormData<typeof objectArrayControlJsonSchema> = { assets: [] }
     const user = userEvent.setup()
     render({
       schema: objectArrayControlJsonSchema,
       uischema: arrayControlUISchema,
-      data: data,
+      data,
       onChange: (result) => {
-        data = result.data
+        data = result.data as JSONFormData<typeof objectArrayControlJsonSchema>
       },
     })
 
@@ -82,7 +83,7 @@ describe("ObjectArrayControl", () => {
   })
 
   test("correctly removes from the list with remove button", async () => {
-    let data = {
+    let data: JSONFormData<typeof objectArrayControlJsonSchema> = {
       assets: [
         { asset: "my asset" },
         { asset: "remove me!" },
@@ -95,7 +96,7 @@ describe("ObjectArrayControl", () => {
       uischema: arrayControlUISchema,
       data: data,
       onChange: (result) => {
-        data = result.data
+        data = result.data as JSONFormData<typeof objectArrayControlJsonSchema>
       },
     })
     await screen.findByDisplayValue("my asset")
@@ -121,13 +122,13 @@ describe("ObjectArrayControl", () => {
 
   test("renders with overwritten icons and does not allow overwriting onClick", async () => {
     const user = userEvent.setup()
-    let data = { assets: [] }
+    let data: JSONFormData<typeof objectArrayControlJsonSchema> = { assets: [] }
     render({
       schema: objectArrayControlJsonSchema,
       uischema: arrayControlUISchemaWithIcons,
-      data: data,
+      data,
       onChange: (result) => {
-        data = result.data
+        data = result.data as JSONFormData<typeof objectArrayControlJsonSchema>
       },
     })
     // Add button text is overwritten and has the correct icon

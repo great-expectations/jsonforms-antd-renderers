@@ -1,4 +1,4 @@
-import { JsonForms } from "@jsonforms/react"
+import { JsonForms, JsonFormsReactProps } from "@jsonforms/react"
 import {
   JsonFormsRendererRegistryEntry,
   JsonFormsUISchemaRegistryEntry,
@@ -12,7 +12,7 @@ import {
 
 type Props<T> = {
   data: Record<string, unknown>
-  updateData: (data: Record<string, unknown>) => void
+  onChange: Required<JsonFormsReactProps>["onChange"]
   jsonSchema: T
   uiSchema?: UISchema<T>
   uiSchemaRegistryEntries?: JsonFormsUISchemaRegistryEntry[]
@@ -25,7 +25,7 @@ export function AntDJsonForm<T = Record<string, unknown>>({
   uiSchema,
   jsonSchema,
   data,
-  updateData,
+  onChange,
   uiSchemaRegistryEntries,
   customRendererRegistryEntries,
   rendererRegistryEntries = _rendererRegistryEntries,
@@ -37,7 +37,7 @@ export function AntDJsonForm<T = Record<string, unknown>>({
       uischema={uiSchema}
       uischemas={uiSchemaRegistryEntries ?? []}
       data={data}
-      onChange={({ data }) => updateData(data as Record<string, unknown>)}
+      onChange={onChange}
       cells={[...cellRegistryEntries]}
       renderers={[
         ...rendererRegistryEntries,

@@ -14,24 +14,31 @@ import {
   numericPriceSchema,
   numericUSDUISchema,
 } from "../testSchemas/numericSchema"
+import { JSONFormData } from "../common/schema-derived-types"
 
 describe("NumericControl", () => {
-  it("does not fall back to default if value is empty", () => {
+  it("does not fall back to default if value is provided", () => {
+    const data: JSONFormData<typeof numericTheNumberSchema> = {
+      numericValue: 0.999,
+    }
+
     render({
       schema: numericTheNumberSchema,
-      data: {},
+      data,
     })
 
-    expect(screen.getByRole("spinbutton")).toHaveValue("")
+    expect(screen.getByRole("spinbutton")).toHaveValue("0.999")
   })
 
   it("calls onChange with number values", async () => {
-    let data = { numericValue: 42.0 }
+    let data: JSONFormData<typeof numericTheNumberSchema> = {
+      numericValue: 42.0,
+    }
     render({
       schema: numericTheNumberSchema,
       data,
       onChange: (state) => {
-        data = state.data
+        data = state.data as JSONFormData<typeof numericTheNumberSchema>
       },
     })
 
@@ -39,7 +46,9 @@ describe("NumericControl", () => {
     await userEvent.type(screen.getByRole("spinbutton"), "42.00")
 
     await waitFor(() => {
-      expect(data).toBe(42.0)
+      expect(data).toEqual({
+        numericValue: 42.0,
+      })
     })
   })
 

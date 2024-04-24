@@ -108,8 +108,9 @@ function MyForm() {
     if ("errorFields" in formValidationResult) {
       return // nothing to do; validateFields will have already rendered error messages on form fields
     }
-    // api call to save form data goes here
-  }, [form])
+    // api call to save form data goes here, e.g.
+    await yourApiCall(data)
+  }, [form, data])
 
   return (
     <Form form={form}>

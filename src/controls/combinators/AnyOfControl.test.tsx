@@ -43,8 +43,10 @@ describe("AnyOf control", () => {
 
     await userEvent.click(screen.getByLabelText("SplitterYearAndMonth"))
     screen.getByLabelText("Column Name")
-    expect(screen.queryByLabelText("Method Name")).toHaveValue(
-      "split_on_year_and_month",
+    await waitFor(() =>
+      expect(screen.queryByLabelText("Method Name")).toHaveValue(
+        "split_on_year_and_month",
+      ),
     )
   })
   test("AnyOf Control with button UISchema allows switching between subschemas and respects uiSchemaRegistryEntries", async () => {

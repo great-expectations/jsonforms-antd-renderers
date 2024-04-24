@@ -1,6 +1,6 @@
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { test, expect, describe } from "vitest"
-import { render } from "../../common/test-render"
+import { render, strictRender } from "../../common/test-render"
 import userEvent from "@testing-library/user-event"
 
 import {
@@ -11,6 +11,7 @@ import {
   splitterAnyOfJsonSchema,
 } from "../../testSchemas/anyOfSchema"
 import { UISchema } from "../../ui-schema"
+import { JSONFormData } from "../../common/schema-derived-types"
 
 const uischema: UISchema<typeof splitterAnyOfJsonSchema> = {
   type: "VerticalLayout",
@@ -104,10 +105,21 @@ describe("AnyOf control", () => {
     expect(screen.queryByLabelText("Column Name")).toHaveValue("abc")
   })
   test("provides a default value for a required combinator", async () => {
-    render({
+    let data: JSONFormData<typeof AnyOfWithDefaultsSchema> = {}
+    const onChange = (result: {
+      data: JSONFormData<typeof AnyOfWithDefaultsSchema>
+    }) => {
+      data = result.data
+    }
+    strictRender({
+      data: {},
+      onChange,
       schema: AnyOfWithDefaultsSchema,
       uischema: AnyOfWithDefaultsBaseUISchema,
       uiSchemaRegistryEntries: AnyOfWithDefaultsUISchemaRegistryEntries,
+    })
+    await waitFor(() => {
+      expect(data?.contactMethod?.method).toEqual("smokesignal")
     })
     await screen.findByText("Pattern")
     await userEvent.click(screen.getByText("Submit"))

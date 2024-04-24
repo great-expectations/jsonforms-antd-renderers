@@ -14,6 +14,7 @@ import {
   numericPriceSchema,
   numericUSDUISchema,
 } from "../testSchemas/numericSchema"
+import { JSONFormData } from "../common/schema-derived-types"
 
 describe("NumericControl", () => {
   it("does not fall back to default if value is empty", () => {
@@ -26,12 +27,14 @@ describe("NumericControl", () => {
   })
 
   it("calls onChange with number values", async () => {
-    let data = { numericValue: 42.0 }
+    let data: JSONFormData<typeof numericTheNumberSchema> = {
+      numericValue: 42.0,
+    }
     render({
       schema: numericTheNumberSchema,
       data,
       onChange: (state) => {
-        data = state.data
+        data = state.data as JSONFormData<typeof numericTheNumberSchema>
       },
     })
 

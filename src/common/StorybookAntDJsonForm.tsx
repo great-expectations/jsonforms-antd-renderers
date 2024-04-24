@@ -7,6 +7,7 @@ import { UISchema } from "../ui-schema"
 import { AntDJsonForm } from "./AntDJsonForm"
 import { useCallback, useState } from "react"
 import { Button, Form } from "antd"
+import { JsonFormsReactProps } from "@jsonforms/react"
 
 type Props<T> = {
   data?: Record<string, unknown>
@@ -15,7 +16,7 @@ type Props<T> = {
   uiSchema?: UISchema<T>
   uiSchemaRegistryEntries?: JsonFormsUISchemaRegistryEntry[]
   config?: Record<string, unknown>
-  onChange: (data: Record<string, unknown>) => void
+  onChange: JsonFormsReactProps["onChange"]
 }
 
 // this component exists to facilitate storybook rendering
@@ -26,13 +27,16 @@ export function StorybookAntDJsonForm<T>({
   uiSchemaRegistryEntries,
   rendererRegistryEntries,
   config,
-  onChange,
+  onChange: _onChange,
 }: Props<T>) {
-  const [data, setData] = useState(initialData)
-  const updateData = (newData: Record<string, unknown>) => {
-    setData(newData)
-    onChange(newData)
-  }
+  const [result, setResult] = useState({ data: initialData })
+  const onChange = useCallback(
+    (r: { data: Record<string, unknown>; errors: [] }) => {
+      setResult(r)
+      _onChange?.(r)
+    },
+    [_onChange],
+  )
   const [form] = Form.useForm()
   const onSubmit = useCallback(async () => {
     const formValidationResult = await form
@@ -49,8 +53,8 @@ export function StorybookAntDJsonForm<T>({
       <AntDJsonForm<typeof jsonSchema>
         uiSchema={uiSchema}
         jsonSchema={jsonSchema}
-        data={data}
-        updateData={(newData) => updateData(newData)}
+        data={result.data}
+        onChange={onChange}
         uiSchemaRegistryEntries={uiSchemaRegistryEntries}
         rendererRegistryEntries={rendererRegistryEntries}
         config={config}

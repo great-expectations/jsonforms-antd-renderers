@@ -130,6 +130,7 @@ export const AnyOfWithDefaultsSchema = {
           title: "Smoke Signal",
           type: "object",
           required: ["pattern", "method"],
+          additionalProperties: false,
           properties: {
             pattern: { type: "string" },
             method: {
@@ -142,6 +143,8 @@ export const AnyOfWithDefaultsSchema = {
         {
           title: "Phone",
           type: "object",
+          required: ["phoneNumber", "method"],
+          additionalProperties: false,
           properties: {
             phoneNumber: { type: "string" },
             method: {
@@ -156,13 +159,11 @@ export const AnyOfWithDefaultsSchema = {
   },
   required: ["contactMethod"],
   additionalProperties: false,
-} satisfies JSONSchema
+} as const satisfies JSONSchema
 
 export const AnyOfWithDefaultsBaseUISchema = {
   type: "VerticalLayout",
-  elements: [
-    { type: "Control", scope: "#/properties/contactMethod" },
-  ],
+  elements: [{ type: "Control", scope: "#/properties/contactMethod" }],
 } satisfies UISchema<typeof AnyOfWithDefaultsSchema>
 
 const AnyOfWithDefaultsUISchema1 = {

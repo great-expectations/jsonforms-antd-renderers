@@ -12,6 +12,7 @@ import {
   arrayInsideCombinatorSchema,
 } from "../testSchemas/arraySchema"
 import { UISchema } from "../ui-schema"
+import { JSONFormData } from "../common/schema-derived-types"
 
 describe("PrimitiveArrayControl", () => {
   test("renders without any data", async () => {
@@ -20,8 +21,7 @@ describe("PrimitiveArrayControl", () => {
       uischema: arrayControlUISchema,
     })
     await screen.findByPlaceholderText("Enter value")
-    screen.getByRole("button")
-    screen.getByText("Add Assets")
+    screen.getByRole("button", { name: "Add Assets" })
   })
 
   test.each([
@@ -65,14 +65,14 @@ describe("PrimitiveArrayControl", () => {
   )
 
   test("correctly appends to the list with add button", async () => {
-    let data = {}
+    let data: JSONFormData<typeof stringArrayControlJsonSchema> = {}
     const user = userEvent.setup()
     render({
       schema: stringArrayControlJsonSchema,
       uischema: arrayControlUISchema,
       data: data,
       onChange: (result) => {
-        data = result.data
+        data = result.data as JSONFormData<typeof stringArrayControlJsonSchema>
       },
     })
     const newAsset = await screen.findByPlaceholderText("Enter value")

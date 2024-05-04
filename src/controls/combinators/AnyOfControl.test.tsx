@@ -1,13 +1,17 @@
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { test, expect, describe } from "vitest"
-import { render } from "../../common/test-render"
+import { render, strictRender } from "../../common/test-render"
 import userEvent from "@testing-library/user-event"
 
 import {
+  AnyOfWithDefaultsBaseUISchema,
+  AnyOfWithDefaultsSchema,
+  AnyOfWithDefaultsUISchemaRegistryEntries,
   SplitterUISchemaRegistryEntry,
   splitterAnyOfJsonSchema,
 } from "../../testSchemas/anyOfSchema"
 import { UISchema } from "../../ui-schema"
+import { JSONFormData } from "../../common/schema-derived-types"
 
 const uischema: UISchema<typeof splitterAnyOfJsonSchema> = {
   type: "VerticalLayout",
@@ -39,8 +43,10 @@ describe("AnyOf control", () => {
 
     await userEvent.click(screen.getByLabelText("SplitterYearAndMonth"))
     screen.getByLabelText("Column Name")
-    expect(screen.queryByLabelText("Method Name")).toHaveValue(
-      "split_on_year_and_month",
+    await waitFor(() =>
+      expect(screen.queryByLabelText("Method Name")).toHaveValue(
+        "split_on_year_and_month",
+      ),
     )
   })
   test("AnyOf Control with button UISchema allows switching between subschemas and respects uiSchemaRegistryEntries", async () => {
@@ -99,5 +105,29 @@ describe("AnyOf control", () => {
     await userEvent.click(screen.getByLabelText("SplitterYear"))
     screen.getByLabelText("Column Name")
     expect(screen.queryByLabelText("Column Name")).toHaveValue("abc")
+  })
+  test("provides a default value for a required combinator", async () => {
+    let data: JSONFormData<typeof AnyOfWithDefaultsSchema> = {}
+    const onChange = (result: {
+      data: JSONFormData<typeof AnyOfWithDefaultsSchema>
+    }) => {
+      data = result.data
+    }
+    strictRender({
+      data: {},
+      onChange,
+      schema: AnyOfWithDefaultsSchema,
+      uischema: AnyOfWithDefaultsBaseUISchema,
+      uiSchemaRegistryEntries: AnyOfWithDefaultsUISchemaRegistryEntries,
+    })
+    await waitFor(() => {
+      expect(data?.contactMethod?.method).toEqual("smokesignal")
+    })
+    await screen.findByText("Pattern")
+    await userEvent.click(screen.getByText("Submit"))
+    await screen.findByText("Pattern is required", { exact: false })
+    expect(
+      screen.queryByText("contactMethod is required", { exact: false }),
+    ).toBeNull()
   })
 })

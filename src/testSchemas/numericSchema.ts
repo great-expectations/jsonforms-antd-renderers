@@ -14,7 +14,7 @@ export const numericMagnitudeSchema = {
 } satisfies JSONSchema
 
 export const numericTheNumberSchema = {
-  type: "number",
+  type: "object",
   properties: {
     numericValue: {
       title: "The Number",

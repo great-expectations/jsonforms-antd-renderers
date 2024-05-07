@@ -158,7 +158,7 @@ const segmentedUISchema = {
     {
       type: "Control",
       scope: "#/properties/deliveryOption",
-      options: { optionType: "dropdown" },
+      options: { optionType: "segmented" },
     },
   ],
 } satisfies UISchema<typeof schema>

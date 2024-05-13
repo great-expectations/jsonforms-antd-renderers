@@ -80,9 +80,7 @@ export function TextControl({
         onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
           handleChange(path, e.target.value)
         }
-        placeholder={`Enter ${
-          placeholderText ?? (label.toLowerCase() || "value")
-        }`}
+        placeholder={placeholderText ?? (label.toLowerCase() || "value")}
       />
     </Form.Item>
   )
@@ -102,7 +100,12 @@ function TextControlInput({ type, ...rest }: TextControlInputProps) {
       // idk why type isn't getting narrowed properly here, but cast seems safe
       return <Input {...(rest as InputProps)} />
     case "password":
-      return <Input.Password {...(rest as InputProps)} />
+      // https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
+      return (
+        <Input.Password
+          {...({ ...rest, autoComplete: "new-password" } as InputProps)}
+        />
+      )
     default:
       try {
         assertNever(type)

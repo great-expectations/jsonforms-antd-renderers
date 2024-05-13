@@ -4,6 +4,9 @@ import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import {
   SplitterUISchemaRegistryEntry,
   splitterAnyOfJsonSchema,
+  AnyOfWithDefaultsBaseUISchema,
+  AnyOfWithDefaultsSchema,
+  AnyOfWithDefaultsUISchemaRegistryEntries,
 } from "../../testSchemas/anyOfSchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm<typeof splitterAnyOfJsonSchema>> =
@@ -123,4 +126,15 @@ export const Dropdown: Story<typeof splitterAnyOfJsonSchema> = {
       description: "this is a minimal anyOf combinator schema",
     },
   },
+}
+
+export const WithDefaultValues: Story<typeof AnyOfWithDefaultsSchema> = {
+  parameters: { controls: { expanded: true } },
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: AnyOfWithDefaultsSchema,
+    uiSchemaRegistryEntries: AnyOfWithDefaultsUISchemaRegistryEntries,
+    uiSchema: AnyOfWithDefaultsBaseUISchema,
+  },
+  argTypes: { jsonSchema: { control: "object" } },
 }

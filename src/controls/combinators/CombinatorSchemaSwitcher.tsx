@@ -129,17 +129,9 @@ function handleCombinatorTypeChange({
   rootSchema,
 }: HandleCombinatorTypeChangeArgs) {
   const newSchema = renderInfos[combinatorIndex]?.schema
-  let newData
-  if (newSchema?.type === "object") {
-    // const typeDiscriminator = newSchema.properties?.type?.default
-
-    newData = {
-      ...createDefaultValue(newSchema, rootSchema),
-      // ...(typeDiscriminator ? { type: typeDiscriminator } : {}),
-    } as unknown
+  if (!newSchema) {
+    handleChange(path, {})
   } else {
-    newData = createDefaultValue(newSchema, rootSchema) as unknown
+    handleChange(path, createDefaultValue(newSchema, rootSchema) as unknown)
   }
-
-  handleChange(path, newData)
 }

@@ -1,6 +1,16 @@
 {
   "name": "@great-expectations/jsonforms-antd-renderers",
   "private": false,
+  "license": "MIT",
+  "description": "ant design renderer set for the jsonforms declarative form framework",
+  "keywords": [
+    "jsonschema",
+    "form",
+    "jsonforms",
+    "antd",
+    "react",
+    "declarative"
+  ],
   "version": "0.0.0-semantic-release",
   "files": [
     "lib/**/*"

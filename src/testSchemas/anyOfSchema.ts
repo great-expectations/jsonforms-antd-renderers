@@ -119,3 +119,103 @@ export const splitterAnyOfJsonSchema = {
   required: ["splitter"],
   additionalProperties: false,
 } satisfies JSONSchema
+
+export const AnyOfWithDefaultsSchema = {
+  type: "object",
+  properties: {
+    contactMethod: {
+      title: "contactMethod",
+      anyOf: [
+        {
+          title: "Smoke Signal",
+          type: "object",
+          required: ["pattern", "method"],
+          additionalProperties: false,
+          properties: {
+            pattern: { type: "string" },
+            method: {
+              default: "smokesignal",
+              enum: ["smokesignal"],
+              type: "string",
+            },
+          },
+        },
+        {
+          title: "Phone",
+          type: "object",
+          required: ["phoneNumber", "method"],
+          additionalProperties: false,
+          properties: {
+            phoneNumber: { type: "string" },
+            method: {
+              default: "phone",
+              enum: ["phone"],
+              type: "string",
+            },
+          },
+        },
+      ],
+    },
+  },
+  required: ["contactMethod"],
+  additionalProperties: false,
+} as const satisfies JSONSchema
+
+export const AnyOfWithDefaultsBaseUISchema = {
+  type: "VerticalLayout",
+  elements: [{ type: "Control", scope: "#/properties/contactMethod" }],
+} satisfies UISchema<typeof AnyOfWithDefaultsSchema>
+
+const AnyOfWithDefaultsUISchema1 = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/pattern",
+      label: "Pattern",
+    },
+    {
+      type: "Control",
+      scope: "#/properties/method",
+      rule: {
+        effect: RuleEffect.HIDE,
+        condition: {},
+      },
+    },
+  ],
+} satisfies UISchema<
+  (typeof AnyOfWithDefaultsSchema.properties.contactMethod.anyOf)[0]
+>
+const AnyOfWithDefaultsUISchema2 = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/phoneNumber",
+      label: "Phone Number",
+    },
+    {
+      type: "Control",
+      scope: "#/properties/method",
+      rule: {
+        effect: RuleEffect.HIDE,
+        condition: {},
+      },
+    },
+  ],
+} satisfies UISchema<
+  (typeof AnyOfWithDefaultsSchema.properties.contactMethod.anyOf)[1]
+>
+
+export const AnyOfWithDefaultsUISchemaRegistryEntries = [
+  {
+    uischema: AnyOfWithDefaultsUISchema1,
+    tester: (schema: JsonSchema) =>
+      schema.title?.startsWith("Smoke") ? 2 : -1,
+  },
+  {
+    uischema: AnyOfWithDefaultsUISchema2,
+    tester: (schema: JsonSchema) =>
+      schema.title?.startsWith("Phone") ? 2 : -1,
+  },
+]

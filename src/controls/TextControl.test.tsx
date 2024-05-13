@@ -55,7 +55,7 @@ test("updates jsonforms data as expected", async () => {
     schema: textInputSchema,
     data,
     onChange: (result) => {
-      data = result.data
+      data = result.data as JSONFormData<typeof textInputSchema>
     },
   })
 

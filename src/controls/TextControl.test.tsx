@@ -88,10 +88,9 @@ test("renders a password when present", async () => {
   } satisfies JSONSchema
 
   render({ schema: passwordSchema, uischema: passwordUISchema })
-  await screen.findByPlaceholderText(
-    passwordSchema.properties.secret.title,
-    { exact: false },
-  )
+  await screen.findByPlaceholderText(passwordSchema.properties.secret.title, {
+    exact: false,
+  })
   expect(
     (screen.getByLabelText("Secret") satisfies HTMLInputElement).type,
   ).toEqual("password")

@@ -19,7 +19,7 @@ describe("PrimitiveArrayControl", () => {
       schema: stringArrayControlJsonSchema,
       uischema: arrayControlUISchema,
     })
-    await screen.findByPlaceholderText("Enter value")
+    await screen.findByPlaceholderText("value")
     screen.getByRole("button")
     screen.getByText("Add Assets")
   })
@@ -75,7 +75,7 @@ describe("PrimitiveArrayControl", () => {
         data = result.data
       },
     })
-    const newAsset = await screen.findByPlaceholderText("Enter value")
+    const newAsset = await screen.findByPlaceholderText("value")
     await user.type(newAsset, "new")
     screen.getByDisplayValue("new")
     await waitFor(() => {
@@ -94,7 +94,7 @@ describe("PrimitiveArrayControl", () => {
     const addButton = await screen.findByRole("button", { name: "Add Assets" })
     await user.click(addButton)
     await user.click(addButton)
-    const inputFields = await screen.findAllByPlaceholderText("Enter value")
+    const inputFields = await screen.findAllByPlaceholderText("value")
     await user.type(inputFields[0], "my asset")
     await user.type(inputFields[1], "remove me!")
     await user.type(inputFields[2], "my other asset")

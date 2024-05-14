@@ -157,6 +157,7 @@ export type TextControlOptions = {
   placeholderText?: string
   required?: boolean
   rules?: AntDRule[]
+  autocomplete?: string
 }
 
 /**

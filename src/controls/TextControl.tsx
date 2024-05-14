@@ -43,6 +43,7 @@ export function TextControl({
   const textControlType: TextControlType = options.type ?? "singleline"
   const tooltip = options.tooltip
   const placeholderText = options.placeholderText
+  const autocomplete = options.autocomplete ?? "off"
   const form = Form.useFormInstance()
   const rules: Rule[] = [
     {
@@ -76,7 +77,7 @@ export function TextControl({
         type={textControlType}
         aria-label={ariaLabel}
         disabled={!enabled}
-        autoComplete="off"
+        autoComplete={autocomplete}
         onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
           handleChange(path, e.target.value)
         }
@@ -100,12 +101,7 @@ function TextControlInput({ type, ...rest }: TextControlInputProps) {
       // idk why type isn't getting narrowed properly here, but cast seems safe
       return <Input {...(rest as InputProps)} />
     case "password":
-      // https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
-      return (
-        <Input.Password
-          {...({ ...rest, autoComplete: "new-password" } as InputProps)}
-        />
-      )
+      return <Input.Password {...(rest as InputProps)} />
     default:
       try {
         assertNever(type)

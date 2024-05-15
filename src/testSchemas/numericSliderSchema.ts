@@ -31,6 +31,21 @@ export const numericSliderTemperatureSchema = {
   required: ["numericRangeValue"],
 } satisfies JSONSchema
 
+export const numericSliderKelvinSchema = {
+  type: "object",
+  properties: {
+    numericRangeValue: {
+      title: "Temperature",
+      type: "number",
+      minimum: 0,
+      maximum: 500,
+      multipleOf: 1,
+      default: 273,
+    },
+  },
+  required: ["numericRangeValue"],
+} satisfies JSONSchema
+
 export const numericSliderHumiditySchema = {
   type: "object",
   properties: {
@@ -97,6 +112,20 @@ export const numericSliderVerticalUISchema = {
     },
   ],
 } satisfies UISchema<typeof numericSliderDonateNowSchema>
+
+export const numericSliderTooltipUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/numericRangeValue",
+      options: {
+        addonAfter: "°K",
+        tooltip: "°Kelvin = °Celsius + 273.15 or °Fahrenheit + 459.67",
+      },
+    },
+  ],
+} satisfies UISchema<typeof numericSliderTemperatureSchema>
 
 export const numericSliderHorizontalUISchema = {
   type: "HorizontalLayout",

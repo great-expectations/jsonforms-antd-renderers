@@ -4,6 +4,8 @@ import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import {
   numericSliderBasisPointsSchema,
   numericSliderVerticalUISchema,
+  numericSliderTooltipUISchema,
+  numericSliderKelvinSchema,
   numericSliderTemperatureSchema,
   numericSliderTemperatureUISchema,
   numericSliderFinalGradeSchema,
@@ -58,5 +60,13 @@ export const OptionalUSDWithDefault: Story = {
   args: {
     jsonSchema: numericSliderDonateNowSchema,
     uiSchema: numericSliderUSDUISchema,
+  },
+}
+
+export const WithTooltip: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: numericSliderKelvinSchema,
+    uiSchema: numericSliderTooltipUISchema,
   },
 }

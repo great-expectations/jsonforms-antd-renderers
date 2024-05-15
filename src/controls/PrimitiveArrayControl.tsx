@@ -69,12 +69,19 @@ export function PrimitiveArrayControl({
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
   const label = labelDescription.text || props.label // nullish coalescing doesn't work here because labelDescription.text can be an empty string =(
 
-  const options: ArrayControlOptions =
-    (uischema.options) ?? {}
-  const tooltip = options.tooltip ? tooltipStringToAntdLabelTooltip(options.tooltip) : undefined
+  const options: ArrayControlOptions = uischema.options ?? {}
+  const tooltip = options.tooltip
+    ? tooltipStringToAntdLabelTooltip(options.tooltip)
+    : undefined
 
   return (
-    <Form.Item id={id} name={path} label={label} required={required} tooltip={tooltip}>
+    <Form.Item
+      id={id}
+      name={path}
+      label={label}
+      required={required}
+      tooltip={tooltip}
+    >
       <Form.List name={path} initialValue={data ?? [undefined]}>
         {(fields, { add, remove }, { errors }) => (
           <Row justify={"start"}>

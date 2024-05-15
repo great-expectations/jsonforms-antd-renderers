@@ -20,7 +20,9 @@ export const NumericSliderControl = (props: ControlProps & RendererProps) => {
   ]
 
   const options: NumericControlOptions = props.uischema.options ?? {}
-  const tooltip = options.tooltip ? tooltipStringToAntdLabelTooltip(options.tooltip) : undefined
+  const tooltip = options.tooltip
+    ? tooltipStringToAntdLabelTooltip(options.tooltip)
+    : undefined
 
   return (
     <Form.Item

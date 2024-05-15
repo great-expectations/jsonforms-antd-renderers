@@ -16,6 +16,19 @@ export const arrayControlUISchema = {
   ],
 } satisfies UISchema<typeof objectArrayControlJsonSchema>
 
+export const arrayControlTooltipUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      scope: "#/properties/assets",
+      type: "Control",
+      options: {
+        tooltip: "Items of value",
+      },
+    },
+  ],
+} satisfies UISchema<typeof objectArrayControlJsonSchema>
+
 export const arrayControlUISchemaWithIcons = {
   type: "VerticalLayout",
   elements: [

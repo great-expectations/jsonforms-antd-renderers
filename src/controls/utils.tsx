@@ -15,7 +15,9 @@ export const coerceToInteger = (value: number) => Math.round(value)
 
 export const coerceToNumber = (value: number) => Number(value)
 
-export const tooltipStringToAntdLabelTooltip = (tooltip: string): LabelTooltipType => ({
-    title: tooltip,
-    icon: <QuestionCircleOutlined />,
+export const tooltipStringToAntdLabelTooltip = (
+  tooltip: string,
+): LabelTooltipType => ({
+  title: tooltip,
+  icon: <QuestionCircleOutlined />,
 })

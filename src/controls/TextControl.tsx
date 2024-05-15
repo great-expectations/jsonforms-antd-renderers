@@ -41,7 +41,9 @@ export function TextControl({
   const options: TextControlOptions =
     (uischema.options as TextControlOptions) ?? {}
   const textControlType: TextControlType = options.type ?? "singleline"
-  const tooltip = options.tooltip ? tooltipStringToAntdLabelTooltip(options.tooltip) : undefined
+  const tooltip = options.tooltip
+    ? tooltipStringToAntdLabelTooltip(options.tooltip)
+    : undefined
   const placeholderText = options.placeholderText
   const form = Form.useFormInstance()
   const rules: Rule[] = [

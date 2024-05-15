@@ -28,6 +28,19 @@ export const objectUISchemaWithName = {
   ],
 } satisfies UISchema<typeof objectSchema>
 
+export const objectUISchemaWithTooltip = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/name",
+      options: {
+        tooltip: "It's what you call yourself"
+      }
+    },
+  ],
+} satisfies UISchema<typeof objectSchema>
+
 export const objectUISchemaWithNameAndLastName = {
   type: "VerticalLayout",
   elements: [

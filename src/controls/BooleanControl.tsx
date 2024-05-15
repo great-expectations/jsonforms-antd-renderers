@@ -2,7 +2,7 @@
 import { ControlProps, isDescriptionHidden } from "@jsonforms/core"
 import { Form } from "antd"
 import { Checkbox } from "../antd/Checkbox"
-import { QuestionCircleOutlined } from "@ant-design/icons"
+import { tooltipStringToAntdLabelTooltip } from "./utils"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
 export function BooleanControl({
@@ -39,21 +39,16 @@ export function BooleanControl({
 
   const showTooltip =
     !showDescription && !isDescriptionHidden(visible, description, true, true)
+  const tooltip =
+    showTooltip && description
+      ? tooltipStringToAntdLabelTooltip(description)
+      : undefined
   return (
     <Form.Item
       id={id}
       name={path}
       initialValue={data ?? schema.default}
-      {...{
-        ...(showTooltip
-          ? {
-              tooltip: {
-                title: description,
-                icon: <QuestionCircleOutlined />,
-              },
-            }
-          : {}),
-      }}
+      tooltip={tooltip}
     >
       <Checkbox
         id={`${id}-input`}

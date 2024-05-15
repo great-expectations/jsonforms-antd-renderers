@@ -81,6 +81,7 @@ export function TextControl({
         type={textControlType}
         aria-label={ariaLabel}
         disabled={!enabled}
+        autoComplete="off"
         onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
           handleChange(path, e.target.value)
         }

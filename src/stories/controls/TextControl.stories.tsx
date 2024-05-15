@@ -120,3 +120,22 @@ export const RuleDefinedInUISchema: Story = {
     } satisfies UISchema<typeof schema>,
   },
 }
+
+export const Tooltip: Story = {
+  parameters: { controls: { expanded: true } },
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: schema,
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Control",
+          scope: "#/properties/name",
+          label: "Name",
+          options: { tooltip: "It's what you call yourself" },
+        },
+      ],
+    } satisfies UISchema<typeof schema>,
+  },
+}

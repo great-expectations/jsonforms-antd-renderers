@@ -5,6 +5,7 @@ import {
   SplitterUISchemaRegistryEntry,
   splitterAnyOfJsonSchema,
   AnyOfWithDefaultsBaseUISchema,
+  AnyOfTooltipUISchema,
   AnyOfWithDefaultsSchema,
   AnyOfWithDefaultsUISchemaRegistryEntries,
 } from "../../testSchemas/anyOfSchema"
@@ -137,4 +138,14 @@ export const WithDefaultValues: Story<typeof AnyOfWithDefaultsSchema> = {
     uiSchema: AnyOfWithDefaultsBaseUISchema,
   },
   argTypes: { jsonSchema: { control: "object" } },
+}
+
+export const Tooltip: Story<typeof AnyOfWithDefaultsSchema> = {
+  parameters: { controls: { expanded: true } },
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: AnyOfWithDefaultsSchema,
+    uiSchemaRegistryEntries: AnyOfWithDefaultsUISchemaRegistryEntries,
+    uiSchema: AnyOfTooltipUISchema,
+  },
 }

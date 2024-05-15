@@ -124,7 +124,7 @@ export const AnyOfWithDefaultsSchema = {
   type: "object",
   properties: {
     contactMethod: {
-      title: "contactMethod",
+      title: "Contact Method",
       anyOf: [
         {
           title: "Smoke Signal",
@@ -164,6 +164,17 @@ export const AnyOfWithDefaultsSchema = {
 export const AnyOfWithDefaultsBaseUISchema = {
   type: "VerticalLayout",
   elements: [{ type: "Control", scope: "#/properties/contactMethod" }],
+} satisfies UISchema<typeof AnyOfWithDefaultsSchema>
+
+export const AnyOfTooltipUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/contactMethod",
+      options: { tooltip: "Choose wisely" },
+    },
+  ],
 } satisfies UISchema<typeof AnyOfWithDefaultsSchema>
 
 const AnyOfWithDefaultsUISchema1 = {

@@ -35,8 +35,8 @@ export const objectUISchemaWithTooltip = {
       type: "Control",
       scope: "#/properties/name",
       options: {
-        tooltip: "It's what you call yourself"
-      }
+        tooltip: "It's what you call yourself",
+      },
     },
   ],
 } satisfies UISchema<typeof objectSchema>

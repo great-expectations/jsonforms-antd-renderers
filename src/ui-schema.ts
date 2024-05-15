@@ -145,6 +145,7 @@ export type OneOfControlOptions = {
   optionType?: CombinatorSchemaSwitcherOption
   required?: boolean
   subschemaTitleToLabelMap?: Record<string, string>
+  tooltip?: string
 }
 
 export type AnyOfControlOptions = OneOfControlOptions

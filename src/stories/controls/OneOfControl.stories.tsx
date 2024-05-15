@@ -163,6 +163,20 @@ const segmentedUISchema = {
   ],
 } satisfies UISchema<typeof schema>
 
+const tooltipUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/deliveryOption",
+      options: {
+        optionType: "segmented",
+        tooltip: "We charge a $3 delivery fee",
+      },
+    },
+  ],
+} satisfies UISchema<typeof schema>
+
 export const Segmented: Story = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
@@ -290,5 +304,14 @@ export const OneOfArray: Story = {
         },
       ],
     },
+  },
+}
+
+export const OneOfTooltip: Story = {
+  parameters: { controls: { expanded: true } },
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: schema,
+    uiSchema: tooltipUISchema,
   },
 }

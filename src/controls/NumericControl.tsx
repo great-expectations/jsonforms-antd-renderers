@@ -3,7 +3,7 @@ import { Col, Form } from "antd"
 import type { Rule } from "antd/es/form"
 import { InputNumber } from "../antd/InputNumber"
 import type { NumericControlOptions } from "../ui-schema"
-import { QuestionCircleOutlined } from "@ant-design/icons"
+import { tooltipStringToAntdLabelTooltip } from "./utils"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
 export const NumericControl = (props: ControlProps & RendererProps) => {
@@ -17,7 +17,7 @@ export const NumericControl = (props: ControlProps & RendererProps) => {
   ]
 
   const options: NumericControlOptions = props.uischema.options ?? {}
-  const tooltip = options.tooltip
+  const tooltip = options.tooltip ? tooltipStringToAntdLabelTooltip(options.tooltip) : undefined
 
   return (
     <Form.Item
@@ -28,14 +28,7 @@ export const NumericControl = (props: ControlProps & RendererProps) => {
       initialValue={initialValue}
       rules={rules}
       validateTrigger={["onBlur"]}
-      {...(tooltip
-        ? {
-            tooltip: {
-              title: tooltip,
-              icon: <QuestionCircleOutlined />,
-            },
-          }
-        : {})}
+      tooltip={tooltip}
     >
       <Col span={18}>{InputNumber({ ...props })}</Col>
     </Form.Item>

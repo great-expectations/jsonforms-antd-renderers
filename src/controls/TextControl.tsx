@@ -2,12 +2,12 @@ import type { ChangeEvent } from "react"
 import { useCallback, useEffect } from "react"
 import type { InputProps } from "antd"
 import { Input, Form } from "antd"
-import { QuestionCircleOutlined } from "@ant-design/icons"
 import type { Rule } from "antd/es/form"
 import type { TextAreaProps } from "antd/es/input"
 import type { ControlProps } from "@jsonforms/core"
 
 import type { TextControlOptions, TextControlType } from "../ui-schema"
+import { tooltipStringToAntdLabelTooltip } from "./utils"
 import { assertNever } from "../common/assert-never"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 interface TextControlProps extends ControlProps {
@@ -41,7 +41,7 @@ export function TextControl({
   const options: TextControlOptions =
     (uischema.options as TextControlOptions) ?? {}
   const textControlType: TextControlType = options.type ?? "singleline"
-  const tooltip = options.tooltip
+  const tooltip = options.tooltip ? tooltipStringToAntdLabelTooltip(options.tooltip) : undefined
   const placeholderText = options.placeholderText
   const form = Form.useFormInstance()
   const rules: Rule[] = [
@@ -63,14 +63,7 @@ export function TextControl({
       name={path}
       rules={rules}
       validateTrigger={["onBlur"]}
-      {...(tooltip
-        ? {
-            tooltip: {
-              title: tooltip,
-              icon: <QuestionCircleOutlined />,
-            },
-          }
-        : {})}
+      tooltip={tooltip}
     >
       <TextControlInput
         type={textControlType}

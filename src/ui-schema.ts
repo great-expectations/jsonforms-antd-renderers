@@ -281,6 +281,7 @@ export type ArrayControlOptions = {
   addButtonProps?: ButtonProps
   removeButtonProps?: ButtonProps
   addButtonLocation?: AddButtonLocation
+  tooltip?: string
 }
 
 export type NumericControlOptions = {

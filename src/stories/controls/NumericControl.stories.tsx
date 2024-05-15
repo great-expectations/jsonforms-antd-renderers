@@ -7,6 +7,7 @@ import {
   numericWeightSchema,
   numericSheepSchema,
   numericVerticalUISchema,
+  numericTooltipUISchema,
   numericPriceSchema,
   numericUSDUISchema,
   numericROISchema,
@@ -75,5 +76,13 @@ export const RequiredPercentage: Story = {
   args: {
     jsonSchema: numericROISchema,
     uiSchema: numericPercentageUISchema,
+  },
+}
+
+export const WithTooltip: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: numericSheepSchema,
+    uiSchema: numericTooltipUISchema,
   },
 }

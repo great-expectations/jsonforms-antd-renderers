@@ -1,10 +1,10 @@
 import type { JsonSchema } from "@jsonforms/core"
 import type {
-  ButtonProps,
-  InputNumberProps,
   AlertProps,
+  ButtonProps,
   CardProps,
   DividerProps,
+  InputNumberProps,
 } from "antd"
 import type { RuleObject as AntDRule } from "antd/es/form"
 import type { TitleProps } from "antd/es/typography/Title"
@@ -286,4 +286,5 @@ export type ArrayControlOptions = {
 export type NumericControlOptions = {
   addonBefore?: InputNumberProps["addonBefore"]
   addonAfter?: InputNumberProps["addonAfter"]
+  tooltip?: string
 }

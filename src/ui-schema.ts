@@ -5,7 +5,9 @@ import type {
   AlertProps,
   CardProps,
   DividerProps,
+  InputProps,
 } from "antd"
+import type { TextAreaProps } from "antd/es/input"
 import type { RuleObject as AntDRule } from "antd/es/form"
 import type { TitleProps } from "antd/es/typography/Title"
 import type { TextProps } from "antd/es/typography/Text"
@@ -150,6 +152,10 @@ export type OneOfControlOptions = {
 export type AnyOfControlOptions = OneOfControlOptions
 
 export type TextControlType = "multiline" | "password" | "singleline"
+export type TextControlInputProps =
+  | (InputProps & { type: "singleline" })
+  | (TextAreaProps & { type: "multiline" })
+  | (InputProps & { type: "password" })
 
 export type TextControlOptions = {
   type?: TextControlType
@@ -157,7 +163,7 @@ export type TextControlOptions = {
   placeholderText?: string
   required?: boolean
   rules?: AntDRule[]
-  autocomplete?: string
+  inputProps?: TextControlInputProps
 }
 
 /**

@@ -7,7 +7,11 @@ import type { Rule } from "antd/es/form"
 import type { TextAreaProps } from "antd/es/input"
 import type { ControlProps } from "@jsonforms/core"
 
-import type { TextControlOptions, TextControlType } from "../ui-schema"
+import type {
+  TextControlInputProps,
+  TextControlOptions,
+  TextControlType,
+} from "../ui-schema"
 import { assertNever } from "../common/assert-never"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 interface TextControlProps extends ControlProps {
@@ -43,7 +47,7 @@ export function TextControl({
   const textControlType: TextControlType = options.type ?? "singleline"
   const tooltip = options.tooltip
   const placeholderText = options.placeholderText
-  const autocomplete = options.autocomplete ?? "off"
+  const restInputProps = options.inputProps
   const form = Form.useFormInstance()
   const rules: Rule[] = [
     {
@@ -77,20 +81,15 @@ export function TextControl({
         type={textControlType}
         aria-label={ariaLabel}
         disabled={!enabled}
-        autoComplete={autocomplete}
         onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
           handleChange(path, e.target.value)
         }
         placeholder={placeholderText ?? (label.toLowerCase() || "value")}
+        {...restInputProps}
       />
     </Form.Item>
   )
 }
-
-type TextControlInputProps =
-  | (InputProps & { type: "singleline" })
-  | (TextAreaProps & { type: "multiline" })
-  | (InputProps & { type: "password" })
 
 function TextControlInput({ type, ...rest }: TextControlInputProps) {
   switch (type) {

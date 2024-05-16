@@ -152,19 +152,26 @@ export type OneOfControlOptions = {
 export type AnyOfControlOptions = OneOfControlOptions
 
 export type TextControlType = "multiline" | "password" | "singleline"
-export type TextControlInputProps =
-  | (InputProps & { type: "singleline" })
-  | (TextAreaProps & { type: "multiline" })
-  | (InputProps & { type: "password" })
 
 export type TextControlOptions = {
-  type?: TextControlType
   tooltip?: string
   placeholderText?: string
   required?: boolean
   rules?: AntDRule[]
-  inputProps?: TextControlInputProps
-}
+} & (
+  | {
+      type?: "singleline"
+      inputProps?: InputProps
+    }
+  | {
+      type: "multiline"
+      inputProps?: TextAreaProps
+    }
+  | {
+      type: "password"
+      inputProps?: InputProps
+    }
+)
 
 /**
  * A control element. The scope property of the control determines

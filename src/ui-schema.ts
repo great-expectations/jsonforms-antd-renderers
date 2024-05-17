@@ -5,7 +5,9 @@ import type {
   AlertProps,
   CardProps,
   DividerProps,
+  InputProps,
 } from "antd"
+import type { TextAreaProps } from "antd/es/input"
 import type { RuleObject as AntDRule } from "antd/es/form"
 import type { TitleProps } from "antd/es/typography/Title"
 import type { TextProps } from "antd/es/typography/Text"
@@ -152,12 +154,24 @@ export type AnyOfControlOptions = OneOfControlOptions
 export type TextControlType = "multiline" | "password" | "singleline"
 
 export type TextControlOptions = {
-  type?: TextControlType
   tooltip?: string
   placeholderText?: string
   required?: boolean
   rules?: AntDRule[]
-}
+} & (
+  | {
+      type?: "singleline"
+      inputProps?: InputProps
+    }
+  | {
+      type: "multiline"
+      inputProps?: TextAreaProps
+    }
+  | {
+      type: "password"
+      inputProps?: InputProps
+    }
+)
 
 /**
  * A control element. The scope property of the control determines

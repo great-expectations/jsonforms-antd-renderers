@@ -10,9 +10,10 @@ import { Slider } from "../antd/Slider"
 import { ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
-type NumericSliderControlProps = RendererProps & ControlProps & {
-  uischema: ControlUISchema<unknown> | ControlElement
-}
+type NumericSliderControlProps = RendererProps &
+  ControlProps & {
+    uischema: ControlUISchema<unknown> | ControlElement
+  }
 
 export const NumericSliderControl = (props: NumericSliderControlProps) => {
   if (!props.visible) return null

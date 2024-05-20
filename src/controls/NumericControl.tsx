@@ -9,9 +9,10 @@ import { InputNumber } from "../antd/InputNumber"
 import { ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
-type NumericControlProps = ControlProps & RendererProps & {
-  uischema: ControlUISchema<unknown> | ControlElement
-}
+type NumericControlProps = ControlProps &
+  RendererProps & {
+    uischema: ControlUISchema<unknown> | ControlElement
+  }
 
 export const NumericControl = (props: NumericControlProps) => {
   if (!props.visible) return null

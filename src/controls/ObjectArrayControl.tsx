@@ -17,7 +17,6 @@ import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 import React from "react"
 
-
 type ArrayLayoutProps = JSFArrayLayoutProps & {
   uischema: ControlUISchema<unknown> | ControlElement
 }

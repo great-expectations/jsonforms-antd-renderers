@@ -75,8 +75,8 @@ export function AnyOfControl({
 
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
 
-  const uiSchema = uischema as ControlUISchema<typeof uischema> & ControlElement
-  const formItemProps = uiSchema.formItemProps ?? {}
+  const uiSchema = uischema as ControlUISchema<unknown> | ControlElement
+  const formItemProps = "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
 
   return (
     <Space direction="vertical" style={{ width: "100%" }} size="middle">

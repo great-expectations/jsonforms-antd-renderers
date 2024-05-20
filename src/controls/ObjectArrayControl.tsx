@@ -1,4 +1,5 @@
 import {
+  ControlElement,
   Helpers,
   ArrayLayoutProps,
   composePaths,
@@ -12,7 +13,7 @@ import {
 import { Flex, Form, List, Button } from "antd"
 import range from "lodash.range"
 import { useEffect, useMemo } from "react"
-import { ArrayControlOptions } from "../ui-schema"
+import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 import React from "react"
 
@@ -58,6 +59,9 @@ export function ObjectArrayControl({
     }
   })
 
+  const uiSchema = uischema as ControlUISchema<unknown> | ControlElement
+  const formItemProps = "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
+
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
   const label = labelDescription.show ? labelDescription.text : ""
 
@@ -86,6 +90,7 @@ export function ObjectArrayControl({
       required={required}
       rules={[{ required: required, message: `${label} is required` }]}
       validateTrigger={["onBlur"]}
+      {...formItemProps}
     >
       <>{label}</>
       <List<unknown>

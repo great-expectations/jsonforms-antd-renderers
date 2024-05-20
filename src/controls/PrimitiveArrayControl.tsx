@@ -69,9 +69,9 @@ export function PrimitiveArrayControl({
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
   const label = labelDescription.text || props.label // nullish coalescing doesn't work here because labelDescription.text can be an empty string =(
 
-  const uiSchema = uischema as ControlUISchema<typeof uischema> & ControlElement
+  const uiSchema = uischema as ControlUISchema<unknown> | ControlElement
   const options: ArrayControlOptions = uiSchema.options ?? {}
-  const formItemProps = uiSchema.formItemProps ?? {}
+  const formItemProps = "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
 
   return (
     <Form.Item

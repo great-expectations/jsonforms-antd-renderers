@@ -36,8 +36,8 @@ export function OneOfControl({
     uischemas,
   )
 
-  const uiSchema = uischema as ControlUISchema<typeof uischema> & ControlElement
-  const formItemProps = uiSchema.formItemProps ?? {}
+  const uiSchema = uischema as ControlUISchema<unknown> | ControlElement
+  const formItemProps = "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
 
   return (
     <Form.Item

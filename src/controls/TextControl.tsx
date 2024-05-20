@@ -25,7 +25,7 @@ export function TextControl({
   id,
   uischema,
 }: TextControlProps) {
-  const uiSchema = uischema as ControlUISchema<typeof uischema> & ControlElement
+  const uiSchema = uischema as ControlUISchema<unknown> | ControlElement
   const setInitialValue = useCallback(
     (value: unknown) => {
       if (typeof value !== "number") return value
@@ -38,8 +38,8 @@ export function TextControl({
   const ariaLabel = label || schema.description
   const options: TextControlOptions =
     (uiSchema.options as TextControlOptions) ?? {}
-  const formItemProps = uiSchema.formItemProps ?? {}
-  const tooltip = options.tooltip ? options.tooltip : formItemProps.tooltip
+  const formItemProps = "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
+  const tooltip = options.tooltip ? options.tooltip : formItemProps?.tooltip
   const placeholderText = options.placeholderText
   const form = Form.useFormInstance()
   const rules: Rule[] = [

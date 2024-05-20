@@ -19,9 +19,8 @@ export const NumericControl = (props: ControlProps & RendererProps) => {
     { required: props.required, message: `${props.label} is required` },
   ]
 
-  const uiSchema = props.uischema as ControlUISchema<typeof props.uischema> &
-    ControlElement
-  const formItemProps = uiSchema.formItemProps ?? {}
+  const uiSchema = props.uischema as ControlUISchema<unknown> | ControlElement
+  const formItemProps = "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
 
   return (
     <Form.Item

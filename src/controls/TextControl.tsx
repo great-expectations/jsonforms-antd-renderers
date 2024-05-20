@@ -2,14 +2,9 @@ import type { ChangeEvent } from "react"
 import { useCallback, useEffect } from "react"
 import { Input, Form } from "antd"
 import type { Rule } from "antd/es/form"
-import type { TextAreaProps } from "antd/es/input"
 import type { ControlElement, ControlProps } from "@jsonforms/core"
 
-import type {
-  ControlUISchema,
-  TextControlOptions,
-  TextControlType,
-} from "../ui-schema"
+import type { ControlUISchema, TextControlOptions } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 interface TextControlProps extends ControlProps {
@@ -43,7 +38,6 @@ export function TextControl({
   const ariaLabel = label || schema.description
   const options: TextControlOptions =
     (uiSchema.options as TextControlOptions) ?? {}
-  const textControlType: TextControlType = options.type ?? "singleline"
   const formItemProps = uiSchema.formItemProps ?? {}
   const tooltip = options.tooltip ? options.tooltip : formItemProps.tooltip
   const placeholderText = options.placeholderText

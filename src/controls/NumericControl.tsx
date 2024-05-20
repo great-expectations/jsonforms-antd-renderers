@@ -23,7 +23,7 @@ export const NumericControl = (props: ControlProps & RendererProps) => {
       initialValue={initialValue}
       rules={rules}
       validateTrigger={["onBlur"]}
-      tooltip={props.uischema.formItemProps?.tooltip}
+      {...props.uischema.formItemProps}
     >
       <Col span={18}>{InputNumber({ ...props })}</Col>
     </Form.Item>

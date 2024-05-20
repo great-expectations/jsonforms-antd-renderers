@@ -38,8 +38,10 @@ export function BooleanControl({
 
   const showTooltip =
     !showDescription && !isDescriptionHidden(visible, description, true, true)
+  const formItemProps = uischema.formItemProps ?? {}
+  const [formItemPropsTooltip, ...restFormItemProps] = formItemProps.tooltip
   const tooltip =
-    showTooltip && description ? description : uischema.formItemProps?.tooltip
+    showTooltip && description ? description : formItemPropsTooltip
 
   return (
     <Form.Item
@@ -47,6 +49,7 @@ export function BooleanControl({
       name={path}
       initialValue={data ?? schema.default}
       tooltip={tooltip}
+      {...restFormItemProps}
     >
       <Checkbox
         id={`${id}-input`}

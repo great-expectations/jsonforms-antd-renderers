@@ -27,7 +27,7 @@ export const NumericSliderControl = (props: ControlProps & RendererProps) => {
       initialValue={initialValue}
       rules={rules}
       validateTrigger={["onBlur"]}
-      tooltip={props.uischema.formItemProps?.tooltip}
+      {...props.uischema.formItemProps}
     >
       <Row>
         <Col span={8}>{Slider({ ...props })}</Col>

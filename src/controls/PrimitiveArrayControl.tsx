@@ -69,6 +69,7 @@ export function PrimitiveArrayControl({
   const label = labelDescription.text || props.label // nullish coalescing doesn't work here because labelDescription.text can be an empty string =(
 
   const options: ArrayControlOptions = uischema.options ?? {}
+  const formItemProps = uischema.formItemProps ?? {}
 
   return (
     <Form.Item
@@ -76,7 +77,7 @@ export function PrimitiveArrayControl({
       name={path}
       label={label}
       required={required}
-      tooltip={uischema?.formItemProps?.tooltip}
+      {...formItemProps}
     >
       <Form.List name={path} initialValue={data ?? [undefined]}>
         {(fields, { add, remove }, { errors }) => (

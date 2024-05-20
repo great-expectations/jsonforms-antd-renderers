@@ -39,7 +39,7 @@ export function OneOfControl({
     <Form.Item
       required={required}
       label={uischema.label ? "" : schema.title}
-      tooltip={uischema.formItemProps?.tooltip}
+      {...uischema.formItemProps}
     >
       <Space direction="vertical" style={{ width: "100%" }} size="middle">
         {uischema.type === "Control" && uischema.label ? ( // I don't think it's possible for type to be other than "Control"

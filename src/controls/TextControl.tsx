@@ -63,6 +63,7 @@ export function TextControl({
       rules={rules}
       validateTrigger={["onBlur"]}
       tooltip={tooltip}
+      {...formItemProps}
     >
       <TextControlInput
         aria-label={ariaLabel}

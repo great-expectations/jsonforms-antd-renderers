@@ -5,11 +5,11 @@ import { InputNumber } from "../antd/InputNumber"
 import { ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
-type NumericControlProps = Omit<JSFControlProps, "uischema"> & {
+type ControlProps = Omit<JSFControlProps, "uischema"> & {
   uischema: ControlUISchema<unknown> | JSFControlProps["uischema"]
 }
 
-export const NumericControl = (props: NumericControlProps) => {
+export const NumericControl = (props: ControlProps) => {
   if (!props.visible) return null
 
   const initialValue =

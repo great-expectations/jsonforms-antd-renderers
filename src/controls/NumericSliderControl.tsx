@@ -6,11 +6,11 @@ import { Slider } from "../antd/Slider"
 import { ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
-type NumericSliderControlProps = Omit<JSFControlProps, "uischema"> & {
+type ControlProps = Omit<JSFControlProps, "uischema"> & {
   uischema: ControlUISchema<unknown> | JSFControlProps["uischema"]
 }
 
-export const NumericSliderControl = (props: NumericSliderControlProps) => {
+export const NumericSliderControl = (props: ControlProps) => {
   if (!props.visible) return null
 
   const initialValue =

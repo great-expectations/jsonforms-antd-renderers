@@ -42,7 +42,7 @@ test("renders default value when present", async () => {
   await waitFor(() => {
     expect(
       screen.getByPlaceholderText(
-        "Enter " + defaultValueTextInputSchema.properties.foo.title,
+        defaultValueTextInputSchema.properties.foo.title,
         { exact: false },
       ),
     ).toHaveValue(defaultValueTextInputSchema.properties.foo.default)
@@ -60,7 +60,7 @@ test("updates jsonforms data as expected", async () => {
   })
 
   const input = screen.getByPlaceholderText(
-    "Enter " + textInputSchema.properties.foo.title,
+    textInputSchema.properties.foo.title,
     { exact: false },
   )
 
@@ -88,10 +88,9 @@ test("renders a password when present", async () => {
   } satisfies JSONSchema
 
   render({ schema: passwordSchema, uischema: passwordUISchema })
-  await screen.findByPlaceholderText(
-    "Enter " + passwordSchema.properties.secret.title,
-    { exact: false },
-  )
+  await screen.findByPlaceholderText(passwordSchema.properties.secret.title, {
+    exact: false,
+  })
   expect(
     (screen.getByLabelText("Secret") satisfies HTMLInputElement).type,
   ).toEqual("password")
@@ -122,7 +121,7 @@ test("renders error messages from rule validation", async () => {
   })
 
   const inputElement = await screen.findByPlaceholderText(
-    "Enter " + patternSchema.properties.name.title,
+    patternSchema.properties.name.title,
     { exact: false },
   )
 

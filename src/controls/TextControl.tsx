@@ -1,6 +1,5 @@
 import type { ChangeEvent } from "react"
 import { useCallback, useEffect } from "react"
-import type { InputProps } from "antd"
 import { Input, Form } from "antd"
 import type { Rule } from "antd/es/form"
 import type { TextAreaProps } from "antd/es/input"
@@ -71,41 +70,52 @@ export function TextControl({
       tooltip={tooltip}
     >
       <TextControlInput
-        type={textControlType}
         aria-label={ariaLabel}
         disabled={!enabled}
         autoComplete="off"
         onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
           handleChange(path, e.target.value)
         }
-        placeholder={`Enter ${
-          placeholderText ?? (label.toLowerCase() || "value")
-        }`}
+        placeholder={placeholderText ?? (label.toLowerCase() || "value")}
+        textControlOptions={options}
       />
     </Form.Item>
   )
 }
 
-type TextControlInputProps =
-  | (InputProps & { type: "singleline" })
-  | (TextAreaProps & { type: "multiline" })
-  | (InputProps & { type: "password" })
+type TextControlInputProps = {
+  "aria-label": string | undefined
+  disabled: boolean
+  autoComplete: string
+  onChange: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void
+  placeholder: string
+  textControlOptions: TextControlOptions
+}
 
-function TextControlInput({ type, ...rest }: TextControlInputProps) {
-  switch (type) {
+function TextControlInput({
+  textControlOptions,
+  ...rest
+}: TextControlInputProps) {
+  if (
+    !(`type` in textControlOptions) ||
+    textControlOptions.type === undefined
+  ) {
+    return <Input {...{ ...rest, ...textControlOptions }} />
+  }
+
+  switch (textControlOptions.type) {
     case "multiline":
-      // idk why type isn't getting narrowed properly here, but cast seems safe
-      return <Input.TextArea {...(rest as TextAreaProps)} />
+      return <Input.TextArea {...{ ...rest, ...textControlOptions }} />
     case "singleline":
-      // idk why type isn't getting narrowed properly here, but cast seems safe
-      return <Input {...(rest as InputProps)} />
+      return <Input {...{ ...rest, ...textControlOptions }} />
     case "password":
-      return <Input.Password {...(rest as InputProps)} />
+      return <Input.Password {...{ ...rest, ...textControlOptions }} />
+
     default:
       try {
-        assertNever(type)
+        assertNever(textControlOptions.type)
       } catch (e) {
-        return <Input {...(rest as InputProps)} />
+        return <Input {...{ ...rest, ...textControlOptions }} />
       }
   }
 }

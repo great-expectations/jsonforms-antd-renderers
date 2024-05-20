@@ -172,7 +172,7 @@ export const AnyOfTooltipUISchema = {
     {
       type: "Control",
       scope: "#/properties/contactMethod",
-      options: { tooltip: "Choose wisely" },
+      formItemProps: { tooltip: "Choose wisely" },
     },
   ],
 } satisfies UISchema<typeof AnyOfWithDefaultsSchema>

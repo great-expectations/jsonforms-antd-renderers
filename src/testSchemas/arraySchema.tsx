@@ -22,7 +22,7 @@ export const arrayControlTooltipUISchema = {
     {
       scope: "#/properties/assets",
       type: "Control",
-      options: {
+      formItemProps: {
         tooltip: "Items of value",
       },
     },

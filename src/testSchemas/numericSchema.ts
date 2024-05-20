@@ -95,7 +95,7 @@ export const numericTooltipUISchema = {
     {
       type: "Control",
       scope: "#/properties/numericValue",
-      options: {
+      formItemProps: {
         tooltip:
           "Sheep (pl.: sheep) or domestic sheep (Ovis aries) are a domesticated, ruminant mammal typically kept as livestock.",
       },

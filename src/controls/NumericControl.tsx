@@ -2,8 +2,6 @@ import type { ControlProps, RendererProps } from "@jsonforms/core"
 import { Col, Form } from "antd"
 import type { Rule } from "antd/es/form"
 import { InputNumber } from "../antd/InputNumber"
-import type { NumericControlOptions } from "../ui-schema"
-import { tooltipStringToAntdLabelTooltip } from "./utils"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
 export const NumericControl = (props: ControlProps & RendererProps) => {
@@ -16,11 +14,6 @@ export const NumericControl = (props: ControlProps & RendererProps) => {
     { required: props.required, message: `${props.label} is required` },
   ]
 
-  const options: NumericControlOptions = props.uischema.options ?? {}
-  const tooltip = options.tooltip
-    ? tooltipStringToAntdLabelTooltip(options.tooltip)
-    : undefined
-
   return (
     <Form.Item
       label={props.label}
@@ -30,7 +23,7 @@ export const NumericControl = (props: ControlProps & RendererProps) => {
       initialValue={initialValue}
       rules={rules}
       validateTrigger={["onBlur"]}
-      tooltip={tooltip}
+      tooltip={props.uischema.formItemProps?.tooltip}
     >
       <Col span={18}>{InputNumber({ ...props })}</Col>
     </Form.Item>

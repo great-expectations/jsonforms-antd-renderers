@@ -133,7 +133,7 @@ export const Tooltip: Story = {
           type: "Control",
           scope: "#/properties/name",
           label: "Name",
-          options: { tooltip: "It's what you call yourself" },
+          formItemProps: { tooltip: "It's what you call yourself" },
         },
       ],
     } satisfies UISchema<typeof schema>,

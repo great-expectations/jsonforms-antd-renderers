@@ -34,7 +34,7 @@ export const objectUISchemaWithTooltip = {
     {
       type: "Control",
       scope: "#/properties/name",
-      options: {
+      formItemProps: {
         tooltip: "It's what you call yourself",
       },
     },

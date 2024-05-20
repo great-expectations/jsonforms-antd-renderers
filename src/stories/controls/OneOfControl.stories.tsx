@@ -171,6 +171,8 @@ const tooltipUISchema = {
       scope: "#/properties/deliveryOption",
       options: {
         optionType: "segmented",
+      },
+      formItemProps: {
         tooltip: "We charge a $3 delivery fee",
       },
     },

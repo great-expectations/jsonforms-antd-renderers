@@ -4,6 +4,7 @@ import type {
   ButtonProps,
   CardProps,
   DividerProps,
+  FormItemProps,
   InputNumberProps,
 } from "antd"
 import type { RuleObject as AntDRule } from "antd/es/form"
@@ -145,7 +146,6 @@ export type OneOfControlOptions = {
   optionType?: CombinatorSchemaSwitcherOption
   required?: boolean
   subschemaTitleToLabelMap?: Record<string, string>
-  tooltip?: string
 }
 
 export type AnyOfControlOptions = OneOfControlOptions
@@ -169,6 +169,7 @@ export type ControlUISchema<T> = UISchemaElement<T> &
   SchemaAwareScope<T> &
   ControlUISchemaLabel & {
     type: "Control"
+    formItemProps?: FormItemProps
   }
 /**
  * The category layout.
@@ -282,11 +283,9 @@ export type ArrayControlOptions = {
   addButtonProps?: ButtonProps
   removeButtonProps?: ButtonProps
   addButtonLocation?: AddButtonLocation
-  tooltip?: string
 }
 
 export type NumericControlOptions = {
   addonBefore?: InputNumberProps["addonBefore"]
   addonAfter?: InputNumberProps["addonAfter"]
-  tooltip?: string
 }

@@ -7,7 +7,6 @@ import { JsonFormsDispatch, withJsonFormsOneOfProps } from "@jsonforms/react"
 import { Form, Space } from "antd"
 import { useState } from "react"
 import { ControlUISchema, OneOfControlOptions } from "../../ui-schema"
-import { tooltipStringToAntdLabelTooltip } from "../utils"
 import { ControlLabel } from "../../common/ControlLabel"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
 
@@ -36,16 +35,11 @@ export function OneOfControl({
     uischemas,
   )
 
-  const options: OneOfControlOptions = uischema.options ?? {}
-  const tooltip = options.tooltip
-    ? tooltipStringToAntdLabelTooltip(options.tooltip)
-    : undefined
-
   return (
     <Form.Item
       required={required}
       label={uischema.label ? "" : schema.title}
-      tooltip={tooltip}
+      tooltip={uischema.formItemProps?.tooltip}
     >
       <Space direction="vertical" style={{ width: "100%" }} size="middle">
         {uischema.type === "Control" && uischema.label ? ( // I don't think it's possible for type to be other than "Control"

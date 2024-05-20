@@ -7,7 +7,6 @@ import type { TextAreaProps } from "antd/es/input"
 import type { ControlProps } from "@jsonforms/core"
 
 import type { TextControlOptions, TextControlType } from "../ui-schema"
-import { tooltipStringToAntdLabelTooltip } from "./utils"
 import { assertNever } from "../common/assert-never"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 interface TextControlProps extends ControlProps {
@@ -42,8 +41,8 @@ export function TextControl({
     (uischema.options as TextControlOptions) ?? {}
   const textControlType: TextControlType = options.type ?? "singleline"
   const tooltip = options.tooltip
-    ? tooltipStringToAntdLabelTooltip(options.tooltip)
-    : undefined
+    ? options.tooltip
+    : uischema.formItemProps?.tooltip
   const placeholderText = options.placeholderText
   const form = Form.useFormInstance()
   const rules: Rule[] = [

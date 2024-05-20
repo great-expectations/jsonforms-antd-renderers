@@ -13,8 +13,6 @@ import { JsonFormsDispatch, withJsonFormsOneOfProps } from "@jsonforms/react"
 import { Form, Space } from "antd"
 import { useEffect, useState } from "react"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
-import { AnyOfControlOptions } from "../../ui-schema"
-import { tooltipStringToAntdLabelTooltip } from "../utils"
 
 export function AnyOfControl({
   handleChange,
@@ -74,17 +72,13 @@ export function AnyOfControl({
   ])
 
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
-  const options: AnyOfControlOptions = uischema.options ?? {}
-  const tooltip = options.tooltip
-    ? tooltipStringToAntdLabelTooltip(options.tooltip)
-    : undefined
 
   return (
     <Space direction="vertical" style={{ width: "100%" }} size="middle">
       <Form.Item
         rules={[{ required, message: `${schema.title} is required` }]}
         label={labelDescription.show ? labelDescription.text : ""}
-        tooltip={tooltip}
+        tooltip={uischema.formItemProps?.tooltip}
       >
         <CombinatorSchemaSwitcher
           config={config as unknown}

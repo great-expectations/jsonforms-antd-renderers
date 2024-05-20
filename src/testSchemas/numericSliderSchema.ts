@@ -121,6 +121,8 @@ export const numericSliderTooltipUISchema = {
       scope: "#/properties/numericRangeValue",
       options: {
         addonAfter: "°K",
+      },
+      formItemProps: {
         tooltip: "°Kelvin = °Celsius + 273.15 or °Fahrenheit + 459.67",
       },
     },

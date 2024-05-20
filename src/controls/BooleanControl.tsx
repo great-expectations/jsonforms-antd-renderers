@@ -2,7 +2,6 @@
 import { ControlProps, isDescriptionHidden } from "@jsonforms/core"
 import { Form } from "antd"
 import { Checkbox } from "../antd/Checkbox"
-import { tooltipStringToAntdLabelTooltip } from "./utils"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
 export function BooleanControl({
@@ -40,9 +39,8 @@ export function BooleanControl({
   const showTooltip =
     !showDescription && !isDescriptionHidden(visible, description, true, true)
   const tooltip =
-    showTooltip && description
-      ? tooltipStringToAntdLabelTooltip(description)
-      : undefined
+    showTooltip && description ? description : uischema.formItemProps?.tooltip
+
   return (
     <Form.Item
       id={id}

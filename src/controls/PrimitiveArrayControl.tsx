@@ -13,7 +13,6 @@ import { Form, Button, Col, Row } from "antd"
 import React, { useEffect, useMemo } from "react"
 import { ArrayControlOptions } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
-import { tooltipStringToAntdLabelTooltip } from "./utils"
 
 type ArrayControlProps = Omit<JSFArrayControlProps, "data"> & {
   data?: unknown[]
@@ -70,9 +69,6 @@ export function PrimitiveArrayControl({
   const label = labelDescription.text || props.label // nullish coalescing doesn't work here because labelDescription.text can be an empty string =(
 
   const options: ArrayControlOptions = uischema.options ?? {}
-  const tooltip = options.tooltip
-    ? tooltipStringToAntdLabelTooltip(options.tooltip)
-    : undefined
 
   return (
     <Form.Item
@@ -80,7 +76,7 @@ export function PrimitiveArrayControl({
       name={path}
       label={label}
       required={required}
-      tooltip={tooltip}
+      tooltip={uischema?.formItemProps?.tooltip}
     >
       <Form.List name={path} initialValue={data ?? [undefined]}>
         {(fields, { add, remove }, { errors }) => (

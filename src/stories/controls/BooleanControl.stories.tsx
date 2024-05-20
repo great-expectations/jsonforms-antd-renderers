@@ -20,6 +20,18 @@ const metaUISchema = {
   ],
 } satisfies UISchema<typeof schema>
 
+const tooltipUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/checkbox",
+      label: "Checkbox",
+      formItemProps: { tooltip: "Check me" },
+    },
+  ],
+} satisfies UISchema<typeof schema>
+
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Boolean",
   component: StorybookAntDJsonForm,
@@ -61,4 +73,10 @@ export const SingleLine: Story = {
       description: "this is a simple schema with one property (name)",
     },
   },
+}
+
+export const Tooltip: Story = {
+  parameters: { controls: { expanded: true } },
+  tags: ["autodocs"],
+  args: { jsonSchema: schema, uiSchema: tooltipUISchema },
 }

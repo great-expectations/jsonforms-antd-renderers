@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import {
-  ControlProps,
-  isDescriptionHidden,
-} from "@jsonforms/core"
+import { ControlProps, isDescriptionHidden } from "@jsonforms/core"
 import { Form, FormItemProps } from "antd"
 import { Checkbox } from "../antd/Checkbox"
 import { withJsonFormsControlProps } from "@jsonforms/react"
@@ -42,7 +39,7 @@ export function BooleanControl({
   const showTooltip =
     !showDescription && !isDescriptionHidden(visible, description, true, true)
   const formItemProps =
-    "formItemProps" in uischema ? uischema.formItemProps as FormItemProps : {}
+    "formItemProps" in uischema ? (uischema.formItemProps as FormItemProps) : {}
   const tooltip = showTooltip && description ? description : undefined
 
   return (

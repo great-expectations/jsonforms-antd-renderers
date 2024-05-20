@@ -2,7 +2,10 @@ import type { ChangeEvent } from "react"
 import { useCallback, useEffect } from "react"
 import { Input, Form } from "antd"
 import type { Rule } from "antd/es/form"
-import type { ControlElement, ControlProps as JSFControlProps } from "@jsonforms/core"
+import type {
+  ControlElement,
+  ControlProps as JSFControlProps,
+} from "@jsonforms/core"
 
 import type { ControlUISchema, TextControlOptions } from "../ui-schema"
 import { assertNever } from "../common/assert-never"

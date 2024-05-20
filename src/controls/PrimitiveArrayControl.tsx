@@ -17,6 +17,7 @@ import { usePreviousValue } from "../common/usePreviousValue"
 
 type ArrayControlProps = Omit<JSFArrayControlProps, "data"> & {
   data?: unknown[]
+  uischema: ControlUISchema<unknown> | ControlElement
 }
 
 export function PrimitiveArrayControl({
@@ -69,10 +70,9 @@ export function PrimitiveArrayControl({
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
   const label = labelDescription.text || props.label // nullish coalescing doesn't work here because labelDescription.text can be an empty string =(
 
-  const uiSchema = uischema as ControlUISchema<unknown> | ControlElement
-  const options: ArrayControlOptions = uiSchema.options ?? {}
+  const options: ArrayControlOptions = uischema.options ?? {}
   const formItemProps =
-    "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
+    "formItemProps" in uischema ? uischema.formItemProps : {}
 
   return (
     <Form.Item

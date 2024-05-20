@@ -4,7 +4,7 @@ AnyOfRenderer does not have options to render the label as a title
 */
 import {
   ControlElement,
-  CombinatorRendererProps,
+  CombinatorRendererProps as JSFCombinatorRendererProps,
   createCombinatorRenderInfos,
   createDefaultValue,
   Helpers,
@@ -15,6 +15,10 @@ import { Form, Space } from "antd"
 import { useEffect, useState } from "react"
 import { ControlUISchema } from "../../ui-schema"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
+
+type CombinatorRendererProps = JSFCombinatorRendererProps & {
+  uischema: ControlUISchema<unknown> | ControlElement
+}
 
 export function AnyOfControl({
   handleChange,
@@ -74,10 +78,8 @@ export function AnyOfControl({
   ])
 
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
-
-  const uiSchema = uischema as ControlUISchema<unknown> | ControlElement
   const formItemProps =
-    "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
+    "formItemProps" in uischema ? uischema.formItemProps : {}
 
   return (
     <Space direction="vertical" style={{ width: "100%" }} size="middle">
@@ -91,7 +93,7 @@ export function AnyOfControl({
           renderInfos={combinatorRenderInfos}
           selectedIndex={selectedIndex}
           setSelectedIndex={setSelectedIndex}
-          uischema={uiSchema}
+          uischema={uischema}
           path={path}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           data={data}

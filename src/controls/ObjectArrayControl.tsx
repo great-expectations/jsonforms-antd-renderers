@@ -1,7 +1,7 @@
 import {
   ControlElement,
   Helpers,
-  ArrayLayoutProps,
+  ArrayLayoutProps as JSFArrayLayoutProps,
   composePaths,
   createDefaultValue,
   findUISchema,
@@ -16,6 +16,11 @@ import { useEffect, useMemo } from "react"
 import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 import React from "react"
+
+
+type ArrayLayoutProps = JSFArrayLayoutProps & {
+  uischema: ControlUISchema<unknown> | ControlElement
+}
 
 export function ObjectArrayControl({
   data,
@@ -59,9 +64,8 @@ export function ObjectArrayControl({
     }
   })
 
-  const uiSchema = uischema as ControlUISchema<unknown> | ControlElement
   const formItemProps =
-    "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
+    "formItemProps" in uischema ? uischema.formItemProps : {}
 
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
   const label = labelDescription.show ? labelDescription.text : ""

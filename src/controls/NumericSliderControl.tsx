@@ -10,7 +10,11 @@ import { Slider } from "../antd/Slider"
 import { ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
-export const NumericSliderControl = (props: ControlProps & RendererProps) => {
+type NumericSliderControlProps = RendererProps & ControlProps & {
+  uischema: ControlUISchema<unknown> | ControlElement
+}
+
+export const NumericSliderControl = (props: NumericSliderControlProps) => {
   if (!props.visible) return null
 
   const initialValue =
@@ -22,9 +26,8 @@ export const NumericSliderControl = (props: ControlProps & RendererProps) => {
     { required: props.required, message: `${props.label} is required` },
   ]
 
-  const uiSchema = props.uischema as ControlUISchema<unknown> | ControlElement
   const formItemProps =
-    "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
+    "formItemProps" in props.uischema ? props.uischema.formItemProps : {}
 
   return (
     <Form.Item

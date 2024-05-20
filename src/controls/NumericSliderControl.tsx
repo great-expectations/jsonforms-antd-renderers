@@ -1,4 +1,8 @@
-import type { ControlElement, ControlProps, RendererProps } from "@jsonforms/core"
+import type {
+  ControlElement,
+  ControlProps,
+  RendererProps,
+} from "@jsonforms/core"
 import { Col, Form, Row } from "antd"
 import type { Rule } from "antd/es/form"
 import { InputNumber } from "../antd/InputNumber"
@@ -18,7 +22,8 @@ export const NumericSliderControl = (props: ControlProps & RendererProps) => {
     { required: props.required, message: `${props.label} is required` },
   ]
 
-  const uiSchema = props.uischema as ControlUISchema<typeof props.uischema> & ControlElement
+  const uiSchema = props.uischema as ControlUISchema<typeof props.uischema> &
+    ControlElement
   const formItemProps = uiSchema.formItemProps ?? {}
 
   return (

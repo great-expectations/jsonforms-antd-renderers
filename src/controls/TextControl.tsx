@@ -2,12 +2,12 @@ import type { ChangeEvent } from "react"
 import { useCallback, useEffect } from "react"
 import { Input, Form } from "antd"
 import type { Rule } from "antd/es/form"
-import type { ControlElement, ControlProps } from "@jsonforms/core"
+import type { ControlElement, ControlProps as JSFControlProps } from "@jsonforms/core"
 
 import type { ControlUISchema, TextControlOptions } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
 import { withJsonFormsControlProps } from "@jsonforms/react"
-interface TextControlProps extends ControlProps {
+type ControlProps = Omit<JSFControlProps, "uischema"> & {
   data: string
   handleChange(path: string, value: string): void
   path: string
@@ -25,7 +25,7 @@ export function TextControl({
   enabled,
   id,
   uischema,
-}: TextControlProps) {
+}: ControlProps) {
   const setInitialValue = useCallback(
     (value: unknown) => {
       if (typeof value !== "number") return value

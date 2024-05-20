@@ -1,5 +1,4 @@
 import {
-  ControlElement,
   CombinatorRendererProps as JSFCombinatorRendererProps,
   createCombinatorRenderInfos,
   JsonSchema,
@@ -11,8 +10,8 @@ import { ControlUISchema } from "../../ui-schema"
 import { ControlLabel } from "../../common/ControlLabel"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
 
-type CombinatorRendererProps = JSFCombinatorRendererProps & {
-  uischema: ControlUISchema<unknown> | ControlElement
+type CombinatorRendererProps = Omit<JSFCombinatorRendererProps, "uischema"> & {
+  uischema: ControlUISchema<unknown> | JSFCombinatorRendererProps["uischema"]
 }
 
 export function OneOfControl({

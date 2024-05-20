@@ -1,18 +1,13 @@
-import type {
-  ControlElement,
-  ControlProps,
-  RendererProps,
-} from "@jsonforms/core"
+import type { ControlProps as JSFControlProps } from "@jsonforms/core"
 import { Col, Form } from "antd"
 import type { Rule } from "antd/es/form"
 import { InputNumber } from "../antd/InputNumber"
 import { ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
-type NumericControlProps = ControlProps &
-  RendererProps & {
-    uischema: ControlUISchema<unknown> | ControlElement
-  }
+type NumericControlProps = Omit<JSFControlProps, "uischema"> & {
+  uischema: ControlUISchema<unknown> | JSFControlProps["uischema"]
+}
 
 export const NumericControl = (props: NumericControlProps) => {
   if (!props.visible) return null

@@ -1,5 +1,4 @@
 import {
-  ControlElement,
   Helpers,
   ArrayLayoutProps as JSFArrayLayoutProps,
   composePaths,
@@ -17,8 +16,8 @@ import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 import React from "react"
 
-type ArrayLayoutProps = JSFArrayLayoutProps & {
-  uischema: ControlUISchema<unknown> | ControlElement
+type ArrayLayoutProps = Omit<JSFArrayLayoutProps, "uischema"> & {
+  uischema: ControlUISchema<unknown> | JSFArrayLayoutProps["uischema"]
 }
 
 export function ObjectArrayControl({

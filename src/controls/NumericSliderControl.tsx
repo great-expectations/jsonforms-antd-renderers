@@ -1,8 +1,4 @@
-import type {
-  ControlElement,
-  ControlProps,
-  RendererProps,
-} from "@jsonforms/core"
+import type { ControlProps as JSFControlProps } from "@jsonforms/core"
 import { Col, Form, Row } from "antd"
 import type { Rule } from "antd/es/form"
 import { InputNumber } from "../antd/InputNumber"
@@ -10,10 +6,9 @@ import { Slider } from "../antd/Slider"
 import { ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
-type NumericSliderControlProps = RendererProps &
-  ControlProps & {
-    uischema: ControlUISchema<unknown> | ControlElement
-  }
+type NumericSliderControlProps = Omit<JSFControlProps, "uischema"> & {
+  uischema: ControlUISchema<unknown> | JSFControlProps["uischema"]
+}
 
 export const NumericSliderControl = (props: NumericSliderControlProps) => {
   if (!props.visible) return null

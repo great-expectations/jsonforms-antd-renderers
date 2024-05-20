@@ -1,5 +1,4 @@
 import {
-  ControlElement,
   Helpers,
   composePaths,
   createDefaultValue,
@@ -15,9 +14,9 @@ import React, { useEffect, useMemo } from "react"
 import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 
-type ArrayControlProps = Omit<JSFArrayControlProps, "data"> & {
+type ArrayControlProps = Omit<JSFArrayControlProps, "data" | "uischema"> & {
   data?: unknown[]
-  uischema: ControlUISchema<unknown> | ControlElement
+  uischema: ControlUISchema<unknown> | JSFArrayControlProps["uischema"]
 }
 
 export function PrimitiveArrayControl({

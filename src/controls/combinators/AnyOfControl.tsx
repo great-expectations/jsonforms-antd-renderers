@@ -3,7 +3,6 @@ AnyOfControl should be used when a form item would control other elements within
 AnyOfRenderer does not have options to render the label as a title
 */
 import {
-  ControlElement,
   CombinatorRendererProps as JSFCombinatorRendererProps,
   createCombinatorRenderInfos,
   createDefaultValue,
@@ -16,8 +15,8 @@ import { useEffect, useState } from "react"
 import { ControlUISchema } from "../../ui-schema"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
 
-type CombinatorRendererProps = JSFCombinatorRendererProps & {
-  uischema: ControlUISchema<unknown> | ControlElement
+type CombinatorRendererProps = Omit<JSFCombinatorRendererProps, "uischema"> & {
+  uischema: ControlUISchema<unknown> | JSFCombinatorRendererProps["uischema"]
 }
 
 export function AnyOfControl({

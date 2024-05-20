@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
-  ControlElement,
   ControlProps as JSFControlProps,
   isDescriptionHidden,
 } from "@jsonforms/core"
@@ -9,9 +8,7 @@ import { Checkbox } from "../antd/Checkbox"
 import { ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
-type ControlProps = JSFControlProps & {
-  uischema: ControlUISchema<unknown> | ControlElement
-}
+type ControlProps = Omit<JSFControlProps, "uischema"> & { uischema: ControlUISchema<unknown> | JSFControlProps["uischema"] }
 
 export function BooleanControl({
   data,

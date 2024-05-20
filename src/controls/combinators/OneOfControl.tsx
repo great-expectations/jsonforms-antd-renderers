@@ -1,5 +1,5 @@
 import {
-  CombinatorRendererProps,
+  CombinatorRendererProps as JSFCombinatorRendererProps,
   createCombinatorRenderInfos,
   JsonSchema,
 } from "@jsonforms/core"
@@ -9,6 +9,10 @@ import { useState } from "react"
 import { ControlUISchema } from "../../ui-schema"
 import { ControlLabel } from "../../common/ControlLabel"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
+
+type CombinatorRendererProps = Omit<JSFCombinatorRendererProps, "uischema"> & {
+  uischema: ControlUISchema<unknown> | JSFCombinatorRendererProps["uischema"]
+}
 
 export function OneOfControl({
   handleChange,
@@ -35,8 +39,15 @@ export function OneOfControl({
     uischemas,
   )
 
+  const formItemProps =
+    "formItemProps" in uischema ? uischema.formItemProps : {}
+
   return (
-    <Form.Item required={required} label={uischema.label ? "" : schema.title}>
+    <Form.Item
+      required={required}
+      label={uischema.label ? "" : schema.title}
+      {...formItemProps}
+    >
       <Space direction="vertical" style={{ width: "100%" }} size="middle">
         {uischema.type === "Control" && uischema.label ? ( // I don't think it's possible for type to be other than "Control"
           // but until we improve the UISchema types a bit, it's hard to be sure

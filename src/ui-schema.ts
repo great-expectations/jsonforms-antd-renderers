@@ -1,10 +1,11 @@
 import type { JsonSchema } from "@jsonforms/core"
 import type {
-  ButtonProps,
-  InputNumberProps,
   AlertProps,
+  ButtonProps,
   CardProps,
   DividerProps,
+  FormItemProps,
+  InputNumberProps,
   InputProps,
 } from "antd"
 import type { TextAreaProps } from "antd/es/input"
@@ -182,6 +183,7 @@ export type ControlUISchema<T> = UISchemaElement<T> &
   SchemaAwareScope<T> &
   ControlUISchemaLabel & {
     type: "Control"
+    formItemProps?: FormItemProps
   }
 /**
  * The category layout.

@@ -1,17 +1,20 @@
 import type { ChangeEvent } from "react"
 import { useCallback, useEffect } from "react"
 import { Input, Form } from "antd"
-import { QuestionCircleOutlined } from "@ant-design/icons"
 import type { Rule } from "antd/es/form"
-import type { ControlProps } from "@jsonforms/core"
+import type {
+  ControlElement,
+  ControlProps as JSFControlProps,
+} from "@jsonforms/core"
 
-import type { TextControlOptions } from "../ui-schema"
+import type { ControlUISchema, TextControlOptions } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
 import { withJsonFormsControlProps } from "@jsonforms/react"
-interface TextControlProps extends ControlProps {
+type ControlProps = Omit<JSFControlProps, "uischema"> & {
   data: string
   handleChange(path: string, value: string): void
   path: string
+  uischema: ControlUISchema<unknown> | ControlElement
 }
 
 export function TextControl({
@@ -25,7 +28,7 @@ export function TextControl({
   enabled,
   id,
   uischema,
-}: TextControlProps) {
+}: ControlProps) {
   const setInitialValue = useCallback(
     (value: unknown) => {
       if (typeof value !== "number") return value
@@ -38,7 +41,9 @@ export function TextControl({
   const ariaLabel = label || schema.description
   const options: TextControlOptions =
     (uischema.options as TextControlOptions) ?? {}
-  const tooltip = options.tooltip
+  const formItemProps =
+    "formItemProps" in uischema ? uischema.formItemProps : {}
+  const tooltip = options.tooltip ? options.tooltip : formItemProps?.tooltip
   const placeholderText = options.placeholderText
   const form = Form.useFormInstance()
   const rules: Rule[] = [
@@ -60,14 +65,8 @@ export function TextControl({
       name={path}
       rules={rules}
       validateTrigger={["onBlur"]}
-      {...(tooltip
-        ? {
-            tooltip: {
-              title: tooltip,
-              icon: <QuestionCircleOutlined />,
-            },
-          }
-        : {})}
+      tooltip={tooltip}
+      {...formItemProps}
     >
       <TextControlInput
         aria-label={ariaLabel}

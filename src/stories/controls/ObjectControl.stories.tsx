@@ -5,6 +5,7 @@ import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import {
   objectSchema,
   objectUISchemaWithName,
+  objectUISchemaWithTooltip,
   objectUISchemaWithNameAndLastName,
   objectUISchemaWithRule,
 } from "../../testSchemas/objectSchema"
@@ -54,5 +55,13 @@ export const ObjectWithRuleHidingLastNameIfNameIsJohn: Story = {
   args: {
     jsonSchema: objectSchema,
     uiSchema: objectUISchemaWithRule,
+  },
+}
+
+export const ObjectWithTooltip: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: objectSchema,
+    uiSchema: objectUISchemaWithTooltip,
   },
 }

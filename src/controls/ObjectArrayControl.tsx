@@ -1,6 +1,6 @@
 import {
   Helpers,
-  ArrayLayoutProps,
+  ArrayLayoutProps as JSFArrayLayoutProps,
   composePaths,
   createDefaultValue,
   findUISchema,
@@ -12,9 +12,13 @@ import {
 import { Flex, Form, List, Button } from "antd"
 import range from "lodash.range"
 import { useEffect, useMemo } from "react"
-import { ArrayControlOptions } from "../ui-schema"
+import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 import React from "react"
+
+type ArrayLayoutProps = Omit<JSFArrayLayoutProps, "uischema"> & {
+  uischema: ControlUISchema<unknown> | JSFArrayLayoutProps["uischema"]
+}
 
 export function ObjectArrayControl({
   data,
@@ -58,6 +62,9 @@ export function ObjectArrayControl({
     }
   })
 
+  const formItemProps =
+    "formItemProps" in uischema ? uischema.formItemProps : {}
+
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
   const label = labelDescription.show ? labelDescription.text : ""
 
@@ -86,6 +93,7 @@ export function ObjectArrayControl({
       required={required}
       rules={[{ required: required, message: `${label} is required` }]}
       validateTrigger={["onBlur"]}
+      {...formItemProps}
     >
       <>{label}</>
       <List<unknown>

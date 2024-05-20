@@ -89,6 +89,20 @@ export const numericVerticalUISchema = {
   ],
 } satisfies UISchema<typeof numericROISchema>
 
+export const numericTooltipUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/numericValue",
+      formItemProps: {
+        tooltip:
+          "Sheep (pl.: sheep) or domestic sheep (Ovis aries) are a domesticated, ruminant mammal typically kept as livestock.",
+      },
+    },
+  ],
+} satisfies UISchema<typeof numericSheepSchema>
+
 export const numericHorizontalUISchema = {
   type: "HorizontalLayout",
   elements: [

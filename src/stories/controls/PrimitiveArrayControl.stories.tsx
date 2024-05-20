@@ -4,6 +4,7 @@ import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 import {
   stringArrayControlJsonSchema,
   arrayControlUISchema,
+  arrayControlTooltipUISchema,
 } from "../../testSchemas/arraySchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
@@ -81,6 +82,25 @@ export const PrePopulatedArray: Story = {
       },
     } satisfies JSONSchema,
     uiSchema: arrayControlUISchema,
+    data: { assets: [1, 2, 3] },
+  },
+}
+
+export const WithTooltip: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      type: "object",
+      properties: {
+        assets: {
+          type: "array",
+          items: {
+            type: "number",
+          },
+        },
+      },
+    } satisfies JSONSchema,
+    uiSchema: arrayControlTooltipUISchema,
     data: { assets: [1, 2, 3] },
   },
 }

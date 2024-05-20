@@ -1,4 +1,5 @@
 import {
+  ControlElement,
   Helpers,
   composePaths,
   createDefaultValue,
@@ -11,7 +12,7 @@ import {
 } from "@jsonforms/react"
 import { Form, Button, Col, Row } from "antd"
 import React, { useEffect, useMemo } from "react"
-import { ArrayControlOptions } from "../ui-schema"
+import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 
 type ArrayControlProps = Omit<JSFArrayControlProps, "data"> & {
@@ -68,8 +69,9 @@ export function PrimitiveArrayControl({
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
   const label = labelDescription.text || props.label // nullish coalescing doesn't work here because labelDescription.text can be an empty string =(
 
-  const options: ArrayControlOptions = uischema.options ?? {}
-  const formItemProps = uischema.formItemProps ?? {}
+  const uiSchema = uischema as ControlUISchema<typeof uischema> & ControlElement
+  const options: ArrayControlOptions = uiSchema.options ?? {}
+  const formItemProps = uiSchema.formItemProps ?? {}
 
   return (
     <Form.Item

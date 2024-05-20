@@ -1,7 +1,8 @@
-import type { ControlProps, RendererProps } from "@jsonforms/core"
+import type { ControlElement, ControlProps, RendererProps } from "@jsonforms/core"
 import { Col, Form } from "antd"
 import type { Rule } from "antd/es/form"
 import { InputNumber } from "../antd/InputNumber"
+import { ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
 export const NumericControl = (props: ControlProps & RendererProps) => {
@@ -14,6 +15,9 @@ export const NumericControl = (props: ControlProps & RendererProps) => {
     { required: props.required, message: `${props.label} is required` },
   ]
 
+  const uiSchema = props.uischema as ControlUISchema<typeof props.uischema> & ControlElement
+  const formItemProps = uiSchema.formItemProps ?? {}
+
   return (
     <Form.Item
       label={props.label}
@@ -23,7 +27,7 @@ export const NumericControl = (props: ControlProps & RendererProps) => {
       initialValue={initialValue}
       rules={rules}
       validateTrigger={["onBlur"]}
-      {...props.uischema.formItemProps}
+      {...formItemProps}
     >
       <Col span={18}>{InputNumber({ ...props })}</Col>
     </Form.Item>

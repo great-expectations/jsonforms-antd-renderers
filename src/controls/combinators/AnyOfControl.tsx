@@ -3,6 +3,7 @@ AnyOfControl should be used when a form item would control other elements within
 AnyOfRenderer does not have options to render the label as a title
 */
 import {
+  ControlElement,
   CombinatorRendererProps,
   createCombinatorRenderInfos,
   createDefaultValue,
@@ -12,6 +13,7 @@ import {
 import { JsonFormsDispatch, withJsonFormsOneOfProps } from "@jsonforms/react"
 import { Form, Space } from "antd"
 import { useEffect, useState } from "react"
+import { ControlUISchema } from "../../ui-schema"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
 
 export function AnyOfControl({
@@ -73,19 +75,22 @@ export function AnyOfControl({
 
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
 
+  const uiSchema = uischema as ControlUISchema<typeof uischema> & ControlElement
+  const formItemProps = uiSchema.formItemProps ?? {}
+
   return (
     <Space direction="vertical" style={{ width: "100%" }} size="middle">
       <Form.Item
         rules={[{ required, message: `${schema.title} is required` }]}
         label={labelDescription.show ? labelDescription.text : ""}
-        tooltip={uischema.formItemProps?.tooltip}
+        {...formItemProps}
       >
         <CombinatorSchemaSwitcher
           config={config as unknown}
           renderInfos={combinatorRenderInfos}
           selectedIndex={selectedIndex}
           setSelectedIndex={setSelectedIndex}
-          uischema={uischema}
+          uischema={uiSchema}
           path={path}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           data={data}

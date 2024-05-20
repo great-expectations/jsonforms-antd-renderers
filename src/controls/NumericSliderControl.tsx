@@ -1,9 +1,9 @@
-import type { ControlProps, RendererProps } from "@jsonforms/core"
+import type { ControlElement, ControlProps, RendererProps } from "@jsonforms/core"
 import { Col, Form, Row } from "antd"
 import type { Rule } from "antd/es/form"
 import { InputNumber } from "../antd/InputNumber"
 import { Slider } from "../antd/Slider"
-import type { NumericControlOptions } from "../ui-schema"
+import { ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 
 export const NumericSliderControl = (props: ControlProps & RendererProps) => {
@@ -18,6 +18,9 @@ export const NumericSliderControl = (props: ControlProps & RendererProps) => {
     { required: props.required, message: `${props.label} is required` },
   ]
 
+  const uiSchema = props.uischema as ControlUISchema<typeof props.uischema> & ControlElement
+  const formItemProps = uiSchema.formItemProps ?? {}
+
   return (
     <Form.Item
       label={props.label}
@@ -27,7 +30,7 @@ export const NumericSliderControl = (props: ControlProps & RendererProps) => {
       initialValue={initialValue}
       rules={rules}
       validateTrigger={["onBlur"]}
-      {...props.uischema.formItemProps}
+      {...formItemProps}
     >
       <Row>
         <Col span={8}>{Slider({ ...props })}</Col>

@@ -1,4 +1,5 @@
 import {
+  ControlElement,
   CombinatorRendererProps,
   createCombinatorRenderInfos,
   JsonSchema,
@@ -6,7 +7,7 @@ import {
 import { JsonFormsDispatch, withJsonFormsOneOfProps } from "@jsonforms/react"
 import { Form, Space } from "antd"
 import { useState } from "react"
-import { ControlUISchema, OneOfControlOptions } from "../../ui-schema"
+import { ControlUISchema } from "../../ui-schema"
 import { ControlLabel } from "../../common/ControlLabel"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
 
@@ -35,17 +36,20 @@ export function OneOfControl({
     uischemas,
   )
 
+  const uiSchema = uischema as ControlUISchema<typeof uischema> & ControlElement
+  const formItemProps = uiSchema.formItemProps ?? {}
+
   return (
     <Form.Item
       required={required}
-      label={uischema.label ? "" : schema.title}
-      {...uischema.formItemProps}
+      label={uiSchema.label ? "" : schema.title}
+      {...formItemProps}
     >
       <Space direction="vertical" style={{ width: "100%" }} size="middle">
-        {uischema.type === "Control" && uischema.label ? ( // I don't think it's possible for type to be other than "Control"
+        {uiSchema.type === "Control" && uiSchema.label ? ( // I don't think it's possible for type to be other than "Control"
           // but until we improve the UISchema types a bit, it's hard to be sure
           <ControlLabel
-            uischema={uischema as ControlUISchema<unknown>}
+            uischema={uiSchema as ControlUISchema<unknown>}
             schema={schema}
           />
         ) : null}
@@ -54,7 +58,7 @@ export function OneOfControl({
           renderInfos={oneOfRenderInfos}
           selectedIndex={selectedIndex}
           setSelectedIndex={setSelectedIndex}
-          uischema={uischema}
+          uischema={uiSchema}
           path={path}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           data={data}

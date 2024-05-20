@@ -44,7 +44,8 @@ export function BooleanControl({
   const showTooltip =
     !showDescription && !isDescriptionHidden(visible, description, true, true)
   const uiSchema = uischema as ControlUISchema<unknown> | ControlElement
-  const formItemProps = "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
+  const formItemProps =
+    "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
   const tooltip = showTooltip && description ? description : undefined
 
   return (

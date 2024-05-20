@@ -71,7 +71,8 @@ export function PrimitiveArrayControl({
 
   const uiSchema = uischema as ControlUISchema<unknown> | ControlElement
   const options: ArrayControlOptions = uiSchema.options ?? {}
-  const formItemProps = "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
+  const formItemProps =
+    "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
 
   return (
     <Form.Item

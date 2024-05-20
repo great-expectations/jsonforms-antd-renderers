@@ -60,7 +60,8 @@ export function ObjectArrayControl({
   })
 
   const uiSchema = uischema as ControlUISchema<unknown> | ControlElement
-  const formItemProps = "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
+  const formItemProps =
+    "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
 
   const labelDescription = Helpers.createLabelDescriptionFrom(uischema, schema)
   const label = labelDescription.show ? labelDescription.text : ""

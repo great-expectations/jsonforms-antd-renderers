@@ -23,7 +23,8 @@ export const NumericSliderControl = (props: ControlProps & RendererProps) => {
   ]
 
   const uiSchema = props.uischema as ControlUISchema<unknown> | ControlElement
-  const formItemProps = "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
+  const formItemProps =
+    "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
 
   return (
     <Form.Item

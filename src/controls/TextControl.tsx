@@ -38,7 +38,8 @@ export function TextControl({
   const ariaLabel = label || schema.description
   const options: TextControlOptions =
     (uiSchema.options as TextControlOptions) ?? {}
-  const formItemProps = "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
+  const formItemProps =
+    "formItemProps" in uiSchema ? uiSchema.formItemProps : {}
   const tooltip = options.tooltip ? options.tooltip : formItemProps?.tooltip
   const placeholderText = options.placeholderText
   const form = Form.useFormInstance()

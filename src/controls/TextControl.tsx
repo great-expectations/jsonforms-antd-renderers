@@ -106,7 +106,6 @@ function TextControlInput({
       <Input
         {...{
           ...rest,
-          ...restTextControlOptions,
           ...(inputProps as InputProps),
           // hate this but because of destructuring we have to go back to casting
         }}
@@ -120,7 +119,6 @@ function TextControlInput({
         <Input.TextArea
           {...{
             ...rest,
-            ...restTextControlOptions,
             ...(inputProps as TextAreaProps),
           }}
         />
@@ -130,7 +128,6 @@ function TextControlInput({
         <Input
           {...{
             ...rest,
-            ...restTextControlOptions,
             ...(inputProps as InputProps),
           }}
         />
@@ -140,7 +137,6 @@ function TextControlInput({
         <Input.Password
           {...{
             ...rest,
-            ...restTextControlOptions,
             ...(inputProps as InputProps),
           }}
         />
@@ -154,7 +150,6 @@ function TextControlInput({
           <Input
             {...{
               ...rest,
-              ...textControlOptions,
               ...(inputProps as InputProps),
             }}
           />

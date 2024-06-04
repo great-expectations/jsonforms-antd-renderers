@@ -90,7 +90,11 @@ export const Password: Story = {
           type: "Control",
           scope: "#/properties/name",
           label: "Name",
-          options: { type: "password", rules: [] },
+          options: {
+            type: "password",
+            rules: [],
+            inputProps: { autoComplete: "new-password" },
+          },
         },
       ],
     } satisfies UISchema<typeof schema>,

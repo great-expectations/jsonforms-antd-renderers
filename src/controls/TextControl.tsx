@@ -1,6 +1,6 @@
 import type { ChangeEvent } from "react"
 import { useCallback, useEffect } from "react"
-import { Input, Form } from "antd"
+import { Input, Form, InputProps } from "antd"
 import type { Rule } from "antd/es/form"
 import type {
   ControlElement,
@@ -10,6 +10,7 @@ import type {
 import type { ControlUISchema, TextControlOptions } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
 import { withJsonFormsControlProps } from "@jsonforms/react"
+import { TextAreaProps } from "antd/es/input/TextArea"
 type ControlProps = Omit<JSFControlProps, "uischema"> & {
   data: string
   handleChange(path: string, value: string): void
@@ -95,26 +96,64 @@ function TextControlInput({
   textControlOptions,
   ...rest
 }: TextControlInputProps) {
+  const { inputProps, ...restTextControlOptions } = textControlOptions
+
   if (
-    !(`type` in textControlOptions) ||
-    textControlOptions.type === undefined
+    !(`type` in restTextControlOptions) ||
+    restTextControlOptions.type === undefined
   ) {
-    return <Input {...{ ...rest, ...textControlOptions }} />
+    return (
+      <Input
+        {...{
+          ...rest,
+          ...(inputProps as InputProps),
+          // hate this but because of destructuring we have to go back to casting
+        }}
+      />
+    )
   }
 
-  switch (textControlOptions.type) {
+  switch (restTextControlOptions.type) {
     case "multiline":
-      return <Input.TextArea {...{ ...rest, ...textControlOptions }} />
+      return (
+        <Input.TextArea
+          {...{
+            ...rest,
+            ...(inputProps as TextAreaProps),
+          }}
+        />
+      )
     case "singleline":
-      return <Input {...{ ...rest, ...textControlOptions }} />
+      return (
+        <Input
+          {...{
+            ...rest,
+            ...(inputProps as InputProps),
+          }}
+        />
+      )
     case "password":
-      return <Input.Password {...{ ...rest, ...textControlOptions }} />
+      return (
+        <Input.Password
+          {...{
+            ...rest,
+            ...(inputProps as InputProps),
+          }}
+        />
+      )
 
     default:
       try {
-        assertNever(textControlOptions.type)
+        assertNever(restTextControlOptions.type)
       } catch (e) {
-        return <Input {...{ ...rest, ...textControlOptions }} />
+        return (
+          <Input
+            {...{
+              ...rest,
+              ...(inputProps as InputProps),
+            }}
+          />
+        )
       }
   }
 }

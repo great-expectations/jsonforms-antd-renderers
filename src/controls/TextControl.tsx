@@ -1,16 +1,19 @@
 import type { ChangeEvent } from "react"
-import { useCallback, useEffect } from "react"
+import React, { useCallback, useEffect } from "react"
 import { Input, Form, InputProps } from "antd"
-import type { Rule } from "antd/es/form"
+import type { FormItemProps, Rule } from "antd/es/form"
 import type {
   ControlElement,
   ControlProps as JSFControlProps,
 } from "@jsonforms/core"
+import { Interweave } from "interweave"
+import ReactDOMServer from "react-dom/server"
 
 import type { ControlUISchema, TextControlOptions } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 import { TextAreaProps } from "antd/es/input/TextArea"
+
 type ControlProps = Omit<JSFControlProps, "uischema"> & {
   data: string
   handleChange(path: string, value: string): void
@@ -44,7 +47,10 @@ export function TextControl({
     (uischema.options as TextControlOptions) ?? {}
   const formItemProps =
     "formItemProps" in uischema ? uischema.formItemProps : {}
-  const tooltip = options.tooltip ? options.tooltip : formItemProps?.tooltip
+  const { tooltip, ...formItemPropsWOTooltip } = formItemProps as FormItemProps
+  const mergedTooltip = options.tooltip ? options.tooltip : tooltip ?? ""
+  const tooltipProps = getTooltipProps(mergedTooltip)
+
   const placeholderText = options.placeholderText
   const form = Form.useFormInstance()
   const rules: Rule[] = [
@@ -64,10 +70,13 @@ export function TextControl({
       label={label}
       id={id}
       name={path}
-      rules={rules}
       validateTrigger={["onBlur"]}
-      tooltip={tooltip}
-      {...formItemProps}
+      rules={rules}
+      tooltip={{
+        title: <Interweave content={tooltipProps.title} />,
+        ...tooltipProps.rest,
+      }}
+      {...formItemPropsWOTooltip}
     >
       <TextControlInput
         aria-label={ariaLabel}
@@ -160,6 +169,21 @@ function TextControlInput({
 
 function coerceToString(value: number) {
   return value.toString()
+}
+
+const getTooltipProps = (tooltip: string | FormItemProps["tooltip"]) => {
+  if (!tooltip) {
+    return { title: "", rest: null }
+  } else if (typeof tooltip === "string") {
+    return { title: tooltip, rest: null }
+  } else if (React.isValidElement(tooltip)) {
+    return { title: ReactDOMServer.renderToString(tooltip), rest: null }
+  } else if (typeof tooltip === "object" && "title" in tooltip) {
+    const { title, ...rest } = tooltip
+    return { title: String(title), rest }
+  } else {
+    return { title: String(tooltip), rest: null }
+  }
 }
 
 export const TextRenderer = withJsonFormsControlProps(TextControl)

@@ -130,3 +130,33 @@ test("renders error messages from rule validation", async () => {
 
   await screen.findByText("Only letters are allowed")
 })
+
+test("renders tooltips", async () => {
+  const uischema = {
+    type: "VerticalLayout",
+    elements: [
+      {
+        type: "Control",
+        scope: "#/properties/name",
+        label: "Name",
+        options: {
+          tooltip:
+            "Choose <a href='https://wheelofnames.com/' target='_blank' rel='noopener noreferrer'>a random name</a>.",
+        },
+      },
+    ],
+  }
+  const schema = {
+    type: "object",
+    properties: { name: { type: "string", title: "Name" } },
+  } satisfies JSONSchema
+
+  render({ schema, uischema })
+  await screen.findByPlaceholderText(schema.properties.name.title, {
+    exact: false,
+  })
+  const svgEl = screen.getByRole("img", { name: /question-circle/i })
+  await userEvent.hover(svgEl)
+
+  await screen.findByText("a random name", { exact: false })
+})

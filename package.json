@@ -110,7 +110,6 @@
     "vitest": "^1.5.0"
   },
   "dependencies": {
-    "interweave": "^13.1.0",
     "lodash.isempty": "^4.4.0",
     "lodash.merge": "^4.6.2",
     "lodash.range": "^3.2.0",

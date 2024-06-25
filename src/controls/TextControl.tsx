@@ -1,13 +1,11 @@
 import type { ChangeEvent } from "react"
-import React, { useCallback, useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { Input, Form, InputProps } from "antd"
 import type { FormItemProps, Rule } from "antd/es/form"
 import type {
   ControlElement,
   ControlProps as JSFControlProps,
 } from "@jsonforms/core"
-import { Interweave } from "interweave"
-import ReactDOMServer from "react-dom/server"
 
 import type { ControlUISchema, TextControlOptions } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
@@ -49,7 +47,6 @@ export function TextControl({
     "formItemProps" in uischema ? uischema.formItemProps : {}
   const { tooltip, ...formItemPropsWOTooltip } = formItemProps as FormItemProps
   const mergedTooltip = options.tooltip ? options.tooltip : tooltip ?? ""
-  const tooltipProps = getTooltipProps(mergedTooltip)
 
   const placeholderText = options.placeholderText
   const form = Form.useFormInstance()
@@ -72,10 +69,7 @@ export function TextControl({
       name={path}
       validateTrigger={["onBlur"]}
       rules={rules}
-      tooltip={{
-        title: <Interweave content={tooltipProps.title} />,
-        ...tooltipProps.rest,
-      }}
+      tooltip={mergedTooltip}
       {...formItemPropsWOTooltip}
     >
       <TextControlInput
@@ -169,21 +163,6 @@ function TextControlInput({
 
 function coerceToString(value: number) {
   return value.toString()
-}
-
-const getTooltipProps = (tooltip: string | FormItemProps["tooltip"]) => {
-  if (!tooltip) {
-    return { title: "", rest: null }
-  } else if (typeof tooltip === "string") {
-    return { title: tooltip, rest: null }
-  } else if (React.isValidElement(tooltip)) {
-    return { title: ReactDOMServer.renderToString(tooltip), rest: null }
-  } else if (typeof tooltip === "object" && "title" in tooltip) {
-    const { title, ...rest } = tooltip
-    return { title: String(title), rest }
-  } else {
-    return { title: String(tooltip), rest: null }
-  }
 }
 
 export const TextRenderer = withJsonFormsControlProps(TextControl)

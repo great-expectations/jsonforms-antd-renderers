@@ -155,7 +155,7 @@ export type AnyOfControlOptions = OneOfControlOptions
 export type TextControlType = "multiline" | "password" | "singleline"
 
 export type TextControlOptions = {
-  tooltip?: string
+  tooltip?: React.ReactNode
   placeholderText?: string
   required?: boolean
   rules?: AntDRule[]

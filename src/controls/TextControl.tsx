@@ -45,7 +45,8 @@ export function TextControl({
     (uischema.options as TextControlOptions) ?? {}
   const formItemProps =
     "formItemProps" in uischema ? uischema.formItemProps : {}
-  const { tooltip: formItemTooltip, ...formItemPropsWOTooltip } = formItemProps ?? {}
+  const { tooltip: formItemTooltip, ...formItemPropsWOTooltip } =
+    formItemProps ?? {}
   const tooltip = options.tooltip ? options.tooltip : formItemTooltip ?? ""
 
   const placeholderText = options.placeholderText

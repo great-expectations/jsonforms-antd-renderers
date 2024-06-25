@@ -1,7 +1,7 @@
 import type { ChangeEvent } from "react"
 import { useCallback, useEffect } from "react"
 import { Input, Form, InputProps } from "antd"
-import type { FormItemProps, Rule } from "antd/es/form"
+import type { Rule } from "antd/es/form"
 import type {
   ControlElement,
   ControlProps as JSFControlProps,
@@ -45,8 +45,8 @@ export function TextControl({
     (uischema.options as TextControlOptions) ?? {}
   const formItemProps =
     "formItemProps" in uischema ? uischema.formItemProps : {}
-  const { tooltip, ...formItemPropsWOTooltip } = formItemProps as FormItemProps
-  const mergedTooltip = options.tooltip ? options.tooltip : tooltip ?? ""
+  const { tooltip: formItemTooltip, ...formItemPropsWOTooltip } = formItemProps ?? {}
+  const tooltip = options.tooltip ? options.tooltip : formItemTooltip ?? ""
 
   const placeholderText = options.placeholderText
   const form = Form.useFormInstance()
@@ -69,7 +69,7 @@ export function TextControl({
       name={path}
       validateTrigger={["onBlur"]}
       rules={rules}
-      tooltip={mergedTooltip}
+      tooltip={tooltip}
       {...formItemPropsWOTooltip}
     >
       <TextControlInput

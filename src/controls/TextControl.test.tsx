@@ -1,10 +1,10 @@
-import { test, expect } from "vitest"
+import { test, expect, describe } from "vitest"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import type { JSONSchema } from "json-schema-to-ts"
 
 import { render } from "../common/test-render"
-import type { UISchema } from "../ui-schema"
+import type { TextControlOptions, UISchema } from "../ui-schema"
 import type { JSONFormData } from "../common/schema-derived-types"
 
 const textInputSchema = {
@@ -131,8 +131,8 @@ test("renders error messages from rule validation", async () => {
   await screen.findByText("Only letters are allowed")
 })
 
-test("renders tooltips", async () => {
-  const uischema = {
+describe("tooltips", () => {
+  const getUiSchema = (options?: TextControlOptions) => ({
     type: "VerticalLayout",
     elements: [
       {
@@ -157,20 +157,36 @@ test("renders tooltips", async () => {
             placement: "right",
           },
         },
+        options,
       },
     ],
-  }
+  })
+
   const schema = {
     type: "object",
     properties: { name: { type: "string", title: "Name" } },
   } satisfies JSONSchema
 
-  render({ schema, uischema })
-  await screen.findByPlaceholderText(schema.properties.name.title, {
-    exact: false,
-  })
-  const svgEl = screen.getByRole("img", { name: /question-circle/i })
-  await userEvent.hover(svgEl)
+  test("renders tooltip", async () => {
+    render({ schema, uischema: getUiSchema() })
+    await screen.findByPlaceholderText(schema.properties.name.title, {
+      exact: false,
+    })
+    const svgEl = screen.getByRole("img", { name: /question-circle/i })
+    await userEvent.hover(svgEl)
 
-  await screen.findByText("a random name", { exact: false })
+    await screen.findByText("a random name", { exact: false })
+  })
+
+  test("renders right tooltip in case both are passed", async () => {
+    const options = { tooltip: "You should see this tooltip" }
+    render({ schema, uischema: getUiSchema(options) })
+    await screen.findByPlaceholderText(schema.properties.name.title, {
+      exact: false,
+    })
+    const svgEl = screen.getByRole("img", { name: /question-circle/i })
+    await userEvent.hover(svgEl)
+
+    await screen.findByText("You should see this tooltip")
+  })
 })

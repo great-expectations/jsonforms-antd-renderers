@@ -155,7 +155,10 @@ export type AnyOfControlOptions = OneOfControlOptions
 export type TextControlType = "multiline" | "password" | "singleline"
 
 export type TextControlOptions = {
-  tooltip?: React.ReactNode
+  /**
+   * @deprecated Please use formItemProps.tooltip instead
+   */
+  tooltip?: string
   placeholderText?: string
   required?: boolean
   rules?: AntDRule[]

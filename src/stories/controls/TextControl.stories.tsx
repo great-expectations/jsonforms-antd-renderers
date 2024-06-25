@@ -139,42 +139,21 @@ export const FormItemTooltip: Story = {
           label: "Name",
           formItemProps: {
             tooltip: {
-              title: "It's what you call yourself",
+              title: (
+                <p>
+                  Choose{" "}
+                  <a
+                    href="https://wheelofnames.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    a random name
+                  </a>
+                  .
+                </p>
+              ),
               placement: "right",
             },
-          },
-        },
-      ],
-    } satisfies UISchema<typeof schema>,
-  },
-}
-
-export const OptionsTooltip: Story = {
-  parameters: { controls: { expanded: true } },
-  tags: ["autodocs"],
-  args: {
-    jsonSchema: schema,
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/name",
-          label: "Name",
-          options: {
-            tooltip: (
-              <p>
-                Choose{" "}
-                <a
-                  href="https://wheelofnames.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  a random name
-                </a>
-                .
-              </p>
-            ),
           },
         },
       ],

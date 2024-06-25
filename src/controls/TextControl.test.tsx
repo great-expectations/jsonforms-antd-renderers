@@ -140,8 +140,24 @@ test("renders tooltips", async () => {
         scope: "#/properties/name",
         label: "Name",
         options: {
-          tooltip:
-            "Choose <a href='https://wheelofnames.com/' target='_blank' rel='noopener noreferrer'>a random name</a>.",
+          formItemProps: {
+            tooltip: {
+              title: (
+                <p>
+                  Choose{" "}
+                  <a
+                    href="https://wheelofnames.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    a random name
+                  </a>
+                  .
+                </p>
+              ),
+              placement: "right",
+            },
+          },
         },
       },
     ],

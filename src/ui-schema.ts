@@ -155,6 +155,9 @@ export type AnyOfControlOptions = OneOfControlOptions
 export type TextControlType = "multiline" | "password" | "singleline"
 
 export type TextControlOptions = {
+  /**
+   * @deprecated Please use formItemProps.tooltip instead
+   */
   tooltip?: string
   placeholderText?: string
   required?: boolean

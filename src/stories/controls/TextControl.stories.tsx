@@ -125,7 +125,7 @@ export const RuleDefinedInUISchema: Story = {
   },
 }
 
-export const Tooltip: Story = {
+export const FormItemTooltip: Story = {
   parameters: { controls: { expanded: true } },
   tags: ["autodocs"],
   args: {
@@ -137,7 +137,24 @@ export const Tooltip: Story = {
           type: "Control",
           scope: "#/properties/name",
           label: "Name",
-          formItemProps: { tooltip: "It's what you call yourself" },
+          formItemProps: {
+            tooltip: {
+              title: (
+                <p>
+                  Choose{" "}
+                  <a
+                    href="https://wheelofnames.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    a random name
+                  </a>
+                  .
+                </p>
+              ),
+              placement: "right",
+            },
+          },
         },
       ],
     } satisfies UISchema<typeof schema>,

@@ -11,6 +11,7 @@ import type { ControlUISchema, TextControlOptions } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 import { TextAreaProps } from "antd/es/input/TextArea"
+
 type ControlProps = Omit<JSFControlProps, "uischema"> & {
   data: string
   handleChange(path: string, value: string): void
@@ -44,7 +45,10 @@ export function TextControl({
     (uischema.options as TextControlOptions) ?? {}
   const formItemProps =
     "formItemProps" in uischema ? uischema.formItemProps : {}
-  const tooltip = options.tooltip ? options.tooltip : formItemProps?.tooltip
+  const { tooltip: formItemTooltip, ...formItemPropsWOTooltip } =
+    formItemProps ?? {}
+  const tooltip = options.tooltip ? options.tooltip : formItemTooltip ?? ""
+
   const placeholderText = options.placeholderText
   const form = Form.useFormInstance()
   const rules: Rule[] = [
@@ -64,10 +68,10 @@ export function TextControl({
       label={label}
       id={id}
       name={path}
-      rules={rules}
       validateTrigger={["onBlur"]}
+      rules={rules}
       tooltip={tooltip}
-      {...formItemProps}
+      {...formItemPropsWOTooltip}
     >
       <TextControlInput
         aria-label={ariaLabel}

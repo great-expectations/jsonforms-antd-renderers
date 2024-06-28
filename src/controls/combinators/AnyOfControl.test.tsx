@@ -98,13 +98,13 @@ describe("AnyOf control", () => {
     await userEvent.type(screen.getByLabelText("Column Name"), "abc")
 
     await userEvent.click(screen.getByLabelText("SplitterYearAndMonth"))
-    screen.getByLabelText("Column Name")
-    expect(screen.queryByLabelText("Column Name")).not.toHaveValue("abc")
+    let column = screen.getByLabelText("Column Name")
+    expect(column).not.toHaveValue("abc")
     await userEvent.type(screen.getByLabelText("Column Name"), "xyz")
 
     await userEvent.click(screen.getByLabelText("SplitterYear"))
-    screen.getByLabelText("Column Name")
-    expect(screen.queryByLabelText("Column Name")).toHaveValue("abc")
+    column = screen.getByLabelText("Column Name")
+    expect(column).toHaveValue("abc")
   })
   test("provides a default value for a required combinator", async () => {
     let data: JSONFormData<typeof AnyOfWithDefaultsSchema> = {}

@@ -34,8 +34,7 @@ export const EnumControl = (props: ControlProps) => {
       ? enumValue.map((value) => ({
           label:
             enumValueToLabelMap &&
-            typeof value === "string" &&
-            !!enumValueToLabelMap[value]
+            typeof value === "string"
               ? enumValueToLabelMap[value]
               : (value as string),
           value: value as string,

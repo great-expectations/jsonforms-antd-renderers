@@ -152,6 +152,14 @@ export type OneOfControlOptions = {
 
 export type AnyOfControlOptions = OneOfControlOptions
 
+export const EnumOptions = ["dropdown", "radio", "segmented"] as const
+
+export type EnumOption = (typeof EnumOptions)[number]
+
+export type EnumControlOptions = {
+  optionType?: EnumOption
+}
+
 export type TextControlType = "multiline" | "password" | "singleline"
 
 export type TextControlOptions = {

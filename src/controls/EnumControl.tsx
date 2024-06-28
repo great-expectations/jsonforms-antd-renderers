@@ -9,7 +9,9 @@ type ControlProps = Omit<JSFControlProps, "uischema"> & {
 }
 
 const isStringOrNumberArray = (arr: unknown[]): boolean => {
-  return arr.every((value) => typeof value === "string" || typeof value === "number")
+  return arr.every(
+    (value) => typeof value === "string" || typeof value === "number",
+  )
 }
 
 export const EnumControl = (props: ControlProps) => {
@@ -32,10 +34,7 @@ export const EnumControl = (props: ControlProps) => {
   const options =
     enumValue && isStringOrNumberArray(enumValue)
       ? enumValue.map((value: string | number) => ({
-          label:
-            enumValueToLabelMap
-              ? enumValueToLabelMap[value]
-              : (value),
+          label: enumValueToLabelMap ? enumValueToLabelMap[value] : value,
           value: value,
         }))
       : []

@@ -26,7 +26,10 @@ export const EnumControl = (props: ControlProps) => {
   const enumValueToLabelMap = appliedUiSchemaOptions.enumValueToLabelMap
   const options = props.schema.enum
     ? props.schema.enum?.map((value) => ({
-        label: enumValueToLabelMap && typeof value === "string" ? enumValueToLabelMap[value] : value as string,
+        label:
+          enumValueToLabelMap && typeof value === "string"
+            ? enumValueToLabelMap[value]
+            : (value as string),
         value: value as string,
       }))
     : []

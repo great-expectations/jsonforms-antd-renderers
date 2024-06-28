@@ -8,6 +8,10 @@ type ControlProps = Omit<JSFControlProps, "uischema"> & {
   uischema: ControlUISchema<unknown> | JSFControlProps["uischema"]
 }
 
+const isStringOrNumber = (value: unknown): boolean => {
+  return typeof value === "string" || typeof value === "number"
+}
+
 export const EnumControl = (props: ControlProps) => {
   if (!props.visible) return null
 
@@ -23,18 +27,20 @@ export const EnumControl = (props: ControlProps) => {
 
   const appliedUiSchemaOptions = props.uischema.options as EnumControlOptions
 
+  const enumValue = props.schema.enum
   const enumValueToLabelMap = appliedUiSchemaOptions?.enumValueToLabelMap
-  const options = props.schema.enum
-    ? props.schema.enum?.map((value) => ({
-        label:
-          enumValueToLabelMap &&
-          typeof value === "string" &&
-          !!enumValueToLabelMap[value]
-            ? enumValueToLabelMap[value]
-            : (value as string),
-        value: value as string,
-      }))
-    : []
+  const options =
+    enumValue && isStringOrNumber(enumValue)
+      ? enumValue.map((value) => ({
+          label:
+            enumValueToLabelMap &&
+            typeof value === "string" &&
+            !!enumValueToLabelMap[value]
+              ? enumValueToLabelMap[value]
+              : (value as string),
+          value: value as string,
+        }))
+      : []
 
   let selector
   switch (appliedUiSchemaOptions?.optionType) {

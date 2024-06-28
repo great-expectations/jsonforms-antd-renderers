@@ -158,7 +158,7 @@ export type EnumOption = (typeof EnumOptions)[number]
 
 export type EnumControlOptions = {
   optionType?: EnumOption
-  enumValueToLabelMap?: Record<string, string>
+  enumValueToLabelMap?: Record<string | number, string>
 }
 
 export type TextControlType = "multiline" | "password" | "singleline"

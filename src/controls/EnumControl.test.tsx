@@ -11,7 +11,7 @@ import {
   enumSnakeCaseUISchema,
 } from "../testSchemas/enumSchema"
 
-test("renders the enum component as radio", () => {
+test("renders the enum component as radio optionType", () => {
   render({
     schema: enumPSISchema,
     uischema: enumPSIUISchema,
@@ -21,7 +21,7 @@ test("renders the enum component as radio", () => {
   expect(radioButtons).toHaveLength(3)
 })
 
-test("renders the enum component as dropdown", () => {
+test("renders the enum component as dropdown optionType", () => {
   render({
     schema: enumProfessionSchema,
     uischema: enumProfessionUISchema,

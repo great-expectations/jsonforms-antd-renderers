@@ -75,10 +75,6 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
     renderer: NumericRenderer,
   },
   {
-    tester: rankWith(2, isEnumControl),
-    renderer: EnumRenderer,
-  },
-  {
     tester: rankWith(
       3,
       and(
@@ -91,16 +87,20 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
     renderer: NumericSliderRenderer,
   },
   {
-    tester: rankWith(3, isOneOfControl),
+    tester: rankWith(4, isEnumControl),
+    renderer: EnumRenderer,
+  },
+  {
+    tester: rankWith(5, isOneOfControl),
     renderer: OneOfRenderer,
   },
   {
-    tester: rankWith(3, isAnyOfControl),
+    tester: rankWith(5, isAnyOfControl),
     renderer: AnyOfRenderer,
   },
   {
     tester: rankWith(
-      3,
+      5,
       or(isObjectArrayControl, isObjectArray, isObjectArrayWithNesting),
     ),
     renderer: ObjectArrayRenderer,

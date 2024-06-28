@@ -42,6 +42,17 @@ export const enumPSISchema = {
   },
 } satisfies JSONSchema
 
+export const enumSnakeCaseSchema = {
+  type: "object",
+  properties: {
+    humanReadableOptions: {
+      title: "Human Readable Options",
+      type: "string",
+      enum: ["option_1", "option_2", "option_3"],
+    },
+  },
+} satisfies JSONSchema
+
 export const enumSizeUISchema = {
   type: "VerticalLayout",
   elements: [
@@ -74,3 +85,21 @@ export const enumPSIUISchema = {
     },
   ],
 } satisfies UISchema<typeof enumPSISchema>
+
+export const enumSnakeCaseUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/humanReadableOptions",
+      options: {
+        optionType: "dropdown",
+        enumValueToLabelMap: {
+          option_1: "Option 1",
+          option_2: "Option 2",
+          option_3: "Option 3",
+        },
+      },
+    },
+  ],
+} satisfies UISchema<typeof enumSnakeCaseSchema>

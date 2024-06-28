@@ -7,6 +7,8 @@ import {
   enumProfessionUISchema,
   enumSizeSchema,
   enumSizeUISchema,
+  enumSnakeCaseSchema,
+  enumSnakeCaseUISchema,
 } from "../../testSchemas/enumSchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
@@ -48,5 +50,13 @@ export const Radio: Story = {
   args: {
     jsonSchema: enumPSISchema,
     uiSchema: enumPSIUISchema,
+  },
+}
+
+export const CustomLabels: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: enumSnakeCaseSchema,
+    uiSchema: enumSnakeCaseUISchema,
   },
 }

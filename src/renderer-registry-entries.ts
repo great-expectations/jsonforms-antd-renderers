@@ -75,7 +75,7 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
     renderer: NumericRenderer,
   },
   {
-    tester: rankWith(3, isEnumControl),
+    tester: rankWith(2, isEnumControl),
     renderer: EnumRenderer,
   },
   {

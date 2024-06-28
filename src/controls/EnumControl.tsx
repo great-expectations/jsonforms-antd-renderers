@@ -33,8 +33,7 @@ export const EnumControl = (props: ControlProps) => {
     enumValue && isStringOrNumber(enumValue)
       ? enumValue.map((value) => ({
           label:
-            enumValueToLabelMap &&
-            typeof value === "string"
+            enumValueToLabelMap && typeof value === "string"
               ? enumValueToLabelMap[value]
               : (value as string),
           value: value as string,

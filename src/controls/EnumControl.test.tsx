@@ -46,7 +46,7 @@ test("handles onChange event correctly", async () => {
   const updateData = vi.fn()
   render({
     schema: enumProfessionSchema,
-    data: {profession: "Bob Ross Impersonator"},
+    data: { profession: "Bob Ross Impersonator" },
     onChange: (result) => {
       updateData(result)
     },
@@ -59,7 +59,7 @@ test("handles onChange event correctly", async () => {
   await userEvent.click(screen.getByTitle("Footballer"))
   await waitFor(() =>
     expect(updateData).toHaveBeenLastCalledWith({
-      data: {profession: "Footballer"},
+      data: { profession: "Footballer" },
       errors: [],
     }),
   )

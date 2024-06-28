@@ -37,17 +37,14 @@ describe("AnyOf control", () => {
     // Column Name is available in both subschemas
     await screen.findByText("Splitter")
     screen.getByLabelText("Column Name")
-    expect(screen.queryByLabelText("Method Name")).toHaveValue("split_on_year")
+    screen.getByTitle("split_on_year")
+    expect(screen.queryByTitle("split_on_year_and_month")).not.toBeInTheDocument()
 
     // UiSchema is not set here, so we should see the Method Name changing
 
     await userEvent.click(screen.getByLabelText("SplitterYearAndMonth"))
     screen.getByLabelText("Column Name")
-    await waitFor(() =>
-      expect(screen.queryByLabelText("Method Name")).toHaveValue(
-        "split_on_year_and_month",
-      ),
-    )
+    screen.getByTitle("split_on_year_and_month")
   })
   test("AnyOf Control with button UISchema allows switching between subschemas and respects uiSchemaRegistryEntries", async () => {
     render({
@@ -77,7 +74,8 @@ describe("AnyOf control", () => {
     // Column Name is available in both subschemas
     await screen.findByText("Splitter")
     screen.getByLabelText("Column Name")
-    expect(screen.queryByLabelText("Method Name")).toHaveValue("split_on_year")
+    screen.getByTitle("split_on_year")
+    expect(screen.queryByTitle("split_on_year_and_month")).not.toBeInTheDocument()
 
     // Open the dropdown
     await userEvent.click(screen.getByText("Year"))
@@ -85,9 +83,7 @@ describe("AnyOf control", () => {
     // Select another option
     await userEvent.click(screen.getByText("Year - Month"))
     screen.getByLabelText("Column Name")
-    expect(screen.queryByLabelText("Method Name")).toHaveValue(
-      "split_on_year_and_month",
-    )
+    screen.getByTitle("split_on_year_and_month")
   })
   test("AnyOf Control persists state when switching between subschemas", async () => {
     render({ schema: splitterAnyOfJsonSchema })

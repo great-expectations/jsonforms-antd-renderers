@@ -23,7 +23,7 @@ export const EnumControl = (props: ControlProps) => {
 
   const appliedUiSchemaOptions = props.uischema.options as EnumControlOptions
 
-  const enumValueToLabelMap = appliedUiSchemaOptions.enumValueToLabelMap
+  const enumValueToLabelMap = appliedUiSchemaOptions?.enumValueToLabelMap
   const options = props.schema.enum
     ? props.schema.enum?.map((value) => ({
         label:

@@ -8,8 +8,8 @@ type ControlProps = Omit<JSFControlProps, "uischema"> & {
   uischema: ControlUISchema<unknown> | JSFControlProps["uischema"]
 }
 
-const isStringOrNumber = (value: unknown): boolean => {
-  return typeof value === "string" || typeof value === "number"
+const isStringOrNumberArray = (arr: unknown[]): boolean => {
+  return arr.every((value) => typeof value === "string" || typeof value === "number")
 }
 
 export const EnumControl = (props: ControlProps) => {
@@ -30,13 +30,13 @@ export const EnumControl = (props: ControlProps) => {
   const enumValue = props.schema.enum
   const enumValueToLabelMap = appliedUiSchemaOptions?.enumValueToLabelMap
   const options =
-    enumValue && isStringOrNumber(enumValue)
-      ? enumValue.map((value) => ({
+    enumValue && isStringOrNumberArray(enumValue)
+      ? enumValue.map((value: string | number) => ({
           label:
-            enumValueToLabelMap && typeof value === "string"
+            enumValueToLabelMap
               ? enumValueToLabelMap[value]
-              : (value as string),
-          value: value as string,
+              : (value),
+          value: value,
         }))
       : []
 

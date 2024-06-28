@@ -38,7 +38,9 @@ describe("AnyOf control", () => {
     await screen.findByText("Splitter")
     screen.getByLabelText("Column Name")
     screen.getByTitle("split_on_year")
-    expect(screen.queryByTitle("split_on_year_and_month")).not.toBeInTheDocument()
+    expect(
+      screen.queryByTitle("split_on_year_and_month"),
+    ).not.toBeInTheDocument()
 
     // UiSchema is not set here, so we should see the Method Name changing
 
@@ -75,7 +77,9 @@ describe("AnyOf control", () => {
     await screen.findByText("Splitter")
     screen.getByLabelText("Column Name")
     screen.getByTitle("split_on_year")
-    expect(screen.queryByTitle("split_on_year_and_month")).not.toBeInTheDocument()
+    expect(
+      screen.queryByTitle("split_on_year_and_month"),
+    ).not.toBeInTheDocument()
 
     // Open the dropdown
     await userEvent.click(screen.getByText("Year"))

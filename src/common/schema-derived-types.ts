@@ -2,6 +2,7 @@ import { FromSchema, JSONSchema } from "json-schema-to-ts"
 import {
   AnyOfControlOptions,
   ArrayControlOptions,
+  EnumControlOptions,
   NumericControlOptions,
   OneOfControlOptions,
   TextControlOptions,
@@ -18,25 +19,28 @@ type RecursivePartial<T> = T extends object
 type JsonSchemaTypeToControlOptions<
   T,
   // K extends keyof T & string,
-> = T extends { type: infer U }
-  ? U extends "object" // ObjectControlOptions goes here
-    ? unknown
-    : U extends "string"
-      ? TextControlOptions
-      : U extends "number" | "integer"
-        ? NumericControlOptions
-        : U extends "array"
-          ? ArrayControlOptions
-          : U extends "boolean"
-            ? unknown // BooleanControlOptions goes here
-            : unknown
-  : T extends { anyOf: unknown }
-    ? AnyOfControlOptions
-    : T extends { oneOf: unknown }
-      ? OneOfControlOptions
-      : unknown
+> = T extends { enum: unknown }
+  ? EnumControlOptions
+  : T extends { type: infer U }
+    ? U extends "object" // ObjectControlOptions goes here
+      ? unknown
+      : U extends "string"
+        ? TextControlOptions
+        : U extends "number" | "integer"
+          ? NumericControlOptions
+          : U extends "array"
+            ? ArrayControlOptions
+            : U extends "boolean"
+              ? unknown // BooleanControlOptions goes here
+              : unknown
+    : T extends { anyOf: unknown }
+      ? AnyOfControlOptions
+      : T extends { oneOf: unknown }
+        ? OneOfControlOptions
+        : unknown
 
 type IsControlProperty<T> = T extends  // is this a property we can apply a control to?
+  | { enum: unknown }
   | { type: string }
   | { anyOf: unknown }
   | { oneOf: unknown }

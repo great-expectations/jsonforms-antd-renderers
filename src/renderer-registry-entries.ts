@@ -20,6 +20,7 @@ import {
   isPrimitiveArrayControl,
   isOneOfControl,
   isAnyOfControl,
+  isEnumControl,
 } from "@jsonforms/core"
 import { withJsonFormsCellProps } from "@jsonforms/react"
 
@@ -37,6 +38,7 @@ import { ObjectArrayRenderer } from "./controls/ObjectArrayControl"
 import { PrimitiveArrayRenderer } from "./controls/PrimitiveArrayControl"
 import { OneOfRenderer } from "./controls/combinators/OneOfControl"
 import { AnyOfRenderer } from "./controls/combinators/AnyOfControl"
+import { EnumRenderer } from "./controls/EnumControl"
 
 // Ordered from lowest rank to highest rank. Higher rank renderers will be preferred over lower rank renderers.
 export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
@@ -85,16 +87,20 @@ export const rendererRegistryEntries: JsonFormsRendererRegistryEntry[] = [
     renderer: NumericSliderRenderer,
   },
   {
-    tester: rankWith(3, isOneOfControl),
+    tester: rankWith(4, isEnumControl),
+    renderer: EnumRenderer,
+  },
+  {
+    tester: rankWith(5, isOneOfControl),
     renderer: OneOfRenderer,
   },
   {
-    tester: rankWith(3, isAnyOfControl),
+    tester: rankWith(5, isAnyOfControl),
     renderer: AnyOfRenderer,
   },
   {
     tester: rankWith(
-      3,
+      5,
       or(isObjectArrayControl, isObjectArray, isObjectArrayWithNesting),
     ),
     renderer: ObjectArrayRenderer,

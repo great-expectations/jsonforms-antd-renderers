@@ -30,7 +30,7 @@ export const EnumControl = (props: ControlProps) => {
   const appliedUiSchemaOptions = props.uischema.options as EnumControlOptions
 
   let selector
-  switch (appliedUiSchemaOptions.optionType) {
+  switch (appliedUiSchemaOptions?.optionType) {
     case "radio":
       selector = (
         <Radio.Group

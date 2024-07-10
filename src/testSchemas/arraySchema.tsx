@@ -14,7 +14,7 @@ export const arrayControlUISchema = {
       scope: "#/properties/assets",
       options: {
         showSortButtons: true,
-      }
+      },
     },
   ],
 } satisfies UISchema<typeof objectArrayControlJsonSchema>

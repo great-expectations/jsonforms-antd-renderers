@@ -10,8 +10,11 @@ export const arrayControlUISchema = {
   type: "VerticalLayout",
   elements: [
     {
-      scope: "#/properties/assets",
       type: "Control",
+      scope: "#/properties/assets",
+      options: {
+        showSortButtons: true,
+      }
     },
   ],
 } satisfies UISchema<typeof objectArrayControlJsonSchema>

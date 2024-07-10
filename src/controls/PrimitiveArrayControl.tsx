@@ -73,6 +73,14 @@ export function PrimitiveArrayControl({
   const formItemProps =
     "formItemProps" in uischema ? uischema.formItemProps : {}
 
+  const moveUp = (path: string, index: number) => () => {
+    return props.moveUp?.(path, index)()
+  }
+
+  const moveDown = (path: string, index: number) => () => {
+    return props.moveDown?.(path, index)()
+  }
+
   return (
     <Form.Item
       id={id}
@@ -103,6 +111,7 @@ export function PrimitiveArrayControl({
                   </Col>
                   <Col>
                     {fields.length > 1 ? (
+                      <>
                       <Button
                         key="remove"
                         disabled={
@@ -118,6 +127,13 @@ export function PrimitiveArrayControl({
                       >
                         {options.removeButtonProps?.children ?? "Delete"}
                       </Button>
+                        {options.showSortButtons && (
+                          <>
+                        <Button onClick={moveUp(path, index)}>Up</Button>
+                        <Button onClick={moveDown(path, index)}>Down</Button>
+                          </>
+                          )}
+                      </>
                     ) : null}
                   </Col>
                 </Row>

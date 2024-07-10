@@ -130,7 +130,9 @@ export function PrimitiveArrayControl({
                         {options.showSortButtons && (
                           <>
                             <Button onClick={moveUp(path, index)}>Up</Button>
-                            <Button onClick={moveDown(path, index)}>Down</Button>
+                            <Button onClick={moveDown(path, index)}>
+                              Down
+                            </Button>
                           </>
                         )}
                       </>

@@ -14,7 +14,7 @@ export const arrayControlUISchema = {
       type: "Control",
       options: {
         showSortButtons: true,
-      }
+      },
     },
   ],
 } satisfies UISchema<typeof objectArrayControlJsonSchema>

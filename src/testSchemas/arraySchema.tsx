@@ -12,6 +12,16 @@ export const arrayControlUISchema = {
     {
       type: "Control",
       scope: "#/properties/assets",
+    },
+  ],
+} satisfies UISchema<typeof objectArrayControlJsonSchema>
+
+export const arrayControlSortableUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/assets",
       options: {
         showSortButtons: true,
       },

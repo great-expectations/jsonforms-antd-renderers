@@ -16,6 +16,7 @@
     "lib/**/*"
   ],
   "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
   "types": "./lib/cjs/index.d.ts",
   "exports": {
     "require": {
@@ -24,7 +25,7 @@
     },
     "import": {
       "types": "./lib/esm/index.d.ts",
-      "default": "./lib/esm/index.mjs"
+      "default": "./lib/esm/index.js"
     },
     "default": "./lib/cjs/index.js"
   },
@@ -44,7 +45,7 @@
   "scripts": {
     "clean": "rm -rf ./lib",
     "build": "pnpm run clean && pnpm run build:esm && pnpm run build:cjs",
-    "build:esm": "tsc -p tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
+    "build:esm": "tsc -p tsconfig.esm.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "prepack": "pnpm run build",
     "test": "vitest",

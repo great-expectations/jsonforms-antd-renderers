@@ -10,7 +10,6 @@ import {
   withJsonFormsArrayControlProps,
 } from "@jsonforms/react"
 import { Form, Button, Col, Row, Space } from "antd"
-import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons"
 import React, { useEffect, useMemo } from "react"
 import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
@@ -35,6 +34,8 @@ export function PrimitiveArrayControl({
   rootSchema,
   uischemas,
   required,
+  moveDown,
+  moveUp,
   ...props
 }: ArrayControlProps) {
   const foundUISchema = useMemo(
@@ -74,12 +75,12 @@ export function PrimitiveArrayControl({
   const formItemProps =
     "formItemProps" in uischema ? uischema.formItemProps : {}
 
-  const moveUp = (path: string, index: number) => () => {
-    return props.moveUp?.(path, index)()
+  const handleUpClick = (path: string, index: number) => () => {
+    return moveUp?.(path, index)()
   }
 
-  const moveDown = (path: string, index: number) => () => {
-    return props.moveDown?.(path, index)()
+  const handleDownClick = (path: string, index: number) => () => {
+    return moveDown?.(path, index)()
   }
 
   return (
@@ -113,35 +114,37 @@ export function PrimitiveArrayControl({
                   {fields.length > 1 ? (
                     <Col>
                       <Space align="start">
-                          {options.showSortButtons && (
-                            <>
-                              <Button
-                                icon={<ArrowUpOutlined />}
-                                onClick={moveUp(path, index)}
-                                disabled={index === 0}
-                              />
-                              <Button
-                                icon={<ArrowDownOutlined />}
-                                onClick={moveDown(path, index)}
-                                disabled={index === fields.length - 1}
-                              />
-                            </>
-                          )}
-                          <Button
-                            key="remove"
-                            disabled={
-                              !removeItems ||
-                              (required && fields.length === 1 && index === 0)
-                            }
-                            {...options.removeButtonProps}
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              remove(field.name)
-                              removeItems?.(path, [index])()
-                            }}
-                          >
-                            {options.removeButtonProps?.children ?? "Delete"}
-                          </Button>
+                        {options.showSortButtons && (
+                          <>
+                            <Button
+                              aria-label={`Move up`}
+                              disabled={index === 0}
+                              {...options.moveUpButtonProps}
+                              onClick={handleUpClick(path, index)}
+                            />
+                            <Button
+                              aria-label={`Move down`}
+                              disabled={index === fields.length - 1}
+                              {...options.moveDownButtonProps}
+                              onClick={handleDownClick(path, index)}
+                            />
+                          </>
+                        )}
+                        <Button
+                          key="remove"
+                          disabled={
+                            !removeItems ||
+                            (required && fields.length === 1 && index === 0)
+                          }
+                          {...options.removeButtonProps}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            remove(field.name)
+                            removeItems?.(path, [index])()
+                          }}
+                        >
+                          {options.removeButtonProps?.children ?? "Delete"}
+                        </Button>
                       </Space>
                     </Col>
                   ) : null}

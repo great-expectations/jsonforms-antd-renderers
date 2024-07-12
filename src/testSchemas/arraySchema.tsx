@@ -1,6 +1,11 @@
 import { JSONSchema } from "json-schema-to-ts"
 import { ControlUISchema, UISchema } from "../ui-schema"
-import { PlusCircleTwoTone, DeleteOutlined } from "@ant-design/icons"
+import {
+  PlusCircleTwoTone,
+  DeleteOutlined,
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+} from "@ant-design/icons"
 import {
   JsonFormsUISchemaRegistryEntry,
   UISchemaElement,
@@ -24,6 +29,14 @@ export const arrayControlSortableUISchema = {
       scope: "#/properties/assets",
       options: {
         showSortButtons: true,
+        moveUpButtonProps: {
+          icon: <ArrowUpOutlined />,
+          onClick: () => {}, // User should be unable to override the onClick event
+        },
+        moveDownButtonProps: {
+          icon: <ArrowDownOutlined />,
+          onClick: () => {}, // User should be unable to override the onClick event
+        },
       },
     },
   ],

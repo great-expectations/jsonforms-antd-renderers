@@ -310,6 +310,8 @@ export type ArrayControlOptions = {
   removeButtonProps?: ButtonProps
   addButtonLocation?: AddButtonLocation
   showSortButtons?: boolean
+  moveUpButtonProps?: ButtonProps
+  moveDownButtonProps?: ButtonProps
 }
 
 export type NumericControlOptions = {

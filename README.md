@@ -137,7 +137,7 @@ function MyForm() {
 ### First time setup
 
 - Install node.js (only Node v20 is currently supported)
-- Install pnpm: [https://pnpm.io/installation](https://pnpm.io/installation) (use pnpm 8.6.8+)
+- Install pnpm: [https://pnpm.io/installation](https://pnpm.io/installation) (use pnpm 8)
 - Clone this repository
 - Install dependencies: `pnpm i --frozen-lockfile`
 - Run tests: `pnpm test`

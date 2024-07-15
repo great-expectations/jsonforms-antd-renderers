@@ -23,11 +23,11 @@ devDependencies:
     specifier: ^5.3.0
     version: 5.3.0(react-dom@18.2.0)(react@18.2.0)
   '@jsonforms/core':
-    specifier: ^3.2.1
-    version: 3.2.1
+    specifier: ^3.3.0
+    version: 3.3.0
   '@jsonforms/react':
-    specifier: ^3.2.1
-    version: 3.2.1(@jsonforms/core@3.2.1)(react@18.2.0)
+    specifier: ^3.3.0
+    version: 3.3.0(@jsonforms/core@3.3.0)(react@18.2.0)
   '@storybook/addon-essentials':
     specifier: ^7.6.8
     version: 7.6.8(@types/react-dom@18.2.19)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0)
@@ -2206,8 +2206,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@jsonforms/core@3.2.1:
-    resolution: {integrity: sha512-G5ldiWM2e5Vh5WrbjDKb0QJ1SG/39kxC48x2ufFKhfpDHibqhPaXegg5jmSBTNcB0ldE9jMmpKwxF6fi5VBCEA==}
+  /@jsonforms/core@3.3.0:
+    resolution: {integrity: sha512-p88vnW5VbeQ9dPe36DHhqzKEd5puM7njWp5yu5FCB2O7kjSc0do4OqjgUDVl3vBblsi0OsTQqxaLZ8uUVVbcRQ==}
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.12.0
@@ -2215,13 +2215,13 @@ packages:
       lodash: 4.17.21
     dev: true
 
-  /@jsonforms/react@3.2.1(@jsonforms/core@3.2.1)(react@18.2.0):
-    resolution: {integrity: sha512-MKDEXBHtaCZR7vjtlTa4JtyItgYxCPrShjLTgoZbwRL6dsi54d6gRJ08YvV3XuwPn0kempXj3RCMY/kw/5AYRQ==}
+  /@jsonforms/react@3.3.0(@jsonforms/core@3.3.0)(react@18.2.0):
+    resolution: {integrity: sha512-+iuNYHlsZ3uc8MuvxsmmiWRvDoMaHcNSRLUcGUNwWKLEOmQj0jj75oBNkI9h36oXB3/9VtXzXqw0VYHqmoWYYA==}
     peerDependencies:
-      '@jsonforms/core': 3.2.1
+      '@jsonforms/core': 3.3.0
       react: ^16.12.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@jsonforms/core': 3.2.1
+      '@jsonforms/core': 3.3.0
       lodash: 4.17.21
       react: 18.2.0
     dev: true

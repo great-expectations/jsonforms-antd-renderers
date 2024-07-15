@@ -213,8 +213,12 @@ describe("PrimitiveArrayControl", () => {
     expect(moveUpButtons[0]).toHaveProperty("disabled", true)
     expect(moveDownButtons[3]).toHaveProperty("disabled", true)
     await user.click(moveUpButtons[3])
-    expect(data).toEqual({ assets: ["A", "B", "D", "C"] })
+    await waitFor(() => {
+      expect(data).toEqual({ assets: ["A", "B", "D", "C"] })
+    })
     await user.click(moveDownButtons[0])
-    expect(data).toEqual({ assets: ["B", "A", "D", "C"] })
+    await waitFor(() => {
+      expect(data).toEqual({ assets: ["B", "A", "D", "C"] })
+    })
   })
 })

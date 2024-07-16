@@ -97,6 +97,24 @@ export function PrimitiveArrayControl({
             <Col>
               {fields.map((field, index) => (
                 <Row key={field.key} gutter={12}>
+                  {fields.length > 1 && options.showSortButtons ? (
+                    <Col>
+                      <Space>
+                      <Button
+                        aria-label={`Move up`}
+                        disabled={index === 0}
+                        {...options.moveUpButtonProps}
+                        onClick={handleUpClick(path, index)}
+                      />
+                      <Button
+                        aria-label={`Move down`}
+                        disabled={index === fields.length - 1}
+                        {...options.moveDownButtonProps}
+                        onClick={handleDownClick(path, index)}
+                      />
+                      </Space>
+                    </Col>
+                  ) : null}
                   <Col>
                     <JsonFormsDispatch
                       enabled={enabled} // not crazy about this pattern of overriding the description, but it solves the problem of disappearing aria labels
@@ -113,23 +131,6 @@ export function PrimitiveArrayControl({
                   </Col>
                   {fields.length > 1 ? (
                     <Col>
-                      <Space align="start">
-                        {options.showSortButtons && (
-                          <>
-                            <Button
-                              aria-label={`Move up`}
-                              disabled={index === 0}
-                              {...options.moveUpButtonProps}
-                              onClick={handleUpClick(path, index)}
-                            />
-                            <Button
-                              aria-label={`Move down`}
-                              disabled={index === fields.length - 1}
-                              {...options.moveDownButtonProps}
-                              onClick={handleDownClick(path, index)}
-                            />
-                          </>
-                        )}
                         <Button
                           key="remove"
                           disabled={
@@ -145,7 +146,6 @@ export function PrimitiveArrayControl({
                         >
                           {options.removeButtonProps?.children ?? "Delete"}
                         </Button>
-                      </Space>
                     </Col>
                   ) : null}
                 </Row>

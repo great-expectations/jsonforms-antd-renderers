@@ -100,18 +100,18 @@ export function PrimitiveArrayControl({
                   {fields.length > 1 && options.showSortButtons ? (
                     <Col>
                       <Space>
-                      <Button
-                        aria-label={`Move up`}
-                        disabled={index === 0}
-                        {...options.moveUpButtonProps}
-                        onClick={handleUpClick(path, index)}
-                      />
-                      <Button
-                        aria-label={`Move down`}
-                        disabled={index === fields.length - 1}
-                        {...options.moveDownButtonProps}
-                        onClick={handleDownClick(path, index)}
-                      />
+                        <Button
+                          aria-label={`Move up`}
+                          disabled={index === 0}
+                          {...options.moveUpButtonProps}
+                          onClick={handleUpClick(path, index)}
+                        />
+                        <Button
+                          aria-label={`Move down`}
+                          disabled={index === fields.length - 1}
+                          {...options.moveDownButtonProps}
+                          onClick={handleDownClick(path, index)}
+                        />
                       </Space>
                     </Col>
                   ) : null}
@@ -131,21 +131,21 @@ export function PrimitiveArrayControl({
                   </Col>
                   {fields.length > 1 ? (
                     <Col>
-                        <Button
-                          key="remove"
-                          disabled={
-                            !removeItems ||
-                            (required && fields.length === 1 && index === 0)
-                          }
-                          {...options.removeButtonProps}
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            remove(field.name)
-                            removeItems?.(path, [index])()
-                          }}
-                        >
-                          {options.removeButtonProps?.children ?? "Delete"}
-                        </Button>
+                      <Button
+                        key="remove"
+                        disabled={
+                          !removeItems ||
+                          (required && fields.length === 1 && index === 0)
+                        }
+                        {...options.removeButtonProps}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          remove(field.name)
+                          removeItems?.(path, [index])()
+                        }}
+                      >
+                        {options.removeButtonProps?.children ?? "Delete"}
+                      </Button>
                     </Col>
                   ) : null}
                 </Row>

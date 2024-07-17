@@ -7,6 +7,7 @@ import {
   arrayControlTooltipUISchema,
   arrayControlSortableUISchema,
   arrayControlUISchemaWithIcons,
+  arrayControlSortableWithIconsUISchema,
 } from "../../testSchemas/arraySchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
@@ -104,6 +105,26 @@ export const SortableArray: Story = {
       required: ["assets"],
     } satisfies JSONSchema,
     uiSchema: arrayControlSortableUISchema,
+    data: { assets: [1, 2, 3] },
+  },
+}
+
+export const SortableWithIconsArray: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      type: "object",
+      properties: {
+        assets: {
+          type: "array",
+          items: {
+            type: "number",
+          },
+        },
+      },
+      required: ["assets"],
+    } satisfies JSONSchema,
+    uiSchema: arrayControlSortableWithIconsUISchema,
     data: { assets: [1, 2, 3] },
   },
 }

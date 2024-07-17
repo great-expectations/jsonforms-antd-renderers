@@ -11,6 +11,7 @@ import {
   numberArrayControlJsonSchema,
   arrayInsideCombinatorSchema,
   arrayControlSortableUISchema,
+  arrayControlSortableWithIconsUISchema,
 } from "../testSchemas/arraySchema"
 import { UISchema } from "../ui-schema"
 import { JSONFormData } from "../common/schema-derived-types"
@@ -219,6 +220,39 @@ describe("PrimitiveArrayControl", () => {
     await user.click(moveDownButtons[0])
     await waitFor(() => {
       expect(data).toEqual({ assets: ["B", "A", "D", "C"] })
+    })
+  })
+
+  test("renders with overwritten sorting icons and does not allow overwriting onClick", async () => {
+    const user = userEvent.setup()
+    let data: JSONFormData<typeof stringArrayControlJsonSchema> = {
+      assets: ["A", "B"],
+    }
+    render({
+      schema: stringArrayControlJsonSchema,
+      uischema: arrayControlSortableWithIconsUISchema,
+      data,
+      onChange: (result) => {
+        data = result.data as JSONFormData<typeof stringArrayControlJsonSchema>
+      },
+    })
+
+    // Move buttons text is overwritten with the UISchema's icons
+    const upButtons = await screen.findAllByRole("img", { name: "arrow-up" })
+    const downButtons = await screen.findAllByRole("img", {
+      name: "arrow-down",
+    })
+    expect(screen.queryByText("Up")).toBeNull()
+    expect(screen.queryByText("Down")).toBeNull()
+
+    // Check that the onClick handlers are not overwritten by the UISchema
+    await user.click(upButtons[1])
+    await waitFor(() => {
+      expect(data).toEqual({ assets: ["B", "A"] })
+    })
+    await user.click(downButtons[0])
+    await waitFor(() => {
+      expect(data).toEqual({ assets: ["A", "B"] })
     })
   })
 })

@@ -29,13 +29,26 @@ export const arrayControlSortableUISchema = {
       scope: "#/properties/assets",
       options: {
         showSortButtons: true,
+      },
+    },
+  ],
+} satisfies UISchema<typeof objectArrayControlJsonSchema>
+
+export const arrayControlSortableWithIconsUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/assets",
+      options: {
+        showSortButtons: true,
         moveUpButtonProps: {
           icon: <ArrowUpOutlined />,
-          onClick: () => {}, // User should be unable to override the onClick event
+          onClick: () => {}, // Testing to verify this isn't called because the user should be unable to override the onClick event
         },
         moveDownButtonProps: {
           icon: <ArrowDownOutlined />,
-          onClick: () => {}, // User should be unable to override the onClick event
+          onClick: () => {}, // Testing to verify this isn't called because the user should be unable to override the onClick event
         },
       },
     },

@@ -105,13 +105,17 @@ export function PrimitiveArrayControl({
                           disabled={index === 0}
                           {...options.moveUpButtonProps}
                           onClick={handleUpClick(path, index)}
-                        />
+                        >
+                          {!options.moveUpButtonProps?.icon && "Up"}
+                        </Button>
                         <Button
                           aria-label={`Move down`}
                           disabled={index === fields.length - 1}
                           {...options.moveDownButtonProps}
                           onClick={handleDownClick(path, index)}
-                        />
+                        >
+                          {!options.moveDownButtonProps?.icon && "Down"}
+                        </Button>
                       </Space>
                     </Col>
                   ) : null}

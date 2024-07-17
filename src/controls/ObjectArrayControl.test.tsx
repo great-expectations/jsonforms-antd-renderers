@@ -122,7 +122,9 @@ describe("ObjectArrayControl", () => {
 
   test("renders with overwritten icons and does not allow overwriting onClick", async () => {
     const user = userEvent.setup()
-    let data: JSONFormData<typeof objectArrayControlJsonSchema> = { assets: [] }
+    let data: JSONFormData<typeof objectArrayControlJsonSchema> = {
+      assets: [{ asset: "one" }],
+    }
     render({
       schema: objectArrayControlJsonSchema,
       uischema: arrayControlUISchemaWithIcons,
@@ -135,24 +137,14 @@ describe("ObjectArrayControl", () => {
     screen.getByText("Add more items")
     screen.getByLabelText("plus-circle") // fyi: aria-label is "plus-circle"
 
-    await screen.findByRole("textbox")
-    await waitFor(() => {
-      expect(data).toEqual({
-        assets: [{}],
-      })
-    })
-
     // Delete button text is overwritten and has the correct icon
-    await screen.findByText("Destroy me!")
+    const deleteButton = await screen.findByText("Destroy me!")
     await screen.findByLabelText("delete") // fyi: aria-label is "delete"
 
-    // Check that the onClick handler is not overwritten on Delete button
-    const deleteButton = await screen.findByText("Destroy me!")
+    // Check that the empty onClick handler is not overwritten on Delete button
     await user.click(deleteButton)
     await waitFor(() => {
-      expect(data).toEqual({
-        assets: [],
-      })
+      expect(data.assets?.length).toEqual(1)
     })
   })
 

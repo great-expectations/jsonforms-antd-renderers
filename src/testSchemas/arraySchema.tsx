@@ -1,6 +1,11 @@
 import { JSONSchema } from "json-schema-to-ts"
 import { ControlUISchema, UISchema } from "../ui-schema"
-import { PlusCircleTwoTone, DeleteOutlined } from "@ant-design/icons"
+import {
+  PlusCircleTwoTone,
+  DeleteOutlined,
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+} from "@ant-design/icons"
 import {
   JsonFormsUISchemaRegistryEntry,
   UISchemaElement,
@@ -10,8 +15,42 @@ export const arrayControlUISchema = {
   type: "VerticalLayout",
   elements: [
     {
-      scope: "#/properties/assets",
       type: "Control",
+      scope: "#/properties/assets",
+    },
+  ],
+} satisfies UISchema<typeof objectArrayControlJsonSchema>
+
+export const arrayControlSortableUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/assets",
+      options: {
+        showSortButtons: true,
+      },
+    },
+  ],
+} satisfies UISchema<typeof objectArrayControlJsonSchema>
+
+export const arrayControlSortableWithIconsUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/assets",
+      options: {
+        showSortButtons: true,
+        moveUpButtonProps: {
+          icon: <ArrowUpOutlined />,
+          onClick: () => {}, // Testing to verify this isn't called because the user should be unable to override the onClick event
+        },
+        moveDownButtonProps: {
+          icon: <ArrowDownOutlined />,
+          onClick: () => {}, // Testing to verify this isn't called because the user should be unable to override the onClick event
+        },
+      },
     },
   ],
 } satisfies UISchema<typeof objectArrayControlJsonSchema>

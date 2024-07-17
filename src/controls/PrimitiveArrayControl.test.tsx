@@ -10,6 +10,8 @@ import {
   stringArrayControlJsonSchemaWithTitle,
   numberArrayControlJsonSchema,
   arrayInsideCombinatorSchema,
+  arrayControlSortableUISchema,
+  arrayControlSortableWithIconsUISchema,
 } from "../testSchemas/arraySchema"
 import { UISchema } from "../ui-schema"
 import { JSONFormData } from "../common/schema-derived-types"
@@ -27,17 +29,22 @@ describe("PrimitiveArrayControl", () => {
   test.each([
     [stringArrayControlJsonSchema],
     [stringArrayControlJsonSchemaWithRequired],
-  ])("does not render remove button with one element", async (schema) => {
-    render({
-      schema: schema,
-      uischema: arrayControlUISchema,
-      data: { assets: ["my asset"] },
-    })
-    await screen.findByText("Add Assets")
-    screen.getByDisplayValue("my asset")
-    //note: the text is within a span in the <button>
-    expect(screen.queryByRole("button", { name: "Delete" })).toBeNull()
-  })
+  ])(
+    "does not render remove, up, or down buttons with only one element",
+    async (schema) => {
+      render({
+        schema: schema,
+        uischema: arrayControlSortableUISchema,
+        data: { assets: ["my asset"] },
+      })
+      await screen.findByText("Add Assets")
+      screen.getByDisplayValue("my asset")
+      //note: the text is within a span in the <button>
+      expect(screen.queryByRole("button", { name: "Delete" })).toBeNull()
+      expect(screen.queryByLabelText(/move up/i)).toBeNull()
+      expect(screen.queryByLabelText(/move down/i)).toBeNull()
+    },
+  )
 
   test.each([
     [stringArrayControlJsonSchema],
@@ -185,5 +192,67 @@ describe("PrimitiveArrayControl", () => {
     await screen.findByLabelText("Assets 2")
     await screen.findByLabelText("Assets 3")
     await screen.findByLabelText("Assets 4")
+  })
+  test("Arrays are sortable", async () => {
+    let data: JSONFormData<typeof stringArrayControlJsonSchema> = {
+      assets: ["A", "B", "C", "D"],
+    }
+    const user = userEvent.setup()
+    render({
+      schema: stringArrayControlJsonSchema,
+      uischema: arrayControlSortableUISchema,
+      data: data,
+      onChange: (result) => {
+        data = result.data as JSONFormData<typeof stringArrayControlJsonSchema>
+      },
+    })
+
+    const moveUpButtons = await screen.findAllByLabelText(/move up/i)
+    const moveDownButtons = await screen.findAllByLabelText(/move down/i)
+    expect(moveUpButtons).toHaveLength(4)
+    expect(moveDownButtons).toHaveLength(4)
+    expect(moveUpButtons[0]).toHaveProperty("disabled", true)
+    expect(moveDownButtons[3]).toHaveProperty("disabled", true)
+    await user.click(moveUpButtons[3])
+    await waitFor(() => {
+      expect(data).toEqual({ assets: ["A", "B", "D", "C"] })
+    })
+    await user.click(moveDownButtons[0])
+    await waitFor(() => {
+      expect(data).toEqual({ assets: ["B", "A", "D", "C"] })
+    })
+  })
+
+  test("renders with overwritten sorting icons and does not allow overwriting onClick", async () => {
+    const user = userEvent.setup()
+    let data: JSONFormData<typeof stringArrayControlJsonSchema> = {
+      assets: ["A", "B"],
+    }
+    render({
+      schema: stringArrayControlJsonSchema,
+      uischema: arrayControlSortableWithIconsUISchema,
+      data,
+      onChange: (result) => {
+        data = result.data as JSONFormData<typeof stringArrayControlJsonSchema>
+      },
+    })
+
+    // Move buttons text is overwritten with the UISchema's icons
+    const upButtons = await screen.findAllByRole("img", { name: "arrow-up" })
+    const downButtons = await screen.findAllByRole("img", {
+      name: "arrow-down",
+    })
+    expect(screen.queryByText("Up")).toBeNull()
+    expect(screen.queryByText("Down")).toBeNull()
+
+    // Check that the onClick handlers are not overwritten by the UISchema
+    await user.click(upButtons[1])
+    await waitFor(() => {
+      expect(data).toEqual({ assets: ["B", "A"] })
+    })
+    await user.click(downButtons[0])
+    await waitFor(() => {
+      expect(data).toEqual({ assets: ["A", "B"] })
+    })
   })
 })

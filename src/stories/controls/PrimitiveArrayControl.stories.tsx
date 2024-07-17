@@ -5,6 +5,9 @@ import {
   stringArrayControlJsonSchema,
   arrayControlUISchema,
   arrayControlTooltipUISchema,
+  arrayControlSortableUISchema,
+  arrayControlUISchemaWithIcons,
+  arrayControlSortableWithIconsUISchema,
 } from "../../testSchemas/arraySchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
@@ -82,6 +85,66 @@ export const PrePopulatedArray: Story = {
       },
     } satisfies JSONSchema,
     uiSchema: arrayControlUISchema,
+    data: { assets: [1, 2, 3] },
+  },
+}
+
+export const SortableArray: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      type: "object",
+      properties: {
+        assets: {
+          type: "array",
+          items: {
+            type: "number",
+          },
+        },
+      },
+      required: ["assets"],
+    } satisfies JSONSchema,
+    uiSchema: arrayControlSortableUISchema,
+    data: { assets: [1, 2, 3] },
+  },
+}
+
+export const SortableWithIconsArray: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      type: "object",
+      properties: {
+        assets: {
+          type: "array",
+          items: {
+            type: "number",
+          },
+        },
+      },
+      required: ["assets"],
+    } satisfies JSONSchema,
+    uiSchema: arrayControlSortableWithIconsUISchema,
+    data: { assets: [1, 2, 3] },
+  },
+}
+
+export const WithIconsArray: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      type: "object",
+      properties: {
+        assets: {
+          type: "array",
+          items: {
+            type: "number",
+          },
+        },
+      },
+      required: ["assets"],
+    } satisfies JSONSchema,
+    uiSchema: arrayControlUISchemaWithIcons,
     data: { assets: [1, 2, 3] },
   },
 }

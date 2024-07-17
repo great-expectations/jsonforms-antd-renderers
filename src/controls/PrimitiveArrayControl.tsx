@@ -9,7 +9,7 @@ import {
   JsonFormsDispatch,
   withJsonFormsArrayControlProps,
 } from "@jsonforms/react"
-import { Form, Button, Col, Row } from "antd"
+import { Form, Button, Col, Row, Space } from "antd"
 import React, { useEffect, useMemo } from "react"
 import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
@@ -34,6 +34,8 @@ export function PrimitiveArrayControl({
   rootSchema,
   uischemas,
   required,
+  moveDown,
+  moveUp,
   ...props
 }: ArrayControlProps) {
   const foundUISchema = useMemo(
@@ -73,6 +75,14 @@ export function PrimitiveArrayControl({
   const formItemProps =
     "formItemProps" in uischema ? uischema.formItemProps : {}
 
+  const handleUpClick = (path: string, index: number) => () => {
+    return moveUp?.(path, index)()
+  }
+
+  const handleDownClick = (path: string, index: number) => () => {
+    return moveDown?.(path, index)()
+  }
+
   return (
     <Form.Item
       id={id}
@@ -87,6 +97,28 @@ export function PrimitiveArrayControl({
             <Col>
               {fields.map((field, index) => (
                 <Row key={field.key} gutter={12}>
+                  {fields.length > 1 && options.showSortButtons ? (
+                    <Col>
+                      <Space>
+                        <Button
+                          aria-label={`Move up`}
+                          disabled={index === 0}
+                          {...options.moveUpButtonProps}
+                          onClick={handleUpClick(path, index)}
+                        >
+                          {!options.moveUpButtonProps?.icon && "Up"}
+                        </Button>
+                        <Button
+                          aria-label={`Move down`}
+                          disabled={index === fields.length - 1}
+                          {...options.moveDownButtonProps}
+                          onClick={handleDownClick(path, index)}
+                        >
+                          {!options.moveDownButtonProps?.icon && "Down"}
+                        </Button>
+                      </Space>
+                    </Col>
+                  ) : null}
                   <Col>
                     <JsonFormsDispatch
                       enabled={enabled} // not crazy about this pattern of overriding the description, but it solves the problem of disappearing aria labels
@@ -101,8 +133,8 @@ export function PrimitiveArrayControl({
                       uischemas={uischemas}
                     />
                   </Col>
-                  <Col>
-                    {fields.length > 1 ? (
+                  {fields.length > 1 ? (
+                    <Col>
                       <Button
                         key="remove"
                         disabled={
@@ -118,8 +150,8 @@ export function PrimitiveArrayControl({
                       >
                         {options.removeButtonProps?.children ?? "Delete"}
                       </Button>
-                    ) : null}
-                  </Col>
+                    </Col>
+                  ) : null}
                 </Row>
               ))}
               <Form.Item>

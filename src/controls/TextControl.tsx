@@ -1,18 +1,22 @@
 import type { ChangeEvent } from "react"
 import { useCallback, useEffect } from "react"
-import type { InputProps } from "antd"
-import { Input, Form } from "antd"
-import { QuestionCircleOutlined } from "@ant-design/icons"
+import { Input, Form, InputProps } from "antd"
 import type { Rule } from "antd/es/form"
-import type { TextAreaProps } from "antd/es/input"
-import type { ControlProps } from "@jsonforms/core"
+import type {
+  ControlElement,
+  ControlProps as JSFControlProps,
+} from "@jsonforms/core"
 
-import type { TextControlOptions, TextControlType } from "../ui-schema"
+import type { ControlUISchema, TextControlOptions } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
-interface TextControlProps extends ControlProps {
+import { withJsonFormsControlProps } from "@jsonforms/react"
+import { TextAreaProps } from "antd/es/input/TextArea"
+
+type ControlProps = Omit<JSFControlProps, "uischema"> & {
   data: string
   handleChange(path: string, value: string): void
   path: string
+  uischema: ControlUISchema<unknown> | ControlElement
 }
 
 export function TextControl({
@@ -26,7 +30,7 @@ export function TextControl({
   enabled,
   id,
   uischema,
-}: TextControlProps) {
+}: ControlProps) {
   const setInitialValue = useCallback(
     (value: unknown) => {
       if (typeof value !== "number") return value
@@ -36,10 +40,15 @@ export function TextControl({
     },
     [handleChange, path],
   )
+  const ariaLabel = label || schema.description
   const options: TextControlOptions =
     (uischema.options as TextControlOptions) ?? {}
-  const textControlType: TextControlType = options.type ?? "singleline"
-  const tooltip = options.tooltip
+  const formItemProps =
+    "formItemProps" in uischema ? uischema.formItemProps : {}
+  const { tooltip: formItemTooltip, ...formItemPropsWOTooltip } =
+    formItemProps ?? {}
+  const tooltip = options.tooltip ? options.tooltip : formItemTooltip ?? ""
+
   const placeholderText = options.placeholderText
   const form = Form.useFormInstance()
   const rules: Rule[] = [
@@ -59,53 +68,96 @@ export function TextControl({
       label={label}
       id={id}
       name={path}
-      rules={rules}
       validateTrigger={["onBlur"]}
-      {...(tooltip
-        ? {
-            tooltip: {
-              title: tooltip,
-              icon: <QuestionCircleOutlined />,
-            },
-          }
-        : {})}
+      rules={rules}
+      tooltip={tooltip}
+      {...formItemPropsWOTooltip}
     >
       <TextControlInput
-        type={textControlType}
-        aria-label={label || schema.description}
+        aria-label={ariaLabel}
         disabled={!enabled}
         autoComplete="off"
         onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
           handleChange(path, e.target.value)
         }
-        placeholder={`Enter ${
-          placeholderText ?? (label.toLowerCase() || "value")
-        }`}
+        placeholder={placeholderText ?? (label.toLowerCase() || "value")}
+        textControlOptions={options}
       />
     </Form.Item>
   )
 }
 
-type TextControlInputProps =
-  | (InputProps & { type: "singleline" })
-  | (TextAreaProps & { type: "multiline" })
-  | (InputProps & { type: "password" })
+type TextControlInputProps = {
+  "aria-label": string | undefined
+  disabled: boolean
+  autoComplete: string
+  onChange: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void
+  placeholder: string
+  textControlOptions: TextControlOptions
+}
 
-function TextControlInput({ type, ...rest }: TextControlInputProps) {
-  switch (type) {
+function TextControlInput({
+  textControlOptions,
+  ...rest
+}: TextControlInputProps) {
+  const { inputProps, ...restTextControlOptions } = textControlOptions
+
+  if (
+    !(`type` in restTextControlOptions) ||
+    restTextControlOptions.type === undefined
+  ) {
+    return (
+      <Input
+        {...{
+          ...rest,
+          ...(inputProps as InputProps),
+          // hate this but because of destructuring we have to go back to casting
+        }}
+      />
+    )
+  }
+
+  switch (restTextControlOptions.type) {
     case "multiline":
-      // idk why type isn't getting narrowed properly here, but cast seems safe
-      return <Input.TextArea {...(rest as TextAreaProps)} />
+      return (
+        <Input.TextArea
+          {...{
+            ...rest,
+            ...(inputProps as TextAreaProps),
+          }}
+        />
+      )
     case "singleline":
-      // idk why type isn't getting narrowed properly here, but cast seems safe
-      return <Input {...(rest as InputProps)} />
+      return (
+        <Input
+          {...{
+            ...rest,
+            ...(inputProps as InputProps),
+          }}
+        />
+      )
     case "password":
-      return <Input.Password {...(rest as InputProps)} />
+      return (
+        <Input.Password
+          {...{
+            ...rest,
+            ...(inputProps as InputProps),
+          }}
+        />
+      )
+
     default:
       try {
-        assertNever(type)
+        assertNever(restTextControlOptions.type)
       } catch (e) {
-        return <Input {...(rest as InputProps)} />
+        return (
+          <Input
+            {...{
+              ...rest,
+              ...(inputProps as InputProps),
+            }}
+          />
+        )
       }
   }
 }
@@ -113,3 +165,5 @@ function TextControlInput({ type, ...rest }: TextControlInputProps) {
 function coerceToString(value: number) {
   return value.toString()
 }
+
+export const TextRenderer = withJsonFormsControlProps(TextControl)

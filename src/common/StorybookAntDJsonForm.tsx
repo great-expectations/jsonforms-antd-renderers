@@ -1,46 +1,69 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import {
   JsonFormsRendererRegistryEntry,
   JsonFormsUISchemaRegistryEntry,
-  JsonSchema7,
 } from "@jsonforms/core"
 import { UISchema } from "../ui-schema"
 import { AntDJsonForm } from "./AntDJsonForm"
-import { useState } from "react"
+import { useCallback, useState } from "react"
+import { Button, Form } from "antd"
+import { JsonFormsReactProps } from "@jsonforms/react"
 
-type Props = {
+type Props<T> = {
   data?: Record<string, unknown>
-  jsonSchema: JsonSchema7
+  jsonSchema: T
   rendererRegistryEntries: JsonFormsRendererRegistryEntry[]
-  uiSchema?: UISchema
+  uiSchema?: UISchema<T>
   uiSchemaRegistryEntries?: JsonFormsUISchemaRegistryEntry[]
   config?: Record<string, unknown>
-  onChange: (data: Record<string, unknown>) => void
+  onChange: JsonFormsReactProps["onChange"]
 }
 
 // this component exists to facilitate storybook rendering
-export function StorybookAntDJsonForm({
+export function StorybookAntDJsonForm<T>({
   data: initialData = {},
   uiSchema,
   jsonSchema,
   uiSchemaRegistryEntries,
   rendererRegistryEntries,
   config,
-  onChange,
-}: Props) {
-  const [data, setData] = useState(initialData)
-  const updateData = (newData: Record<string, unknown>) => {
-    setData(newData)
-    onChange(newData)
-  }
+  onChange: _onChange,
+}: Props<T>) {
+  const [result, setResult] = useState({ data: initialData })
+  const onChange = useCallback(
+    (r: { data: Record<string, unknown>; errors: [] }) => {
+      setResult(r)
+      _onChange?.(r)
+    },
+    [_onChange],
+  )
+  const [form] = Form.useForm()
+  const onSubmit = useCallback(async () => {
+    const formValidationResult = await form
+      .validateFields()
+      .then((values: Record<string, unknown>) => values)
+      .catch((errorInfo: { errorFields: unknown[] }) => errorInfo)
+
+    if ("errorFields" in formValidationResult) {
+      return // nothing to do; validateFields will have already rendered error messages on form fields
+    }
+  }, [form])
   return (
-    <AntDJsonForm
-      uiSchema={uiSchema}
-      jsonSchema={jsonSchema}
-      data={data}
-      updateData={(newData) => updateData(newData)}
-      uiSchemaRegistryEntries={uiSchemaRegistryEntries}
-      rendererRegistryEntries={rendererRegistryEntries}
-      config={config}
-    />
+    <Form form={form}>
+      <AntDJsonForm<typeof jsonSchema>
+        uiSchema={uiSchema}
+        jsonSchema={jsonSchema}
+        data={result.data}
+        onChange={onChange}
+        uiSchemaRegistryEntries={uiSchemaRegistryEntries}
+        rendererRegistryEntries={rendererRegistryEntries}
+        config={config}
+      />
+      <Form.Item>
+        <Button type="primary" onClick={onSubmit}>
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
   )
 }

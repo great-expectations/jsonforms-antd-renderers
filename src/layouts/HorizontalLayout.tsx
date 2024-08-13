@@ -1,8 +1,9 @@
 import { LayoutProps, GroupLayout } from "@jsonforms/core"
 import isEmpty from "lodash.isempty"
 import { AntDLayout, AntDLayoutProps } from "./LayoutRenderer"
-import { HorizontalLayout as HorizontalLayoutUISchema } from "../ui-schema"
+import { HorizontalLayoutUISchema } from "../ui-schema"
 import { Form, Row } from "antd"
+import { withJsonFormsLayoutProps } from "@jsonforms/react"
 
 export function HorizontalLayout({
   uischema,
@@ -13,7 +14,7 @@ export function HorizontalLayout({
   renderers,
   cells,
 }: LayoutProps) {
-  const horizontalLayout = uischema as HorizontalLayoutUISchema
+  const horizontalLayout = uischema as HorizontalLayoutUISchema<unknown>
   const groupLayout = uischema as GroupLayout
   const childProps: AntDLayoutProps = {
     elements: horizontalLayout.elements,
@@ -37,3 +38,6 @@ export function HorizontalLayout({
     </Form>
   )
 }
+
+export const HorizontalLayoutRenderer =
+  withJsonFormsLayoutProps(HorizontalLayout)

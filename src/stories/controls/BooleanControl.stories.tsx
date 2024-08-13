@@ -1,12 +1,24 @@
 import { Meta, StoryObj } from "@storybook/react"
-import { rendererRegistryEntries } from "../../renderers"
+import { rendererRegistryEntries } from "../../renderer-registry-entries"
 import { UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
+import { JSONSchema } from "json-schema-to-ts"
 
 const schema = {
   type: "object",
   properties: { checkbox: { type: "boolean" } },
-}
+} satisfies JSONSchema
+
+const metaUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/checkbox",
+      label: "Checkbox",
+    },
+  ],
+} satisfies UISchema<typeof schema>
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Boolean",
@@ -19,16 +31,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
   tags: ["autodocs"],
   args: {
     jsonSchema: schema,
-    uiSchema: {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/checkbox",
-          label: "Checkbox",
-        },
-      ],
-    } satisfies UISchema,
+    uiSchema: metaUISchema,
     rendererRegistryEntries: [...rendererRegistryEntries],
   },
   // More on argTypes: https://storybook.js.org/docs/api/argtypes

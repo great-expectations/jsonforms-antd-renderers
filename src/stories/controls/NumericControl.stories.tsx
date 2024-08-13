@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { StorybookAntDJsonForm } from "../../../common/StorybookAntDJsonForm"
+import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 
 import {
   numericMagnitudeSchema,
@@ -7,11 +7,12 @@ import {
   numericWeightSchema,
   numericSheepSchema,
   numericVerticalUISchema,
+  numericTooltipUISchema,
   numericPriceSchema,
   numericUSDUISchema,
   numericROISchema,
   numericPercentageUISchema,
-} from "../../../testSchemas/numericSchema/numericSchema"
+} from "../../testSchemas/numericSchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Numeric Input",
@@ -75,5 +76,13 @@ export const RequiredPercentage: Story = {
   args: {
     jsonSchema: numericROISchema,
     uiSchema: numericPercentageUISchema,
+  },
+}
+
+export const WithTooltip: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: numericSheepSchema,
+    uiSchema: numericTooltipUISchema,
   },
 }

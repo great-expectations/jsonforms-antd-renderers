@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ControlProps, isDescriptionHidden } from "@jsonforms/core"
-import { Form } from "antd"
+import { Form, FormItemProps } from "antd"
 import { Checkbox } from "../antd/Checkbox"
-import { QuestionCircleOutlined } from "@ant-design/icons"
+import { withJsonFormsControlProps } from "@jsonforms/react"
 
 export function BooleanControl({
   data,
@@ -38,21 +38,17 @@ export function BooleanControl({
 
   const showTooltip =
     !showDescription && !isDescriptionHidden(visible, description, true, true)
+  const formItemProps =
+    "formItemProps" in uischema ? (uischema.formItemProps as FormItemProps) : {}
+  const tooltip = showTooltip && description ? description : undefined
+
   return (
     <Form.Item
       id={id}
       name={path}
       initialValue={data ?? schema.default}
-      {...{
-        ...(showTooltip
-          ? {
-              tooltip: {
-                title: description,
-                icon: <QuestionCircleOutlined />,
-              },
-            }
-          : {}),
-      }}
+      tooltip={tooltip}
+      {...formItemProps}
     >
       <Checkbox
         id={`${id}-input`}
@@ -72,3 +68,5 @@ export function BooleanControl({
     </Form.Item>
   )
 }
+
+export const BooleanRenderer = withJsonFormsControlProps(BooleanControl)

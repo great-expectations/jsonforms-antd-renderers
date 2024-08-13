@@ -1,7 +1,8 @@
 import { LayoutProps, GroupLayout } from "@jsonforms/core"
 import { AntDLayout, AntDLayoutProps } from "./LayoutRenderer"
 import { Form, FormInstance, FormProps } from "antd"
-import { VerticalLayout as VerticalLayoutUISchema } from "../ui-schema"
+import { VerticalLayoutUISchema } from "../ui-schema"
+import { withJsonFormsLayoutProps } from "@jsonforms/react"
 
 export function VerticalLayout({
   uischema,
@@ -12,7 +13,7 @@ export function VerticalLayout({
   renderers,
   cells,
 }: LayoutProps) {
-  const verticalLayout = uischema as VerticalLayoutUISchema
+  const verticalLayout = uischema as VerticalLayoutUISchema<unknown>
   const groupLayout = uischema as GroupLayout
   const childProps: AntDLayoutProps = {
     elements: verticalLayout.elements,
@@ -38,3 +39,5 @@ function getFormLayoutOptions(form: FormInstance): Partial<FormProps> {
     component: form ? "div" : "form",
   }
 }
+
+export const VerticalLayoutRenderer = withJsonFormsLayoutProps(VerticalLayout)

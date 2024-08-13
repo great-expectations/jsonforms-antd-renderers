@@ -1,16 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { StorybookAntDJsonForm } from "../../../common/StorybookAntDJsonForm"
+import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
 
 import {
   numericSliderBasisPointsSchema,
   numericSliderVerticalUISchema,
+  numericSliderTooltipUISchema,
+  numericSliderKelvinSchema,
   numericSliderTemperatureSchema,
   numericSliderTemperatureUISchema,
   numericSliderFinalGradeSchema,
   numericSliderPercentageUISchema,
   numericSliderDonateNowSchema,
   numericSliderUSDUISchema,
-} from "../../../testSchemas/numericSchema/numericSliderSchema"
+} from "../../testSchemas/numericSliderSchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Numeric Slider",
@@ -58,5 +60,13 @@ export const OptionalUSDWithDefault: Story = {
   args: {
     jsonSchema: numericSliderDonateNowSchema,
     uiSchema: numericSliderUSDUISchema,
+  },
+}
+
+export const WithTooltip: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: numericSliderKelvinSchema,
+    uiSchema: numericSliderTooltipUISchema,
   },
 }

@@ -1,0 +1,9 @@
+flag_management:
+  default_rules: # the rules that will be followed for any flag added, generally
+    carryforward: false
+    statuses:
+      - type: project
+        target: auto # the default target for the project
+        threshold: 60% # the default minimum threshold for the project
+      - type: patch
+        target: 80%

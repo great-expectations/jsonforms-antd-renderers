@@ -1,10 +1,10 @@
-import { test, expect } from "vitest"
+import { test, expect, describe } from "vitest"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import type { JSONSchema } from "json-schema-to-ts"
 
 import { render } from "../common/test-render"
-import type { UISchema } from "../ui-schema"
+import type { TextControlOptions, UISchema } from "../ui-schema"
 import type { JSONFormData } from "../common/schema-derived-types"
 
 const textInputSchema = {
@@ -42,7 +42,7 @@ test("renders default value when present", async () => {
   await waitFor(() => {
     expect(
       screen.getByPlaceholderText(
-        "Enter " + defaultValueTextInputSchema.properties.foo.title,
+        defaultValueTextInputSchema.properties.foo.title,
         { exact: false },
       ),
     ).toHaveValue(defaultValueTextInputSchema.properties.foo.default)
@@ -55,12 +55,12 @@ test("updates jsonforms data as expected", async () => {
     schema: textInputSchema,
     data,
     onChange: (result) => {
-      data = result.data
+      data = result.data as JSONFormData<typeof textInputSchema>
     },
   })
 
   const input = screen.getByPlaceholderText(
-    "Enter " + textInputSchema.properties.foo.title,
+    textInputSchema.properties.foo.title,
     { exact: false },
   )
 
@@ -72,38 +72,43 @@ test("updates jsonforms data as expected", async () => {
 })
 
 test("renders a password when present", async () => {
-  const passwordUISchema: UISchema = {
-    type: "Control",
-    scope: "#/properties/secret",
-    options: { type: "password" },
+  const passwordUISchema: UISchema<typeof passwordSchema> = {
+    type: "VerticalLayout",
+    elements: [
+      {
+        type: "Control",
+        scope: "#/properties/secret",
+        options: { type: "password" },
+      },
+    ],
   }
   const passwordSchema = {
+    type: "object",
     properties: { secret: { type: "string", title: "Secret" } },
   } satisfies JSONSchema
 
   render({ schema: passwordSchema, uischema: passwordUISchema })
-  await screen.findByPlaceholderText(
-    "Enter " + passwordSchema.properties.secret.title,
-    { exact: false },
-  )
+  await screen.findByPlaceholderText(passwordSchema.properties.secret.title, {
+    exact: false,
+  })
   expect(
     (screen.getByLabelText("Secret") satisfies HTMLInputElement).type,
   ).toEqual("password")
 })
 
 test("renders error messages from rule validation", async () => {
-  const patternUISchema: UISchema = {
+  const patternUISchema = {
     type: "Control",
     scope: "#/properties/name",
     options: {
       rules: [
         {
-          pattern: "^[a-zA-Z ]*$",
+          pattern: /^[a-zA-Z ]*$/,
           message: "Only letters are allowed",
         },
       ],
     },
-  }
+  } satisfies UISchema<typeof patternSchema>
 
   const patternSchema = {
     type: "object",
@@ -116,7 +121,7 @@ test("renders error messages from rule validation", async () => {
   })
 
   const inputElement = await screen.findByPlaceholderText(
-    "Enter " + patternSchema.properties.name.title,
+    patternSchema.properties.name.title,
     { exact: false },
   )
 
@@ -124,4 +129,64 @@ test("renders error messages from rule validation", async () => {
   await userEvent.tab() // to trigger onBlur validation
 
   await screen.findByText("Only letters are allowed")
+})
+
+describe("tooltips", () => {
+  const getUiSchema = (options?: TextControlOptions) => ({
+    type: "VerticalLayout",
+    elements: [
+      {
+        type: "Control",
+        scope: "#/properties/name",
+        label: "Name",
+        formItemProps: {
+          tooltip: {
+            title: (
+              <p>
+                Choose{" "}
+                <a
+                  href="https://wheelofnames.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  a random name
+                </a>
+                .
+              </p>
+            ),
+            placement: "right",
+          },
+        },
+        options,
+      },
+    ],
+  })
+
+  const schema = {
+    type: "object",
+    properties: { name: { type: "string", title: "Name" } },
+  } satisfies JSONSchema
+
+  test("renders tooltip", async () => {
+    render({ schema, uischema: getUiSchema() })
+    await screen.findByPlaceholderText(schema.properties.name.title, {
+      exact: false,
+    })
+    const svgEl = screen.getByRole("img", { name: /question-circle/i })
+    await userEvent.hover(svgEl)
+
+    await screen.findByText("a random name", { exact: false })
+  })
+
+  test("renders right tooltip in case both are passed", async () => {
+    const options = { tooltip: "You should see this tooltip" }
+    render({ schema, uischema: getUiSchema(options) })
+    await screen.findByPlaceholderText(schema.properties.name.title, {
+      exact: false,
+    })
+    const svgEl = screen.getByRole("img", { name: /question-circle/i })
+    await userEvent.hover(svgEl)
+
+    await screen.findByText("You should see this tooltip")
+  })
 })

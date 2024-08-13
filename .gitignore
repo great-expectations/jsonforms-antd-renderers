@@ -27,3 +27,8 @@ dist-ssr
 
 # Built package
 great-expectations-jsonforms-antd-renderers-*.tgz
+
+# coverage
+coverage/
+# default for vitest-ui
+html/

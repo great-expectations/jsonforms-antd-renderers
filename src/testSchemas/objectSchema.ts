@@ -26,7 +26,20 @@ export const objectUISchemaWithName = {
       scope: "#/properties/name",
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof objectSchema>
+
+export const objectUISchemaWithTooltip = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/name",
+      formItemProps: {
+        tooltip: "It's what you call yourself",
+      },
+    },
+  ],
+} satisfies UISchema<typeof objectSchema>
 
 export const objectUISchemaWithNameAndLastName = {
   type: "VerticalLayout",
@@ -40,7 +53,7 @@ export const objectUISchemaWithNameAndLastName = {
       scope: "#/properties/lastName",
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof objectSchema>
 
 export const objectUISchemaWithRule = {
   type: "VerticalLayout",
@@ -61,4 +74,4 @@ export const objectUISchemaWithRule = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof objectSchema>

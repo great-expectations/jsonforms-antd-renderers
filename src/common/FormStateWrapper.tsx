@@ -1,43 +1,68 @@
-import { JsonForms } from "@jsonforms/react"
-import { JSONSchema } from "json-schema-to-ts"
-import { Form } from "antd"
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { JsonForms, JsonFormsReactProps } from "@jsonforms/react"
+import { Button, Form } from "antd"
 
-import { JsonSchema7 } from "@jsonforms/core"
+import { JsonFormsUISchemaRegistryEntry, JsonSchema7 } from "@jsonforms/core"
 import { UISchema } from "../ui-schema"
-import { cellRegistryEntries, rendererRegistryEntries } from "../renderers"
-import { useState } from "react"
+import {
+  cellRegistryEntries,
+  rendererRegistryEntries,
+} from "../renderer-registry-entries"
+import { useCallback, useState } from "react"
 
-type RenderProps<T extends Record<string, unknown>> = {
-  schema: JSONSchema
+export type RenderProps<T extends Record<string, unknown>, S> = {
+  schema: S
   data?: T
-  uischema?: UISchema
-  onChange?: (result: { data: T }) => void
+  uischema?: UISchema<S>
+  onChange?: JsonFormsReactProps["onChange"]
+  uiSchemaRegistryEntries?: JsonFormsUISchemaRegistryEntry[]
 }
 
-export function FormStateWrapper<T extends Record<string, unknown>>({
+export function FormStateWrapper<T extends Record<string, unknown>, S>({
   schema,
   uischema,
   data: initialData,
-  onChange,
-}: RenderProps<T>) {
-  const [data, setData] = useState<Record<string, unknown> | undefined>(
-    initialData,
+  onChange: _onChange,
+  uiSchemaRegistryEntries,
+}: RenderProps<T, S>) {
+  const [result, setResult] = useState({
+    data: initialData,
+  })
+  const onChange: Required<JsonFormsReactProps>["onChange"] = useCallback(
+    (r) => {
+      _onChange?.(r)
+      setResult(r)
+    },
+    [_onChange],
   )
+  const [form] = Form.useForm()
+  const onSubmit = useCallback(async () => {
+    const formValidationResult = await form
+      .validateFields()
+      .then((values: Record<string, unknown>) => values)
+      .catch((errorInfo: { errorFields: unknown[] }) => errorInfo)
+
+    if ("errorFields" in formValidationResult) {
+      return // nothing to do; validateFields will have already rendered error messages on form fields
+    }
+  }, [form])
+
   return (
-    <Form>
+    <Form form={form}>
       <JsonForms
         schema={schema as JsonSchema7}
         uischema={uischema}
         renderers={rendererRegistryEntries}
         cells={cellRegistryEntries}
-        data={data}
-        {...(onChange
-          ? { onChange }
-          : {
-              onChange: (result) =>
-                setData(result.data as Record<string, unknown>),
-            })}
+        data={result?.data}
+        uischemas={uiSchemaRegistryEntries ?? []}
+        onChange={onChange}
       />
+      <Form.Item>
+        <Button type="primary" onClick={onSubmit}>
+          Submit
+        </Button>
+      </Form.Item>
     </Form>
   )
 }

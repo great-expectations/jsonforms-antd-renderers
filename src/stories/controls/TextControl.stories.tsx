@@ -1,13 +1,14 @@
 import { Meta, StoryObj } from "@storybook/react"
-import { rendererRegistryEntries } from "../../renderers"
-import { TextControlOptions, UISchema } from "../../ui-schema"
+import { rendererRegistryEntries } from "../../renderer-registry-entries"
+import { UISchema } from "../../ui-schema"
 import { StorybookAntDJsonForm } from "../../common/StorybookAntDJsonForm"
+import { JSONSchema } from "json-schema-to-ts"
 
 const schema = {
   type: "object",
   properties: { name: { type: "string" } },
   // required: ["name"],
-}
+} satisfies JSONSchema
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Control/Text",
@@ -29,7 +30,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
           label: "Name",
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof schema>,
     rendererRegistryEntries: [...rendererRegistryEntries],
   },
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
@@ -75,7 +76,7 @@ export const MultiLine: Story = {
           options: { type: "multiline" },
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof schema>,
   },
 }
 
@@ -89,10 +90,14 @@ export const Password: Story = {
           type: "Control",
           scope: "#/properties/name",
           label: "Name",
-          options: { type: "password" },
+          options: {
+            type: "password",
+            rules: [],
+            inputProps: { autoComplete: "new-password" },
+          },
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof schema>,
   },
 }
 
@@ -113,9 +118,45 @@ export const RuleDefinedInUISchema: Story = {
                 message: "Name cannot start or end with a space",
               },
             ],
-          } satisfies TextControlOptions,
+          },
         },
       ],
-    } satisfies UISchema,
+    } satisfies UISchema<typeof schema>,
+  },
+}
+
+export const FormItemTooltip: Story = {
+  parameters: { controls: { expanded: true } },
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: schema,
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Control",
+          scope: "#/properties/name",
+          label: "Name",
+          formItemProps: {
+            tooltip: {
+              title: (
+                <p>
+                  Choose{" "}
+                  <a
+                    href="https://wheelofnames.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    a random name
+                  </a>
+                  .
+                </p>
+              ),
+              placement: "right",
+            },
+          },
+        },
+      ],
+    } satisfies UISchema<typeof schema>,
   },
 }

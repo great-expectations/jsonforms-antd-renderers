@@ -1,17 +1,23 @@
-name: tests
+# Simple workflow for deploying static content to GitHub Pages
+name: Publish Storybook to GitHub Pages
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  cache-and-install-deps-and-run-tests:
+  publish:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -43,22 +49,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Dry-run of build
-        shell: bash
-        run: pnpm pack
+      - name: Build storybook
+        run: pnpm build-storybook
 
-      - name: Run lint
-        run: pnpm lint
-
-      - name: Run format
-        run: pnpm format:check
-
-      - name: Run tests with coverage
-        run: pnpm test:cov
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.1.0
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          files: coverage/cobertura-coverage.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: great-expectations/jsonforms-antd-renderers
+          path: "./storybook-static"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2

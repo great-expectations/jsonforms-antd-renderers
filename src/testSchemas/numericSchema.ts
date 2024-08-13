@@ -1,6 +1,6 @@
 import { RuleEffect } from "@jsonforms/core"
 import { JSONSchema } from "json-schema-to-ts"
-import { UISchema } from "../../ui-schema"
+import { UISchema } from "../ui-schema"
 
 export const numericMagnitudeSchema = {
   type: "object",
@@ -14,7 +14,7 @@ export const numericMagnitudeSchema = {
 } satisfies JSONSchema
 
 export const numericTheNumberSchema = {
-  type: "number",
+  type: "object",
   properties: {
     numericValue: {
       title: "The Number",
@@ -87,7 +87,21 @@ export const numericVerticalUISchema = {
       scope: "#/properties/numericValue",
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericROISchema>
+
+export const numericTooltipUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/numericValue",
+      formItemProps: {
+        tooltip:
+          "Sheep (pl.: sheep) or domestic sheep (Ovis aries) are a domesticated, ruminant mammal typically kept as livestock.",
+      },
+    },
+  ],
+} satisfies UISchema<typeof numericSheepSchema>
 
 export const numericHorizontalUISchema = {
   type: "HorizontalLayout",
@@ -97,7 +111,7 @@ export const numericHorizontalUISchema = {
       scope: "#/properties/numericValue",
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericROISchema>
 
 export const numericUSDUISchema = {
   type: "VerticalLayout",
@@ -110,7 +124,7 @@ export const numericUSDUISchema = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericROISchema>
 
 export const numericPercentageUISchema = {
   type: "VerticalLayout",
@@ -123,7 +137,7 @@ export const numericPercentageUISchema = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericROISchema>
 
 export const numericUISchemaWithRule = {
   type: "VerticalLayout",
@@ -137,4 +151,4 @@ export const numericUISchemaWithRule = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericROISchema>

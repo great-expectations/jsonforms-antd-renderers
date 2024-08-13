@@ -1,18 +1,17 @@
 import { render as RTLrender } from "@testing-library/react"
-import { JSONSchema } from "json-schema-to-ts"
+import { FormStateWrapper, RenderProps } from "./FormStateWrapper"
+import { StrictMode } from "react"
 
-import { UISchema } from "../ui-schema"
-import { FormStateWrapper } from "./FormStateWrapper"
-
-type RenderProps<T extends Record<string, unknown>> = {
-  schema: JSONSchema
-  data?: T
-  uischema?: UISchema
-  onChange?: (result: { data: T }) => void
-}
-
-export function render<T extends Record<string, unknown>>(
-  props: RenderProps<T>,
+export function render<T extends Record<string, unknown>, S>(
+  props: RenderProps<T, S>,
 ) {
   return RTLrender(<FormStateWrapper {...props} />)
+}
+
+export function strictRender<T extends Record<string, unknown>, S>(
+  props: RenderProps<T, S>,
+) {
+  return RTLrender(<FormStateWrapper {...props} />, {
+    wrapper: StrictMode,
+  })
 }

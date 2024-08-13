@@ -1,6 +1,6 @@
 import { RuleEffect } from "@jsonforms/core"
 import { JSONSchema } from "json-schema-to-ts"
-import { UISchema } from "../../ui-schema"
+import { UISchema } from "../ui-schema"
 
 export const numericSliderBasisPointsSchema = {
   type: "object",
@@ -26,6 +26,21 @@ export const numericSliderTemperatureSchema = {
       maximum: 150,
       multipleOf: 1,
       default: 70,
+    },
+  },
+  required: ["numericRangeValue"],
+} satisfies JSONSchema
+
+export const numericSliderKelvinSchema = {
+  type: "object",
+  properties: {
+    numericRangeValue: {
+      title: "Temperature",
+      type: "number",
+      minimum: 0,
+      maximum: 500,
+      multipleOf: 1,
+      default: 273,
     },
   },
   required: ["numericRangeValue"],
@@ -96,7 +111,23 @@ export const numericSliderVerticalUISchema = {
       scope: "#/properties/numericRangeValue",
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericSliderDonateNowSchema>
+
+export const numericSliderTooltipUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/numericRangeValue",
+      options: {
+        addonAfter: "°K",
+      },
+      formItemProps: {
+        tooltip: "°Kelvin = °Celsius + 273.15 or °Fahrenheit + 459.67",
+      },
+    },
+  ],
+} satisfies UISchema<typeof numericSliderTemperatureSchema>
 
 export const numericSliderHorizontalUISchema = {
   type: "HorizontalLayout",
@@ -106,7 +137,7 @@ export const numericSliderHorizontalUISchema = {
       scope: "#/properties/numericRangeValue",
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericSliderDonateNowSchema>
 
 export const numericSliderUSDUISchema = {
   type: "VerticalLayout",
@@ -119,7 +150,7 @@ export const numericSliderUSDUISchema = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericSliderDonateNowSchema>
 
 export const numericSliderPercentageUISchema = {
   type: "VerticalLayout",
@@ -132,7 +163,7 @@ export const numericSliderPercentageUISchema = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericSliderDonateNowSchema>
 
 export const numericSliderTemperatureUISchema = {
   type: "VerticalLayout",
@@ -145,7 +176,7 @@ export const numericSliderTemperatureUISchema = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericSliderDonateNowSchema>
 
 export const numericSliderUISchemaWithRule = {
   type: "VerticalLayout",
@@ -159,4 +190,4 @@ export const numericSliderUISchemaWithRule = {
       },
     },
   ],
-} satisfies UISchema
+} satisfies UISchema<typeof numericSliderDonateNowSchema>

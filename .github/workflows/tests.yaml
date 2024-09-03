@@ -24,7 +24,6 @@ jobs:
       - uses: pnpm/action-setup@v3
         name: Install pnpm
         with:
-          version: 8
           run_install: false
 
       - name: Get pnpm store directory
@@ -62,3 +61,9 @@ jobs:
           files: coverage/cobertura-coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: great-expectations/jsonforms-antd-renderers
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

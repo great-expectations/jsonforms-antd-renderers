@@ -27,7 +27,7 @@ export function HorizontalLayout({
   return (
     <Form component={form ? false : "form"} form={form}>
       {!isEmpty(groupLayout.label) && groupLayout.label}
-      <Row justify="space-between" gutter={12}>
+      <Row justify="space-between" gutter={12} align="middle">
         <AntDLayout
           {...childProps}
           direction="row"

@@ -17,6 +17,9 @@ export const arrayControlUISchema = {
     {
       type: "Control",
       scope: "#/properties/assets",
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof objectArrayControlJsonSchema>
@@ -29,6 +32,9 @@ export const arrayControlSortableUISchema = {
       scope: "#/properties/assets",
       options: {
         showSortButtons: true,
+      },
+      layoutProps: {
+        columns: undefined,
       },
     },
   ],
@@ -51,6 +57,9 @@ export const arrayControlSortableWithIconsUISchema = {
           onClick: () => {}, // Testing to verify this isn't called because the user should be unable to override the onClick event
         },
       },
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof objectArrayControlJsonSchema>
@@ -63,6 +72,9 @@ export const arrayControlTooltipUISchema = {
       type: "Control",
       formItemProps: {
         tooltip: "Items of value",
+      },
+      layoutProps: {
+        columns: undefined,
       },
     },
   ],
@@ -86,6 +98,9 @@ export const arrayControlUISchemaWithIcons = {
           danger: true,
           onClick: () => {}, // User should be unable to override the onClick event
         },
+      },
+      layoutProps: {
+        columns: undefined,
       },
     },
   ],
@@ -260,6 +275,9 @@ const objectArrayWithCombinatorUISchema = {
       scope: "#/properties/brownCopperKettle",
       label: "Brown Copper Kettle",
       type: "Control",
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<
@@ -293,6 +311,9 @@ export const objectArrayWithCombinator_CombinatorUISchemaRegistryEntry: JsonForm
           FavoriteThing1: "Favorite Thing 1",
           FavoriteThing2: "Favorite Thing 2",
         },
+      },
+      layoutProps: {
+        columns: undefined,
       },
     } satisfies ControlUISchema<{ oneOf: [] }> as UISchemaElement,
   }

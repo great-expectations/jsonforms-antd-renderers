@@ -109,6 +109,9 @@ export const numericSliderVerticalUISchema = {
     {
       type: "Control",
       scope: "#/properties/numericRangeValue",
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof numericSliderDonateNowSchema>
@@ -125,6 +128,9 @@ export const numericSliderTooltipUISchema = {
       formItemProps: {
         tooltip: "°Kelvin = °Celsius + 273.15 or °Fahrenheit + 459.67",
       },
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof numericSliderTemperatureSchema>
@@ -135,6 +141,9 @@ export const numericSliderHorizontalUISchema = {
     {
       type: "Control",
       scope: "#/properties/numericRangeValue",
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof numericSliderDonateNowSchema>
@@ -147,6 +156,9 @@ export const numericSliderUSDUISchema = {
       scope: "#/properties/numericRangeValue",
       options: {
         addonBefore: "$",
+      },
+      layoutProps: {
+        columns: undefined,
       },
     },
   ],
@@ -161,6 +173,9 @@ export const numericSliderPercentageUISchema = {
       options: {
         addonAfter: "%",
       },
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof numericSliderDonateNowSchema>
@@ -173,6 +188,9 @@ export const numericSliderTemperatureUISchema = {
       scope: "#/properties/numericRangeValue",
       options: {
         addonAfter: "°F",
+      },
+      layoutProps: {
+        columns: undefined,
       },
     },
   ],
@@ -187,6 +205,9 @@ export const numericSliderUISchemaWithRule = {
       rule: {
         effect: RuleEffect.HIDE,
         condition: {},
+      },
+      layoutProps: {
+        columns: undefined,
       },
     },
   ],

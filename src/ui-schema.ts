@@ -45,6 +45,10 @@ interface Labelable<T = string> {
 interface Labeled<T = string> extends Labelable<T> {
   label: string | T
 }
+
+export interface ColumnLayoutProps {
+  columns?: number
+}
 /**
  * Common base interface for any UI schema element.
  */
@@ -79,6 +83,7 @@ export type VerticalLayoutUISchema<T> = LayoutUISchema<T> & {
  */
 export interface HorizontalLayoutUISchema<T> extends LayoutUISchema<T> {
   type: "HorizontalLayout"
+  layoutProps?: ColumnLayoutProps
 }
 /**
  * A group resembles a vertical layout, but additionally might have a label.
@@ -196,6 +201,7 @@ export type ControlUISchema<T> = UISchemaElement<T> &
   ControlUISchemaLabel & {
     type: "Control"
     formItemProps?: FormItemProps
+    layoutProps?: ColumnLayoutProps
   }
 /**
  * The category layout.

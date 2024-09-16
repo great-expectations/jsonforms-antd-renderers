@@ -109,6 +109,9 @@ export const numericHorizontalUISchema = {
     {
       type: "Control",
       scope: "#/properties/numericValue",
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof numericROISchema>

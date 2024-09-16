@@ -8,6 +8,9 @@ export const objectArrayControlUISchema = {
     {
       scope: "#/properties/assets",
       type: "Control",
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof objectArrayControlJsonSchema>
@@ -69,6 +72,9 @@ export const objectArrayControlUISchemaWithIcons = {
           danger: true,
           onClick: () => {}, // User should be unable to override the onClick event
         },
+      },
+      layoutProps: {
+        columns: undefined,
       },
     },
   ],

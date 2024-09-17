@@ -5,7 +5,7 @@ import { withJsonFormsLabelProps } from "@jsonforms/react"
 import ReactMarkdown from "react-markdown"
 
 export function AlertLayout({ text, uischema }: LabelProps & RendererProps) {
-  const options = uischema.options as AlertLayoutOptions
+  const options = (uischema?.options ?? { style: {} }) as AlertLayoutOptions
   return (
     <Alert
       style={{ marginBottom: "24px", ...options.style }}

@@ -42,6 +42,9 @@ test("AlertLayout renders markdown content", async () => {
       elements: [
         {
           type: "Label",
+          options: {
+            renderAsMarkdown: true,
+          },
           text: `# Title 1
 
 ## Title 2

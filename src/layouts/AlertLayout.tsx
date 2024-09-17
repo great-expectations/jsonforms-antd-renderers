@@ -8,33 +8,36 @@ export function AlertLayout({ text, uischema }: LabelProps & RendererProps) {
   const options = uischema.options as AlertLayoutOptions
   return (
     <Alert
-      style={{ marginBottom: "24px", borderWidth: 0, padding: "12px" }}
+      style={{ marginBottom: "24px", ...options.style }}
       type={options?.type ?? "info"}
       description={
-        <ReactMarkdown
-          components={{
-            p(props) {
-              return <span {...props} />
-            },
-            a(props) {
-              return (
-                <a
-                  style={{ textDecoration: "underline", color: "inherit" }}
-                  href={props.href}
-                  title={props.title}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {props.children}
-                </a>
-              )
-            },
-          }}
-        >
-          {text ?? ""}
-        </ReactMarkdown>
+        !options.renderAsMarkdown ? (
+          text
+        ) : (
+          <ReactMarkdown
+            components={{
+              p(props) {
+                return <span {...props} />
+              },
+              a(props) {
+                return (
+                  <a
+                    style={{ textDecoration: "underline", color: "inherit" }}
+                    href={props.href}
+                    title={props.title}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {props.children}
+                  </a>
+                )
+              },
+            }}
+          >
+            {text ?? ""}
+          </ReactMarkdown>
+        )
       }
-      showIcon
     />
   )
 }

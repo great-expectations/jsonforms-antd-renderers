@@ -98,3 +98,46 @@ export const Success: Story = {
     } satisfies UISchema<typeof schema>,
   },
 }
+
+export const Mardown: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: schema,
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Label",
+          text: `just regular text
+
+
+# Title 1
+
+[Link Text](https://example.com "Link Title")
+
+## Title 2
+_italic_
+
+### Title 3
+**bold**
+
+#### Title 4
+\`<Code Block />\`
+
+##### Title 5
+- ul1
+- ul2
+- ul3
+
+###### Title 6
+1. ol1
+2. ol2
+
+---
+
+`,
+        },
+      ],
+    } satisfies UISchema<typeof schema>,
+  },
+}

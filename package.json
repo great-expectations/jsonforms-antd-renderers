@@ -71,7 +71,7 @@
   "devDependencies": {
     "@ant-design/icons": "^5.5.0",
     "@jsonforms/core": "^3.4.0",
-    "@jsonforms/react": "^3.4.0",down esm bug (#96))
+    "@jsonforms/react": "^3.4.0",
     "@storybook/addon-essentials": "^7.6.20",
     "@storybook/addon-interactions": "^7.6.20",
     "@storybook/addon-links": "^7.6.20",
@@ -87,7 +87,7 @@
     "@types/lodash.merge": "^4.6.9",
     "@types/lodash.range": "^3.2.9",
     "@types/lodash.startcase": "^4.4.9",
-    "@types/react": "^18.3.5",
+    "@types/react": "^18.3.7",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",

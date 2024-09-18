@@ -33,7 +33,7 @@ export const NumericControl = (props: ControlProps) => {
       validateTrigger={["onBlur"]}
       {...formItemProps}
     >
-      <Col span={18}>{InputNumber({ ...props })}</Col>
+      <Col>{InputNumber({ ...props })}</Col>
     </Form.Item>
   )
 }

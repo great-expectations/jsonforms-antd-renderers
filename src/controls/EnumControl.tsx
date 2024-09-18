@@ -97,7 +97,7 @@ export const EnumControl = (props: ControlProps) => {
       validateTrigger={["onBlur"]}
       {...formItemProps}
     >
-      <Col span={18}>{selector}</Col>
+      <Col>{selector}</Col>
     </Form.Item>
   )
 }

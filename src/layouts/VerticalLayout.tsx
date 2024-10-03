@@ -1,4 +1,4 @@
-import { LayoutProps, GroupLayout } from "@jsonforms/core"
+import { LayoutProps } from "@jsonforms/core"
 import { AntDLayout, AntDLayoutProps } from "./LayoutRenderer"
 import { Form } from "antd"
 import { VerticalLayoutUISchema } from "../ui-schema"
@@ -13,10 +13,9 @@ export function VerticalLayout({
   renderers,
   cells,
 }: LayoutProps) {
-  const verticalLayout = uischema as VerticalLayoutUISchema<unknown>
-  const groupLayout = uischema as GroupLayout
+  const { elements } = uischema as VerticalLayoutUISchema<unknown>
   const childProps: AntDLayoutProps = {
-    elements: verticalLayout.elements,
+    elements,
     schema,
     path,
     enabled,
@@ -25,9 +24,6 @@ export function VerticalLayout({
   const form = Form.useFormInstance()
   return (
     <Form component={form ? false : "form"} scrollToFirstError form={form}>
-      {!!groupLayout.label && (
-        <div>{groupLayout.label}</div> // this was SubtitleSemiBold
-      )}
       <AntDLayout {...childProps} renderers={renderers} cells={cells} />
     </Form>
   )

@@ -5,6 +5,8 @@ import { HorizontalLayoutUISchema } from "../ui-schema"
 import { Form, Row } from "antd"
 import { withJsonFormsLayoutProps } from "@jsonforms/react"
 
+export const HORIZONTAL_LAYOUT_FORM_TEST_ID = "horizontal-layout-form"
+
 export function HorizontalLayout({
   uischema,
   schema,
@@ -25,7 +27,11 @@ export function HorizontalLayout({
   }
   const form = Form.useFormInstance()
   return (
-    <Form component={form ? false : "form"} form={form}>
+    <Form
+      data-testid={HORIZONTAL_LAYOUT_FORM_TEST_ID}
+      component={form ? false : "form"}
+      form={form}
+    >
       {!isEmpty(groupLayout.label) && groupLayout.label}
       <Row justify="space-between" gutter={12} align="middle">
         <AntDLayout

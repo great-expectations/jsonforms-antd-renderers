@@ -4,6 +4,8 @@ import { Form } from "antd"
 import { VerticalLayoutUISchema } from "../ui-schema"
 import { withJsonFormsLayoutProps } from "@jsonforms/react"
 
+export const VERTICAL_LAYOUT_FORM_TEST_ID = "vertical-layout-form"
+
 export function VerticalLayout({
   uischema,
   schema,
@@ -23,7 +25,12 @@ export function VerticalLayout({
   }
   const form = Form.useFormInstance()
   return (
-    <Form component={form ? false : "form"} scrollToFirstError form={form}>
+    <Form
+      data-testid={VERTICAL_LAYOUT_FORM_TEST_ID}
+      component={form ? false : "form"}
+      scrollToFirstError
+      form={form}
+    >
       <AntDLayout {...childProps} renderers={renderers} cells={cells} />
     </Form>
   )

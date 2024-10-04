@@ -1,4 +1,5 @@
 [![codecov](https://codecov.io/gh/great-expectations/jsonforms-antd-renderers/graph/badge.svg?token=aDz1isILuA)](https://codecov.io/gh/great-expectations/jsonforms-antd-renderers)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/great-expectations/jsonforms-antd-renderers/main.svg)](https://results.pre-commit.ci/latest/github/great-expectations/jsonforms-antd-renderers/main)
 
 # Ant Design Renderers for `jsonforms`
 

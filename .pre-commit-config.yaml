@@ -1,0 +1,23 @@
+# For available hooks and configuration options see: https://pre-commit.com/hooks.html
+# To manage and run locally, first install `pre-commit` https://pre-commit.com/#installation
+# To auto update to the latest versions `pre-commit autoupdate`
+# To manually run against all files `pre-commit run --all-files`
+# To force hooks to run on local commits `pre-commit install`
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: no-commit-to-branch
+        args: [--branch, develop, --branch, main]
+      - id: detect-private-key
+# https://pre-commit.ci/
+ci:
+  autofix_commit_msg: |
+    [pre-commit.ci] auto fixes from pre-commit.com hooks
+
+    for more information, see https://pre-commit.ci
+  autofix_prs: true
+  autoupdate_branch: "main"
+  autoupdate_commit_msg: "[pre-commit.ci] pre-commit autoupdate"
+  autoupdate_schedule: monthly
+  submodules: false

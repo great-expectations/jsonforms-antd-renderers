@@ -15,6 +15,9 @@ const splitterUISchema: UISchema<
       type: "Control",
       scope: "#/properties/column_name",
       label: "Column of datetime type",
+      layoutProps: {
+        columns: undefined,
+      },
     },
     {
       type: "Control",
@@ -22,6 +25,9 @@ const splitterUISchema: UISchema<
       rule: {
         effect: RuleEffect.HIDE,
         condition: {},
+      },
+      layoutProps: {
+        columns: undefined,
       },
     },
   ],
@@ -163,7 +169,15 @@ export const AnyOfWithDefaultsSchema = {
 
 export const AnyOfWithDefaultsBaseUISchema = {
   type: "VerticalLayout",
-  elements: [{ type: "Control", scope: "#/properties/contactMethod" }],
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/contactMethod",
+      layoutProps: {
+        columns: undefined,
+      },
+    },
+  ],
 } satisfies UISchema<typeof AnyOfWithDefaultsSchema>
 
 export const AnyOfTooltipUISchema = {
@@ -173,6 +187,9 @@ export const AnyOfTooltipUISchema = {
       type: "Control",
       scope: "#/properties/contactMethod",
       formItemProps: { tooltip: "Choose wisely" },
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof AnyOfWithDefaultsSchema>
@@ -184,6 +201,9 @@ const AnyOfWithDefaultsUISchema1 = {
       type: "Control",
       scope: "#/properties/pattern",
       label: "Pattern",
+      layoutProps: {
+        columns: undefined,
+      },
     },
     {
       type: "Control",
@@ -191,6 +211,9 @@ const AnyOfWithDefaultsUISchema1 = {
       rule: {
         effect: RuleEffect.HIDE,
         condition: {},
+      },
+      layoutProps: {
+        columns: undefined,
       },
     },
   ],
@@ -204,6 +227,9 @@ const AnyOfWithDefaultsUISchema2 = {
       type: "Control",
       scope: "#/properties/phoneNumber",
       label: "Phone Number",
+      layoutProps: {
+        columns: undefined,
+      },
     },
     {
       type: "Control",
@@ -211,6 +237,9 @@ const AnyOfWithDefaultsUISchema2 = {
       rule: {
         effect: RuleEffect.HIDE,
         condition: {},
+      },
+      layoutProps: {
+        columns: undefined,
       },
     },
   ],

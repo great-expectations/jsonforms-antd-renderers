@@ -60,6 +60,9 @@ export const enumSizeUISchema = {
       type: "Control",
       scope: "#/properties/size",
       options: { optionType: "segmented" },
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof enumSizeSchema>
@@ -71,6 +74,9 @@ export const enumProfessionUISchema = {
       type: "Control",
       scope: "#/properties/profession",
       options: { optionType: "dropdown" },
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof enumProfessionSchema>
@@ -82,6 +88,9 @@ export const enumPSIUISchema = {
       type: "Control",
       scope: "#/properties/psi",
       options: { optionType: "radio" },
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof enumPSISchema>
@@ -99,6 +108,9 @@ export const enumSnakeCaseUISchema = {
           option_2: "Option 2",
           option_3: "Option 3",
         },
+      },
+      layoutProps: {
+        columns: undefined,
       },
     },
   ],

@@ -19,6 +19,8 @@ export function BooleanControl({
   config,
   description,
 }: ControlProps) {
+  if (!visible) return null
+
   const isValid = errors.length === 0
   const appliedUiSchemaOptions = {
     ...(config as Record<string, unknown>),

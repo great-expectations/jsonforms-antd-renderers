@@ -24,6 +24,9 @@ export const objectUISchemaWithName = {
     {
       type: "Control",
       scope: "#/properties/name",
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof objectSchema>
@@ -37,6 +40,9 @@ export const objectUISchemaWithTooltip = {
       formItemProps: {
         tooltip: "It's what you call yourself",
       },
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof objectSchema>
@@ -47,10 +53,16 @@ export const objectUISchemaWithNameAndLastName = {
     {
       type: "Control",
       scope: "#/properties/name",
+      layoutProps: {
+        columns: undefined,
+      },
     },
     {
       type: "Control",
       scope: "#/properties/lastName",
+      layoutProps: {
+        columns: undefined,
+      },
     },
   ],
 } satisfies UISchema<typeof objectSchema>
@@ -61,6 +73,9 @@ export const objectUISchemaWithRule = {
     {
       type: "Control",
       scope: "#/properties/name",
+      layoutProps: {
+        columns: undefined,
+      },
     },
     {
       type: "Control",
@@ -71,6 +86,9 @@ export const objectUISchemaWithRule = {
           scope: "#/properties/name",
           schema: { const: "John" },
         },
+      },
+      layoutProps: {
+        columns: undefined,
       },
     },
   ],

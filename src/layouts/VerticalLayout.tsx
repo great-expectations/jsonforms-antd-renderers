@@ -1,8 +1,10 @@
-import { LayoutProps, GroupLayout } from "@jsonforms/core"
+import { LayoutProps } from "@jsonforms/core"
 import { AntDLayout, AntDLayoutProps } from "./LayoutRenderer"
-import { Form, FormInstance, FormProps } from "antd"
+import { Form } from "antd"
 import { VerticalLayoutUISchema } from "../ui-schema"
 import { withJsonFormsLayoutProps } from "@jsonforms/react"
+
+export const VERTICAL_LAYOUT_FORM_TEST_ID = "vertical-layout-form"
 
 export function VerticalLayout({
   uischema,
@@ -13,10 +15,9 @@ export function VerticalLayout({
   renderers,
   cells,
 }: LayoutProps) {
-  const verticalLayout = uischema as VerticalLayoutUISchema<unknown>
-  const groupLayout = uischema as GroupLayout
+  const { elements } = uischema as VerticalLayoutUISchema<unknown>
   const childProps: AntDLayoutProps = {
-    elements: verticalLayout.elements,
+    elements,
     schema,
     path,
     enabled,
@@ -24,20 +25,15 @@ export function VerticalLayout({
   }
   const form = Form.useFormInstance()
   return (
-    <Form {...getFormLayoutOptions(form)} form={form}>
-      {!groupLayout.label && (
-        <div>{groupLayout.label}</div> // this was SubtitleSemiBold
-      )}
+    <Form
+      data-testid={VERTICAL_LAYOUT_FORM_TEST_ID}
+      component={form ? false : "form"}
+      scrollToFirstError
+      form={form}
+    >
       <AntDLayout {...childProps} renderers={renderers} cells={cells} />
     </Form>
   )
-}
-
-function getFormLayoutOptions(form: FormInstance): Partial<FormProps> {
-  return {
-    scrollToFirstError: true,
-    component: form ? "div" : "form",
-  }
 }
 
 export const VerticalLayoutRenderer = withJsonFormsLayoutProps(VerticalLayout)

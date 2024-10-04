@@ -23,7 +23,7 @@ $ npm install @great-expectations/jsonforms-antd-renderers
 
 ### Using AntD Renderers
 
-In order to use this package, you need to import the renderer registry entries from this package and provide them to the `@jsonforms/react` `JsonForms` component:
+In order to use this package you need to import the renderer registry entries from this package and provide them to the `@jsonforms/react` `JsonForms` component:
 
 ```tsx
 import { JsonForms } from "@jsonforms/react"

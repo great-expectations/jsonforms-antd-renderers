@@ -30,5 +30,6 @@ great-expectations-jsonforms-antd-renderers-*.tgz
 
 # coverage
 coverage/
+junit.xml
 # default for vitest-ui
 html/

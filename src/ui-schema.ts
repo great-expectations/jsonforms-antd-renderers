@@ -134,7 +134,9 @@ export type LabelLayoutUISchema<T> = UISchemaElement<T> & {
   options?: LabelOptions
 }
 
-export type AlertLayoutOptions = { type: AlertProps["type"] }
+export type AlertLayoutOptions = Pick<AlertProps, "type" | "style"> & {
+  renderAsMarkdown?: boolean
+}
 
 // this is intended to be a union, it just has one member rn
 export type LabelOptions = AlertLayoutOptions

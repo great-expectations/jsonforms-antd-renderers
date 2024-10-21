@@ -6,6 +6,7 @@ import {
   NumericControlOptions,
   OneOfControlOptions,
   TextControlOptions,
+  DateTimeControlOptions,
   UISchema,
 } from ".."
 
@@ -21,11 +22,13 @@ type JsonSchemaTypeToControlOptions<
   // K extends keyof T & string,
 > = T extends { enum: unknown }
   ? EnumControlOptions
-  : T extends { type: infer U }
+  : T extends { type: infer U; format?: infer F }
     ? U extends "object" // ObjectControlOptions goes here
       ? unknown
       : U extends "string"
-        ? TextControlOptions
+        ? F extends "date-time"
+          ? DateTimeControlOptions
+          : TextControlOptions
         : U extends "number" | "integer"
           ? NumericControlOptions
           : U extends "array"

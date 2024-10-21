@@ -65,6 +65,7 @@
     "@jsonforms/core": "^3.3.0",
     "@jsonforms/react": "^3.3.0",
     "antd": "^5.14.0",
+    "dayjs": "^1",
     "react": "^17 || ^18"
   },
   "devDependencies": {

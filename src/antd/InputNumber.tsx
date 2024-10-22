@@ -1,4 +1,4 @@
-import { ReactElement, useCallback } from "react"
+import { useCallback } from "react"
 import { ControlProps, RendererProps } from "@jsonforms/core"
 import { InputNumber as AntdInputNumber } from "antd"
 import { NumericControlOptions } from "../ui-schema"
@@ -9,7 +9,6 @@ import {
   percentageStringToDecimal,
 } from "../controls/utils"
 
-type InputNumber = ReactElement<typeof AntdInputNumber>
 type AntdInputNumberProps = React.ComponentProps<typeof AntdInputNumber>
 type InputNumberProps = AntdInputNumberProps & RendererProps & ControlProps
 

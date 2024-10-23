@@ -63,3 +63,14 @@ export const DefaultValue: Story = {
     uiSchema: dateTimeUISchema,
   },
 }
+
+export const ExistingValue: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: dateTimeSchema,
+    uiSchema: dateTimeUISchema,
+    data: {
+      dateTime: "1999-12-31T23:59:59.999Z",
+    },
+  },
+}

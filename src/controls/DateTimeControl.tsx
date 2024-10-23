@@ -1,4 +1,4 @@
-import { memo } from "react"
+import { memo, useCallback, useEffect } from "react"
 import type { ControlProps as JSFControlProps } from "@jsonforms/core"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 import { DatePicker, type DatePickerProps, Form } from "antd"
@@ -26,6 +26,19 @@ function getProps(options: unknown): DateTimeControlOptions {
   return DEFAULT_PROPS
 }
 
+function getInitialValue(
+  data: unknown,
+  schemaDefault: unknown,
+): string | undefined {
+  if (typeof data === "string" && data !== "") {
+    return data
+  }
+  if (typeof schemaDefault === "string" && schemaDefault !== "") {
+    return schemaDefault
+  }
+  return undefined
+}
+
 export function DateTimeControl({
   handleChange,
   path,
@@ -35,11 +48,24 @@ export function DateTimeControl({
   schema,
   uischema,
   visible,
+  data,
 }: ControlProps) {
+  const setInitialValue = useCallback(
+    (value: string | undefined) => {
+      const coercedValue = value ? dayjs(value) : value
+      handleChange(path, value)
+      return coercedValue
+    },
+    [handleChange, path],
+  )
+  const form = Form.useFormInstance()
+  useEffect(() => {
+    form.setFieldValue(
+      path,
+      setInitialValue(getInitialValue(data, schema.default)),
+    )
+  }, [data, form, path, schema.default, setInitialValue])
   if (!visible) return null
-
-  const initialValue =
-    typeof schema.default === "string" ? dayjs(schema.default) : undefined
 
   const rules: Rule[] = [{ required, message: `${label} is required` }]
 
@@ -60,7 +86,6 @@ export function DateTimeControl({
       required={required}
       validateTrigger={["onBlur"]}
       rules={rules}
-      initialValue={initialValue}
       {...formItemProps}
     >
       <DatePicker

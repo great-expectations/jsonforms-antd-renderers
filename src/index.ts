@@ -18,3 +18,8 @@ export { TextControl } from "./controls/TextControl"
 export { DateTimeControl } from "./controls/DateTimeControl"
 export { UnknownControl } from "./controls/UnknownControl"
 export { VerticalLayout } from "./layouts/VerticalLayout"
+
+// Re-export some custom antd components to allow for
+// external customization without losing functionality
+export { InputNumber } from "./antd/InputNumber"
+export { Slider } from "./antd/Slider"

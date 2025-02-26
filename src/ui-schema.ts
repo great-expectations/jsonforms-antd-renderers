@@ -7,6 +7,7 @@ import type {
   FormItemProps,
   InputNumberProps,
   InputProps,
+  DatePickerProps,
 } from "antd"
 import type { TextAreaProps } from "antd/es/input"
 import type { RuleObject as AntDRule } from "antd/es/form"
@@ -190,6 +191,55 @@ export type TextControlOptions = {
       inputProps?: InputProps
     }
 )
+
+/**
+ * The input props of the AntD DatePicker component that we want to
+ * expose to api consumers through schema options.  Full list of props
+ * can be found in [this section](https://ant.design/components/date-picker#datepicker)
+ * of the antd docs.
+ */
+export const allowedDateTimePropKeys: (keyof DatePickerProps)[] = [
+  "id",
+  "is",
+  "alt",
+  "size",
+  "width",
+  "style",
+  "format",
+  "height",
+  "title",
+  "presets",
+  "showNow",
+  "showHour",
+  "showTime",
+  "showWeek",
+  "showMinute",
+  "showSecond",
+  "showMillisecond",
+] as const
+
+export type DateTimeControlOptions = Pick<
+  DatePickerProps,
+  (typeof allowedDateTimePropKeys)[number]
+>
+
+export function isDateTimeControlOptions(
+  options: unknown,
+): options is DateTimeControlOptions {
+  if (typeof options !== "object" || options == null) {
+    return false
+  }
+
+  for (const key of Object.keys(options)) {
+    if (
+      !allowedDateTimePropKeys.includes(key as keyof DateTimeControlOptions)
+    ) {
+      return false
+    }
+  }
+
+  return true
+}
 
 /**
  * A control element. The scope property of the control determines

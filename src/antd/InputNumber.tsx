@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { useCallback, useRef } from "react"
 import { ControlProps, RendererProps } from "@jsonforms/core"
 import { InputNumber as AntdInputNumber } from "antd"
 import { NumericControlOptions } from "../ui-schema"
@@ -12,12 +12,16 @@ import {
 type AntdInputNumberProps = React.ComponentProps<typeof AntdInputNumber>
 type InputNumberProps = AntdInputNumberProps & RendererProps & ControlProps
 
+const hasLeadingZero = (value?: string) =>
+  value && value.substring(0, 1) === "0"
+
 export function InputNumber({
   handleChange,
   path,
   schema,
   ...props
 }: InputNumberProps) {
+  const incomingValue = useRef<string>()
   const ariaLabel = props.label || schema.description || "Value"
 
   const defaultValue = schema.default as number | undefined
@@ -71,6 +75,18 @@ export function InputNumber({
   // TODO: Revist useCallback use - was meant to prevent re-renders
   const formatter = useCallback(
     (value?: string | number): string => {
+      /**
+       * See block comment in `parser()` below.
+       */
+      if (
+        value &&
+        typeof incomingValue.current === "string" &&
+        hasLeadingZero(incomingValue.current) &&
+        !isNaN(parseFloat(incomingValue.current))
+      ) {
+        return incomingValue.current
+      }
+
       if (value !== "" && value !== undefined) {
         if (isPercentage) {
           const valueFloat =
@@ -87,6 +103,21 @@ export function InputNumber({
   // TODO: Revist useCallback use - was meant to prevent re-renders
   const parser = useCallback(
     (value?: string): number | undefined => {
+      /**
+       * When a parser & formatter are both present it triggers a
+       * double-render of the wrapped AntD InputNumber. This double-render
+       * also triggers a double-set of the incoming value, which will format
+       * and remove leading zeros. We'd like to preserve those leading zeros
+       * if they're part of a valid number, because a user may simply want
+       * to update a value like 30000 to 300 without having to retype the full
+       * number.
+       *
+       * The incomingValue.current ref updates on every input value which allows
+       * the subsequent formatter call to access the raw value and make decisions
+       * based on whether or not it has a leading zero, while avoiding
+       * any async issues caused by needing to set or wait for state changes.
+       */
+      incomingValue.current = value
       const isNumeric = value ? !isNaN(Number(value)) : false
       if (isNumeric && value !== undefined) {
         if (isPercentage) {

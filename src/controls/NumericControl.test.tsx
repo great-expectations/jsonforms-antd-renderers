@@ -13,6 +13,7 @@ import {
   numericUISchemaWithRule,
   numericPriceSchema,
   numericUSDUISchema,
+  numericLeadingZerosSchema,
 } from "../testSchemas/numericSchema"
 import { JSONFormData } from "../common/schema-derived-types"
 
@@ -164,4 +165,25 @@ describe("NumericControl", () => {
       expect(input).toHaveValue("123") // it should be rounded to an integer
     },
   )
+
+  it("preserves leading zeros on valid numerical inputs", async () => {
+    render({
+      schema: numericLeadingZerosSchema,
+    })
+
+    const input = screen.getByRole("spinbutton")
+    expect(input).toHaveValue("3000")
+
+    await userEvent.click(input)
+    await userEvent.keyboard(
+      "[ArrowLeft][ArrowLeft][ArrowLeft][ArrowLeft][Delete]",
+    )
+    expect(input).toHaveValue("000")
+
+    await userEvent.keyboard("5")
+    expect(input).toHaveValue("5000")
+
+    await userEvent.keyboard("[ArrowRight][ArrowRight]a")
+    expect(input).toHaveValue("")
+  })
 })

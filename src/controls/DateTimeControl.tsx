@@ -16,7 +16,7 @@ type ControlProps = Omit<JSFControlProps, "uischema"> & {
 }
 // initialize once
 const DEFAULT_PROPS: DateTimeControlOptions = {
-  format: { format: "YYYY-MM-DD HH:mm:ss", type: "mask" },
+  format: { format: "YYYY-MM-DD HH:mm:ssZ", type: "mask" },
 } as const
 
 function getProps(options: unknown): DateTimeControlOptions {

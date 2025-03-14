@@ -5,7 +5,7 @@
 # To force hooks to run on local commits `pre-commit install`
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: no-commit-to-branch
         args: [--branch, develop, --branch, main]

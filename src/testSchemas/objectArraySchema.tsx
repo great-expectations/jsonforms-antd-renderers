@@ -1,6 +1,11 @@
 import { JSONSchema } from "json-schema-to-ts"
 import { UISchema } from "../ui-schema"
-import { PlusCircleTwoTone, DeleteOutlined } from "@ant-design/icons"
+import {
+  PlusCircleTwoTone,
+  DeleteOutlined,
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+} from "@ant-design/icons"
 
 export const objectArrayControlUISchema = {
   type: "VerticalLayout",
@@ -79,3 +84,43 @@ export const objectArrayControlUISchemaWithIcons = {
     },
   ],
 } satisfies UISchema<typeof objectArrayControlJsonSchemaWithRequired>
+
+export const objectArrayControlSortableUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      scope: "#/properties/assets",
+      type: "Control",
+      options: {
+        showSortButtons: true,
+      },
+      layoutProps: {
+        columns: undefined,
+      },
+    },
+  ],
+} satisfies UISchema<typeof objectArrayControlJsonSchema>
+
+export const objectArrayControlSortableWithIconsUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      scope: "#/properties/assets",
+      type: "Control",
+      options: {
+        showSortButtons: true,
+        moveUpButtonProps: {
+          icon: <ArrowUpOutlined />,
+          onClick: () => {},
+        },
+        moveDownButtonProps: {
+          icon: <ArrowDownOutlined />,
+          onClick: () => {},
+        },
+      },
+      layoutProps: {
+        columns: undefined,
+      },
+    },
+  ],
+} satisfies UISchema<typeof objectArrayControlJsonSchema>

@@ -7,6 +7,7 @@ import {
   objectArrayControlJsonSchema,
   arrayControlUISchema,
   arrayControlUISchemaWithIcons,
+  arrayControlSortableWithIconsUISchema,
 } from "../../testSchemas/arraySchema"
 import { ComponentProps } from "react"
 
@@ -192,6 +193,45 @@ export const ObjectArrayWithMultipleProperties: Story<
             },
           },
         },
+      ],
+    },
+  },
+}
+
+export const SortableObjectArray: Story<typeof objectArrayControlJsonSchema> = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: objectArrayControlJsonSchema,
+    uiSchema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          scope: "#/properties/assets",
+          type: "Control",
+          options: {
+            showSortButtons: true,
+          },
+        },
+      ],
+    },
+    data: {
+      assets: [{ name: "Asset 1" }, { name: "Asset 2" }, { name: "Asset 3" }],
+    },
+  },
+}
+
+export const SortableObjectArrayWithIconsFromSchema: Story<
+  typeof objectArrayControlJsonSchema
+> = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: objectArrayControlJsonSchema,
+    uiSchema: arrayControlSortableWithIconsUISchema,
+    data: {
+      assets: [
+        { asset: "Asset 1" },
+        { asset: "Asset 2" },
+        { asset: "Asset 3" },
       ],
     },
   },

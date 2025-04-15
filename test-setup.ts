@@ -3,11 +3,16 @@ import "@testing-library/jest-dom/vitest"
 import { cleanup } from "@testing-library/react"
 import { afterEach } from "vitest"
 
-// TODO: figure out if this is still necessary:
+// TODO: Fix TypeScript version compatibility with ESLint
 // @ts-expect-error ignore -- this solves issue where RTL throws this error "this environment not configured for act"
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 global.IS_REACT_ACT_ENVIRONMENT = true
 
+// TODO: Fix TypeScript version compatibility with ESLint
+// @ts-expect-error ignore -- TypeScript version compatibility issue
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 global.matchMedia =
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   global.matchMedia ||
   function () {
     return {

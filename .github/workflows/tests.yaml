@@ -4,12 +4,69 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
 
 jobs:
+  check-actor-permissions:
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check User Permission
+        id: check-user-permission
+        uses: actions-cool/check-user-permission@v2
+        with:
+          require: write
+          username: ${{ github.triggering_actor }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notify on Lack of Permission
+        if: steps.check-user-permission.outputs.require-result == 'false'
+        id: slack-user-permission
+        uses: slackapi/slack-github-action@v1.27.0
+        with:
+          payload: |
+            {
+              "MESSAGE": "${{github.actor}} opened a PR from a fork. Please carefully review the code and retry failed jobs.",
+              "GHA_LINK": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PERMISSION_CHECK_WEBHOOK_URL }}
+
+      - name: Notify on Bot Commiting
+        if: steps.check-user-permission.outputs.check-result == 'false'
+        id: slack-bot-user
+        uses: slackapi/slack-github-action@v1.27.0
+        with:
+          payload: |
+            {
+              "MESSAGE": "${{github.actor}} modified a branch but can't run CI. Please carefully review the code and retry failed jobs.",
+              "GHA_LINK": "${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PERMISSION_CHECK_WEBHOOK_URL }}
+
+      - name: Add comment to add helpful context for contributors
+        if: steps.check-user-permission.outputs.require-result == 'false' && steps.check-user-permission.outputs.check-result == 'false'
+        uses: thollander/actions-comment-pull-request@v2.5.0
+        with:
+          comment_tag: execution
+          message: |
+            Thanks for the PR @${{github.actor}} :wave:
+
+            Our GitHub actions pipelines require a user with write permissions to retry the failed jobs. We've sent a message to a maintainer to review your PR. Please be patient and we'll get back to you as soon as possible.
+
+      - name: Fail if No Write Permission
+        if: steps.check-user-permission.outputs.require-result == 'false'
+        run: exit 1
   cache-and-install-deps-and-run-tests:
+    needs: [check-actor-permissions]
     runs-on: ubuntu-latest
 
     steps:

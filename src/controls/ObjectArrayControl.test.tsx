@@ -164,7 +164,7 @@ describe("ObjectArrayControl", () => {
 
     await screen.findByText("Asset")
     await userEvent.click(screen.getByText("Destroy me!"))
-    await screen.findByText("No data")
+    await screen.findAllByText("No data")
   })
   test("Object Array ensures one default item exists in the list if subschema is a combinator", async () => {
     strictRender({

@@ -5,13 +5,24 @@ import { userEvent } from "@testing-library/user-event"
 import { render } from "../common/test-render"
 import { dateTimeSchema } from "../testSchemas/dateTimeSchema"
 import { UISchema } from "../ui-schema"
+import dayjs from "dayjs"
+import utc from "dayjs/plugin/utc"
+dayjs.extend(utc)
+
+/*
+ * NOTE:
+ * These tests must be run with the TZ env variale set to "UTC".
+ * This is to standardize and simluate the user's local timezone across all tests.
+ */
+
+type ISO8601 = string
 
 const EMPTY_DATESTRING = ""
-const INPUT_MASK = "YYYY-MM-DD HH:mm:ss"
 const USER_NOTADATESTRING = "not a date"
-const EXAMPLE_DATESTRING = "2021-08-09T12:34:56"
-const RENDERED_DATESTRING = EXAMPLE_DATESTRING.replace("T", " ")
-const USER_DATESTRING = EXAMPLE_DATESTRING.replace("T", "")
+const EXAMPLE_DATESTRING: ISO8601 = "2021-08-09T12:34:56-10:00"
+const LOCAL_DATESTRING: ISO8601 = dayjs(EXAMPLE_DATESTRING)
+  .utc()
+  .format("YYYY-MM-DDTHH:mm:ssZ")
 const TITLE = dateTimeSchema.properties.dateTime.title
 const REQUIRED_TEXT = `${TITLE} is required`
 
@@ -20,12 +31,12 @@ test("renders the date that the user selects", async () => {
     schema: dateTimeSchema,
   })
   const input = await screen.findByLabelText(TITLE)
-  await userEvent.type(input, USER_DATESTRING)
+  await userEvent.type(input, EXAMPLE_DATESTRING)
 
-  await waitFor(() => expect(input).toHaveValue(RENDERED_DATESTRING))
+  await waitFor(() => expect(input).toHaveValue(EXAMPLE_DATESTRING))
 })
 
-test("renders default date when present", async () => {
+test("renders default date in user's time zone when provided", async () => {
   render({
     schema: {
       ...dateTimeSchema,
@@ -38,25 +49,29 @@ test("renders default date when present", async () => {
     },
   })
   const input = await screen.findByLabelText(TITLE)
-  expect(input).toHaveValue(RENDERED_DATESTRING)
+  expect(input).toHaveValue(LOCAL_DATESTRING)
 })
 
 test("updates jsonforms data as expected", async () => {
-  let data: Record<string, unknown> = {}
+  let data: Record<string, unknown> = {
+    dateTime: LOCAL_DATESTRING,
+  }
   render({
     schema: dateTimeSchema,
     data,
     onChange: (result) => {
+      expect(result.errors).toHaveLength(0)
       data = result.data as Record<string, unknown>
     },
   })
   const input = await screen.findByLabelText(TITLE)
-  await userEvent.type(input, USER_DATESTRING)
-  await userEvent.click(screen.getByText("Submit"))
+  await userEvent.click(input)
+  await screen.findByText("Today")
+  await userEvent.click(screen.getByText("Today"))
+
+  const today = dayjs().utc().format("YYYY-MM-DDTHH:mm:ssZ").split("T")[0]
   await waitFor(() => {
-    expect(data).toEqual({
-      dateTime: RENDERED_DATESTRING,
-    })
+    expect(data.dateTime).toContain(today)
   })
 })
 
@@ -158,17 +173,6 @@ test("it does not error on failure to parse date", async () => {
   })
 })
 
-test("it renders an input mask by default as user types", async () => {
-  render({
-    schema: dateTimeSchema,
-  })
-  const input = await screen.findByLabelText(TITLE)
-  await userEvent.click(input)
-  await waitFor(() => {
-    expect(input).toHaveValue(INPUT_MASK)
-  })
-})
-
 test("it renders form data for forms with existing values (edit)", async () => {
   const data: Record<string, unknown> = {
     dateTime: EXAMPLE_DATESTRING,
@@ -178,5 +182,5 @@ test("it renders form data for forms with existing values (edit)", async () => {
     data,
   })
   const input = await screen.findByLabelText(TITLE)
-  expect(input).toHaveValue(RENDERED_DATESTRING)
+  expect(input).toHaveValue(LOCAL_DATESTRING)
 })

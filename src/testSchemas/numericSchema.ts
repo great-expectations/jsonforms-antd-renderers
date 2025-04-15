@@ -25,6 +25,17 @@ export const numericTheNumberSchema = {
   required: ["numericValue"],
 } satisfies JSONSchema
 
+export const numericLeadingZerosSchema = {
+  type: "object",
+  properties: {
+    numericValue: {
+      title: "Leading Zeros",
+      type: "number",
+      default: "3000",
+    },
+  },
+} satisfies JSONSchema
+
 export const numericWeightSchema = {
   type: "object",
   properties: {

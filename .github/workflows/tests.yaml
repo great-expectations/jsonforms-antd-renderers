@@ -1,6 +1,7 @@
 name: tests
 
 on:
+  workflow_dispatch: # allows manual triggering with branch picker
   push:
     branches:
       - main

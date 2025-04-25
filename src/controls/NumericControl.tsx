@@ -12,8 +12,16 @@ type ControlProps = Omit<JSFControlProps, "uischema"> & {
 export const NumericControl = (props: ControlProps) => {
   if (!props.visible) return null
 
-  const initialValue =
-    typeof props.schema.default === "number" ? props.schema.default : undefined
+  console.log("NumericControl props:", {
+    data: props.data,
+    schemaDefault: props.schema.default,
+    path: props.path,
+    label: props.label
+  })
+
+  const initialValue = (props.data as number | undefined) ?? props.schema.default
+
+  console.log("NumericControl initialValue:", initialValue)
 
   const rules: Rule[] = [
     { required: props.required, message: `${props.label} is required` },

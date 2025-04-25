@@ -97,11 +97,19 @@ describe("NumericControl", () => {
     "renders when data of %s is included",
     (dataVal: number) => {
       const data = { numericValue: dataVal }
-      render({
+      console.log("Test data:", data)
+      console.log("Schema default:", numericTheNumberSchema.default)
+      
+      const { container } = render({
         data: data,
         schema: numericTheNumberSchema, // this has a default of 42.42
         uischema: numericVerticalUISchema,
       })
+      
+      console.log("Rendered HTML:", container.innerHTML)
+      const input = screen.getByRole("spinbutton")
+      console.log("Input value:", input.getAttribute("value"))
+      
       screen.getByText("The Number")
       expect(screen.getByRole("spinbutton")).toHaveValue(`${dataVal}`)
     },

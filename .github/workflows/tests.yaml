@@ -109,7 +109,14 @@ jobs:
       - name: Run format
         run: pnpm format:check
 
+      - name: Clean test artifacts
+        run: |
+          rm -f junit.xml
+          rm -rf coverage/
+          rm -f coverage/cobertura-coverage.xml
+
       - name: Run tests with coverage
+        id: test
         run: |
           pnpm test:cov
           echo "Test output:"
@@ -119,14 +126,21 @@ jobs:
           cat coverage/cobertura-coverage.xml
 
       - name: Upload coverage reports to Codecov
+        if: success()
         uses: codecov/codecov-action@v4.1.0
         with:
           files: coverage/cobertura-coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: great-expectations/jsonforms-antd-renderers
+          fail_ci_if_error: true
 
       - name: Upload test results to Codecov
-        if: ${{ !cancelled() }}
+        if: success()
         uses: codecov/test-results-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+
+      - name: Fail if tests failed
+        if: failure()
+        run: exit 1

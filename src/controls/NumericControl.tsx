@@ -1,5 +1,5 @@
 import type { ControlProps as JSFControlProps } from "@jsonforms/core"
-import { Form } from "antd"
+import { Col, Form } from "antd"
 import type { Rule } from "antd/es/form"
 import { InputNumber } from "../antd/InputNumber"
 import { ControlUISchema } from "../ui-schema"
@@ -12,8 +12,16 @@ type ControlProps = Omit<JSFControlProps, "uischema"> & {
 export const NumericControl = (props: ControlProps) => {
   if (!props.visible) return null
 
-  const initialValue =
-    typeof props.schema.default === "number" ? props.schema.default : undefined
+  console.log("NumericControl props:", {
+    data: props.data,
+    schemaDefault: props.schema.default,
+    path: props.path,
+    label: props.label
+  })
+
+  const initialValue = (props.data as number | undefined) ?? props.schema.default
+
+  console.log("NumericControl initialValue:", initialValue)
 
   const rules: Rule[] = [
     { required: props.required, message: `${props.label} is required` },
@@ -33,7 +41,7 @@ export const NumericControl = (props: ControlProps) => {
       validateTrigger={["onBlur"]}
       {...formItemProps}
     >
-      {InputNumber({ ...props })}
+      <Col>{InputNumber({ ...props })}</Col>
     </Form.Item>
   )
 }

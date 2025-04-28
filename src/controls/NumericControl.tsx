@@ -1,5 +1,5 @@
 import type { ControlProps as JSFControlProps } from "@jsonforms/core"
-import { Form } from "antd"
+import { Col, Form } from "antd"
 import type { Rule } from "antd/es/form"
 import { InputNumber } from "../antd/InputNumber"
 import { ControlUISchema } from "../ui-schema"
@@ -33,7 +33,7 @@ export const NumericControl = (props: ControlProps) => {
       validateTrigger={["onBlur"]}
       {...formItemProps}
     >
-      {InputNumber({ ...props })}
+      <Col>{InputNumber({ ...props })}</Col>
     </Form.Item>
   )
 }

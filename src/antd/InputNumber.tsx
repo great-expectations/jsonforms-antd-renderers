@@ -7,13 +7,11 @@ import {
   coerceToNumber,
   decimalToPercentage,
   percentageStringToDecimal,
+  hasLeadingZero,
 } from "../controls/utils"
 
 type AntdInputNumberProps = React.ComponentProps<typeof AntdInputNumber>
 type InputNumberProps = AntdInputNumberProps & RendererProps & ControlProps
-
-const hasLeadingZero = (value?: string) =>
-  value && value.substring(0, 1) === "0"
 
 export function InputNumber({
   handleChange,

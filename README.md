@@ -118,6 +118,7 @@ function MyForm() {
 ### Conventional commits
 
 - We use [semantic release](https://github.com/semantic-release/semantic-release) to version & release our package, so make sure your commits adhere to the [conventional commit format](https://semantic-release.gitbook.io/semantic-release#commit-message-format)
+- In particular a commit message with the `fix(...):`, `feat(...)`, or `BREAKING CHANGE:` will trigger a release.
 
 ### Testing the package locally
 

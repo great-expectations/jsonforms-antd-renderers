@@ -1,3 +1,2 @@
 # Ignore artifacts:
 pnpm-lock.yaml
-.storybook

@@ -1,5 +1,9 @@
 import { describe, expect, test } from "vitest"
-import { decimalToPercentage, percentageStringToDecimal } from "./utils"
+import {
+  decimalToPercentage,
+  percentageStringToDecimal,
+  hasLeadingZero,
+} from "./utils"
 
 describe("percentageStringToDecimal", () => {
   test.each([
@@ -30,6 +34,21 @@ describe("decimalToPercentage", () => {
     "when value is $value it returns $expected. If symbol is provided, it is appended to the value",
     ({ value, expected }: { value: number; expected: string }) => {
       expect(decimalToPercentage(value)).toEqual(expected)
+    },
+  )
+})
+
+describe("hasLeadingZero", () => {
+  test.each([
+    { value: "100", expected: false },
+    { value: "00", expected: true },
+    { value: "2", expected: false },
+    { value: "0", expected: false },
+    { value: "03", expected: true },
+  ])(
+    "returns $expected for input '$value'",
+    ({ value, expected }: { value: string; expected: boolean }) => {
+      expect(hasLeadingZero(value)).toBe(expected)
     },
   )
 })

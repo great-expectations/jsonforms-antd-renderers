@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest"
 import {
   decimalToPercentage,
   percentageStringToDecimal,
-  hasLeadingZero,
+  areStringNumbersEqual,
 } from "./utils"
 
 describe("percentageStringToDecimal", () => {
@@ -38,17 +38,24 @@ describe("decimalToPercentage", () => {
   )
 })
 
-describe("hasLeadingZero", () => {
+describe("areStringNumbersEqual", () => {
   test.each([
-    { value: "100", expected: false },
-    { value: "00", expected: true },
-    { value: "2", expected: false },
-    { value: "0", expected: false },
-    { value: "03", expected: true },
-  ])(
-    "returns $expected for input '$value'",
-    ({ value, expected }: { value: string; expected: boolean }) => {
-      expect(hasLeadingZero(value)).toBe(expected)
-    },
-  )
+    ["0", 0, true],
+    ["0", "0", true],
+    ["0000", 0, true],
+    ["0000", "00", true],
+    ["00567", 567, true],
+    ["00567", "567", true],
+    ["567", 567, true],
+    ["567", "567", true],
+    ["aaa", NaN, false],
+    ["NaN", NaN, false],
+    ["aaa", "aaa", false],
+    ["aaa", 0, false],
+    ["00567", "00568", false],
+    ["00567", 568, false],
+    ["567", 568, false],
+  ])("areStringNumbersEqual(%o, %o) -> %o", (a, b, expected) => {
+    expect(areStringNumbersEqual(a, b)).toBe(expected)
+  })
 })

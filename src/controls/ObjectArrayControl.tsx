@@ -9,7 +9,7 @@ import {
   JsonFormsDispatch,
   withJsonFormsArrayLayoutProps,
 } from "@jsonforms/react"
-import { Flex, Form, List, Button } from "antd"
+import { Flex, Form, List, Button, Space } from "antd"
 import range from "lodash.range"
 import { useEffect, useMemo } from "react"
 import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
@@ -34,6 +34,8 @@ export function ObjectArrayControl({
   rootSchema,
   uischemas,
   required,
+  moveDown,
+  moveUp,
 }: ArrayLayoutProps) {
   const foundUISchema = useMemo(() => {
     return findUISchema(
@@ -71,6 +73,14 @@ export function ObjectArrayControl({
   const options: ArrayControlOptions =
     (uischema.options as ArrayControlOptions) ?? {}
 
+  const handleUpClick = (path: string, index: number) => () => {
+    return moveUp?.(path, index)()
+  }
+
+  const handleDownClick = (path: string, index: number) => () => {
+    return moveDown?.(path, index)()
+  }
+
   const addButton = (
     <Flex justify="center">
       <Button
@@ -103,6 +113,26 @@ export function ObjectArrayControl({
             <List.Item
               key={index}
               actions={[
+                dataSource.length > 1 && options.showSortButtons ? (
+                  <Space key="sort">
+                    <Button
+                      aria-label={`Move up`}
+                      disabled={index === 0}
+                      {...options.moveUpButtonProps}
+                      onClick={handleUpClick(path, index)}
+                    >
+                      {!options.moveUpButtonProps?.icon && "Up"}
+                    </Button>
+                    <Button
+                      aria-label={`Move down`}
+                      disabled={index === dataSource.length - 1}
+                      {...options.moveDownButtonProps}
+                      onClick={handleDownClick(path, index)}
+                    >
+                      {!options.moveDownButtonProps?.icon && "Down"}
+                    </Button>
+                  </Space>
+                ) : undefined,
                 <Button
                   key="remove"
                   {...options.removeButtonProps}
@@ -117,7 +147,7 @@ export function ObjectArrayControl({
                 >
                   {options.removeButtonProps?.children ?? "Delete"}
                 </Button>,
-              ]}
+              ].filter(Boolean)}
             >
               <div style={{ width: "100%" }}>
                 <JsonFormsDispatch

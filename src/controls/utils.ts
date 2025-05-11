@@ -17,17 +17,15 @@ export const areStringNumbersEqual = (
   value: string | number,
 ): boolean => {
   /**
-   * Returns true if rawValue is a string that represents a number and is
-   * equal to value as a number.
+   * Returns true if both inputs represent numbers and are equal.
    */
-  // If either input is not a number return false
   const parsedRawValue = parseFloat(rawValue)
   const parsedValue = typeof value === "string" ? parseFloat(value) : value
-  if (isNaN(parsedRawValue) || isNaN(parsedValue)) {
-    return false
-  }
-  // If both parsed values are numbers, return true if they are equal
-  if (parsedRawValue === parsedValue) {
+  if (
+    !isNaN(parsedRawValue) &&
+    !isNaN(parsedValue) &&
+    parsedRawValue === parsedValue
+  ) {
     return true
   }
   return false

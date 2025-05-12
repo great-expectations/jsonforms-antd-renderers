@@ -19,6 +19,7 @@ export const areStringNumbersEqual = (
   /**
    * Returns true if both inputs represent numbers and are equal.
    */
+  // If a string is not parsable as a number, parseFloat will return NaN.
   const parsedRawValue = parseFloat(rawValue)
   const parsedValue = typeof value === "string" ? parseFloat(value) : value
   if (!isNaN(parsedRawValue) && parsedRawValue === parsedValue) {

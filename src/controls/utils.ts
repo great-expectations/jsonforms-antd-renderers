@@ -23,7 +23,6 @@ export const areStringNumbersEqual = (
   const parsedValue = typeof value === "string" ? parseFloat(value) : value
   if (
     !isNaN(parsedRawValue) &&
-    !isNaN(parsedValue) &&
     parsedRawValue === parsedValue
   ) {
     return true

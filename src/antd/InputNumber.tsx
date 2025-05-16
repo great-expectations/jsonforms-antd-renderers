@@ -3,6 +3,7 @@ import { ControlProps, RendererProps } from "@jsonforms/core"
 import { InputNumber as AntdInputNumber } from "antd"
 import { NumericControlOptions } from "../ui-schema"
 import {
+  areStringNumbersEqual,
   coerceToInteger,
   coerceToNumber,
   decimalToPercentage,
@@ -11,9 +12,6 @@ import {
 
 type AntdInputNumberProps = React.ComponentProps<typeof AntdInputNumber>
 type InputNumberProps = AntdInputNumberProps & RendererProps & ControlProps
-
-const hasLeadingZero = (value?: string) =>
-  value && value.substring(0, 1) === "0"
 
 export function InputNumber({
   handleChange,
@@ -81,8 +79,7 @@ export function InputNumber({
       if (
         value &&
         typeof incomingValue.current === "string" &&
-        hasLeadingZero(incomingValue.current) &&
-        !isNaN(parseFloat(incomingValue.current))
+        areStringNumbersEqual(incomingValue.current, value)
       ) {
         return incomingValue.current
       }

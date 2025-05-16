@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect } from "react"
 import type { ControlProps as JSFControlProps } from "@jsonforms/core"
 import { withJsonFormsControlProps } from "@jsonforms/react"
-import { DatePicker, type DatePickerProps, Form } from "antd"
+import { DatePicker, Form } from "antd"
 import type { Rule } from "antd/es/form"
 import dayjs from "dayjs"
 
@@ -14,16 +14,12 @@ import {
 type ControlProps = Omit<JSFControlProps, "uischema"> & {
   uischema: ControlUISchema<unknown> | JSFControlProps["uischema"]
 }
-// initialize once
-const DEFAULT_PROPS: DateTimeControlOptions = {
-  format: { format: "YYYY-MM-DD HH:mm:ss", type: "mask" },
-} as const
 
-function getProps(options: unknown): DateTimeControlOptions {
+function getOverrides(options: unknown): DateTimeControlOptions {
   if (isDateTimeControlOptions(options)) {
     return options
   }
-  return DEFAULT_PROPS
+  return {}
 }
 
 function getInitialValue(
@@ -72,11 +68,7 @@ export function DateTimeControl({
   const formItemProps =
     "formItemProps" in uischema ? uischema.formItemProps : {}
 
-  const onChange: DatePickerProps["onChange"] = (_dateObj, dateString) => {
-    handleChange(path, dateString)
-  }
-
-  const options = getProps(uischema.options)
+  const overrides = getOverrides(uischema.options)
 
   return (
     <Form.Item
@@ -89,9 +81,9 @@ export function DateTimeControl({
       {...formItemProps}
     >
       <DatePicker
-        format={DEFAULT_PROPS.format}
-        onChange={onChange}
-        {...options}
+        format={"YYYY-MM-DDTHH:mm:ssZ"}
+        onChange={(_, dateString) => handleChange(path, dateString)}
+        {...overrides}
       />
     </Form.Item>
   )

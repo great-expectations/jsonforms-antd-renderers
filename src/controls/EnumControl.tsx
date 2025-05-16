@@ -1,5 +1,5 @@
 import type { ControlProps as JSFControlProps } from "@jsonforms/core"
-import { Col, Form, Select, Segmented, Radio } from "antd"
+import { Form, Select, Segmented, Radio, Col } from "antd"
 import type { Rule } from "antd/es/form"
 import { EnumControlOptions, ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"

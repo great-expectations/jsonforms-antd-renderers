@@ -1,5 +1,9 @@
 import { describe, expect, test } from "vitest"
-import { decimalToPercentage, percentageStringToDecimal } from "./utils"
+import {
+  decimalToPercentage,
+  percentageStringToDecimal,
+  areStringNumbersEqual,
+} from "./utils"
 
 describe("percentageStringToDecimal", () => {
   test.each([
@@ -32,4 +36,26 @@ describe("decimalToPercentage", () => {
       expect(decimalToPercentage(value)).toEqual(expected)
     },
   )
+})
+
+describe("areStringNumbersEqual", () => {
+  test.each([
+    ["0", 0, true],
+    ["0", "0", true],
+    ["0000", 0, true],
+    ["0000", "00", true],
+    ["00567", 567, true],
+    ["00567", "567", true],
+    ["567", 567, true],
+    ["567", "567", true],
+    ["aaa", NaN, false],
+    ["NaN", NaN, false],
+    ["aaa", "aaa", false],
+    ["aaa", 0, false],
+    ["00567", "00568", false],
+    ["00567", 568, false],
+    ["567", 568, false],
+  ])("areStringNumbersEqual(%o, %o) -> %o", (a, b, expected) => {
+    expect(areStringNumbersEqual(a, b)).toBe(expected)
+  })
 })

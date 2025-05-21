@@ -12,6 +12,18 @@ export const coerceToInteger = (value: number) => Math.round(value)
 
 export const coerceToNumber = (value: number) => Number(value)
 
-export const hasLeadingZero = (value?: string) =>
-  // The value 0 is just 0 and doesn't have leading 0s.
-  value && value.substring(0, 1) === "0" && value.length > 1
+export const areStringNumbersEqual = (
+  rawValue: string,
+  value: string | number,
+): boolean => {
+  /**
+   * Returns true if both inputs represent numbers and are equal.
+   */
+  // If a string is not parsable as a number, parseFloat will return NaN.
+  const parsedRawValue = parseFloat(rawValue)
+  const parsedValue = typeof value === "string" ? parseFloat(value) : value
+  if (!isNaN(parsedRawValue) && parsedRawValue === parsedValue) {
+    return true
+  }
+  return false
+}

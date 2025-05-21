@@ -11,6 +11,8 @@ import {
   objectArrayWithCombinatorSchema,
   objectArrayWithCombinator_CombinatorUISchemaRegistryEntry as objectArrayWithCombinator_CombinatorPropertyUISchemaRegistryEntry,
   objectArrayWithCombinator_FavoriteThing1UISchemaRegistryEntry as objectArrayWithCombinator_CombinatorSubschemaUISchemaRegistryEntry,
+  arrayControlSortableUISchema,
+  arrayControlSortableWithIconsUISchema,
 } from "../testSchemas/arraySchema"
 import { UISchema } from "../ui-schema"
 import { JSONFormData } from "../common/schema-derived-types"
@@ -180,5 +182,82 @@ describe("ObjectArrayControl", () => {
     })
 
     await screen.findByText("Brown Copper Kettle")
+  })
+
+  test("Object Array is sortable", async () => {
+    let data: JSONFormData<typeof objectArrayControlJsonSchema> = {
+      assets: [{ asset: "A" }, { asset: "B" }, { asset: "C" }, { asset: "D" }],
+    }
+    const user = userEvent.setup()
+    render({
+      schema: objectArrayControlJsonSchema,
+      uischema: arrayControlSortableUISchema,
+      data: data,
+      onChange: (result) => {
+        data = result.data as JSONFormData<typeof objectArrayControlJsonSchema>
+      },
+    })
+
+    const moveUpButtons = await screen.findAllByLabelText(/move up/i)
+    const moveDownButtons = await screen.findAllByLabelText(/move down/i)
+    expect(moveUpButtons).toHaveLength(4)
+    expect(moveDownButtons).toHaveLength(4)
+    expect(moveUpButtons[0]).toHaveProperty("disabled", true)
+    expect(moveDownButtons[3]).toHaveProperty("disabled", true)
+    await user.click(moveUpButtons[3])
+    await waitFor(() => {
+      expect(data).toEqual({
+        assets: [
+          { asset: "A" },
+          { asset: "B" },
+          { asset: "D" },
+          { asset: "C" },
+        ],
+      })
+    })
+    await user.click(moveDownButtons[0])
+    await waitFor(() => {
+      expect(data).toEqual({
+        assets: [
+          { asset: "B" },
+          { asset: "A" },
+          { asset: "D" },
+          { asset: "C" },
+        ],
+      })
+    })
+  })
+
+  test("Object Array renders with overwritten sorting icons and does not allow overwriting onClick", async () => {
+    const user = userEvent.setup()
+    let data: JSONFormData<typeof objectArrayControlJsonSchema> = {
+      assets: [{ asset: "A" }, { asset: "B" }],
+    }
+    render({
+      schema: objectArrayControlJsonSchema,
+      uischema: arrayControlSortableWithIconsUISchema,
+      data,
+      onChange: (result) => {
+        data = result.data as JSONFormData<typeof objectArrayControlJsonSchema>
+      },
+    })
+
+    // Move buttons text is overwritten with the UISchema's icons
+    const upButtons = await screen.findAllByRole("img", { name: "arrow-up" })
+    const downButtons = await screen.findAllByRole("img", {
+      name: "arrow-down",
+    })
+    expect(screen.queryByText("Up")).toBeNull()
+    expect(screen.queryByText("Down")).toBeNull()
+
+    // Check that the onClick handlers are not overwritten by the UISchema
+    await user.click(upButtons[1])
+    await waitFor(() => {
+      expect(data).toEqual({ assets: [{ asset: "B" }, { asset: "A" }] })
+    })
+    await user.click(downButtons[0])
+    await waitFor(() => {
+      expect(data).toEqual({ assets: [{ asset: "A" }, { asset: "B" }] })
+    })
   })
 })

@@ -32,3 +32,4 @@ great-expectations-jsonforms-antd-renderers-*.tgz
 coverage/
 # default for vitest-ui
 html/
+.cursorrules

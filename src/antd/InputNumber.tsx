@@ -132,6 +132,7 @@ export function InputNumber({
 
   return (
     <AntdInputNumber
+      placeholder={options?.placeholder}
       aria-label={ariaLabel}
       defaultValue={defaultValue}
       value={value}

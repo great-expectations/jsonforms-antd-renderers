@@ -33,7 +33,12 @@ export function HorizontalLayout({
       form={form}
     >
       {!isEmpty(groupLayout.label) && groupLayout.label}
-      <Row justify="space-between" gutter={12} align="middle">
+      <Row
+        justify="space-between"
+        gutter={12}
+        align="middle"
+        style={{ maxWidth: "100%" }}
+      >
         <AntDLayout
           {...childProps}
           direction="row"

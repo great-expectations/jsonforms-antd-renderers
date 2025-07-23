@@ -373,4 +373,5 @@ export type ArrayControlOptions = {
 export type NumericControlOptions = {
   addonBefore?: InputNumberProps["addonBefore"]
   addonAfter?: InputNumberProps["addonAfter"]
+  placeholder?: string
 }

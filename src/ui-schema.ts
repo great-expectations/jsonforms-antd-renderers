@@ -72,6 +72,7 @@ type LayoutUISchema<T> = UISchemaElement<T> & {
    * The child elements of this layout.
    */
   elements: UISchema<T>[]
+  rule?: Rule<T>
 }
 /**
  * A layout which orders its child elements vertically (i.e. from top to bottom).

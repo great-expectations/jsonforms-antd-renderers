@@ -26,6 +26,9 @@ export function HorizontalLayout({
     visible,
   }
   const form = Form.useFormInstance()
+  if (visible === false) {
+    return null
+  }
   return (
     <Form
       data-testid={HORIZONTAL_LAYOUT_FORM_TEST_ID}

@@ -24,6 +24,11 @@ export function VerticalLayout({
     visible,
   }
   const form = Form.useFormInstance()
+
+  if (visible === false) {
+    return null
+  }
+
   return (
     <Form
       data-testid={VERTICAL_LAYOUT_FORM_TEST_ID}

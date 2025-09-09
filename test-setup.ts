@@ -9,7 +9,6 @@ import { afterEach } from "vitest"
 global.IS_REACT_ACT_ENVIRONMENT = true
 
 // TODO: Fix TypeScript version compatibility with ESLint
-// @ts-expect-error ignore -- TypeScript version compatibility issue
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 global.matchMedia =
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

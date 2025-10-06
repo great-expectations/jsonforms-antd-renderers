@@ -94,7 +94,6 @@ export const EnumControl = (props: ControlProps) => {
       required={props.required}
       initialValue={defaultValue}
       rules={rules}
-      validateTrigger={["onBlur"]}
       {...formItemProps}
     >
       <Col>{selector}</Col>

@@ -3,6 +3,7 @@ import { Form, Select, Segmented, Radio, Col } from "antd"
 import type { Rule } from "antd/es/form"
 import { EnumControlOptions, ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"
+import { useEffect } from "react"
 
 type ControlProps = Omit<JSFControlProps, "uischema"> & {
   uischema: ControlUISchema<unknown> | JSFControlProps["uischema"]
@@ -14,7 +15,40 @@ const isStringOrNumberArray = (arr: unknown[]): boolean => {
   )
 }
 
+/**
+ * Creates an initial value setter for EnumControl
+ */
+function createEnumInitialValueSetter(
+  handleChange: (path: string, value: unknown) => void,
+  path: string,
+) {
+  return (value: unknown) => {
+    handleChange(path, value)
+    return value
+  }
+}
+
 export const EnumControl = (props: ControlProps) => {
+  const setInitialValue = createEnumInitialValueSetter(
+    props.handleChange,
+    props.path,
+  )
+  const form = Form.useFormInstance()
+
+  const defaultValue =
+    (props.data as unknown) ?? (props.schema.default as unknown)
+
+  useEffect(() => {
+    form.setFieldValue(props.path, setInitialValue(defaultValue))
+  }, [
+    props.data,
+    form,
+    props.path,
+    props.schema.default,
+    setInitialValue,
+    defaultValue,
+  ])
+
   if (!props.visible) return null
 
   const rules: Rule[] = [
@@ -23,9 +57,6 @@ export const EnumControl = (props: ControlProps) => {
 
   const formItemProps =
     "formItemProps" in props.uischema ? props.uischema.formItemProps : {}
-
-  const defaultValue =
-    (props.data as unknown) ?? (props.schema.default as unknown)
 
   const appliedUiSchemaOptions = props.uischema.options as EnumControlOptions
 
@@ -92,7 +123,6 @@ export const EnumControl = (props: ControlProps) => {
       id={props.id}
       name={props.path}
       required={props.required}
-      initialValue={defaultValue}
       rules={rules}
       {...formItemProps}
     >

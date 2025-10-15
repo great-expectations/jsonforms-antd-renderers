@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import type { ControlProps as JSFControlProps } from "@jsonforms/core"
 import { Form, Select, Segmented, Radio, Col } from "antd"
 import type { Rule } from "antd/es/form"
@@ -15,6 +16,12 @@ const isStringOrNumberArray = (arr: unknown[]): boolean => {
 }
 
 export const EnumControl = (props: ControlProps) => {
+  const form = Form.useFormInstance()
+
+  useEffect(() => {
+    form.setFieldValue(props.path, props.data ?? props.schema.default)
+  }, [props.data, form, props.path, props.schema.default])
+
   if (!props.visible) return null
 
   const rules: Rule[] = [
@@ -94,7 +101,6 @@ export const EnumControl = (props: ControlProps) => {
       required={props.required}
       initialValue={defaultValue}
       rules={rules}
-      validateTrigger={["onBlur"]}
       {...formItemProps}
     >
       <Col>{selector}</Col>

@@ -21,6 +21,14 @@ const defaultValueTextInputSchema = {
   additionalProperties: false,
 } satisfies JSONSchema
 
+const numericDefaultValueTextInputSchema = {
+  type: "object",
+  properties: {
+    foo: { type: "string", title: "Foo", default: 42 },
+  },
+  additionalProperties: false,
+} satisfies JSONSchema
+
 test("renders data that the user enters", async () => {
   render({
     schema: {
@@ -46,6 +54,35 @@ test("renders default value when present", async () => {
         { exact: false },
       ),
     ).toHaveValue(defaultValueTextInputSchema.properties.foo.default)
+  })
+})
+
+test("renders numeric default value as string", async () => {
+  render({
+    schema: numericDefaultValueTextInputSchema,
+  })
+  await waitFor(() => {
+    expect(
+      screen.getByPlaceholderText(
+        numericDefaultValueTextInputSchema.properties.foo.title,
+        { exact: false },
+      ),
+    ).toHaveValue("42") // Should be converted from number 42 to string "42"
+  })
+})
+
+test("handles numeric data values by converting to string", async () => {
+  render({
+    schema: textInputSchema,
+    data: { foo: 123 as unknown as string }, // Simulating numeric data that should be converted to string
+  })
+
+  await waitFor(() => {
+    const input = screen.getByPlaceholderText(
+      textInputSchema.properties.foo.title,
+      { exact: false },
+    )
+    expect(input).toHaveValue("123") // Should be converted from number to string
   })
 })
 

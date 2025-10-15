@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect } from "react"
+import { memo, useEffect } from "react"
 import type { ControlProps as JSFControlProps } from "@jsonforms/core"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 import { DatePicker, Form } from "antd"
@@ -46,14 +46,7 @@ export function DateTimeControl({
   visible,
   data,
 }: ControlProps) {
-  const setInitialValue = useCallback(
-    (value: string | undefined) => {
-      const coercedValue = value ? dayjs(value) : value
-      handleChange(path, value)
-      return coercedValue
-    },
-    [handleChange, path],
-  )
+  const setInitialValue = createDateTimeInitialValueSetter(handleChange, path)
   const form = Form.useFormInstance()
   useEffect(() => {
     form.setFieldValue(
@@ -87,6 +80,20 @@ export function DateTimeControl({
       />
     </Form.Item>
   )
+}
+
+/**
+ * Creates an initial value setter for DateTimeControl that coerces string values to dayjs objects
+ */
+function createDateTimeInitialValueSetter(
+  handleChange: (path: string, value: string | undefined) => void,
+  path: string,
+) {
+  return (value: string | undefined) => {
+    const coercedValue = value ? dayjs(value) : value
+    handleChange(path, value)
+    return coercedValue
+  }
 }
 
 export const DateTimeRenderer = withJsonFormsControlProps(memo(DateTimeControl))

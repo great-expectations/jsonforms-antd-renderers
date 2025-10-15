@@ -1,5 +1,5 @@
 import type { ChangeEvent } from "react"
-import { useCallback, useEffect } from "react"
+import { useEffect } from "react"
 import { Input, Form, InputProps } from "antd"
 import type { Rule } from "antd/es/form"
 import type {
@@ -31,15 +31,7 @@ export function TextControl({
   id,
   uischema,
 }: ControlProps) {
-  const setInitialValue = useCallback(
-    (value: unknown) => {
-      if (typeof value !== "number") return value
-      const coercedValue = coerceToString(value)
-      handleChange(path, coercedValue)
-      return coercedValue
-    },
-    [handleChange, path],
-  )
+  const setInitialValue = createInitialValueSetter(handleChange, path)
   const ariaLabel = label || schema.description
   const options: TextControlOptions =
     (uischema.options as TextControlOptions) ?? {}
@@ -164,6 +156,21 @@ function TextControlInput({
 
 function coerceToString(value: number) {
   return value.toString()
+}
+
+/**
+ * Creates an initial value setter for TextControl that coerces numbers to strings
+ */
+function createInitialValueSetter(
+  handleChange: (path: string, value: string) => void,
+  path: string,
+) {
+  return (value: unknown) => {
+    if (typeof value !== "number") return value
+    const coercedValue = coerceToString(value)
+    handleChange(path, coercedValue)
+    return coercedValue
+  }
 }
 
 export const TextRenderer = withJsonFormsControlProps(TextControl)

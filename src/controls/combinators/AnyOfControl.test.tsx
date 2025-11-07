@@ -99,7 +99,9 @@ describe("AnyOf control", () => {
 
     await userEvent.click(screen.getByLabelText("SplitterYearAndMonth"))
     let column = screen.getByLabelText("Column Name")
-    expect(column).not.toHaveValue("abc")
+    await waitFor(() => {
+      expect(column).not.toHaveValue("abc")
+    })
     await userEvent.type(screen.getByLabelText("Column Name"), "xyz")
 
     await userEvent.click(screen.getByLabelText("SplitterYear"))

@@ -1,16 +1,17 @@
-import type { ChangeEvent } from "react"
-import { useEffect } from "react"
+import { type ChangeEvent } from "react"
+// import { useEffect } from "react"
 import { Input, Form, InputProps } from "antd"
 import type { Rule } from "antd/es/form"
-import type {
-  ControlElement,
-  ControlProps as JSFControlProps,
+import {
+  type ControlElement,
+  type ControlProps as JSFControlProps,
 } from "@jsonforms/core"
 
 import type { ControlUISchema, TextControlOptions } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 import { TextAreaProps } from "antd/es/input/TextArea"
+import { useAnyOfContext } from "./combinators/AnyOfContext"
 
 type ControlProps = Omit<JSFControlProps, "uischema"> & {
   data: string
@@ -31,7 +32,10 @@ export function TextControl({
   id,
   uischema,
 }: ControlProps) {
-  const setInitialValue = createInitialValueSetter(handleChange, path)
+  // const setInitialValue = createInitialValueSetter(handleChange, path)
+  // const options = uischema.options as TextControlOptions
+  const anyofIndex = useAnyOfContext()
+
   const ariaLabel = label || schema.description
   const options: TextControlOptions =
     (uischema.options as TextControlOptions) ?? {}
@@ -42,7 +46,7 @@ export function TextControl({
   const tooltip = options.tooltip ? options.tooltip : (formItemTooltip ?? "")
 
   const placeholderText = options.placeholderText
-  const form = Form.useFormInstance()
+  // const form = Form.useFormInstance()
   const rules: Rule[] = [
     {
       required: required || options.required,
@@ -51,22 +55,38 @@ export function TextControl({
     },
     ...(options?.rules ? options.rules : []),
   ]
-  useEffect(() => {
-    form.setFieldValue(path, setInitialValue(data ?? schema.default))
-  }, [data, form, path, schema.default, setInitialValue])
+
+  console.log("xxxx jsonforms TextControl path:", path, data)
+  // useEffect(() => {
+  //   form.setFieldValue(path, setInitialValue(data ?? schema.default))
+  // }, [data, form, path, schema.default, setInitialValue])
+  // useEffect(() => {
+  //   const dataOrDefalt = (data ?? schema.default) as string | number
+  //   const value =
+  //     typeof dataOrDefalt === "number" ? dataOrDefalt.toString() : dataOrDefalt
+  //   form.setFieldValue(path, value)
+  // }, [data, form, path, schema.default])
 
   return !visible ? null : (
     <Form.Item
       label={label}
       id={id}
-      name={path}
+      name={[path, anyofIndex]}
       validateTrigger={["onBlur"]}
       rules={rules}
+      initialValue={
+        data === undefined
+          ? (schema.default as string)
+          : typeof data === "number"
+            ? data.toString()
+            : (data as string)
+      }
       tooltip={tooltip}
       {...formItemPropsWOTooltip}
     >
       <TextControlInput
         aria-label={ariaLabel}
+        value={typeof data === "number" ? data.toString() : (data as string)}
         disabled={!enabled}
         autoComplete="off"
         onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
@@ -81,6 +101,7 @@ export function TextControl({
 
 type TextControlInputProps = {
   "aria-label": string | undefined
+  value: string
   disabled: boolean
   autoComplete: string
   onChange: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void
@@ -154,23 +175,23 @@ function TextControlInput({
   }
 }
 
-function coerceToString(value: number) {
-  return value.toString()
-}
+// function coerceToString(value: number) {
+//   return value.toString()
+// }
 
-/**
- * Creates an initial value setter for TextControl that coerces numbers to strings
- */
-function createInitialValueSetter(
-  handleChange: (path: string, value: string) => void,
-  path: string,
-) {
-  return (value: unknown) => {
-    if (typeof value !== "number") return value
-    const coercedValue = coerceToString(value)
-    handleChange(path, coercedValue)
-    return coercedValue
-  }
-}
+// /**
+//  * Creates an initial value setter for TextControl that coerces numbers to strings
+//  */
+// function createInitialValueSetter(
+//   handleChange: (path: string, value: string) => void,
+//   path: string,
+// ) {
+//   return (value: unknown) => {
+//     if (typeof value !== "number") return value
+//     const coercedValue = coerceToString(value)
+//     handleChange(path, coercedValue)
+//     return coercedValue
+//   }
+// }
 
 export const TextRenderer = withJsonFormsControlProps(TextControl)

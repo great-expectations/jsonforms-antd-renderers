@@ -14,6 +14,7 @@ import { Form, Space } from "antd"
 import { useEffect, useState } from "react"
 import { ControlUISchema } from "../../ui-schema"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
+import { AnyOfIndexContext } from "./AnyOfContext"
 
 type CombinatorRendererProps = Omit<JSFCombinatorRendererProps, "uischema"> & {
   uischema: ControlUISchema<unknown> | JSFCombinatorRendererProps["uischema"]
@@ -103,15 +104,20 @@ export function AnyOfControl({
       {combinatorRenderInfos.map((renderInfo, index) => {
         return (
           selectedIndex === index && (
-            <JsonFormsDispatch
-              key={index}
-              schema={renderInfo.schema}
-              uischemas={uischemas}
-              uischema={renderInfo.uischema}
-              path={path}
-              renderers={renderers}
-              cells={cells}
-            />
+            <AnyOfIndexContext.Provider value={index}>
+              <JsonFormsDispatch
+                key={index}
+                schema={renderInfo.schema}
+                uischemas={uischemas}
+                uischema={{
+                  ...renderInfo.uischema,
+                  options: { ...renderInfo.uischema.options, anyOfType: index },
+                }}
+                path={path}
+                renderers={renderers}
+                cells={cells}
+              />
+            </AnyOfIndexContext.Provider>
           )
         )
       })}

@@ -13,6 +13,8 @@ import {
   objectArrayWithCombinator_FavoriteThing1UISchemaRegistryEntry as objectArrayWithCombinator_CombinatorSubschemaUISchemaRegistryEntry,
   arrayControlSortableUISchema,
   arrayControlSortableWithIconsUISchema,
+  objectArrayWithNumericFieldControlJsonSchema,
+  peopleArrayControlUISchema,
 } from "../testSchemas/arraySchema"
 import { UISchema } from "../ui-schema"
 import { JSONFormData } from "../common/schema-derived-types"
@@ -120,6 +122,49 @@ describe("ObjectArrayControl", () => {
     expect(updatedRemoveButtons).toHaveLength(2)
     screen.getByDisplayValue("my asset")
     screen.getByDisplayValue("my other asset")
+  })
+
+  test("correctly removes from the object list with remove button", async () => {
+    let data: JSONFormData<
+      typeof objectArrayWithNumericFieldControlJsonSchema
+    > = {
+      people: [],
+    }
+    const user = userEvent.setup()
+    render({
+      schema: objectArrayWithNumericFieldControlJsonSchema,
+      uischema: peopleArrayControlUISchema,
+      data: data,
+      onChange: (result) => {
+        data = result.data as JSONFormData<
+          typeof objectArrayWithNumericFieldControlJsonSchema
+        >
+      },
+    })
+    const addButton = await screen.findByRole("button", { name: "Add People" })
+    await user.click(addButton)
+    await user.click(addButton)
+    const inputFields = await screen.findAllByLabelText("Age")
+    await user.type(inputFields[0], "25")
+    await user.type(inputFields[1], "30")
+    await user.type(inputFields[2], "35")
+
+    const removeButtons = await screen.findAllByRole("button", {
+      name: "Delete",
+    })
+    expect(removeButtons).toHaveLength(3)
+    await user.click(removeButtons[1])
+    await waitFor(() => {
+      expect(data).toEqual({
+        people: [{ age: 25 }, { age: 35 }],
+      })
+    })
+    const updatedRemoveButtons = screen.getAllByRole("button", {
+      name: "Delete",
+    })
+    expect(updatedRemoveButtons).toHaveLength(2)
+    screen.getByDisplayValue("25")
+    screen.getByDisplayValue("35")
   })
 
   test("renders with overwritten icons and does not allow overwriting onClick", async () => {

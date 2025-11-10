@@ -40,7 +40,10 @@ export function AnyOfControl({
 }: CombinatorRendererProps) {
   const [selectedIndex, setSelectedIndex] = useState(indexOfFittingSchema ?? 0)
   const antdFormData = useNestedAntDFormContext()
-  const nested: NestedAntDFormData = antdFormData
+
+  // We need to inject down data to AntD Form.Items about the selectedIndex
+  // without mangling existing nested antd data.
+  const nestedAntDData: NestedAntDFormData = antdFormData
     ? {
         path: `${antdFormData.path}.${selectedIndex}`,
         index: antdFormData.index,
@@ -115,7 +118,7 @@ export function AnyOfControl({
       {combinatorRenderInfos.map((renderInfo, index) => {
         return (
           selectedIndex === index && (
-            <NestedAntDFormContext.Provider value={nested}>
+            <NestedAntDFormContext.Provider value={nestedAntDData}>
               <JsonFormsDispatch
                 key={index}
                 schema={renderInfo.schema}

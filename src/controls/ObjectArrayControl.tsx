@@ -52,6 +52,7 @@ export function ObjectArrayControl({
   }, [uischemas, schema, path, uischema, rootSchema])
 
   const dataSource = useMemo(() => range(data), [data])
+  console.log("xxxx jsonforms ObjectArrayControl dataSource:", data, dataSource)
 
   const addItemToList = useMemo(
     () => addItem(path, createDefaultValue(schema, rootSchema)),
@@ -83,13 +84,14 @@ export function ObjectArrayControl({
     return moveDown?.(path, index)()
   }
 
-  const addButton = (
+  const addButton = (antdAdd: () => void) => (
     <Flex justify="center">
       <Button
         {...options.addButtonProps}
         onClick={(e) => {
           e.stopPropagation()
           addItemToList()
+          antdAdd()
         }}
       >
         {options.addButtonProps?.children ?? `Add ${label}`}
@@ -115,69 +117,74 @@ export function ObjectArrayControl({
       {...formItemProps}
     >
       <>{label}</>
-      <List<unknown>
-        dataSource={dataSource}
-        renderItem={(_item: unknown, index: number) => {
-          return (
-            <List.Item
-              key={index}
-              actions={[
-                dataSource.length > 1 && options.showSortButtons ? (
-                  <Space key="sort">
+      <Form.List name={path}>
+        {(_, { add, remove }) => (
+          <List<unknown>
+            dataSource={dataSource}
+            renderItem={(_item: unknown, index: number) => {
+              return (
+                <List.Item
+                  key={index}
+                  actions={[
+                    dataSource.length > 1 && options.showSortButtons ? (
+                      <Space key="sort">
+                        <Button
+                          aria-label={`Move up`}
+                          disabled={index === 0}
+                          {...options.moveUpButtonProps}
+                          onClick={handleUpClick(path, index)}
+                        >
+                          {!options.moveUpButtonProps?.icon && "Up"}
+                        </Button>
+                        <Button
+                          aria-label={`Move down`}
+                          disabled={index === dataSource.length - 1}
+                          {...options.moveDownButtonProps}
+                          onClick={handleDownClick(path, index)}
+                        >
+                          {!options.moveDownButtonProps?.icon && "Down"}
+                        </Button>
+                      </Space>
+                    ) : undefined,
                     <Button
-                      aria-label={`Move up`}
-                      disabled={index === 0}
-                      {...options.moveUpButtonProps}
-                      onClick={handleUpClick(path, index)}
+                      key="remove"
+                      {...options.removeButtonProps}
+                      disabled={
+                        !removeItems ||
+                        (required && dataSource.length == 1 && index === 0)
+                      }
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        removeItems?.(path, [index])()
+                        remove(index)
+                      }}
                     >
-                      {!options.moveUpButtonProps?.icon && "Up"}
-                    </Button>
-                    <Button
-                      aria-label={`Move down`}
-                      disabled={index === dataSource.length - 1}
-                      {...options.moveDownButtonProps}
-                      onClick={handleDownClick(path, index)}
-                    >
-                      {!options.moveDownButtonProps?.icon && "Down"}
-                    </Button>
-                  </Space>
-                ) : undefined,
-                <Button
-                  key="remove"
-                  {...options.removeButtonProps}
-                  disabled={
-                    !removeItems ||
-                    (required && dataSource.length == 1 && index === 0)
-                  }
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    removeItems?.(path, [index])()
-                  }}
+                      {options.removeButtonProps?.children ?? "Delete"}
+                    </Button>,
+                  ].filter(Boolean)}
                 >
-                  {options.removeButtonProps?.children ?? "Delete"}
-                </Button>,
-              ].filter(Boolean)}
-            >
-              <div style={{ width: "100%" }}>
-                <NestedAntDFormContext.Provider value={{ path, index }}>
-                  <JsonFormsDispatch
-                    enabled={enabled}
-                    schema={schema}
-                    path={composePaths(path, `${index}`)}
-                    uischema={foundUISchema}
-                    renderers={renderers}
-                    cells={cells}
-                    uischemas={uischemas}
-                  />
-                </NestedAntDFormContext.Provider>
-              </div>
-            </List.Item>
-          )
-        }}
-        {...(options.addButtonLocation === "top"
-          ? { header: addButton }
-          : { footer: addButton })}
-      />
+                  <div style={{ width: "100%" }}>
+                    <NestedAntDFormContext.Provider value={{ path, index }}>
+                      <JsonFormsDispatch
+                        enabled={enabled}
+                        schema={schema}
+                        path={composePaths(path, `${index}`)}
+                        uischema={foundUISchema}
+                        renderers={renderers}
+                        cells={cells}
+                        uischemas={uischemas}
+                      />
+                    </NestedAntDFormContext.Provider>
+                  </div>
+                </List.Item>
+              )
+            }}
+            {...(options.addButtonLocation === "top"
+              ? { header: addButton(add) }
+              : { footer: addButton(add) })}
+          />
+        )}
+      </Form.List>
     </Form.Item>
   )
 }

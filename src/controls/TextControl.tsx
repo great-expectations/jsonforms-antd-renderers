@@ -1,18 +1,16 @@
-import { type ChangeEvent } from "react"
-// import { useEffect } from "react"
+import type { ChangeEvent } from "react"
 import { Input, Form, InputProps } from "antd"
 import type { Rule } from "antd/es/form"
-import {
-  type ControlElement,
-  type ControlProps as JSFControlProps,
+import type {
+  ControlElement,
+  ControlProps as JSFControlProps,
 } from "@jsonforms/core"
 
 import type { ControlUISchema, TextControlOptions } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 import { TextAreaProps } from "antd/es/input/TextArea"
-// import { useAnyOfContext } from "./combinators/AnyOfContext"
-import { useNestedAntDFormContext } from "./combinators/ArrayIndexContext"
+import { useNestedAntDFormContext } from "../hooks/useNestedAntDFormContext"
 
 type ControlProps = Omit<JSFControlProps, "uischema"> & {
   data: string
@@ -33,11 +31,7 @@ export function TextControl({
   id,
   uischema,
 }: ControlProps) {
-  // const setInitialValue = createInitialValueSetter(handleChange, path)
-  // const options = uischema.options as TextControlOptions
-  const form = Form.useFormInstance()
-  // const anyofIndex = useAnyOfContext()
-  const arrayData = useNestedAntDFormContext()
+  const nestedAntdData = useNestedAntDFormContext()
 
   const ariaLabel = label || schema.description
   const options: TextControlOptions =
@@ -49,7 +43,6 @@ export function TextControl({
   const tooltip = options.tooltip ? options.tooltip : (formItemTooltip ?? "")
 
   const placeholderText = options.placeholderText
-  // const form = Form.useFormInstance()
   const rules: Rule[] = [
     {
       required: required || options.required,
@@ -59,8 +52,9 @@ export function TextControl({
     ...(options?.rules ? options.rules : []),
   ]
 
-  const name = arrayData ? [arrayData.path, arrayData.index] : path
-  console.log("xxxx jsonforms TextControl name:", name, form.getFieldsValue())
+  const name = nestedAntdData
+    ? [nestedAntdData.path, nestedAntdData.index]
+    : path
 
   return !visible ? null : (
     <Form.Item
@@ -169,24 +163,5 @@ function TextControlInput({
       }
   }
 }
-
-// function coerceToString(value: number) {
-//   return value.toString()
-// }
-
-// /**
-//  * Creates an initial value setter for TextControl that coerces numbers to strings
-//  */
-// function createInitialValueSetter(
-//   handleChange: (path: string, value: string) => void,
-//   path: string,
-// ) {
-//   return (value: unknown) => {
-//     if (typeof value !== "number") return value
-//     const coercedValue = coerceToString(value)
-//     handleChange(path, coercedValue)
-//     return coercedValue
-//   }
-// }
 
 export const TextRenderer = withJsonFormsControlProps(TextControl)

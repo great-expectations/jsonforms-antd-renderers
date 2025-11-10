@@ -13,7 +13,7 @@ import { Form, Button, Col, Row, Space } from "antd"
 import React, { useEffect, useMemo } from "react"
 import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
-import { NestedAntDFormContext } from "./combinators/ArrayIndexContext"
+import { NestedAntDFormContext } from "../contexts/NestedAntDFormContext"
 
 type ArrayControlProps = Omit<JSFArrayControlProps, "data" | "uischema"> & {
   data?: unknown[]

@@ -48,7 +48,6 @@ export function StorybookAntDJsonForm<T>({
       return // nothing to do; validateFields will have already rendered error messages on form fields
     }
   }, [form])
-
   return (
     <Form form={form}>
       <AntDJsonForm<typeof jsonSchema>

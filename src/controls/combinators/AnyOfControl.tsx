@@ -14,12 +14,11 @@ import { Form, Space } from "antd"
 import { useEffect, useState } from "react"
 import { ControlUISchema } from "../../ui-schema"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
-import { AnyOfIndexContext } from "./AnyOfContext"
 import {
   NestedAntDFormContext,
   NestedAntDFormData,
-  useNestedAntDFormContext,
-} from "./ArrayIndexContext"
+} from "../../contexts/NestedAntDFormContext"
+import { useNestedAntDFormContext } from "../../hooks/useNestedAntDFormContext"
 
 type CombinatorRendererProps = Omit<JSFCombinatorRendererProps, "uischema"> & {
   uischema: ControlUISchema<unknown> | JSFCombinatorRendererProps["uischema"]
@@ -40,7 +39,6 @@ export function AnyOfControl({
   required,
 }: CombinatorRendererProps) {
   const [selectedIndex, setSelectedIndex] = useState(indexOfFittingSchema ?? 0)
-  // const antdName = `${path}.${selectedIndex}`
   const antdFormData = useNestedAntDFormContext()
   const nested: NestedAntDFormData = antdFormData
     ? {
@@ -117,25 +115,23 @@ export function AnyOfControl({
       {combinatorRenderInfos.map((renderInfo, index) => {
         return (
           selectedIndex === index && (
-            <AnyOfIndexContext.Provider value={index}>
-              <NestedAntDFormContext.Provider value={nested}>
-                <JsonFormsDispatch
-                  key={index}
-                  schema={renderInfo.schema}
-                  uischemas={uischemas}
-                  uischema={{
-                    ...renderInfo.uischema,
-                    options: {
-                      ...renderInfo.uischema.options,
-                      anyOfType: index,
-                    },
-                  }}
-                  path={path}
-                  renderers={renderers}
-                  cells={cells}
-                />
-              </NestedAntDFormContext.Provider>
-            </AnyOfIndexContext.Provider>
+            <NestedAntDFormContext.Provider value={nested}>
+              <JsonFormsDispatch
+                key={index}
+                schema={renderInfo.schema}
+                uischemas={uischemas}
+                uischema={{
+                  ...renderInfo.uischema,
+                  options: {
+                    ...renderInfo.uischema.options,
+                    anyOfType: index,
+                  },
+                }}
+                path={path}
+                renderers={renderers}
+                cells={cells}
+              />
+            </NestedAntDFormContext.Provider>
           )
         )
       })}

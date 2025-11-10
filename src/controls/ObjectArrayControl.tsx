@@ -15,7 +15,7 @@ import { useEffect, useMemo } from "react"
 import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 import React from "react"
-import { NestedAntDFormContext } from "./combinators/ArrayIndexContext"
+import { NestedAntDFormContext } from "../contexts/NestedAntDFormContext"
 
 type ArrayLayoutProps = Omit<JSFArrayLayoutProps, "uischema"> & {
   uischema: ControlUISchema<unknown> | JSFArrayLayoutProps["uischema"]
@@ -38,7 +38,6 @@ export function ObjectArrayControl({
   moveDown,
   moveUp,
 }: ArrayLayoutProps) {
-  const form = Form.useFormInstance()
   const foundUISchema = useMemo(() => {
     return findUISchema(
       uischemas ?? [],
@@ -52,7 +51,6 @@ export function ObjectArrayControl({
   }, [uischemas, schema, path, uischema, rootSchema])
 
   const dataSource = useMemo(() => range(data), [data])
-  console.log("xxxx jsonforms ObjectArrayControl dataSource:", data, dataSource)
 
   const addItemToList = useMemo(
     () => addItem(path, createDefaultValue(schema, rootSchema)),
@@ -102,12 +100,6 @@ export function ObjectArrayControl({
   if (!visible) {
     return null
   }
-
-  console.log(
-    "xxxx jsonforms ObjectArrayControl path:",
-    path,
-    form.getFieldsValue(),
-  )
 
   return (
     <Form.Item

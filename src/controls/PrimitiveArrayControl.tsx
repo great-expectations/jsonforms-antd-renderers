@@ -13,7 +13,7 @@ import { Form, Button, Col, Row, Space } from "antd"
 import React, { useEffect, useMemo } from "react"
 import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
-import { ArrayIndexContext } from "./combinators/ArrayIndexContext"
+import { NestedAntDFormContext } from "./combinators/ArrayIndexContext"
 
 type ArrayControlProps = Omit<JSFArrayControlProps, "data" | "uischema"> & {
   data?: unknown[]
@@ -84,11 +84,6 @@ export function PrimitiveArrayControl({
     return moveDown?.(path, index)()
   }
 
-  console.log(
-    "xxxx jsonforms PrimitiveArrayControl list/path:",
-    path,
-    formItemProps,
-  )
   return (
     <Form.Item id={id} label={label} required={required} {...formItemProps}>
       <Form.List name={path} initialValue={data ?? [undefined]}>
@@ -120,7 +115,9 @@ export function PrimitiveArrayControl({
                     </Col>
                   ) : null}
                   <Col>
-                    <ArrayIndexContext.Provider value={{ path: path, index }}>
+                    <NestedAntDFormContext.Provider
+                      value={{ path, index: field.name }}
+                    >
                       <JsonFormsDispatch
                         enabled={enabled} // not crazy about this pattern of overriding the description, but it solves the problem of disappearing aria labels
                         schema={{
@@ -133,7 +130,7 @@ export function PrimitiveArrayControl({
                         cells={cells}
                         uischemas={uischemas}
                       />
-                    </ArrayIndexContext.Provider>
+                    </NestedAntDFormContext.Provider>
                   </Col>
                   {fields.length > 1 ? (
                     <Col>

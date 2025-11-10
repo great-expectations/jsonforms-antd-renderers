@@ -33,18 +33,7 @@ const FormListSandbox = () => {
                     <Input placeholder={`Enter item ${index + 1}`} />
                   </Form.Item>
                   {fields.length > 1 && (
-                    <Button
-                      onClick={() => {
-                        console.log(`Removing item at index ${index}`)
-                        console.log("Before remove:", form.getFieldsValue())
-                        remove(name)
-                        setTimeout(() => {
-                          console.log("After remove:", form.getFieldsValue())
-                        }, 100)
-                      }}
-                    >
-                      Delete
-                    </Button>
+                    <Button onClick={() => remove(name)}>Delete</Button>
                   )}
                 </Space>
               ))}

@@ -12,7 +12,7 @@ import { assertNever } from "../common/assert-never"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 import { TextAreaProps } from "antd/es/input/TextArea"
 // import { useAnyOfContext } from "./combinators/AnyOfContext"
-import { useArrayIndexContext } from "./combinators/ArrayIndexContext"
+import { useNestedAntDFormContext } from "./combinators/ArrayIndexContext"
 
 type ControlProps = Omit<JSFControlProps, "uischema"> & {
   data: string
@@ -37,7 +37,7 @@ export function TextControl({
   // const options = uischema.options as TextControlOptions
   const form = Form.useFormInstance()
   // const anyofIndex = useAnyOfContext()
-  const arrayData = useArrayIndexContext()
+  const arrayData = useNestedAntDFormContext()
 
   const ariaLabel = label || schema.description
   const options: TextControlOptions =
@@ -59,18 +59,8 @@ export function TextControl({
     ...(options?.rules ? options.rules : []),
   ]
 
-  // console.log("xxxx jsonforms TextControl path/index:", path, data, arrayIndex)
-  // useEffect(() => {
-  //   form.setFieldValue(path, setInitialValue(data ?? schema.default))
-  // }, [data, form, path, schema.default, setInitialValue])
-  // useEffect(() => {
-  //   const dataOrDefalt = (data ?? schema.default) as string | number
-  //   const value =
-  //     typeof dataOrDefalt === "number" ? dataOrDefalt.toString() : dataOrDefalt
-  //   form.setFieldValue(path, value)
-  // }, [data, form, path, schema.default])
-
   const name = arrayData ? [arrayData.path, arrayData.index] : path
+  console.log("xxxx jsonforms TextControl name:", name, form.getFieldsValue())
 
   return !visible ? null : (
     <Form.Item
@@ -94,19 +84,9 @@ export function TextControl({
         value={typeof data === "number" ? data.toString() : (data as string)}
         disabled={!enabled}
         autoComplete="off"
-        onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-          console.log(
-            "xxxx jsonforms TextControl onChange",
-            form.getFieldsValue(),
-          )
+        onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
           handleChange(path, e.target.value)
-          setTimeout(() => {
-            console.log(
-              "xxxx jsonforms TextControl onChange after timeout",
-              form.getFieldsValue(),
-            )
-          }, 100)
-        }}
+        }
         placeholder={placeholderText ?? (label.toLowerCase() || "value")}
         textControlOptions={options}
       />

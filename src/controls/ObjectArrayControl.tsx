@@ -15,6 +15,7 @@ import { useEffect, useMemo } from "react"
 import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
 import React from "react"
+import { NestedAntDFormContext } from "./combinators/ArrayIndexContext"
 
 type ArrayLayoutProps = Omit<JSFArrayLayoutProps, "uischema"> & {
   uischema: ControlUISchema<unknown> | JSFArrayLayoutProps["uischema"]
@@ -37,6 +38,7 @@ export function ObjectArrayControl({
   moveDown,
   moveUp,
 }: ArrayLayoutProps) {
+  const form = Form.useFormInstance()
   const foundUISchema = useMemo(() => {
     return findUISchema(
       uischemas ?? [],
@@ -98,6 +100,13 @@ export function ObjectArrayControl({
   if (!visible) {
     return null
   }
+
+  console.log(
+    "xxxx jsonforms ObjectArrayControl path:",
+    path,
+    form.getFieldsValue(),
+  )
+
   return (
     <Form.Item
       required={required}
@@ -150,15 +159,17 @@ export function ObjectArrayControl({
               ].filter(Boolean)}
             >
               <div style={{ width: "100%" }}>
-                <JsonFormsDispatch
-                  enabled={enabled}
-                  schema={schema}
-                  path={composePaths(path, `${index}`)}
-                  uischema={foundUISchema}
-                  renderers={renderers}
-                  cells={cells}
-                  uischemas={uischemas}
-                />
+                <NestedAntDFormContext.Provider value={{ path, index }}>
+                  <JsonFormsDispatch
+                    enabled={enabled}
+                    schema={schema}
+                    path={composePaths(path, `${index}`)}
+                    uischema={foundUISchema}
+                    renderers={renderers}
+                    cells={cells}
+                    uischemas={uischemas}
+                  />
+                </NestedAntDFormContext.Provider>
               </div>
             </List.Item>
           )

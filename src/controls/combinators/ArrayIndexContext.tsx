@@ -4,13 +4,13 @@ export interface AnyOfContextValue {
   anyOfIndex: number | undefined
 }
 
-export interface ArrayIndexContextValue {
+export interface NestedAntDFormData {
   path: string
-  index: number
+  index?: number
 }
-export const ArrayIndexContext = createContext<
-  ArrayIndexContextValue | undefined
+export const NestedAntDFormContext = createContext<
+  NestedAntDFormData | undefined
 >(undefined)
-export const useArrayIndexContext = () => {
-  return useContext(ArrayIndexContext)
+export const useNestedAntDFormContext = () => {
+  return useContext(NestedAntDFormContext)
 }

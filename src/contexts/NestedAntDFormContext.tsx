@@ -1,9 +1,5 @@
 import { createContext } from "react"
 
-export interface AnyOfContextValue {
-  anyOfIndex: number | undefined
-}
-
 export interface NestedAntDFormData {
   path: string
   index?: number

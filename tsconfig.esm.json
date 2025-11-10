@@ -3,8 +3,8 @@
   "compilerOptions": {
     "lib": ["ES2022", "DOM"],
     "target": "ES2022",
-    "module": "ES2022",
-    "moduleResolution": "bundler",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "outDir": "./lib/esm",
     "declarationDir": "./lib/esm"
   }

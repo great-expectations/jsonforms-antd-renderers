@@ -123,13 +123,7 @@ export function AnyOfControl({
                 key={index}
                 schema={renderInfo.schema}
                 uischemas={uischemas}
-                uischema={{
-                  ...renderInfo.uischema,
-                  options: {
-                    ...renderInfo.uischema.options,
-                    anyOfType: index,
-                  },
-                }}
+                uischema={renderInfo.uischema}
                 path={path}
                 renderers={renderers}
                 cells={cells}

@@ -13,6 +13,7 @@ import { Form, Button, Col, Row, Space } from "antd"
 import React, { useEffect, useMemo } from "react"
 import { ArrayControlOptions, ControlUISchema } from "../ui-schema"
 import { usePreviousValue } from "../common/usePreviousValue"
+import { ArrayIndexContext } from "./combinators/ArrayIndexContext"
 
 type ArrayControlProps = Omit<JSFArrayControlProps, "data" | "uischema"> & {
   data?: unknown[]
@@ -83,14 +84,13 @@ export function PrimitiveArrayControl({
     return moveDown?.(path, index)()
   }
 
+  console.log(
+    "xxxx jsonforms PrimitiveArrayControl list/path:",
+    path,
+    formItemProps,
+  )
   return (
-    <Form.Item
-      id={id}
-      name={path}
-      label={label}
-      required={required}
-      {...formItemProps}
-    >
+    <Form.Item id={id} label={label} required={required} {...formItemProps}>
       <Form.List name={path} initialValue={data ?? [undefined]}>
         {(fields, { add, remove }, { errors }) => (
           <Row justify={"start"}>
@@ -120,18 +120,20 @@ export function PrimitiveArrayControl({
                     </Col>
                   ) : null}
                   <Col>
-                    <JsonFormsDispatch
-                      enabled={enabled} // not crazy about this pattern of overriding the description, but it solves the problem of disappearing aria labels
-                      schema={{
-                        ...schema,
-                        description: `${label} ${index + 1}`,
-                      }}
-                      path={composePaths(path, `${index}`)}
-                      uischema={foundUISchema}
-                      renderers={renderers}
-                      cells={cells}
-                      uischemas={uischemas}
-                    />
+                    <ArrayIndexContext.Provider value={{ path: path, index }}>
+                      <JsonFormsDispatch
+                        enabled={enabled} // not crazy about this pattern of overriding the description, but it solves the problem of disappearing aria labels
+                        schema={{
+                          ...schema,
+                          description: `${label} ${index + 1}`,
+                        }}
+                        path={composePaths(path, `${index}`)}
+                        uischema={foundUISchema}
+                        renderers={renderers}
+                        cells={cells}
+                        uischemas={uischemas}
+                      />
+                    </ArrayIndexContext.Provider>
                   </Col>
                   {fields.length > 1 ? (
                     <Col>

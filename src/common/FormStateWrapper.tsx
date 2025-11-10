@@ -46,6 +46,7 @@ export function FormStateWrapper<T extends Record<string, unknown>, S>({
       return // nothing to do; validateFields will have already rendered error messages on form fields
     }
   }, [form])
+  console.log("xxxx jsonforms FormStateWrapper state:", form.getFieldsValue())
 
   return (
     <Form form={form}>

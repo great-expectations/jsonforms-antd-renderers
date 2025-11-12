@@ -1,5 +1,4 @@
 import type { ChangeEvent } from "react"
-import { useEffect } from "react"
 import { Input, Form, InputProps } from "antd"
 import type { Rule } from "antd/es/form"
 import type {
@@ -11,6 +10,7 @@ import type { ControlUISchema, TextControlOptions } from "../ui-schema"
 import { assertNever } from "../common/assert-never"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 import { TextAreaProps } from "antd/es/input/TextArea"
+import { useNestedAntDFormContext } from "../hooks/useNestedAntDFormContext"
 
 type ControlProps = Omit<JSFControlProps, "uischema"> & {
   data: string
@@ -31,7 +31,8 @@ export function TextControl({
   id,
   uischema,
 }: ControlProps) {
-  const setInitialValue = createInitialValueSetter(handleChange, path)
+  const nestedAntdData = useNestedAntDFormContext()
+
   const ariaLabel = label || schema.description
   const options: TextControlOptions =
     (uischema.options as TextControlOptions) ?? {}
@@ -42,7 +43,6 @@ export function TextControl({
   const tooltip = options.tooltip ? options.tooltip : (formItemTooltip ?? "")
 
   const placeholderText = options.placeholderText
-  const form = Form.useFormInstance()
   const rules: Rule[] = [
     {
       required: required || options.required,
@@ -51,22 +51,31 @@ export function TextControl({
     },
     ...(options?.rules ? options.rules : []),
   ]
-  useEffect(() => {
-    form.setFieldValue(path, setInitialValue(data ?? schema.default))
-  }, [data, form, path, schema.default, setInitialValue])
+
+  const name = nestedAntdData
+    ? [nestedAntdData.path, nestedAntdData.index]
+    : path
 
   return !visible ? null : (
     <Form.Item
       label={label}
       id={id}
-      name={path}
+      name={name}
       validateTrigger={["onBlur"]}
       rules={rules}
+      initialValue={
+        data === undefined
+          ? (schema.default as string)
+          : typeof data === "number"
+            ? data.toString()
+            : (data as string)
+      }
       tooltip={tooltip}
       {...formItemPropsWOTooltip}
     >
       <TextControlInput
         aria-label={ariaLabel}
+        value={typeof data === "number" ? data.toString() : (data as string)}
         disabled={!enabled}
         autoComplete="off"
         onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
@@ -81,6 +90,7 @@ export function TextControl({
 
 type TextControlInputProps = {
   "aria-label": string | undefined
+  value: string
   disabled: boolean
   autoComplete: string
   onChange: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void
@@ -151,25 +161,6 @@ function TextControlInput({
           />
         )
       }
-  }
-}
-
-function coerceToString(value: number) {
-  return value.toString()
-}
-
-/**
- * Creates an initial value setter for TextControl that coerces numbers to strings
- */
-function createInitialValueSetter(
-  handleChange: (path: string, value: string) => void,
-  path: string,
-) {
-  return (value: unknown) => {
-    if (typeof value !== "number") return value
-    const coercedValue = coerceToString(value)
-    handleChange(path, coercedValue)
-    return coercedValue
   }
 }
 

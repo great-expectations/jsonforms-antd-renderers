@@ -106,6 +106,19 @@ export const arrayControlUISchemaWithIcons = {
   ],
 } satisfies UISchema<typeof objectArrayControlJsonSchema>
 
+export const peopleArrayControlUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/people",
+      layoutProps: {
+        columns: undefined,
+      },
+    },
+  ],
+} satisfies UISchema<typeof objectArrayWithNumericFieldControlJsonSchema>
+
 export const objectArrayControlJsonSchema = {
   title: "Assets",
   type: "object",
@@ -143,6 +156,25 @@ export const objectArrayControlJsonSchemaWithRequired = {
     },
   },
   required: ["assets"],
+} satisfies JSONSchema
+
+export const objectArrayWithNumericFieldControlJsonSchema = {
+  title: "People",
+  type: "object",
+  properties: {
+    people: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          age: {
+            title: "Age",
+            type: "number",
+          },
+        },
+      },
+    },
+  },
 } satisfies JSONSchema
 
 export const stringArrayControlJsonSchema = {

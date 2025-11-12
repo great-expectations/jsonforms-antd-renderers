@@ -118,6 +118,33 @@ describe("PrimitiveArrayControl", () => {
     screen.getByDisplayValue("my other asset")
   })
 
+  test("correctly removes from the numeric list with remove button", async () => {
+    const user = userEvent.setup()
+    render({
+      schema: numberArrayControlJsonSchema,
+      uischema: arrayControlUISchema,
+    })
+    const addButton = await screen.findByRole("button", { name: "Add Assets" })
+    await user.click(addButton)
+    await user.click(addButton)
+    const inputFields = await screen.findAllByLabelText(/Assets \d+/)
+    await user.type(inputFields[0], "1")
+    await user.type(inputFields[1], "2")
+    await user.type(inputFields[2], "3")
+
+    const removeButtons = await screen.findAllByRole("button", {
+      name: "Delete",
+    })
+    expect(removeButtons).toHaveLength(3)
+    await user.click(removeButtons[1])
+    const updatedRemoveButtons = await screen.findAllByRole("button", {
+      name: "Delete",
+    })
+    expect(updatedRemoveButtons).toHaveLength(2)
+    screen.getByDisplayValue("01")
+    screen.getByDisplayValue("3")
+  })
+
   test("renders with title", async () => {
     const data = { assets: ["apple"] }
     render({

@@ -14,6 +14,11 @@ import { Form, Space } from "antd"
 import { useEffect, useState } from "react"
 import { ControlUISchema } from "../../ui-schema"
 import { CombinatorSchemaSwitcher } from "./CombinatorSchemaSwitcher"
+import {
+  NestedAntDFormContext,
+  NestedAntDFormData,
+} from "../../contexts/NestedAntDFormContext"
+import { useNestedAntDFormContext } from "../../hooks/useNestedAntDFormContext"
 
 type CombinatorRendererProps = Omit<JSFCombinatorRendererProps, "uischema"> & {
   uischema: ControlUISchema<unknown> | JSFCombinatorRendererProps["uischema"]
@@ -34,6 +39,16 @@ export function AnyOfControl({
   required,
 }: CombinatorRendererProps) {
   const [selectedIndex, setSelectedIndex] = useState(indexOfFittingSchema ?? 0)
+  const antdFormData = useNestedAntDFormContext()
+
+  // We need to inject down data to AntD Form.Items about the selectedIndex
+  // without mangling existing nested antd data.
+  const nestedAntDData: NestedAntDFormData = antdFormData
+    ? {
+        path: `${antdFormData.path}.${selectedIndex}`,
+        index: antdFormData.index,
+      }
+    : { path: `${path}.${selectedIndex}`, index: undefined }
 
   const combinatorRenderInfos = createCombinatorRenderInfos(
     schema.anyOf as JsonSchema[],
@@ -103,15 +118,17 @@ export function AnyOfControl({
       {combinatorRenderInfos.map((renderInfo, index) => {
         return (
           selectedIndex === index && (
-            <JsonFormsDispatch
-              key={index}
-              schema={renderInfo.schema}
-              uischemas={uischemas}
-              uischema={renderInfo.uischema}
-              path={path}
-              renderers={renderers}
-              cells={cells}
-            />
+            <NestedAntDFormContext.Provider value={nestedAntDData}>
+              <JsonFormsDispatch
+                key={index}
+                schema={renderInfo.schema}
+                uischemas={uischemas}
+                uischema={renderInfo.uischema}
+                path={path}
+                renderers={renderers}
+                cells={cells}
+              />
+            </NestedAntDFormContext.Provider>
           )
         )
       })}

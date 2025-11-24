@@ -259,3 +259,35 @@ export const AnyOfWithDefaultsUISchemaRegistryEntries = [
       schema.title?.startsWith("Phone") ? 2 : -1,
   },
 ]
+
+export const anyOfEnumSchema = {
+  type: "object",
+  properties: {
+    item: {
+      anyOf: [
+        {
+          title: "Option A",
+          type: "object",
+          properties: {
+            type: { const: "A" },
+            status: {
+              type: "string",
+              enum: ["active", "inactive"],
+            },
+          },
+        },
+        {
+          title: "Option B",
+          type: "object",
+          properties: {
+            type: { const: "B" },
+            status: {
+              type: "string",
+              enum: ["pending", "archived"],
+            },
+          },
+        },
+      ],
+    },
+  },
+}

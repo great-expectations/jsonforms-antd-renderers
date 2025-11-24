@@ -177,6 +177,39 @@ export const objectArrayWithNumericFieldControlJsonSchema = {
   },
 } satisfies JSONSchema
 
+export const objectArrayWithEnumFieldControlJsonSchema = {
+  title: "Items",
+  type: "object",
+  properties: {
+    items: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          status: {
+            title: "Status",
+            type: "string",
+            enum: ["foo", "bar", "baz"],
+          },
+        },
+      },
+    },
+  },
+} satisfies JSONSchema
+
+export const itemsArrayControlUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/items",
+      layoutProps: {
+        columns: undefined,
+      },
+    },
+  ],
+} satisfies UISchema<typeof objectArrayWithEnumFieldControlJsonSchema>
+
 export const stringArrayControlJsonSchema = {
   title: "Assets",
   type: "object",
@@ -198,6 +231,20 @@ export const numberArrayControlJsonSchema = {
       type: "array",
       items: {
         type: "number",
+      },
+    },
+  },
+} satisfies JSONSchema
+
+export const enumArrayControlJsonSchema = {
+  title: "Assets",
+  type: "object",
+  properties: {
+    assets: {
+      type: "array",
+      items: {
+        type: "string",
+        enum: ["foo", "bar", "baz"],
       },
     },
   },

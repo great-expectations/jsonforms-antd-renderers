@@ -23,6 +23,7 @@ export const NumericControl = (props: ControlProps) => {
     "formItemProps" in props.uischema ? props.uischema.formItemProps : {}
 
   return (
+    <Col>
     <Form.Item
       label={props.label}
       id={props.id}
@@ -35,6 +36,7 @@ export const NumericControl = (props: ControlProps) => {
     >
       <Col>{InputNumber({ ...props })}</Col>
     </Form.Item>
+</Col>
   )
 }
 

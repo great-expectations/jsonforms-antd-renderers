@@ -1,7 +1,7 @@
 import { memo } from "react"
 import type { ControlProps as JSFControlProps } from "@jsonforms/core"
 import { withJsonFormsControlProps } from "@jsonforms/react"
-import { DatePicker, Form } from "antd"
+import { Col, DatePicker, Form } from "antd"
 import type { Rule } from "antd/es/form"
 import dayjs from "dayjs"
 
@@ -51,22 +51,24 @@ export function DateTimeControl({
   const overrides = getOverrides(uischema.options)
 
   return (
-    <Form.Item
-      label={label}
-      id={id}
-      name={name}
-      required={required}
-      validateTrigger={["onBlur"]}
-      rules={rules}
-      initialValue={getInitialValue(data, schema.default)}
-      {...formItemProps}
-    >
-      <DatePicker
-        format={"YYYY-MM-DDTHH:mm:ssZ"}
-        onChange={(_, dateString) => handleChange(path, dateString)}
-        {...overrides}
-      />
-    </Form.Item>
+    <Col>
+      <Form.Item
+        label={label}
+        id={id}
+        name={name}
+        required={required}
+        validateTrigger={["onBlur"]}
+        rules={rules}
+        initialValue={getInitialValue(data, schema.default)}
+        {...formItemProps}
+      >
+        <DatePicker
+          format={"YYYY-MM-DDTHH:mm:ssZ"}
+          onChange={(_, dateString) => handleChange(path, dateString)}
+          {...overrides}
+        />
+      </Form.Item>
+    </Col>
   )
 }
 

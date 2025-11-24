@@ -96,17 +96,19 @@ export const EnumControl = (props: ControlProps) => {
   }
 
   return (
-    <Form.Item
-      label={props.label}
-      id={props.id}
-      name={name}
-      required={props.required}
-      initialValue={defaultValue}
-      rules={rules}
-      {...formItemProps}
-    >
-      {selector}
-    </Form.Item>
+    <Col>
+      <Form.Item
+        label={props.label}
+        id={props.id}
+        name={name}
+        required={props.required}
+        initialValue={defaultValue}
+        rules={rules}
+        {...formItemProps}
+      >
+        {selector}
+      </Form.Item>
+    </Col>
   )
 }
 

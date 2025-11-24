@@ -52,6 +52,48 @@ export const ArrayOfStringsAsRequired: Story = {
   },
 }
 
+export const ArrayOfEnums: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      type: "object",
+      properties: {
+        assets: {
+          type: "array",
+          items: {
+            type: "string",
+            title: "Asset",
+            enum: ["foo", "bar", "baz"],
+          },
+        },
+      },
+      required: ["assets"],
+    } satisfies JSONSchema,
+    uiSchema: arrayControlUISchema,
+  },
+}
+
+export const ArrayOfDateTimes: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: {
+      type: "object",
+      properties: {
+        assets: {
+          type: "array",
+          items: {
+            type: "string",
+            title: "Dates",
+            format: "date-time"
+          },
+        },
+      },
+      required: ["assets"],
+    } satisfies JSONSchema,
+    uiSchema: arrayControlUISchema,
+  },
+}
+
 export const ArrayOfNumbersWithoutRequired: Story = {
   tags: ["autodocs"],
   args: {

@@ -1,9 +1,9 @@
-import { useEffect } from "react"
 import type { ControlProps as JSFControlProps } from "@jsonforms/core"
 import { Form, Select, Segmented, Radio, Col } from "antd"
 import type { Rule } from "antd/es/form"
 import { EnumControlOptions, ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"
+import { useNestedAntDFormContext } from "../hooks/useNestedAntDFormContext"
 
 type ControlProps = Omit<JSFControlProps, "uischema"> & {
   uischema: ControlUISchema<unknown> | JSFControlProps["uischema"]
@@ -16,11 +16,7 @@ const isStringOrNumberArray = (arr: unknown[]): boolean => {
 }
 
 export const EnumControl = (props: ControlProps) => {
-  const form = Form.useFormInstance()
-
-  useEffect(() => {
-    form.setFieldValue(props.path, props.data ?? props.schema.default)
-  }, [props.data, form, props.path, props.schema.default])
+  const nestedAntdData = useNestedAntDFormContext()
 
   if (!props.visible) return null
 
@@ -33,6 +29,12 @@ export const EnumControl = (props: ControlProps) => {
 
   const defaultValue =
     (props.data as unknown) ?? (props.schema.default as unknown)
+
+  const name = nestedAntdData
+    ? nestedAntdData.index !== undefined
+      ? [nestedAntdData.path, nestedAntdData.index]
+      : nestedAntdData.path
+    : props.path
 
   const appliedUiSchemaOptions = props.uischema.options as EnumControlOptions
 
@@ -97,13 +99,13 @@ export const EnumControl = (props: ControlProps) => {
     <Form.Item
       label={props.label}
       id={props.id}
-      name={props.path}
+      name={name}
       required={props.required}
       initialValue={defaultValue}
       rules={rules}
       {...formItemProps}
     >
-      <Col>{selector}</Col>
+      {selector}
     </Form.Item>
   )
 }

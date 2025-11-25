@@ -23,20 +23,18 @@ export const NumericControl = (props: ControlProps) => {
     "formItemProps" in props.uischema ? props.uischema.formItemProps : {}
 
   return (
-    <Col>
-      <Form.Item
-        label={props.label}
-        id={props.id}
-        name={props.path}
-        required={props.required}
-        initialValue={initialValue}
-        rules={rules}
-        validateTrigger={["onBlur"]}
-        {...formItemProps}
-      >
-        {InputNumber({ ...props })}
-      </Form.Item>
-    </Col>
+    <Form.Item
+      label={props.label}
+      id={props.id}
+      name={props.path}
+      required={props.required}
+      initialValue={initialValue}
+      rules={rules}
+      validateTrigger={["onBlur"]}
+      {...formItemProps}
+    >
+      <Col>{InputNumber({ ...props })}</Col>
+    </Form.Item>
   )
 }
 

@@ -30,11 +30,10 @@ export const EnumControl = (props: ControlProps) => {
   const defaultValue =
     (props.data as unknown) ?? (props.schema.default as unknown)
 
-  const name = nestedAntdData
-    ? nestedAntdData.index !== undefined
+  const name =
+    nestedAntdData?.index !== undefined
       ? [nestedAntdData.path, nestedAntdData.index]
-      : nestedAntdData.path
-    : props.path
+      : (nestedAntdData?.path ?? props.path)
 
   const appliedUiSchemaOptions = props.uischema.options as EnumControlOptions
 

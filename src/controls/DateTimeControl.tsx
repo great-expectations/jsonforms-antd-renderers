@@ -77,16 +77,12 @@ function getInitialValue(
   schemaDefault: unknown,
 ): dayjs.Dayjs | undefined {
   if (typeof data === "string" && data !== "") {
-    return toDate(data)
+    return dayjs(data)
   }
   if (typeof schemaDefault === "string" && schemaDefault !== "") {
-    return toDate(schemaDefault)
+    return dayjs(schemaDefault)
   }
   return undefined
-}
-
-function toDate(value: string | undefined): dayjs.Dayjs | undefined {
-  return value !== undefined ? dayjs(value) : value
 }
 
 export const DateTimeRenderer = withJsonFormsControlProps(memo(DateTimeControl))

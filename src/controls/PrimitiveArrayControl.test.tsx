@@ -187,7 +187,7 @@ describe("PrimitiveArrayControl", () => {
       name: "Delete",
     })
     expect(removeButtons).toHaveLength(3)
-    
+
     // Remove the second item ("bar")
     await user.click(removeButtons[1])
 

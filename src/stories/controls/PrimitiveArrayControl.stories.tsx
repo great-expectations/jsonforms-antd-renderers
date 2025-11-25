@@ -84,7 +84,7 @@ export const ArrayOfDateTimes: Story = {
           items: {
             type: "string",
             title: "Dates",
-            format: "date-time"
+            format: "date-time",
           },
         },
       },

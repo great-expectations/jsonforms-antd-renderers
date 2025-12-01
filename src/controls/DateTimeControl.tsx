@@ -1,7 +1,7 @@
-import { memo, useEffect } from "react"
+import { memo } from "react"
 import type { ControlProps as JSFControlProps } from "@jsonforms/core"
 import { withJsonFormsControlProps } from "@jsonforms/react"
-import { DatePicker, Form } from "antd"
+import { Col, DatePicker, Form } from "antd"
 import type { Rule } from "antd/es/form"
 import dayjs from "dayjs"
 
@@ -10,6 +10,7 @@ import {
   DateTimeControlOptions,
   isDateTimeControlOptions,
 } from "../ui-schema"
+import { useNestedAntDFormContext } from "../hooks/useNestedAntDFormContext"
 
 type ControlProps = Omit<JSFControlProps, "uischema"> & {
   uischema: ControlUISchema<unknown> | JSFControlProps["uischema"]
@@ -20,19 +21,6 @@ function getOverrides(options: unknown): DateTimeControlOptions {
     return options
   }
   return {}
-}
-
-function getInitialValue(
-  data: unknown,
-  schemaDefault: unknown,
-): string | undefined {
-  if (typeof data === "string" && data !== "") {
-    return data
-  }
-  if (typeof schemaDefault === "string" && schemaDefault !== "") {
-    return schemaDefault
-  }
-  return undefined
 }
 
 export function DateTimeControl({
@@ -46,14 +34,13 @@ export function DateTimeControl({
   visible,
   data,
 }: ControlProps) {
-  const setInitialValue = createDateTimeInitialValueSetter(handleChange, path)
-  const form = Form.useFormInstance()
-  useEffect(() => {
-    form.setFieldValue(
-      path,
-      setInitialValue(getInitialValue(data, schema.default)),
-    )
-  }, [data, form, path, schema.default, setInitialValue])
+  const nestedAntdData = useNestedAntDFormContext()
+  const name = nestedAntdData
+    ? nestedAntdData.index !== undefined
+      ? [nestedAntdData.path, nestedAntdData.index]
+      : nestedAntdData.path
+    : path
+
   if (!visible) return null
 
   const rules: Rule[] = [{ required, message: `${label} is required` }]
@@ -64,36 +51,38 @@ export function DateTimeControl({
   const overrides = getOverrides(uischema.options)
 
   return (
-    <Form.Item
-      label={label}
-      id={id}
-      name={path}
-      required={required}
-      validateTrigger={["onBlur"]}
-      rules={rules}
-      {...formItemProps}
-    >
-      <DatePicker
-        format={"YYYY-MM-DDTHH:mm:ssZ"}
-        onChange={(_, dateString) => handleChange(path, dateString)}
-        {...overrides}
-      />
-    </Form.Item>
+    <Col>
+      <Form.Item
+        label={label}
+        id={id}
+        name={name}
+        required={required}
+        validateTrigger={["onBlur"]}
+        rules={rules}
+        initialValue={getInitialValue(data, schema.default)}
+        {...formItemProps}
+      >
+        <DatePicker
+          format={"YYYY-MM-DDTHH:mm:ssZ"}
+          onChange={(_, dateString) => handleChange(path, dateString)}
+          {...overrides}
+        />
+      </Form.Item>
+    </Col>
   )
 }
 
-/**
- * Creates an initial value setter for DateTimeControl that coerces string values to dayjs objects
- */
-function createDateTimeInitialValueSetter(
-  handleChange: (path: string, value: string | undefined) => void,
-  path: string,
-) {
-  return (value: string | undefined) => {
-    const coercedValue = value ? dayjs(value) : value
-    handleChange(path, value)
-    return coercedValue
+function getInitialValue(
+  data: unknown,
+  schemaDefault: unknown,
+): dayjs.Dayjs | undefined {
+  if (typeof data === "string" && data !== "") {
+    return dayjs(data)
   }
+  if (typeof schemaDefault === "string" && schemaDefault !== "") {
+    return dayjs(schemaDefault)
+  }
+  return undefined
 }
 
 export const DateTimeRenderer = withJsonFormsControlProps(memo(DateTimeControl))

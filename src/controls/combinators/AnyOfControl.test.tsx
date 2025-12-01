@@ -9,6 +9,7 @@ import {
   AnyOfWithDefaultsUISchemaRegistryEntries,
   SplitterUISchemaRegistryEntry,
   splitterAnyOfJsonSchema,
+  anyOfEnumSchema,
 } from "../../testSchemas/anyOfSchema"
 import { UISchema } from "../../ui-schema"
 import { JSONFormData } from "../../common/schema-derived-types"
@@ -105,6 +106,38 @@ describe("AnyOf control", () => {
     await userEvent.click(screen.getByLabelText("SplitterYear"))
     column = screen.getByLabelText("Column Name")
     expect(column).toHaveValue("abc")
+  })
+  test("AnyOf Control persists state with enums", async () => {
+    render({ schema: anyOfEnumSchema })
+
+    // Start with Option A (default or first option)
+    await screen.findByText("Option A")
+
+    // Select 'active' status
+    const statusSelect = screen.getByRole("combobox")
+    await userEvent.click(statusSelect)
+    await userEvent.click(screen.getByTitle("active"))
+
+    // Switch to Option B
+    await userEvent.click(screen.getByLabelText("Option B"))
+
+    // Verify Option B is active
+    const optionBTab = screen.getByLabelText("Option B")
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(optionBTab.closest("label")).toHaveClass("ant-radio-wrapper-checked")
+
+    // Select 'pending' status
+    const statusSelectB = screen.getByRole("combobox")
+    await userEvent.click(statusSelectB)
+    await userEvent.click(screen.getByTitle("pending"))
+
+    // Switch back to Option A
+    await userEvent.click(screen.getByLabelText("Option A"))
+
+    // Verify Option A is active
+    const optionATab = screen.getByLabelText("Option A")
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(optionATab.closest("label")).toHaveClass("ant-radio-wrapper-checked")
   })
   test("provides a default value for a required combinator", async () => {
     let data: JSONFormData<typeof AnyOfWithDefaultsSchema> = {}

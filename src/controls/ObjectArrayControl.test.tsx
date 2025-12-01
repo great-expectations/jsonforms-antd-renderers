@@ -15,6 +15,8 @@ import {
   arrayControlSortableWithIconsUISchema,
   objectArrayWithNumericFieldControlJsonSchema,
   peopleArrayControlUISchema,
+  objectArrayWithEnumFieldControlJsonSchema,
+  itemsArrayControlUISchema,
 } from "../testSchemas/arraySchema"
 import { UISchema } from "../ui-schema"
 import { JSONFormData } from "../common/schema-derived-types"
@@ -165,6 +167,70 @@ describe("ObjectArrayControl", () => {
     expect(updatedRemoveButtons).toHaveLength(2)
     screen.getByDisplayValue("25")
     screen.getByDisplayValue("35")
+  })
+
+  test("correctly removes from the object list with enum field and remove button", async () => {
+    let data: JSONFormData<typeof objectArrayWithEnumFieldControlJsonSchema> = {
+      items: [],
+    }
+    const user = userEvent.setup()
+    render({
+      schema: objectArrayWithEnumFieldControlJsonSchema,
+      uischema: itemsArrayControlUISchema,
+      data: data,
+      onChange: (result) => {
+        data = result.data as JSONFormData<
+          typeof objectArrayWithEnumFieldControlJsonSchema
+        >
+      },
+    })
+
+    const addButton = await screen.findByRole("button", { name: "Add Items" })
+    await user.click(addButton)
+    await user.click(addButton)
+
+    const statusFields = await screen.findAllByLabelText("Status")
+    expect(statusFields).toHaveLength(3)
+
+    await user.click(statusFields[0])
+    await user.click(screen.getByTitle("foo"))
+
+    await user.click(statusFields[1])
+    await user.click(screen.getAllByTitle("bar")[1])
+
+    await user.click(statusFields[2])
+    await user.click(screen.getAllByTitle("baz")[2])
+
+    await waitFor(() => {
+      expect(data.items).toEqual([
+        { status: "foo" },
+        { status: "bar" },
+        { status: "baz" },
+      ])
+    })
+
+    const removeButtons = await screen.findAllByRole("button", {
+      name: "Delete",
+    })
+    expect(removeButtons).toHaveLength(3)
+
+    // Remove the second item (index 1) which is "bar"
+    await user.click(removeButtons[1])
+
+    await waitFor(() => {
+      expect(data).toEqual({
+        items: [{ status: "foo" }, { status: "baz" }],
+      })
+    })
+
+    expect(
+      screen.getAllByRole("button", {
+        name: "Delete",
+      }),
+    ).toHaveLength(2)
+
+    const remainingStatusFields = screen.getAllByLabelText("Status")
+    expect(remainingStatusFields).toHaveLength(2)
   })
 
   test("renders with overwritten icons and does not allow overwriting onClick", async () => {

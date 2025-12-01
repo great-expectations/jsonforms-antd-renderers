@@ -9,6 +9,7 @@ import {
   stringArrayControlJsonSchemaWithRequired,
   stringArrayControlJsonSchemaWithTitle,
   numberArrayControlJsonSchema,
+  enumArrayControlJsonSchema,
   arrayInsideCombinatorSchema,
   arrayControlSortableUISchema,
   arrayControlSortableWithIconsUISchema,
@@ -143,6 +144,60 @@ describe("PrimitiveArrayControl", () => {
     expect(updatedRemoveButtons).toHaveLength(2)
     screen.getByDisplayValue("01")
     screen.getByDisplayValue("3")
+  })
+
+  test("correctly removes from the enum list with remove button", async () => {
+    let data: JSONFormData<typeof enumArrayControlJsonSchema> = {
+      assets: [],
+    }
+    const user = userEvent.setup()
+    render({
+      schema: enumArrayControlJsonSchema,
+      uischema: arrayControlUISchema,
+      data: data,
+      onChange: (result) => {
+        data = result.data as JSONFormData<typeof enumArrayControlJsonSchema>
+      },
+    })
+    const addButton = await screen.findByRole("button", { name: "Add Assets" })
+    // Add 3 items
+    await user.click(addButton)
+    await user.click(addButton)
+    await user.click(addButton)
+
+    const comboboxes = await screen.findAllByRole("combobox")
+    expect(comboboxes).toHaveLength(3)
+
+    // Helper to select an option from a combobox
+    const selectOption = async (index: number, title: string) => {
+      await user.click(comboboxes[index])
+      const options = await screen.findAllByTitle(title)
+      await user.click(options[options.length - 1])
+    }
+
+    await selectOption(0, "foo")
+    await selectOption(1, "bar")
+    await selectOption(2, "baz")
+
+    await waitFor(() => {
+      expect(data.assets).toEqual(["foo", "bar", "baz"])
+    })
+
+    const removeButtons = await screen.findAllByRole("button", {
+      name: "Delete",
+    })
+    expect(removeButtons).toHaveLength(3)
+
+    // Remove the second item ("bar")
+    await user.click(removeButtons[1])
+
+    // Verify the correct items remain in the data
+    await waitFor(() => {
+      expect(data.assets).toEqual(["foo", "baz"])
+    })
+
+    const selectedItems = screen.getAllByRole("combobox")
+    expect(selectedItems).toHaveLength(2)
   })
 
   test("renders with title", async () => {

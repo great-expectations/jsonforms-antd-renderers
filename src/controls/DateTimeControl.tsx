@@ -20,7 +20,7 @@ function getOverrides(options: unknown): DateTimeControlOptions {
   if (isDateTimeControlOptions(options)) {
     // Exclude 'format' to prevent it from being overridden by uischema options
     return Object.fromEntries(
-      Object.entries(options).filter(([key]) => key !== "format")
+      Object.entries(options).filter(([key]) => key !== "format"),
     ) as DateTimeControlOptions
   }
   return {}
@@ -68,7 +68,12 @@ export function DateTimeControl({
         <DatePicker
           format="YYYY-MM-DD HH:mm:ss"
           showTime
-          onChange={(date: dayjs.Dayjs | null) => handleChange(path, date ? date.format("YYYY-MM-DDTHH:mm:ss") : undefined)}
+          onChange={(date: dayjs.Dayjs | null) =>
+            handleChange(
+              path,
+              date ? date.format("YYYY-MM-DDTHH:mm:ss") : undefined,
+            )
+          }
           {...overrides}
         />
       </Form.Item>
@@ -80,9 +85,12 @@ function getInitialValue(
   data: unknown,
   schemaDefault: unknown,
 ): dayjs.Dayjs | undefined {
-  const value = (typeof data === "string" && data !== "") ? data : 
-                (typeof schemaDefault === "string" && schemaDefault !== "") ? schemaDefault : 
-                undefined
+  const value =
+    typeof data === "string" && data !== ""
+      ? data
+      : typeof schemaDefault === "string" && schemaDefault !== ""
+        ? schemaDefault
+        : undefined
   if (!value) return undefined
   const parsed = dayjs(value)
   return parsed.isValid() ? parsed : undefined

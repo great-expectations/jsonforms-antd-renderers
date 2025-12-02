@@ -18,7 +18,10 @@ type ControlProps = Omit<JSFControlProps, "uischema"> & {
 
 function getOverrides(options: unknown): DateTimeControlOptions {
   if (isDateTimeControlOptions(options)) {
-    return options
+    // Exclude 'format' to prevent it from being overridden by uischema options
+    return Object.fromEntries(
+      Object.entries(options).filter(([key]) => key !== "format")
+    ) as DateTimeControlOptions
   }
   return {}
 }
@@ -63,8 +66,9 @@ export function DateTimeControl({
         {...formItemProps}
       >
         <DatePicker
-          format={"YYYY-MM-DDTHH:mm:ssZ"}
-          onChange={(_, dateString) => handleChange(path, dateString)}
+          format="YYYY-MM-DD HH:mm:ss"
+          showTime
+          onChange={(date: dayjs.Dayjs | null) => handleChange(path, date ? date.format("YYYY-MM-DDTHH:mm:ss") : undefined)}
           {...overrides}
         />
       </Form.Item>
@@ -76,13 +80,12 @@ function getInitialValue(
   data: unknown,
   schemaDefault: unknown,
 ): dayjs.Dayjs | undefined {
-  if (typeof data === "string" && data !== "") {
-    return dayjs(data)
-  }
-  if (typeof schemaDefault === "string" && schemaDefault !== "") {
-    return dayjs(schemaDefault)
-  }
-  return undefined
+  const value = (typeof data === "string" && data !== "") ? data : 
+                (typeof schemaDefault === "string" && schemaDefault !== "") ? schemaDefault : 
+                undefined
+  if (!value) return undefined
+  const parsed = dayjs(value)
+  return parsed.isValid() ? parsed : undefined
 }
 
 export const DateTimeRenderer = withJsonFormsControlProps(memo(DateTimeControl))

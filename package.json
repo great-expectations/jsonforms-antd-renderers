@@ -55,7 +55,7 @@
     "prepack": "pnpm run build",
     "test": "TZ=UTC vitest --run",
     "test:watch": "TZ=UTC vitest",
-    "test:cov": "VITE_CJS_IGNORE_WARNING=true TZ=UTC vitest run --coverage --reporter=junit --outputFile=./junit.xml",
+    "test:cov": "VITE_CJS_IGNORE_WARNING=true TZ=UTC vitest run --coverage  --reporter=default --reporter=junit --outputFile=./junit.xml",
     "tsc": "tsc",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format:write": "prettier . --write",

@@ -16,6 +16,10 @@
   "files": [
     "lib/**/*"
   ],
+  "sideEffects": [
+    "./lib/cjs/renderer-registry-entries.js",
+    "./lib/esm/renderer-registry-entries.js"
+  ],
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/cjs/index.d.ts",

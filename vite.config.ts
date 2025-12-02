@@ -28,7 +28,7 @@ export default defineConfig({
     // @ts-expect-error ignore -- TypeScript version compatibility issue
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     reporters: process.env.GITHUB_ACTIONS
-      ? ["github-actions", "default"]
+      ? ["github-actions"]
       : ["default", "html"],
   },
   build: {

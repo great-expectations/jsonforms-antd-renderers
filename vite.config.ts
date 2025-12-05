@@ -23,7 +23,11 @@ export default defineConfig({
         : ["text", "html", "clover", "json"],
       reportsDirectory: "html/coverage",
       include: ["src/**/*"],
-      exclude: ["**/*.stories.tsx", "src/common/StorybookAntDJsonForm.tsx"],
+      exclude: [
+        "**/*.stories.tsx",
+        "**/*.mdx",
+        "src/common/StorybookAntDJsonForm.tsx",
+      ],
     },
     // @ts-expect-error ignore -- TypeScript version compatibility issue
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

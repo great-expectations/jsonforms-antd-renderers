@@ -63,7 +63,8 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "semantic-release:dry-run": "semantic-release --dry-run"
   },
   "peerDependencies": {
     "@ant-design/icons": "^5.3.0",

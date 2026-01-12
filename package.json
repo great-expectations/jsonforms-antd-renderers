@@ -40,7 +40,8 @@
   },
   "release": {
     "branches": [
-      "main"
+      "main",
+      "t/GX-2204/update-semantic-releaser-settings-for-trusted-publish"
     ]
   },
   "repository": {

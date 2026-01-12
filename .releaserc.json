@@ -1,5 +1,4 @@
 {
-  "branches": ["main", "t/GX-2204/update-semantic-releaser-settings-for-trusted-publish"],
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",

@@ -40,8 +40,7 @@
   },
   "release": {
     "branches": [
-      "main",
-      "t/GX-2204/update-semantic-releaser-settings-for-trusted-publish"
+      "main"
     ]
   },
   "repository": {
@@ -64,8 +63,7 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "semantic-release": "semantic-release",
-    "semantic-release:dry-run": "semantic-release --dry-run"
+    "semantic-release": "semantic-release"
   },
   "peerDependencies": {
     "@ant-design/icons": "^5.3.0",

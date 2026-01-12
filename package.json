@@ -3,7 +3,7 @@
   "private": false,
   "license": "MIT",
   "description": "ant design renderer set for the jsonforms declarative form framework",
-  "packageManager": "pnpm@10.26.0",
+  "packageManager": "pnpm@9.15.4",
   "keywords": [
     "jsonschema",
     "form",

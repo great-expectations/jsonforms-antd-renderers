@@ -28,6 +28,8 @@ jobs:
         with:
           node-version-file: .nvmrc
           registry-url: "https://registry.npmjs.org"
+      - name: Upgrade npm to latest (for OIDC support)
+        run: npm install -g npm@latest
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:

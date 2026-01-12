@@ -6,7 +6,8 @@
       "@semantic-release/npm",
       {
         "npmPublish": true,
-        "pkgRoot": "."
+        "pkgRoot": ".",
+        "tarballDir": "dist"
       }
     ],
     "@semantic-release/github"

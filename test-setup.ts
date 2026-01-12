@@ -1,17 +1,21 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 // context: https://github.com/testing-library/jest-dom/pull/511
 import "@testing-library/jest-dom/vitest"
 import { cleanup } from "@testing-library/react"
 import { afterEach } from "vitest"
 
-// TODO: Fix TypeScript version compatibility with ESLint
-// @ts-expect-error ignore -- this solves issue where RTL throws this error "this environment not configured for act"
-// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+// Make TypeScript aware of Node.js global object
+declare const global: typeof globalThis & {
+  IS_REACT_ACT_ENVIRONMENT?: boolean
+  matchMedia?: (query: string) => {
+    addListener: (listener: () => void) => void
+    removeListener: (listener: () => void) => void
+  }
+}
+
 global.IS_REACT_ACT_ENVIRONMENT = true
 
-// TODO: Fix TypeScript version compatibility with ESLint
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 global.matchMedia =
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   global.matchMedia ||
   function () {
     return {
@@ -71,7 +75,7 @@ if (typeof document !== "undefined") {
     if (hasInvalidSelectorPattern(selector)) {
       // Return empty NodeList by creating a fragment and querying an impossible selector
       const fragment = document.createDocumentFragment()
-      return fragment.querySelectorAll(":not(*)") as NodeListOf<Element>
+      return fragment.querySelectorAll(":not(*)")
     }
     // Wrap in try-catch to handle any parsing errors from nwsapi
     try {
@@ -85,7 +89,7 @@ if (typeof document !== "undefined") {
         error?.message?.includes("not a valid selector")
       ) {
         const fragment = document.createDocumentFragment()
-        return fragment.querySelectorAll(":not(*)") as NodeListOf<Element>
+        return fragment.querySelectorAll(":not(*)")
       }
       throw e
     }

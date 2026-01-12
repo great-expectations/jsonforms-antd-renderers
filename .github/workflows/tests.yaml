@@ -109,6 +109,9 @@ jobs:
       - name: Run lint
         run: pnpm lint
 
+      - name: Check types
+        run: pnpm tsc
+
       - name: Run format
         run: pnpm format:check
 

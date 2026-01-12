@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - t/GX-2204/update-semantic-releaser-settings-for-trusted-publish
   workflow_dispatch:
 
 permissions:

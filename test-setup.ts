@@ -2,7 +2,7 @@
 // context: https://github.com/testing-library/jest-dom/pull/511
 import "@testing-library/jest-dom/vitest"
 import { cleanup } from "@testing-library/react"
-import { afterEach } from "vitest"
+import { afterAll, afterEach, beforeAll } from "vitest"
 
 // Make TypeScript aware of Node.js global object
 declare const global: typeof globalThis & {
@@ -23,6 +23,27 @@ global.matchMedia =
       removeListener: () => undefined,
     }
   }
+
+// Suppress React act() warnings from Ant Design components
+// These warnings come from Ant Design's internal portal/dropdown components
+// and are not actionable since they originate from third-party library code
+const originalConsoleError = console.error
+beforeAll(() => {
+  console.error = (...args: unknown[]) => {
+    const message = args[0]
+    if (
+      typeof message === "string" &&
+      message.includes("was not wrapped in act")
+    ) {
+      return
+    }
+    originalConsoleError.apply(console, args)
+  }
+})
+
+afterAll(() => {
+  console.error = originalConsoleError
+})
 
 // Workaround for jsdom/nwsapi invalid CSS selector parsing issue with Ant Design
 // This patches querySelector and matches to handle invalid selectors gracefully

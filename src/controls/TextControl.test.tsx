@@ -226,4 +226,21 @@ describe("tooltips", () => {
 
     await screen.findByText("You should see this tooltip")
   })
+
+  test("does not show info icon when no tooltip is passed", () => {
+    const uischemaNoTooltip = {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Control",
+          scope: "#/properties/name",
+          label: "Name",
+        },
+      ],
+    }
+    render({ schema, uischema: uischemaNoTooltip })
+    expect(
+      screen.queryByRole("img", { name: /question-circle/i }),
+    ).not.toBeInTheDocument()
+  })
 })

@@ -40,7 +40,7 @@ export function TextControl({
     "formItemProps" in uischema ? uischema.formItemProps : {}
   const { tooltip: formItemTooltip, ...formItemPropsWOTooltip } =
     formItemProps ?? {}
-  const tooltip = options.tooltip ? options.tooltip : (formItemTooltip ?? "")
+  const tooltip = options.tooltip || formItemTooltip || undefined
 
   const placeholderText = options.placeholderText
   const rules: Rule[] = [

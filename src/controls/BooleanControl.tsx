@@ -25,13 +25,13 @@ export function BooleanControl({
   const formItemProps =
     "formItemProps" in uischema ? (uischema.formItemProps as FormItemProps) : {}
   const options = uischema.options as BooleanControlOptions | undefined
-  const labelOnTop = options?.labelPlacement === "top"
+  const labelOnFormItem = options?.formItemLabel !== false
 
   return (
     <Form.Item
       id={id}
       name={path}
-      label={labelOnTop ? label : undefined}
+      label={labelOnFormItem ? label : undefined}
       initialValue={data ?? schema.default}
       {...formItemProps}
     >
@@ -40,7 +40,7 @@ export function BooleanControl({
         isValid={isValid}
         data={data}
         enabled={enabled}
-        label={labelOnTop ? "" : label}
+        label={labelOnFormItem ? "" : label}
         visible={visible}
         path={path}
         uischema={uischema}

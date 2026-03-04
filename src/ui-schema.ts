@@ -373,7 +373,7 @@ export type ArrayControlOptions = {
 }
 
 export type BooleanControlOptions = {
-  labelPlacement?: "top"
+  formItemLabel?: boolean
 }
 
 export type NumericControlOptions = {

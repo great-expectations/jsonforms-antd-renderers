@@ -35,3 +35,27 @@ export const horizontalAlignmentUISchema = {
     },
   ],
 } satisfies UISchema<typeof horizontalAlignmentSchema>
+
+export const horizontalAlignmentLabelOnTopUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "HorizontalLayout",
+      elements: [
+        { type: "Control", scope: "#/properties/first_name" },
+        { type: "Control", scope: "#/properties/last_name" },
+      ],
+    },
+    {
+      type: "HorizontalLayout",
+      elements: [
+        { type: "Control", scope: "#/properties/color" },
+        {
+          type: "Control",
+          scope: "#/properties/agree",
+          options: { labelPlacement: "top" },
+        },
+      ],
+    },
+  ],
+} satisfies UISchema<typeof horizontalAlignmentSchema>

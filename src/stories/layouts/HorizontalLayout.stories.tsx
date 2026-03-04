@@ -12,6 +12,7 @@ import {
 import {
   horizontalAlignmentSchema,
   horizontalAlignmentUISchema,
+  horizontalAlignmentLabelOnTopUISchema,
 } from "../../testSchemas/horizontalAlignmentSchema"
 
 const meta: Meta<typeof StorybookAntDJsonForm> = {
@@ -44,6 +45,15 @@ export const MixedControlAlignment: Story = {
   args: {
     jsonSchema: horizontalAlignmentSchema,
     uiSchema: horizontalAlignmentUISchema,
+    layout: "vertical",
+  },
+}
+
+export const MixedControlAlignmentLabelOnTop: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: horizontalAlignmentSchema,
+    uiSchema: horizontalAlignmentLabelOnTopUISchema,
     layout: "vertical",
   },
 }

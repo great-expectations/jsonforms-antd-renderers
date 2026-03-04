@@ -11,10 +11,12 @@ test("renders the Checkbox component", async () => {
     },
   })
 
-  const checkbox = await screen.findByRole("checkbox")
+  const checkbox = await screen.findByLabelText("Adult")
   expect(checkbox).toBeInTheDocument()
   expect(checkbox).not.toBeChecked()
   expect(checkbox).toBeEnabled()
+  expect(checkbox.tagName).toBe("INPUT")
+  expect(checkbox.getAttribute("type")).toBe("checkbox")
 })
 
 test("handles onChange event correctly", async () => {
@@ -30,7 +32,7 @@ test("handles onChange event correctly", async () => {
     },
   })
 
-  const checkbox = await screen.findByRole("checkbox")
+  const checkbox = await screen.findByLabelText("Name")
   expect(checkbox).not.toBeChecked()
 
   await userEvent.click(checkbox)

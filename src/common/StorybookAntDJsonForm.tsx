@@ -6,7 +6,7 @@ import {
 import { UISchema } from "../ui-schema"
 import { AntDJsonForm } from "./AntDJsonForm"
 import { useCallback, useState } from "react"
-import { Button, Form } from "antd"
+import { Button, Form, FormProps } from "antd"
 import { JsonFormsReactProps } from "@jsonforms/react"
 
 type Props<T> = {
@@ -17,6 +17,7 @@ type Props<T> = {
   uiSchemaRegistryEntries?: JsonFormsUISchemaRegistryEntry[]
   config?: Record<string, unknown>
   onChange: JsonFormsReactProps["onChange"]
+  layout?: FormProps["layout"]
 }
 
 // this component exists to facilitate storybook rendering
@@ -28,6 +29,7 @@ export function StorybookAntDJsonForm<T>({
   rendererRegistryEntries,
   config,
   onChange: _onChange,
+  layout,
 }: Props<T>) {
   const [result, setResult] = useState({ data: initialData })
   const onChange = useCallback(
@@ -49,7 +51,7 @@ export function StorybookAntDJsonForm<T>({
     }
   }, [form])
   return (
-    <Form form={form}>
+    <Form form={form} layout={layout}>
       <AntDJsonForm<typeof jsonSchema>
         uiSchema={uiSchema}
         jsonSchema={jsonSchema}

@@ -44,5 +44,6 @@ export const MixedControlAlignment: Story = {
   args: {
     jsonSchema: horizontalAlignmentSchema,
     uiSchema: horizontalAlignmentUISchema,
+    layout: "vertical",
   },
 }

@@ -29,12 +29,9 @@ export function HorizontalLayout({
   if (visible === false) {
     return null
   }
-  return (
-    <Form
-      data-testid={HORIZONTAL_LAYOUT_FORM_TEST_ID}
-      component={form ? false : "form"}
-      form={form}
-    >
+
+  const content = (
+    <>
       {!isEmpty(groupLayout.label) && groupLayout.label}
       <Row
         justify="space-between"
@@ -49,6 +46,16 @@ export function HorizontalLayout({
           cells={cells}
         />
       </Row>
+    </>
+  )
+
+  if (form) {
+    return content
+  }
+
+  return (
+    <Form data-testid={HORIZONTAL_LAYOUT_FORM_TEST_ID}>
+      {content}
     </Form>
   )
 }

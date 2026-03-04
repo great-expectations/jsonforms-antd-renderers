@@ -58,7 +58,7 @@ export function BooleanControl({
         isValid={isValid}
         data={data}
         enabled={enabled}
-        label=""
+        label="" // label is rendered by the parent Form.Item, not inline in the checkbox
         visible={visible}
         path={path}
         uischema={uischema}

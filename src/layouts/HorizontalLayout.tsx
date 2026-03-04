@@ -39,7 +39,7 @@ export function HorizontalLayout({
       <Row
         justify="space-between"
         gutter={12}
-        align="middle"
+        align="top"
         style={{ maxWidth: "100%" }}
       >
         <AntDLayout

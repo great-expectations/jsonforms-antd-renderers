@@ -1,5 +1,5 @@
 import type { ControlProps as JSFControlProps } from "@jsonforms/core"
-import { Form, Select, Segmented, Radio, Col } from "antd"
+import { Form, Select, Segmented, Radio } from "antd"
 import type { Rule } from "antd/es/form"
 import { EnumControlOptions, ControlUISchema } from "../ui-schema"
 import { withJsonFormsControlProps } from "@jsonforms/react"
@@ -95,19 +95,17 @@ export const EnumControl = (props: ControlProps) => {
   }
 
   return (
-    <Col>
-      <Form.Item
-        label={props.label}
-        id={props.id}
-        name={name}
-        required={props.required}
-        initialValue={defaultValue}
-        rules={rules}
-        {...formItemProps}
-      >
-        {selector}
-      </Form.Item>
-    </Col>
+    <Form.Item
+      label={props.label}
+      id={props.id}
+      name={name}
+      required={props.required}
+      initialValue={defaultValue}
+      rules={rules}
+      {...formItemProps}
+    >
+      {selector}
+    </Form.Item>
   )
 }
 

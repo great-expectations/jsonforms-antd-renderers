@@ -133,7 +133,6 @@ test("renders default props if invalid props are submitted", async () => {
         scope: "#/properties/dateTime",
         label: "Date Time",
         options: {
-          /** @ts-expect-error to test the fail route we need to provide an invalid prop */
           foo: "bar",
           showTime: true,
         },

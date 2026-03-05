@@ -31,6 +31,7 @@ export function BooleanControl({
   const showDescription = !isDescriptionHidden(
     visible,
     description,
+    // this comment is copypasta, may be removed:
     // Checkboxes do not receive focus until they are used, so
     // we cannot rely on focus as criteria for showing descriptions.
     // So we pass "false" to treat it as unfocused.

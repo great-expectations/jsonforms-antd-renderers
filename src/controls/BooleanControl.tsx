@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { ControlProps } from "@jsonforms/core"
+import { ControlProps, isDescriptionHidden } from "@jsonforms/core"
 import { Form, FormItemProps } from "antd"
 import { Checkbox } from "../antd/Checkbox"
 import { withJsonFormsControlProps } from "@jsonforms/react"
@@ -18,12 +18,31 @@ export function BooleanControl({
   errors,
   path,
   config,
+  description,
 }: ControlProps) {
   if (!visible) return null
 
   const isValid = errors.length === 0
+  const appliedUiSchemaOptions = {
+    ...(config as Record<string, unknown>),
+    ...uischema.options,
+  }
+
+  const showDescription = !isDescriptionHidden(
+    visible,
+    description,
+    // Checkboxes do not receive focus until they are used, so
+    // we cannot rely on focus as criteria for showing descriptions.
+    // So we pass "false" to treat it as unfocused.
+    false,
+    !!appliedUiSchemaOptions.showUnfocusedDescription,
+  )
+
+  const showTooltip =
+    !showDescription && !isDescriptionHidden(visible, description, true, true)
   const formItemProps =
     "formItemProps" in uischema ? (uischema.formItemProps as FormItemProps) : {}
+  const tooltip = showTooltip && description ? description : undefined
   const options = uischema.options as BooleanControlOptions | undefined
   const labelOnFormItem = options?.formItemLabel === true
 
@@ -33,6 +52,7 @@ export function BooleanControl({
       name={path}
       label={labelOnFormItem ? label : undefined}
       initialValue={data ?? schema.default}
+      tooltip={tooltip}
       {...formItemProps}
     >
       <Checkbox

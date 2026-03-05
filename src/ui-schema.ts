@@ -251,7 +251,6 @@ export type ControlUISchema<T> = UISchemaElement<T> &
   SchemaAwareScope<T> &
   ControlUISchemaLabel & {
     type: "Control"
-    options?: Record<string, unknown>
     formItemProps?: FormItemProps
     layoutProps?: ColumnLayoutProps
   }

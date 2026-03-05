@@ -68,12 +68,12 @@ const formItemLabelUISchema = {
   elements: [
     {
       type: "Control",
-      scope: "#/properties/checkbox",
+      scope: "#/properties/checkbox" as const,
       label: "Checkbox",
       options: { formItemLabel: true },
     },
   ],
-} satisfies UISchema<typeof schema>
+}
 
 export const FormItemLabel: Story = {
   tags: ["autodocs"],

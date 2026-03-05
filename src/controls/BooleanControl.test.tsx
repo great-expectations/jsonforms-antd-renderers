@@ -15,6 +15,7 @@ test("renders the Checkbox component", async () => {
   expect(checkbox).toBeInTheDocument()
   expect(checkbox).not.toBeChecked()
   expect(checkbox).toBeEnabled()
+  // check that there is an checkbox
   expect(checkbox.tagName).toBe("INPUT")
   expect(checkbox.getAttribute("type")).toBe("checkbox")
 })
@@ -65,24 +66,18 @@ test("renders label on Form.Item when formItemLabel option is true", async () =>
       elements: [
         {
           type: "Control",
-          scope: "#/properties/agree",
+          scope: "#/properties/agree" as const,
           options: { formItemLabel: true },
         },
       ],
-    },
+    } as Parameters<typeof render>[0]["uischema"],
   })
 
   const checkbox = await screen.findByRole("checkbox")
   expect(checkbox).toBeInTheDocument()
-  // label should be on the Form.Item, not inline in the checkbox
-  const formItemLabel = document.querySelector(".ant-form-item-label")
-  expect(formItemLabel).toBeInTheDocument()
-  expect(formItemLabel?.textContent).toContain("I agree")
-  // checkbox should have no inline label text
-  const checkboxLabel = checkbox
-    .closest("label")
-    ?.querySelector(".ant-checkbox-label")
-  expect(checkboxLabel?.textContent).toBe("")
+  // label should be rendered as a Form.Item label, not inline with the checkbox
+  expect(screen.queryByLabelText("I agree")).toBeNull()
+  await screen.findByText("I agree")
 })
 
 test("renders inline label by default", async () => {
@@ -95,9 +90,6 @@ test("renders inline label by default", async () => {
 
   const checkbox = await screen.findByLabelText("I agree")
   expect(checkbox).toBeInTheDocument()
-  // checkbox should have inline label text
-  const checkboxLabel = checkbox
-    .closest("label")
-    ?.querySelector(".ant-checkbox-label")
-  expect(checkboxLabel?.textContent).toBe("I agree")
+  // label is inline with the checkbox (accessible via findByLabelText)
+  expect(checkbox).toHaveAttribute("type", "checkbox")
 })

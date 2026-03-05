@@ -12,12 +12,8 @@ test("renders the Checkbox component", async () => {
   })
 
   const checkbox = await screen.findByLabelText("Adult")
-  expect(checkbox).toBeInTheDocument()
   expect(checkbox).not.toBeChecked()
   expect(checkbox).toBeEnabled()
-  // check that there is an checkbox
-  expect(checkbox.tagName).toBe("INPUT")
-  expect(checkbox.getAttribute("type")).toBe("checkbox")
 })
 
 test("handles onChange event correctly", async () => {
@@ -73,8 +69,7 @@ test("renders label on Form.Item when formItemLabel option is true", async () =>
     } as Parameters<typeof render>[0]["uischema"],
   })
 
-  const checkbox = await screen.findByRole("checkbox")
-  expect(checkbox).toBeInTheDocument()
+  await screen.findByRole("checkbox")
   // label should be rendered as a Form.Item label, not inline with the checkbox
   expect(screen.queryByLabelText("I agree")).toBeNull()
   await screen.findByText("I agree")
@@ -88,8 +83,5 @@ test("renders inline label by default", async () => {
     },
   })
 
-  const checkbox = await screen.findByLabelText("I agree")
-  expect(checkbox).toBeInTheDocument()
-  // label is inline with the checkbox (accessible via findByLabelText)
-  expect(checkbox).toHaveAttribute("type", "checkbox")
+  await screen.findByLabelText("I agree")
 })

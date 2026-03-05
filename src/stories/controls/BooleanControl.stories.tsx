@@ -62,3 +62,24 @@ export const SingleLine: Story = {
     },
   },
 }
+
+const formItemLabelUISchema = {
+  type: "VerticalLayout",
+  elements: [
+    {
+      type: "Control",
+      scope: "#/properties/checkbox" as const,
+      label: "Checkbox",
+      options: { formItemLabel: true },
+    },
+  ],
+}
+
+export const FormItemLabel: Story = {
+  tags: ["autodocs"],
+  args: {
+    jsonSchema: schema,
+    uiSchema: formItemLabelUISchema,
+    layout: "vertical",
+  },
+}

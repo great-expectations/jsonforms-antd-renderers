@@ -371,6 +371,10 @@ export type ArrayControlOptions = {
   moveDownButtonProps?: ButtonProps
 }
 
+export type BooleanControlOptions = {
+  formItemLabel?: boolean
+}
+
 export type NumericControlOptions = {
   addonBefore?: InputNumberProps["addonBefore"]
   addonAfter?: InputNumberProps["addonAfter"]

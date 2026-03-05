@@ -3,6 +3,7 @@ import { ControlProps, isDescriptionHidden } from "@jsonforms/core"
 import { Form, FormItemProps } from "antd"
 import { Checkbox } from "../antd/Checkbox"
 import { withJsonFormsControlProps } from "@jsonforms/react"
+import { BooleanControlOptions } from "../ui-schema"
 
 export function BooleanControl({
   data,
@@ -43,11 +44,14 @@ export function BooleanControl({
   const formItemProps =
     "formItemProps" in uischema ? (uischema.formItemProps as FormItemProps) : {}
   const tooltip = showTooltip && description ? description : undefined
+  const options = uischema.options as BooleanControlOptions | undefined
+  const labelOnFormItem = options?.formItemLabel === true
 
   return (
     <Form.Item
       id={id}
       name={path}
+      label={labelOnFormItem ? label : undefined}
       initialValue={data ?? schema.default}
       tooltip={tooltip}
       {...formItemProps}
@@ -57,7 +61,7 @@ export function BooleanControl({
         isValid={isValid}
         data={data}
         enabled={enabled}
-        label={label}
+        label={labelOnFormItem ? "" : label}
         visible={visible}
         path={path}
         uischema={uischema}

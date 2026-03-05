@@ -54,3 +54,38 @@ test("handles onChange event correctly", async () => {
     }),
   )
 })
+
+test("renders label on Form.Item when formItemLabel option is true", async () => {
+  render({
+    schema: {
+      type: "object",
+      properties: { agree: { type: "boolean", title: "I agree" } },
+    },
+    uischema: {
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Control",
+          scope: "#/properties/agree" as const,
+          options: { formItemLabel: true },
+        },
+      ],
+    } as Parameters<typeof render>[0]["uischema"],
+  })
+
+  await screen.findByRole("checkbox")
+  // label should be rendered as a Form.Item label, not inline with the checkbox
+  expect(screen.queryByLabelText("I agree")).toBeNull()
+  await screen.findByText("I agree")
+})
+
+test("renders inline label by default", async () => {
+  render({
+    schema: {
+      type: "object",
+      properties: { agree: { type: "boolean", title: "I agree" } },
+    },
+  })
+
+  await screen.findByLabelText("I agree")
+})

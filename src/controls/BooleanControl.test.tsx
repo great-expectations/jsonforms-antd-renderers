@@ -15,6 +15,7 @@ test("renders the Checkbox component", async () => {
   expect(checkbox).toBeInTheDocument()
   expect(checkbox).not.toBeChecked()
   expect(checkbox).toBeEnabled()
+  // check that there is an checkbox
   expect(checkbox.tagName).toBe("INPUT")
   expect(checkbox.getAttribute("type")).toBe("checkbox")
 })

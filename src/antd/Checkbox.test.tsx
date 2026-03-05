@@ -11,6 +11,6 @@ test("renders Checkbox component with default label", async () => {
     data: { name: true },
   })
 
-  const checkbox = await screen.findByRole("checkbox")
+  const checkbox = await screen.findByLabelText("Name")
   expect(checkbox).toBeChecked()
 })

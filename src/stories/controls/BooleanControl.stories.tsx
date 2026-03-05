@@ -63,22 +63,23 @@ export const SingleLine: Story = {
   },
 }
 
-const inlineLabelUISchema = {
+const formItemLabelUISchema = {
   type: "VerticalLayout",
   elements: [
     {
       type: "Control",
       scope: "#/properties/checkbox",
       label: "Checkbox",
-      options: { formItemLabel: false },
+      options: { formItemLabel: true },
     },
   ],
 } satisfies UISchema<typeof schema>
 
-export const InlineLabel: Story = {
+export const FormItemLabel: Story = {
   tags: ["autodocs"],
   args: {
     jsonSchema: schema,
-    uiSchema: inlineLabelUISchema,
+    uiSchema: formItemLabelUISchema,
+    layout: "vertical",
   },
 }

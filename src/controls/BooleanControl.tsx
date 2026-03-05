@@ -25,7 +25,7 @@ export function BooleanControl({
   const formItemProps =
     "formItemProps" in uischema ? (uischema.formItemProps as FormItemProps) : {}
   const options = uischema.options as BooleanControlOptions | undefined
-  const labelOnFormItem = options?.formItemLabel !== false
+  const labelOnFormItem = options?.formItemLabel === true
 
   return (
     <Form.Item

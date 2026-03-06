@@ -1,10 +1,9 @@
 import { LayoutProps } from "@jsonforms/core"
 import { AntDLayout, AntDLayoutProps } from "./LayoutRenderer"
 import { Form } from "antd"
-import { FormContext } from "antd/es/form/context"
 import { VerticalLayoutUISchema } from "../ui-schema"
 import { withJsonFormsLayoutProps } from "@jsonforms/react"
-import { useContext } from "react"
+import { useParentFormLayout } from "../hooks/useParentFormLayout"
 
 export const VERTICAL_LAYOUT_FORM_TEST_ID = "vertical-layout-form"
 
@@ -26,22 +25,25 @@ export function VerticalLayout({
     visible,
   }
   const form = Form.useFormInstance()
-  const { layout } = useContext(FormContext)
+  const { probeRef, layout } = useParentFormLayout()
 
   if (visible === false) {
     return null
   }
 
   return (
-    <Form
-      data-testid={VERTICAL_LAYOUT_FORM_TEST_ID}
-      component={form ? false : "form"}
-      layout={layout}
-      scrollToFirstError
-      form={form}
-    >
-      <AntDLayout {...childProps} renderers={renderers} cells={cells} />
-    </Form>
+    <>
+      <span ref={probeRef} style={{ display: "none" }} />
+      <Form
+        data-testid={VERTICAL_LAYOUT_FORM_TEST_ID}
+        component={form ? false : "form"}
+        layout={layout}
+        scrollToFirstError
+        form={form}
+      >
+        <AntDLayout {...childProps} renderers={renderers} cells={cells} />
+      </Form>
+    </>
   )
 }
 

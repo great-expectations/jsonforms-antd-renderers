@@ -3,9 +3,8 @@ import isEmpty from "lodash.isempty"
 import { AntDLayout, AntDLayoutProps } from "./LayoutRenderer"
 import { HorizontalLayoutUISchema } from "../ui-schema"
 import { Form, Row } from "antd"
-import { FormContext } from "antd/es/form/context"
 import { withJsonFormsLayoutProps } from "@jsonforms/react"
-import { useContext } from "react"
+import { useParentFormLayout } from "../hooks/useParentFormLayout"
 
 export const HORIZONTAL_LAYOUT_FORM_TEST_ID = "horizontal-layout-form"
 
@@ -28,7 +27,7 @@ export function HorizontalLayout({
     visible,
   }
   const form = Form.useFormInstance()
-  const { layout } = useContext(FormContext)
+  const { probeRef, layout } = useParentFormLayout()
 
   if (visible === false) {
     return null
@@ -54,14 +53,17 @@ export function HorizontalLayout({
   )
 
   return (
-    <Form
-      data-testid={HORIZONTAL_LAYOUT_FORM_TEST_ID}
-      component={form ? false : "form"}
-      layout={layout}
-      form={form}
-    >
-      {content}
-    </Form>
+    <>
+      <span ref={probeRef} style={{ display: "none" }} />
+      <Form
+        data-testid={HORIZONTAL_LAYOUT_FORM_TEST_ID}
+        component={form ? false : "form"}
+        layout={layout}
+        form={form}
+      >
+        {content}
+      </Form>
+    </>
   )
 }
 

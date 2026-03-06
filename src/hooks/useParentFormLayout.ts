@@ -17,11 +17,16 @@ export function useParentFormLayout() {
   const ref = useRef<HTMLSpanElement>(null)
   const [layout, setLayout] = useState<FormProps["layout"]>()
 
+  // No dependency array — re-reads the DOM class after every render so the
+  // layout stays in sync when the parent Form's `layout` prop changes.
+  // Safe from infinite loops: setLayout is a no-op when the value is unchanged.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useLayoutEffect(() => {
     const formEl = ref.current?.closest(".ant-form")
     if (formEl?.classList.contains("ant-form-vertical")) setLayout("vertical")
     else if (formEl?.classList.contains("ant-form-inline")) setLayout("inline")
-  }, [])
+    else setLayout(undefined)
+  })
 
   return { ref, layout }
 }

@@ -14,10 +14,10 @@ type Props<T> = {
   jsonSchema: T
   rendererRegistryEntries: JsonFormsRendererRegistryEntry[]
   uiSchema?: UISchema<T>
+  layout?: FormProps["layout"]
   uiSchemaRegistryEntries?: JsonFormsUISchemaRegistryEntry[]
   config?: Record<string, unknown>
   onChange: JsonFormsReactProps["onChange"]
-  layout?: FormProps["layout"]
 }
 
 // this component exists to facilitate storybook rendering

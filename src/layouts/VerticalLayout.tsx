@@ -29,14 +29,20 @@ export function VerticalLayout({
     return null
   }
 
+  const content = (
+    <AntDLayout {...childProps} renderers={renderers} cells={cells} />
+  )
+
+  if (form) {
+    return content
+  }
+
   return (
     <Form
       data-testid={VERTICAL_LAYOUT_FORM_TEST_ID}
-      component={form ? false : "form"}
       scrollToFirstError
-      form={form}
     >
-      <AntDLayout {...childProps} renderers={renderers} cells={cells} />
+      {content}
     </Form>
   )
 }

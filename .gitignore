@@ -25,6 +25,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# Storybook
+storybook-static
+
 # Built package
 great-expectations-jsonforms-antd-renderers-*.tgz
 

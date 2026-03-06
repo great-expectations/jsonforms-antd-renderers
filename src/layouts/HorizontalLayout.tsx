@@ -53,7 +53,11 @@ export function HorizontalLayout({
     return content
   }
 
-  return <Form data-testid={HORIZONTAL_LAYOUT_FORM_TEST_ID}>{content}</Form>
+  return (
+    <Form data-testid={HORIZONTAL_LAYOUT_FORM_TEST_ID}>
+      {content}
+    </Form>
+  )
 }
 
 export const HorizontalLayoutRenderer =

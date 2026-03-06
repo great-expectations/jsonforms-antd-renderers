@@ -9,6 +9,12 @@ const preview: Preview = {
       },
     },
   },
+  argTypes: {
+    layout: {
+      control: "select",
+      options: ["horizontal", "vertical", "inline"],
+    },
+  },
 }
 
 export default preview

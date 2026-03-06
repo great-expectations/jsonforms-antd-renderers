@@ -9,13 +9,14 @@ import type { FormProps } from "antd"
  * `ant-form-inline`) to determine the layout. When no ancestor form exists or
  * the layout is the default "horizontal", `layout` is `undefined`.
  *
- * We keep the intermediate `<Form>` wrapper (with `component={false}` when
- * nested) rather than conditionally removing it because `Form.List` in the
- * array controls depends on it for correct store structure.
+ * We take this approach for two reasons:
  *
- * We detect layout via the DOM rather than importing antd's internal
- * FormContext because that context is a different object in CJS vs ESM builds,
- * which breaks context sharing when this library is consumed as CJS.
+ * 1. We keep the intermediate `<Form>` wrapper (with `component={false}` when
+ *    nested) rather than conditionally removing it because `Form.List` in the
+ *    array controls depends on it for correct store structure.
+ * 2. We detect layout via the DOM rather than importing antd's internal
+ *    `FormContext` because that context is a different object in CJS vs ESM
+ *    builds, which breaks context sharing when this library is consumed as CJS.
  */
 export function useParentFormLayout() {
   const ref = useRef<HTMLSpanElement>(null)

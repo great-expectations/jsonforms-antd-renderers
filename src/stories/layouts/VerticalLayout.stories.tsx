@@ -15,8 +15,13 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
   component: StorybookAntDJsonForm,
   tags: ["autodocs"],
   argTypes: {
+    rendererRegistryEntries: { table: { disable: true } },
     uiSchema: { control: "object" },
     layout: {},
+    uiSchemaRegistryEntries: { table: { disable: true } },
+    data: { table: { disable: true } },
+    config: { control: "object" },
+    onChange: { table: { disable: true, action: "on-change" } },
   },
 }
 

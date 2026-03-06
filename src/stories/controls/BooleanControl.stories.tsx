@@ -41,6 +41,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     jsonSchema: {
       control: "object",
     },
+    layout: {},
     data: { table: { disable: true } },
     config: { control: "object" },
     onChange: { table: { disable: true, action: "on-change" } },

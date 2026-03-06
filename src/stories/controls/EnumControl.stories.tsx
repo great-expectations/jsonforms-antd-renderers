@@ -23,6 +23,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     uiSchema: {
       control: "object",
     },
+    layout: {},
   },
 }
 

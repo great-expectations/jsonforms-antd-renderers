@@ -18,6 +18,9 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
   title: "Layout/Horizontal",
   component: StorybookAntDJsonForm,
   tags: ["autodocs"],
+  argTypes: {
+    layout: {},
+  },
 }
 
 export default meta

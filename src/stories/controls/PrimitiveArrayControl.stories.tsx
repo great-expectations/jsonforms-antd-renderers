@@ -22,6 +22,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     jsonSchema: {
       control: "object",
     },
+    layout: {},
     uiSchemaRegistryEntries: { table: { disable: true } },
     data: { table: { disable: true } },
     config: { control: "object" },

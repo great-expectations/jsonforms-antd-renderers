@@ -38,10 +38,7 @@ export function VerticalLayout({
   }
 
   return (
-    <Form
-      data-testid={VERTICAL_LAYOUT_FORM_TEST_ID}
-      scrollToFirstError
-    >
+    <Form data-testid={VERTICAL_LAYOUT_FORM_TEST_ID} scrollToFirstError>
       {content}
     </Form>
   )

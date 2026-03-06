@@ -1,0 +1,38 @@
+import { useLayoutEffect, useRef, useState } from "react"
+import type { FormProps } from "antd"
+
+/**
+ * Returns a ref and the detected layout of the nearest ancestor Ant Design Form.
+ *
+ * Attach `ref` to any element rendered inside the parent Form. The hook reads
+ * the CSS class on the closest `.ant-form` ancestor (`ant-form-vertical`,
+ * `ant-form-inline`) to determine the layout. When no ancestor form exists or
+ * the layout is the default "horizontal", `layout` is `undefined`.
+ *
+ * We take this approach for two reasons:
+ *
+ * 1. We keep the intermediate `<Form>` wrapper (with `component={false}` when
+ *    nested) rather than conditionally removing it because `Form.List` in the
+ *    array controls depends on it for correct store structure.
+ * 2. We detect layout via the DOM rather than importing antd's internal
+ *    `FormContext` because it is not part of antd's public API and is a
+ *    different object in CJS vs ESM builds, which breaks context sharing
+ *    when this library is consumed as CJS.
+ */
+export function useParentFormLayout() {
+  const ref = useRef<HTMLSpanElement>(null)
+  const [layout, setLayout] = useState<FormProps["layout"]>()
+
+  // No dependency array — re-reads the DOM class after every render so the
+  // layout stays in sync when the parent Form's `layout` prop changes.
+  // Safe from infinite loops: setLayout is a no-op when the value is unchanged.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useLayoutEffect(() => {
+    const formEl = ref.current?.closest(".ant-form")
+    if (formEl?.classList.contains("ant-form-vertical")) setLayout("vertical")
+    else if (formEl?.classList.contains("ant-form-inline")) setLayout("inline")
+    else setLayout(undefined)
+  })
+
+  return { ref, layout }
+}

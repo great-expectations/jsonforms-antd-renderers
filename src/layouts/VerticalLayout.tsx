@@ -3,6 +3,7 @@ import { AntDLayout, AntDLayoutProps } from "./LayoutRenderer"
 import { Form } from "antd"
 import { VerticalLayoutUISchema } from "../ui-schema"
 import { withJsonFormsLayoutProps } from "@jsonforms/react"
+import { useParentFormLayout } from "../hooks/useParentFormLayout"
 
 export const VERTICAL_LAYOUT_FORM_TEST_ID = "vertical-layout-form"
 
@@ -24,20 +25,25 @@ export function VerticalLayout({
     visible,
   }
   const form = Form.useFormInstance()
+  const { ref, layout } = useParentFormLayout()
 
   if (visible === false) {
     return null
   }
 
   return (
-    <Form
-      data-testid={VERTICAL_LAYOUT_FORM_TEST_ID}
-      component={form ? false : "form"}
-      scrollToFirstError
-      form={form}
-    >
-      <AntDLayout {...childProps} renderers={renderers} cells={cells} />
-    </Form>
+    <>
+      <span ref={ref} style={{ display: "none" }} />
+      <Form
+        data-testid={VERTICAL_LAYOUT_FORM_TEST_ID}
+        component={form ? false : "form"}
+        layout={layout}
+        scrollToFirstError
+        form={form}
+      >
+        <AntDLayout {...childProps} renderers={renderers} cells={cells} />
+      </Form>
+    </>
   )
 }
 

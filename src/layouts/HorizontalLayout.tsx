@@ -4,6 +4,7 @@ import { AntDLayout, AntDLayoutProps } from "./LayoutRenderer"
 import { HorizontalLayoutUISchema } from "../ui-schema"
 import { Form, Row } from "antd"
 import { withJsonFormsLayoutProps } from "@jsonforms/react"
+import { useParentFormLayout } from "../hooks/useParentFormLayout"
 
 export const HORIZONTAL_LAYOUT_FORM_TEST_ID = "horizontal-layout-form"
 
@@ -26,6 +27,8 @@ export function HorizontalLayout({
     visible,
   }
   const form = Form.useFormInstance()
+  const { ref, layout } = useParentFormLayout()
+
   if (visible === false) {
     return null
   }
@@ -36,7 +39,7 @@ export function HorizontalLayout({
       <Row
         justify="space-between"
         gutter={12}
-        align="middle"
+        align="bottom"
         style={{ maxWidth: "100%" }}
       >
         <AntDLayout
@@ -49,11 +52,19 @@ export function HorizontalLayout({
     </>
   )
 
-  if (form) {
-    return content
-  }
-
-  return <Form data-testid={HORIZONTAL_LAYOUT_FORM_TEST_ID}>{content}</Form>
+  return (
+    <>
+      <span ref={ref} style={{ display: "none" }} />
+      <Form
+        data-testid={HORIZONTAL_LAYOUT_FORM_TEST_ID}
+        component={form ? false : "form"}
+        layout={layout}
+        form={form}
+      >
+        {content}
+      </Form>
+    </>
+  )
 }
 
 export const HorizontalLayoutRenderer =

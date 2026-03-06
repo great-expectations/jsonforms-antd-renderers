@@ -70,6 +70,8 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
       control: "object",
       description: "this is a minimal oneOf combinator schema",
     },
+    uiSchema: { control: "object" },
+    layout: {},
     uiSchemaRegistryEntries: { table: { disable: true } },
     data: { table: { disable: true } },
     config: { control: "object" },

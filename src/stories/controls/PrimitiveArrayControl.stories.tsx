@@ -19,9 +19,12 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
   },
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
+    rendererRegistryEntries: { table: { disable: true } },
     jsonSchema: {
       control: "object",
     },
+    uiSchema: { control: "object" },
+    layout: {},
     uiSchemaRegistryEntries: { table: { disable: true } },
     data: { table: { disable: true } },
     config: { control: "object" },

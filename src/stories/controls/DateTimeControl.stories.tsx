@@ -17,7 +17,15 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     jsonSchema: dateTimeSchema,
     uiSchema: dateTimeUISchema,
   },
-  argTypes: {},
+  argTypes: {
+    rendererRegistryEntries: { table: { disable: true } },
+    uiSchema: { control: "object" },
+    layout: {},
+    uiSchemaRegistryEntries: { table: { disable: true } },
+    data: { table: { disable: true } },
+    config: { control: "object" },
+    onChange: { table: { disable: true, action: "on-change" } },
+  },
 }
 
 export default meta

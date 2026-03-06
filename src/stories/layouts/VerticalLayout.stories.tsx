@@ -15,6 +15,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
   component: StorybookAntDJsonForm,
   tags: ["autodocs"],
   argTypes: {
+    uiSchema: { control: "object" },
     layout: {},
   },
 }

@@ -18,6 +18,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
     uiSchema: dateTimeUISchema,
   },
   argTypes: {
+    uiSchema: { control: "object" },
     layout: {},
   },
 }

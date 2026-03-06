@@ -41,6 +41,7 @@ const meta: Meta<typeof StorybookAntDJsonForm<typeof splitterAnyOfJsonSchema>> =
         control: "object",
         description: "this is a minimal anyOf combinator schema",
       },
+      uiSchema: { control: "object" },
       layout: {},
       uiSchemaRegistryEntries: { table: { disable: true } },
       data: { table: { disable: true } },

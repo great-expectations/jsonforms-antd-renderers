@@ -40,6 +40,7 @@ const meta: Meta<typeof StorybookAntDJsonForm> = {
       control: "object",
       description: "this is a simple schema with one property (name)",
     },
+    uiSchema: { control: "object" },
     layout: {},
     uiSchemaRegistryEntries: { table: { disable: true } },
     data: { table: { disable: true } },

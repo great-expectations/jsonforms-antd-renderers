@@ -27,7 +27,7 @@ export function HorizontalLayout({
     visible,
   }
   const form = Form.useFormInstance()
-  const { probeRef, layout } = useParentFormLayout()
+  const { ref, layout } = useParentFormLayout()
 
   if (visible === false) {
     return null
@@ -54,7 +54,7 @@ export function HorizontalLayout({
 
   return (
     <>
-      <span ref={probeRef} style={{ display: "none" }} />
+      <span ref={ref} style={{ display: "none" }} />
       <Form
         data-testid={HORIZONTAL_LAYOUT_FORM_TEST_ID}
         component={form ? false : "form"}

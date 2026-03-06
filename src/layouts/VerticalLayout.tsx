@@ -25,7 +25,7 @@ export function VerticalLayout({
     visible,
   }
   const form = Form.useFormInstance()
-  const { probeRef, layout } = useParentFormLayout()
+  const { ref, layout } = useParentFormLayout()
 
   if (visible === false) {
     return null
@@ -33,7 +33,7 @@ export function VerticalLayout({
 
   return (
     <>
-      <span ref={probeRef} style={{ display: "none" }} />
+      <span ref={ref} style={{ display: "none" }} />
       <Form
         data-testid={VERTICAL_LAYOUT_FORM_TEST_ID}
         component={form ? false : "form"}
